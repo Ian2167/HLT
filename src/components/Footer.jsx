@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { CONTACT_URL } from '../constants/contact';
 
 const Footer = () => {
     const { t } = useLanguage();
@@ -15,9 +17,9 @@ const Footer = () => {
                 </div>
 
                 <div className="flex gap-8 text-sm font-medium">
-                    <a href="#" className="hover:text-white transition-colors">{t('privacyPolicy')}</a>
-                    <a href="#" className="hover:text-white transition-colors">{t('terms')}</a>
-                    <a href="#" className="hover:text-white transition-colors">{t('contactSupport')}</a>
+                    <Link to="/privacy" className="hover:text-white transition-colors">{t('privacyPolicy')}</Link>
+                    <Link to="/terms" className="hover:text-white transition-colors">{t('terms')}</Link>
+                    <a href={CONTACT_URL} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">{t('contactSupport')}</a>
                 </div>
             </div>
             <div className="container mx-auto px-6 mt-8 pt-8 border-t border-slate-800 text-center text-xs text-slate-600">

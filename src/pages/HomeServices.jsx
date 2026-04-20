@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ShieldCheck, MapPin, Calendar, UserCheck, Hammer, Zap, Droplets, Trees, Ruler, Search, ArrowRight, Truck } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { CONTACT_URL } from '../constants/contact';
 import cardHome from '../assets/card-home.png';
 
 const HomeServices = () => {
@@ -150,10 +151,15 @@ const HomeServices = () => {
                     </div>
 
                     <div className="mt-16 text-center">
-                        <button className="px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all flex items-center gap-2 mx-auto">
+                        <a
+                            href={CONTACT_URL}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all items-center gap-2 mx-auto"
+                        >
                             {t('modernizeLogistics')}
                             <ArrowRight size={20} />
-                        </button>
+                        </a>
                     </div>
                 </div>
             </section>

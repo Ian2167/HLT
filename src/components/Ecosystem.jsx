@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Bot, Globe } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { CONTACT_URL } from '../constants/contact';
 
 const Ecosystem = () => {
     const { t } = useLanguage();
@@ -30,9 +31,14 @@ const Ecosystem = () => {
                         <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed max-w-sm">
                             {t('smartWebsitesDesc')}
                         </p>
-                        <button className="px-6 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold hover:shadow-md transition-all">
+                        <a
+                            href={CONTACT_URL}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex px-6 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold hover:shadow-md transition-all"
+                        >
                             {t('viewTemplates')}
-                        </button>
+                        </a>
                     </div>
 
                 </div>

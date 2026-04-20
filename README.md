@@ -1,4 +1,4 @@
-# HLT - Imperial Glass Website
+# HLT Website
 
 This is a premium, high-performance React application built for High Level Thai (HLT). It features a modern, glassmorphism-inspired design with internationalization support (English/Thai).
 

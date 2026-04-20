@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Layout, Search, Zap, Gauge, ArrowRight, Layers, Smartphone } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { CONTACT_URL } from '../constants/contact';
 import cardWeb from '../assets/card-web.png';
 
 const Websites = () => {
@@ -137,10 +138,15 @@ const Websites = () => {
                     </div>
 
                     <div className="mt-16 text-center">
-                        <button className="px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all flex items-center gap-2 mx-auto">
+                        <a
+                            href={CONTACT_URL}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all items-center gap-2 mx-auto"
+                        >
                             {t('getSiteAudit')}
                             <ArrowRight size={20} />
-                        </button>
+                        </a>
                     </div>
                 </div>
             </section>

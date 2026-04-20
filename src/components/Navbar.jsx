@@ -5,6 +5,7 @@ import ThemeToggle from './ThemeToggle';
 import LanguageToggle from './LanguageToggle';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { CONTACT_URL } from '../constants/contact';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -96,9 +97,14 @@ const Navbar = () => {
                     <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-2"></div>
                     <ThemeToggle />
                     <LanguageToggle />
-                    <button className="px-5 py-2 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    <a
+                        href={CONTACT_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-5 py-2 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    >
                         {t('getStarted')}
-                    </button>
+                    </a>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -147,9 +153,14 @@ const Navbar = () => {
                                     {link.name}
                                 </Link>
                             ))}
-                            <button className="w-full py-3 mt-4 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700">
+                            <a
+                                href={CONTACT_URL}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="w-full py-3 mt-4 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 text-center"
+                            >
                                 {t('getStarted')}
-                            </button>
+                            </a>
                         </div>
                     </motion.div>
                 )}

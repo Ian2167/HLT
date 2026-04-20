@@ -9,6 +9,10 @@ import Websites from './pages/Websites';
 import HomeServices from './pages/HomeServices';
 import Clinics from './pages/Clinics';
 import Salons from './pages/Salons';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Terms from './pages/Terms';
+import Support from './pages/Support';
+import NotFound from './pages/NotFound';
 import ScrollToTop from './components/ScrollToTop'; // We will need this to scroll top on nav
 
 function App() {
@@ -27,6 +31,10 @@ function App() {
             <Route path="/home-services" element={<HomeServices />} />
             <Route path="/clinics" element={<Clinics />} />
             <Route path="/salons" element={<Salons />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />

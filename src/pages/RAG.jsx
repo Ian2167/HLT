@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Bot, FileText, Database, MessageSquare, ArrowRight, BookOpen, Clock, Users } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { CONTACT_URL } from '../constants/contact';
 import cardRag from '../assets/card-rag.png';
 
 const RAG = () => {
@@ -127,10 +128,15 @@ const RAG = () => {
                     </div>
 
                     <div className="mt-16 text-center">
-                        <button className="px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all flex items-center gap-2 mx-auto">
+                        <a
+                            href={CONTACT_URL}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all items-center gap-2 mx-auto"
+                        >
                             {t('buildYourArmy')}
                             <ArrowRight size={20} />
-                        </button>
+                        </a>
                     </div>
                 </div>
             </section>

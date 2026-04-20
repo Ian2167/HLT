@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { FileText, CheckCircle, XCircle, ArrowRight, MousePointerClick, CreditCard, Bell } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { CONTACT_URL } from '../constants/contact';
 import cardQuotes from '../assets/card-quotes.png';
 
 const Quotes = () => {
@@ -110,10 +111,15 @@ const Quotes = () => {
                     </div>
 
                     <div className="mt-16 text-center">
-                        <button className="px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all flex items-center gap-2 mx-auto">
+                        <a
+                            href={CONTACT_URL}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all items-center gap-2 mx-auto"
+                        >
                             {t('upgradeProposals')}
                             <ArrowRight size={20} />
-                        </button>
+                        </a>
                     </div>
                 </div>
             </section>
