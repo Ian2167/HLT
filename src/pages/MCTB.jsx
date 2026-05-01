@@ -28,7 +28,7 @@ const MCTB = () => {
                         <div className="relative max-w-4xl mx-auto mt-12">
                             <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-2xl blur opacity-20 dark:opacity-40"></div>
                             <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
-                                <img src={cardMctb} alt="The Receptionist Box" className="w-full h-auto object-cover" />
+                                <img src={cardMctb} alt={t('altMctb')} className="w-full h-auto object-cover" />
                             </div>
                         </div>
                     </motion.div>

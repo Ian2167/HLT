@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="96" viewBox="0 0 500 96" role="img" aria-labelledby="title desc">
+  <title id="title">HighLevelThai wordmark for dark backgrounds</title>
+  <desc id="desc">HighLevelThai wordmark with violet Thai accent.</desc>
+  <defs>
+    <style>
+      .word { font-family: Inter, Arial, sans-serif; font-size: 52px; font-weight: 760; letter-spacing: .2px; }
+    </style>
+  </defs>
+  <text class="word" x="0" y="64" fill="#FFFFFF">HighLevel</text>
+  <text class="word" x="279" y="64" fill="#6857FF">Thai</text>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="460" viewBox="0 0 560 460" role="img" aria-labelledby="title desc">
+  <title id="title">HighLevelThai stacked logo on navy</title>
+  <desc id="desc">Stacked HLT mark and HighLevelThai wordmark on a dark navy background.</desc>
+  <rect width="560" height="460" fill="#080D1B"/>
+  <defs>
+    <style>
+      .word { font-family: Inter, Arial, sans-serif; font-size: 58px; font-weight: 760; letter-spacing: .1px; }
+    </style>
+  </defs>
+  <g fill="#6857FF" transform="translate(184 36) scale(.92)">
+    <path d="M104 0 200 96 172 124 104 56 36 124 8 96Z"/>
+    <path d="M32 142 56 118 100 162 76 186Z" opacity=".96"/>
+    <path d="M108 162 152 118 176 142 132 186Z" opacity=".96"/>
+    <rect x="8" y="154" width="22" height="22" rx="3"/>
+    <rect x="40" y="186" width="22" height="22" rx="3" opacity=".88"/>
+    <rect x="72" y="218" width="22" height="22" rx="3" opacity=".74"/>
+    <rect x="178" y="154" width="22" height="22" rx="3"/>
+    <rect x="146" y="186" width="22" height="22" rx="3" opacity=".88"/>
+    <rect x="114" y="218" width="22" height="22" rx="3" opacity=".74"/>
+  </g>
+  <g transform="translate(56 340)">
+    <text class="word" fill="#FFFFFF">HighLevel</text>
+    <text class="word" x="312" fill="#6857FF">Thai</text>
+  </g>
+</svg>

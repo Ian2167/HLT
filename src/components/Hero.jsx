@@ -34,6 +34,10 @@ const Hero = () => {
                         {t('heroTitlePrefix')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400">{t('heroTitleHighlight')}</span> {t('heroTitleSuffix')}
                     </h1>
 
+                    <p className="text-base md:text-lg text-slate-700 dark:text-slate-200 mb-4 max-w-3xl mx-auto font-medium">
+                        {t('heroTrustLine')}
+                    </p>
+
                     <p className="text-xl text-slate-600 dark:text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed">
                         {t('heroSubtitle')}
                     </p>
@@ -45,16 +49,8 @@ const Hero = () => {
                             rel="noreferrer"
                             className="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:bg-slate-800 dark:hover:bg-slate-200 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                         >
-                            {t('checkReadiness')}
+                            {t('heroPrimaryCta')}
                             <ArrowRight size={20} />
-                        </a>
-                        <a
-                            href={CONTACT_URL}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-white font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"
-                        >
-                            {t('viewSystem')}
                         </a>
                     </div>
 

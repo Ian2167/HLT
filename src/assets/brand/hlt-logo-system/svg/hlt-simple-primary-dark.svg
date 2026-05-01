@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="112" viewBox="0 0 520 112" role="img" aria-labelledby="title desc">
+  <title id="title">HighLevelThai simple logo for dark backgrounds</title>
+  <desc id="desc">A simple violet inverted V mark beside the HighLevelThai wordmark.</desc>
+  <defs>
+    <style>
+      .word { font-family: Inter, Arial, sans-serif; font-size: 42px; font-weight: 760; letter-spacing: 0; }
+    </style>
+  </defs>
+  <path d="M58 14 108 64 91 81 58 48 25 81 8 64Z" fill="#6857FF"/>
+  <text class="word" x="142" y="70" fill="#FFFFFF">HighLevel<tspan fill="#6857FF">Thai</tspan></text>
+</svg>

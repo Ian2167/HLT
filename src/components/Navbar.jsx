@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import LanguageToggle from './LanguageToggle';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { CONTACT_URL } from '../constants/contact';
+import hltSimpleIcon from '../assets/brand/hlt-logo-system/svg/hlt-simple-icon-dark.svg';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -44,9 +45,12 @@ const Navbar = () => {
 
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-2 group">
-                    <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:bg-indigo-500 transition-colors">
-                        H
-                    </div>
+                    <img
+                        src={hltSimpleIcon}
+                        alt=""
+                        aria-hidden="true"
+                        className="h-9 w-9 rounded-lg shadow-sm"
+                    />
                     <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                         HighLevel<span className="text-indigo-600 dark:text-indigo-400">Thai</span>
                     </span>
@@ -123,12 +127,7 @@ const Navbar = () => {
             {/* Mobile Menu Overlay */}
             <AnimatePresence>
                 {mobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 overflow-hidden"
-                    >
+                    <div className="md:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 overflow-hidden">
                         <div className="px-6 py-6 flex flex-col gap-4">
                             <Link to="/" onClick={() => setMobileMenuOpen(false)} className="text-lg font-medium text-slate-900 dark:text-white">{t('home')}</Link>
                             <div className="text-sm font-bold text-indigo-500 uppercase tracking-wider mt-2">{t('services')}</div>
@@ -162,7 +161,7 @@ const Navbar = () => {
                                 {t('getStarted')}
                             </a>
                         </div>
-                    </motion.div>
+                    </div>
                 )}
             </AnimatePresence>
         </nav>

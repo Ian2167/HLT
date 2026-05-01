@@ -9,6 +9,8 @@ import Websites from './pages/Websites';
 import HomeServices from './pages/HomeServices';
 import Clinics from './pages/Clinics';
 import Salons from './pages/Salons';
+import AiosDiagnostic from './pages/AiosDiagnostic';
+import AiosDiagnosticLanding from './pages/AiosDiagnosticLanding';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
 import Support from './pages/Support';
@@ -31,6 +33,8 @@ function App() {
             <Route path="/home-services" element={<HomeServices />} />
             <Route path="/clinics" element={<Clinics />} />
             <Route path="/salons" element={<Salons />} />
+            <Route path="/aios-diagnostic" element={<AiosDiagnosticLanding />} />
+            <Route path="/diagnostic" element={<AiosDiagnostic />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/support" element={<Support />} />

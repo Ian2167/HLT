@@ -27,7 +27,7 @@ const Clinics = () => {
                         <div className="relative max-w-4xl mx-auto mt-12">
                             <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl blur opacity-20 dark:opacity-40"></div>
                             <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
-                                <img src={cardClinic} alt="Premium Clinics" className="w-full h-auto object-cover" />
+                                <img src={cardClinic} alt={t('altClinics')} className="w-full h-auto object-cover" />
                             </div>
                         </div>
                     </motion.div>

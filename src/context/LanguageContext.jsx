@@ -4,7 +4,7 @@ import { translations } from '../translations';
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-    const [language, setLanguage] = useState(() => localStorage.getItem('language') || 'en'); // 'en' or 'th'
+    const [language, setLanguage] = useState(() => localStorage.getItem('language') || 'th'); // 'en' or 'th'
 
     useEffect(() => {
         localStorage.setItem('language', language);
@@ -25,4 +25,5 @@ export const LanguageProvider = ({ children }) => {
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useLanguage = () => useContext(LanguageContext);
