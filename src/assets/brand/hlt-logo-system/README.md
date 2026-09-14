@@ -1,6 +1,12 @@
-# HLT Logo System
+# HLT Logo System — ARCHIVED 14 September 2026, NOT IN USE
 
-## Direction Selected
+> **This violet set is no longer the High Level Thai logo and nothing imports it.**
+> It was a redraw, not Ian's mark. The live set is `../hlt-logo-v2/`, derived from the
+> Canva source vector in `../hlt-logo-source/`. These files are kept, not deleted, so the
+> history of the decision stays readable. Do not import from this folder.
+> (code-builder, bridge row 3406.)
+
+## Direction Selected (historic, superseded)
 
 The strongest direction is a refined structural ascent mark: it preserves the original upward HLT concept, keeps the feeling of lift and infrastructure, and replaces the dated pixel field with a small number of deliberate modular support blocks.
 

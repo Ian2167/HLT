@@ -1,0 +1,15 @@
+/business-read proof shots, 14 September 2026, from shoot-business-read-proof.mjs.
+Source: the built dist/ served on localhost:4180, language=en, deviceScaleFactor 2.
+
+top-desktop-light.png    1440x900  viewport, top of page, light
+top-desktop-dark.png     1440x900  viewport, top of page, dark
+top-mobile-light.png     390x844   viewport, top of page, light
+top-mobile-dark.png      390x844   viewport, top of page, dark
+tiers-desktop-light.png  the eight-row comparison table, light
+tiers-desktop-dark.png   the eight-row comparison table, dark
+tiers-mobile-light.png   the same eight rows stacked per tier, light
+tiers-mobile-dark.png    the same eight rows stacked per tier, dark
+overview-2up-light.png   desktop light beside mobile light; copied to H:\My Drive\IWT Reports\HLT Business Read Page Proof 2026-09-14.png
+
+The four tiers-*.png shots hide the fixed nav, which would otherwise burn across the
+middle of the stitched element capture. The four top-*.png shots show it in place.
