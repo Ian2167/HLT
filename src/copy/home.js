@@ -39,14 +39,14 @@ export const homeCopy = {
     // PC4 catalogue text). A beat with no line on file would have been left out.
     homeApproachHeading: 'How we work',
     homeBeat1Lead: "We don't start by selling systems",
-    homeBeat1Body: "We start by reading the business, and finding where the work leaks, before anything is installed. That's what the Business Read and the AI Opportunity Audit are for.",
+    homeBeat1Body: "We start by reading the business, and finding where the work leaks, before anything is installed. That's what the Business Read and the AIOS Audit are for.",
     homeBeat2Lead: 'We design to the business that actually exists',
     homeBeat2Body: 'The mechanism gets explained before the recommendation, and what gets designed is what fits your actual business, not how the week is supposed to run.',
     homeBeat3Lead: 'We build in your accounts, and hand over',
     homeBeat3Body: 'Your login, your data, your domain. We get invited in, and we hold nothing after handover. Then you choose what to do, when to do it, and how much to do.',
 
     homeServicesHeading: 'Five services. Start wherever it hurts.',
-    homeCard1Desc: 'A scored review of how your week really runs, and a ranked list of what to automate first.',
+    homeCard1Desc: 'We interview every part of your business, then rank where AI saves time and money.',
     homeCard2Desc: "Your expert's judgement, built into an assistant installed in your own account.",
     homeCard3Desc: "A login-gated dashboard built on one rule: work that's done disappears.",
     homeCard4Desc: 'One hour with us, then a written diagnosis of where your margin is going.',
