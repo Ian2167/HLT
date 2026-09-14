@@ -41,6 +41,7 @@ const Navbar = () => {
         // 14 September brief), which is where the nav's own labels get their gated copy.
         { name: t('aoaNavLink'), href: '/ai-opportunity-audit', route: true },
         { name: t('bosNavLink'), href: '/brand-os', route: true },
+        { name: t('caaNavLink'), href: '/custom-ai-assistant', route: true },
     ];
 
     return (

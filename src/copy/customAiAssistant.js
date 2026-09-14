@@ -1,0 +1,121 @@
+// customAiAssistant.js — every visible string on /custom-ai-assistant.
+//
+// Each line below is lifted VERBATIM from a fenced block in the verified copy deck at
+//   C:\Projects\IWT\02-builds\executive-assistant\work\drafts\2026-09-14-HLT-CUSTOM-AI-ASSISTANT-PAGE-COPY.md
+// Nothing here is the builder's own wording. Change the deck first, then this file. Proved by
+//   node src/assets/brand/hlt-logo-v2/verify-page-copy.mjs custom-ai-assistant <deck path>
+//
+// PRICES. No THB figure is ruled for PC3 yet, so there is no price key and no price renders.
+// The catalogue's monthly patching rate is in USD, so the option is named in FAQ 4 without a
+// rate until Ian rules a THB figure.
+export const customAiAssistantCopy = {
+    caaNavLink: 'Custom AI Assistant Pack',
+
+    caaMetaTitle: "Custom AI Assistant Pack: your expert's judgement, installed | High Level Thai",
+    caaMetaDescription: 'A numbered knowledge pack built from your own material, installed as a custom GPT or a Claude Project in your own account, with fixtures. Across Thailand.',
+
+    caaHeroHeadline: "Your expert's judgement, installed as an assistant in your own account.",
+    caaHeroLead: "Somebody in your business knows how to make the call. When they aren't there, nobody does, and a general AI assistant doesn't fix it: it gives you something confident and generic, which is worse than nothing when the answer actually matters. We build a numbered knowledge pack out of your own material, install it in your account, and ship it with fixtures so a later change can be proved rather than hoped for.",
+    caaCtaLabel: 'Talk to us on LINE',
+    caaHeroCtaNote: 'Delivery from seven days. You keep the pack.',
+
+    caaHeroImage: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1600&q=70',
+    caaHeroImageAlt: 'Someone typing at a laptop with a second screen open behind it.',
+
+    caaSummaryHeading: 'A confident, generic answer is worse than no answer.',
+    caaSummaryP1: "Somebody in your business knows how to make the call. When they aren't there, nobody does.",
+    caaSummaryP2: "A general AI assistant doesn't fix that. It gives you something confident and generic, which is worse than nothing when the answer actually matters.",
+    caaSummaryP3: "We build a numbered knowledge pack out of your own material. Your definitions. The routes your expert really takes through a problem. How much confidence the evidence deserves, so it knows when to say it isn't sure and hand the question back to you. A worked example. And the way you talk, taken from your own lines rather than invented.",
+    caaSummaryP4: 'Then we install it as a custom GPT or a Claude Project in your own account.',
+    caaSummaryP5: "It ships with retest fixtures, so when you change it later you can prove the change did what you wanted and broke nothing else. That's the part that gets skipped, and it's the part that stops it rotting.",
+    caaSummaryP6: 'You keep the pack. End the engagement tomorrow and it still works.',
+    caaSummaryP7: 'We work with service businesses across Thailand, Hua Hin and Bangkok included.',
+
+    caaTiersHeading: 'Three depths. Same pack.',
+
+    caaTier1Name: 'Core Pack',
+    caaTier1Desc: 'Three real cases, installed in your account, with five fixtures to prove it.',
+    caaTier2Name: 'Full Pack and Voice',
+    caaTier2Desc: 'The full pack from six cases, plus the voice guide so it sounds like you.',
+    caaTier3Name: 'Full Pack, Hardened',
+    caaTier3Desc: 'Edge cases, fixtures run twice, both platforms, and a maintenance runbook.',
+
+    caaRow1Label: 'Delivery',
+    caaRow1A: '7 days',
+    caaRow1B: '12 days',
+    caaRow1C: '20 days',
+    caaRow2Label: 'Revisions',
+    caaRow2A: '1',
+    caaRow2B: '2',
+    caaRow2C: '3',
+    caaRow3Label: 'Cases processed',
+    caaRow3A: 'Up to 3',
+    caaRow3B: 'Up to 6',
+    caaRow3C: 'Up to 6, plus edge cases',
+    caaRow4Label: 'Numbered files',
+    caaRow4A: 'Core set',
+    caaRow4B: 'Full 00 to 12 taxonomy',
+    caaRow4C: 'Full 00 to 12 taxonomy',
+    caaRow5Label: 'Voice guide',
+    caaRow5A: 'No',
+    caaRow5B: 'Yes, from 5 to 10 verbatim lines',
+    caaRow5C: 'Yes, extended',
+    caaRow6Label: 'Worked example',
+    caaRow6A: 'No',
+    caaRow6B: 'Yes, fictional',
+    caaRow6C: 'Yes, fictional',
+    caaRow7Label: 'Manifest file',
+    caaRow7A: 'No',
+    caaRow7B: 'Yes',
+    caaRow7C: 'Yes',
+    caaRow8Label: 'Retest fixtures',
+    caaRow8A: '5',
+    caaRow8B: '10 or more',
+    caaRow8C: '20 or more, run twice',
+    caaRow9Label: 'Platforms installed',
+    caaRow9A: '1',
+    caaRow9B: '1',
+    caaRow9C: '2, ChatGPT and Claude',
+    caaRow10Label: 'Patch-note template',
+    caaRow10A: 'No',
+    caaRow10B: 'Yes',
+    caaRow10C: 'Yes, plus maintenance runbook',
+    caaRow11Label: 'Handover call',
+    caaRow11A: 'No',
+    caaRow11B: '30 min',
+    caaRow11C: '60 min',
+
+    caaIncludedHeading: 'What you get, on every tier',
+    caaIncluded1: 'The numbered knowledge pack: definitions, diagnostic reference, triage, evidence and confidence guide, action catalogue, worked example, voice guide, instructions file, install notes, retest fixtures and backlog',
+    caaIncluded2: 'A live installed assistant in your own account',
+    caaIncluded3: 'Retest fixtures laid out as prompt, expected and proves',
+    caaIncluded4: 'Install-order documentation',
+
+    caaStepsHeading: 'How it runs',
+    caaStep1Lead: 'Intake.',
+    caaStep1Body: 'You send three to six anonymised real cases with their records, and five to ten lines written in your own words.',
+    caaStep2Lead: 'The judgement map.',
+    caaStep2Body: "We sit with your expert and write down the routes they actually take through a problem, and the points where they say they aren't sure.",
+    caaStep3Lead: 'The pack.',
+    caaStep3Body: 'The numbered files get written: definitions, diagnostic reference, triage, evidence and confidence guide, action catalogue, worked example, voice guide and instructions.',
+    caaStep4Lead: 'Install and test.',
+    caaStep4Body: 'Built in your own account, then run against retest fixtures laid out as prompt, expected and proves.',
+    caaStep5Lead: 'Handover.',
+    caaStep5Body: 'A recorded walkthrough, the patch-note template, and the fixtures, so your next version can be proved rather than hoped for.',
+
+    caaFaqHeading: 'Questions owners ask first',
+    caaFaq1Q: 'What stops it sounding generic?',
+    caaFaq1A: 'Voice capture is a named deliverable: verbatim lines, word lists of what you use and never use, and fixtures that check the voice still holds after an edit.',
+    caaFaq2Q: 'Who owns the pack?',
+    caaFaq2A: "You do. It's written for you, installed in your account, and delivered as files you keep.",
+    caaFaq3Q: 'Can you guarantee accuracy?',
+    caaFaq3A: "No. We guarantee the artefacts, including an evidence and confidence guide that tells the assistant when to say it isn't sure and escalate to you.",
+    caaFaq4Q: 'What about version two?',
+    caaFaq4A: 'The patch-note template and the retest fixtures let you change one file and prove nothing regressed. A monthly patching option exists, one versioned patch with the fixtures re-run.',
+    caaFaq5Q: 'Whose judgement are you actually capturing?',
+    caaFaq5A: "The person your business can't run without. One expert is enough. Two only helps if they genuinely disagree, and if they do, that disagreement is worth capturing on its own.",
+
+    caaClosingHeading: "Your expert's judgement, working when they're not.",
+    caaClosingBody: "Message us on LINE with three real cases and a few lines in your own words. That's everything we need to start, and you'll have the pack whatever happens next.",
+    caaLineHandle: 'LINE Official Account @highlevelthai',
+};

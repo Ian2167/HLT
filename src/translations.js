@@ -10,11 +10,13 @@
 // by page, and nothing else in this file changes.
 import { aiOpportunityAuditCopy } from './copy/aiOpportunityAudit';
 import { brandOsCopy } from './copy/brandOs';
+import { customAiAssistantCopy } from './copy/customAiAssistant';
 
 export const translations = {
     en: {
         ...aiOpportunityAuditCopy,
         ...brandOsCopy,
+        ...customAiAssistantCopy,
 
         home: 'Home',
         services: 'Services',
@@ -414,6 +416,7 @@ export const translations = {
         // TH PENDING: English values on purpose. See the note at the top of this file.
         ...aiOpportunityAuditCopy,
         ...brandOsCopy,
+        ...customAiAssistantCopy,
 
         home: 'หน้าแรก',
         services: 'บริการ',

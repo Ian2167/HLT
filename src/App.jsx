@@ -10,6 +10,7 @@ import BusinessRead from './pages/BusinessRead';
 // routes below stay live on purpose; only the nav stops pointing at them.
 import AiOpportunityAudit from './pages/AiOpportunityAudit';
 import BrandOs from './pages/BrandOs';
+import CustomAiAssistant from './pages/CustomAiAssistant';
 import Websites from './pages/Websites';
 import HomeServices from './pages/HomeServices';
 import Clinics from './pages/Clinics';
@@ -37,6 +38,7 @@ function App() {
             <Route path="/business-read" element={<BusinessRead />} />
             <Route path="/ai-opportunity-audit" element={<AiOpportunityAudit />} />
             <Route path="/brand-os" element={<BrandOs />} />
+            <Route path="/custom-ai-assistant" element={<CustomAiAssistant />} />
             <Route path="/websites" element={<Websites />} />
             <Route path="/home-services" element={<HomeServices />} />
             <Route path="/clinics" element={<Clinics />} />
