@@ -11,6 +11,7 @@ import BusinessRead from './pages/BusinessRead';
 import AiOpportunityAudit from './pages/AiOpportunityAudit';
 import BrandOs from './pages/BrandOs';
 import CustomAiAssistant from './pages/CustomAiAssistant';
+import OpsCockpit from './pages/OpsCockpit';
 import Websites from './pages/Websites';
 import HomeServices from './pages/HomeServices';
 import Clinics from './pages/Clinics';
@@ -39,6 +40,7 @@ function App() {
             <Route path="/ai-opportunity-audit" element={<AiOpportunityAudit />} />
             <Route path="/brand-os" element={<BrandOs />} />
             <Route path="/custom-ai-assistant" element={<CustomAiAssistant />} />
+            <Route path="/ops-cockpit" element={<OpsCockpit />} />
             <Route path="/websites" element={<Websites />} />
             <Route path="/home-services" element={<HomeServices />} />
             <Route path="/clinics" element={<Clinics />} />

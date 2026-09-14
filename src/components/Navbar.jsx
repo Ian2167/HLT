@@ -42,6 +42,7 @@ const Navbar = () => {
         { name: t('aoaNavLink'), href: '/ai-opportunity-audit', route: true },
         { name: t('bosNavLink'), href: '/brand-os', route: true },
         { name: t('caaNavLink'), href: '/custom-ai-assistant', route: true },
+        { name: t('ocpNavLink'), href: '/ops-cockpit', route: true },
     ];
 
     return (
