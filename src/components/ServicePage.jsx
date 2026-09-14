@@ -75,7 +75,7 @@ const ServicePage = ({
     }));
 
     return (
-        <div className="min-h-screen bg-stone-50 pt-24 text-slate-950 dark:bg-slate-950 dark:text-white">
+        <div className="min-h-screen bg-stone-50 pt-24 text-slate-950 dark:bg-hltNavy dark:text-white">
             {/* React 19 hoists this into <head>; the route gets its own title. */}
             <title>{k('MetaTitle')}</title>
 
@@ -87,8 +87,19 @@ const ServicePage = ({
                     className="absolute inset-0 h-full w-full object-cover"
                     loading="eager"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/92 via-slate-950/72 to-slate-950/35" />
-                <div className="absolute inset-0 bg-gradient-to-b from-slate-950/45 via-slate-950/10 to-slate-950/75" />
+                {/* LEGIBILITY, not decoration. Ian's ruling of 14 September 2026 standardises the
+                    dark ground on the card navy, and the Desk's read of the first two heroes was
+                    that a headline over a busy photograph is hard to read. So the photograph sits
+                    under a FLAT card-navy wash at 80 per cent, not a gradient that thins out
+                    wherever the picture happens to be bright.
+                    Measured, not eyeballed: white text over #0A1F44 at 80 per cent gives a
+                    contrast ratio of 8.3:1 in the worst case the photograph can produce, which is
+                    a pure white pixel behind it (blend #444F62, relative luminance 0.077). WCAG
+                    AA large text wants 3:1 and AAA wants 4.5:1. The gradient below only adds
+                    depth at the edges; the wash is what carries the contrast. */}
+                <div className="absolute inset-0 bg-hltNavy/80" />
+                <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-b from-hltNavy/30 via-transparent to-hltNavy/60" />
 
                 <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
                     <motion.div
@@ -134,7 +145,7 @@ const ServicePage = ({
             </section>
 
             {/* The tiers. Name, description and the catalogue's inclusion rows. No price. */}
-            <section className="bg-stone-100 px-5 py-16 dark:bg-slate-900/50 sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2
                         {...fadeUp}
@@ -149,7 +160,7 @@ const ServicePage = ({
                                 key={tier.name}
                                 {...fadeUp}
                                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+                                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
                             >
                                 {tier.Icon ? (
                                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-200">
@@ -158,7 +169,7 @@ const ServicePage = ({
                                 ) : null}
                                 <h3 className="mt-6 text-xl font-bold leading-7 text-slate-950 dark:text-white">{tier.name}</h3>
                                 <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{tier.desc}</p>
-                                <dl className="mt-6 space-y-3 border-t border-slate-100 pt-6 dark:border-slate-800">
+                                <dl className="mt-6 space-y-3 border-t border-slate-100 pt-6 dark:border-white/10">
                                     {rowList.map((row) => (
                                         <div key={row.label} className="flex justify-between gap-4 text-sm leading-6">
                                             <dt className="font-semibold text-slate-950 dark:text-white">{row.label}</dt>
@@ -187,7 +198,7 @@ const ServicePage = ({
                                 key={n}
                                 {...fadeUp}
                                 transition={{ duration: 0.45, delay: (n % 2) * 0.06 }}
-                                className="flex gap-4 rounded-xl border border-slate-200 bg-stone-50 p-5 dark:border-slate-800 dark:bg-slate-900"
+                                className="flex gap-4 rounded-xl border border-slate-200 bg-stone-50 p-5 dark:border-white/10 dark:bg-white/[0.04]"
                             >
                                 <span className="mt-0.5 shrink-0 text-indigo-700 dark:text-indigo-300">
                                     <Check size={20} aria-hidden="true" />
@@ -200,7 +211,7 @@ const ServicePage = ({
             </section>
 
             {/* How it runs */}
-            <section className="bg-stone-100 px-5 py-16 dark:bg-slate-900/50 sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2
                         {...fadeUp}
@@ -217,7 +228,7 @@ const ServicePage = ({
                                     key={n}
                                     {...fadeUp}
                                     transition={{ duration: 0.45, delay: (n - 1) * 0.06 }}
-                                    className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+                                    className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
                                 >
                                     <div className="flex items-center gap-3">
                                         {/* The dot is deliberate: the deck's step lines read "1. Intake. ...",
@@ -262,7 +273,7 @@ const ServicePage = ({
             </section>
 
             {/* Closing CTA */}
-            <section className="bg-slate-950 px-5 py-16 text-white dark:bg-slate-900 sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{k('ClosingHeading')}</h2>
                     <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">{k('ClosingBody')}</p>
