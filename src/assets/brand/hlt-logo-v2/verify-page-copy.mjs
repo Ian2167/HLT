@@ -28,6 +28,28 @@
 //
 // Whitespace collapsing is the ONLY normalisation applied. Nothing else is forgiven.
 //
+// -------------------------------------------------------------------------------------------
+// THE VISUAL PASS, 14 September 2026: data-visual, and why it is not a loosening
+// -------------------------------------------------------------------------------------------
+// Ian asked for visuals on top of the locked copy ("Ok this is looking ok in terms of copy next
+// please add visuals to improve", 17:42 Bangkok). A code-drawn artefact mock — a read card, a
+// dashboard, a chat window — has to carry placeholder words inside it, and a process numeral is
+// a numeral, not a sentence. None of that is page copy, and none of it may be mistaken for page
+// copy later.
+//
+// So a mock subtree is marked `data-visual` on its root element, and this fixture:
+//   * SKIPS that subtree in the REVERSE check, rather than loosening the check for everybody;
+//   * PRINTS every string it skipped, under `mock`, so the exemption is a receipt and not a
+//     hiding place. The printed list is the MOCK STRINGS list that goes in the build notes;
+//   * still runs the FORWARD check over the rest of the page, so nothing can be hidden by
+//     wrapping it, because a missing deck line fails wherever it went;
+//   * checks any <img> inside a `data-visual` subtree against
+//     src\assets\brand\hlt-logo-v2\IMAGES.md, URL and alt text, rather than against the deck.
+//     Supporting photographs are logged there, not in the copy deck, and the decks are locked.
+//     An unlogged photograph still fails, in the same way an unlogged hero image does.
+// The one thing `data-visual` must never wrap is a line the deck carries. The forward check is
+// what stops that, and it is not exempted.
+//
 // DECK SHAPE IT EXPECTS (the Business Read deck's shape, one heading per section):
 //   a heading containing "page title and meta"  -> block 1 is the title tag, block 2 the meta
 //   a heading containing "hero image"           -> one block: the image URL, then the alt text
@@ -160,26 +182,66 @@ if (ctaTargets.size !== 1) {
 const expectedHref = [...ctaTargets][0];
 
 // The inclusion rows are a markdown table, not a fenced block.
+//
+// THE FIRST TABLE UNDER THE HEADING IS THE TABLE. A second table under the same heading is an
+// alternative layout the deck offers the builder, not a second set of rows the page owes. The
+// Business Read deck is the case: under "Comparison table, the eight rows" it prints the eight
+// rows, then the sentence "Price row, if the builder wants price inside the grid rather than on
+// the cards:", then a one-row price table. The page puts the prices on the tier cards, which the
+// deck's own sentence allows, so it renders every price but never the word "Price" as a row
+// label — and this fixture demanded it, failing /business-read on a line the deck marks optional.
+// Measured before this pass changed anything: FAIL /business-read 2 failure(s), both of them
+// `deck line not rendered: "Price"`, one per language. Nothing else on any of the six routes.
 let tableRows = 0;
+let ignoredRows = 0;
+let tableState = "before"; // before -> in -> done, reset at every heading
 heading = "";
 for (const line of deckLines) {
     if (/^\s*#{1,6}\s/.test(line)) {
         heading = line.replace(/^\s*#{1,6}\s*/, "").replace(/\*\*/g, "").trim().toLowerCase();
+        tableState = "before";
         continue;
     }
     const isTableSection = heading.includes("inclusion rows") || heading.includes("comparison table");
     if (!isTableSection) continue;
     const l = line.trim();
-    if (!l.startsWith("|")) continue;
+    if (!l.startsWith("|")) {
+        if (tableState === "in") tableState = "done"; // the first table has ended
+        continue;
+    }
+    if (tableState === "done") { ignoredRows++; continue; }
+    tableState = "in";
     const cells = l.split("|").slice(1, -1).map((c) => norm(c.replace(/\*\*/g, "")));
     if (cells.every((c) => /^-*$/.test(c))) continue; // separator row
     for (const c of cells) if (c) expectedVisible.add(c);
     tableRows++;
 }
 
+// ---------------------------------------------------------------------------------------
+// 1b. The image log. Supporting photographs inside a data-visual subtree are checked against
+//     IMAGES.md, which is the file the swap list lives in, because the copy decks are locked.
+// ---------------------------------------------------------------------------------------
+const IMAGE_LOG = join(HERE, "IMAGES.md");
+const loggedImages = new Set();
+const loggedAlts = new Set();
+if (existsSync(IMAGE_LOG)) {
+    for (const line of readFileSync(IMAGE_LOG, "utf8").split(/\r?\n/)) {
+        const l = line.trim();
+        if (!l.startsWith("|")) continue;
+        const cells = l.split("|").slice(1, -1).map((c) => norm(c.replace(/`/g, "")));
+        const url = cells.find((c) => /^https?:\/\/\S+$/.test(c));
+        if (!url) continue;
+        loggedImages.add(url);
+        const last = cells[cells.length - 1];
+        if (last) loggedAlts.add(last);
+    }
+}
+
 console.log(`deck   ${DECK}`);
 console.log(`route  ${ROUTE}`);
 console.log(`copy   ${expectedVisible.size} deck lines (${tableRows} table row(s)), ${expectedImages.size} image(s), CTA ${expectedHref}`);
+if (ignoredRows) console.log(`note   ${ignoredRows} row(s) after the first table under a table heading ignored as an alternative layout`);
+console.log(`log    ${loggedImages.size} image(s) and ${loggedAlts.size} alt line(s) in ${IMAGE_LOG}`);
 if (expectedEnOnly.size || expectedThOnly.size) {
     console.log(`lang   ${expectedEnOnly.size} en-only line(s), ${expectedThOnly.size} th-only line(s)`);
 }
@@ -218,6 +280,19 @@ for (const lang of ["en", "th"]) {
     const shot = await page.evaluate(() => {
         const all = new Set();
         const leaves = new Set();
+        const mock = new Set();
+        // A data-visual subtree is a code-drawn visual, never page copy. Its strings are
+        // collected separately and printed, never checked against the deck. See the header.
+        const collectMock = (el) => {
+            for (const node of el.childNodes) {
+                if (node.nodeType === 3) {
+                    const tx = node.textContent.replace(/\s+/g, " ").trim();
+                    if (tx) mock.add(tx);
+                } else if (node.nodeType === 1) {
+                    collectMock(node);
+                }
+            }
+        };
         const walk = (el) => {
             const parts = [];
             let hasElementChild = false;
@@ -227,6 +302,7 @@ for (const lang of ["en", "th"]) {
                     if (tx) parts.push(tx);
                 } else if (node.nodeType === 1) {
                     hasElementChild = true;
+                    if (node.dataset && node.dataset.visual !== undefined) { collectMock(node); continue; }
                     const t = walk(node);
                     if (t) parts.push(t);
                 }
@@ -243,11 +319,16 @@ for (const lang of ["en", "th"]) {
         return {
             all: [...all],
             leaves: [...leaves],
+            mock: [...mock],
             title: document.title,
             metaCount: metas.length,
             meta: metas.length ? metas[0].getAttribute("content") : null,
             hrefs: [...document.querySelectorAll("main a[href]")].map((a) => a.getAttribute("href")),
-            images: [...document.querySelectorAll("main img")].map((i) => ({ src: i.getAttribute("src"), alt: i.getAttribute("alt") })),
+            images: [...document.querySelectorAll("main img")].map((i) => ({
+                src: i.getAttribute("src"),
+                alt: i.getAttribute("alt"),
+                visual: Boolean(i.closest("[data-visual]")),
+            })),
         };
     });
 
@@ -274,17 +355,30 @@ for (const lang of ["en", "th"]) {
     }
     if (internal.length) console.log(`ok    routes ${internal.length} internal link(s): ${[...new Set(internal)].join(", ")}`);
 
+    const deckImages = shot.images.filter((i) => !i.visual);
+    const visualImages = shot.images.filter((i) => i.visual);
+
     if (expectedImages.size) {
         const seen = new Set();
-        for (const img of shot.images) {
+        for (const img of deckImages) {
             if (!expectedImages.has(img.src)) fail(`image src is not in the deck: ${JSON.stringify(img.src)}`);
             else seen.add(img.src);
             if (!expectedAlts.has(norm(img.alt || ""))) fail(`image alt is not in the deck: ${JSON.stringify(img.alt)}`);
         }
         for (const want of expectedImages) if (!seen.has(want)) fail(`deck image not rendered: ${want}`);
-        if (shot.images.length && [...expectedImages].every((w) => seen.has(w))) {
-            console.log(`ok    images ${shot.images.length} rendered, all from the deck`);
+        if (deckImages.length && [...expectedImages].every((w) => seen.has(w))) {
+            console.log(`ok    images ${deckImages.length} rendered, all from the deck`);
         }
+    }
+
+    // A photograph inside a data-visual subtree is checked against the image log instead, for
+    // the reason in the header: the decks are locked and IMAGES.md is the swap list.
+    for (const img of visualImages) {
+        if (!loggedImages.has(img.src)) fail(`image src is not in IMAGES.md: ${JSON.stringify(img.src)}`);
+        if (!loggedAlts.has(norm(img.alt || ""))) fail(`image alt is not in IMAGES.md: ${JSON.stringify(img.alt)}`);
+    }
+    if (visualImages.length && visualImages.every((i) => loggedImages.has(i.src) && loggedAlts.has(norm(i.alt || "")))) {
+        console.log(`ok    photos ${visualImages.length} supporting photograph(s), all logged in IMAGES.md`);
     }
 
     // Forward: the shared lines plus this language's own conditional lines.
@@ -311,6 +405,12 @@ for (const lang of ["en", "th"]) {
         if (!covered) { fail(`rendered string is not in the deck: ${JSON.stringify(got)}`); invented++; }
     }
     console.log(`${invented === 0 ? "ok" : "FAIL"}    reverse  ${shot.leaves.length} rendered leaf strings, ${invented} not found in the deck`);
+
+    // The exemption, printed. This list IS the MOCK STRINGS list for the build notes.
+    if (shot.mock.length) {
+        console.log(`mock   ${shot.mock.length} string(s) inside data-visual subtrees, exempt from the reverse check:`);
+        for (const m of shot.mock.slice().sort()) console.log(`       · ${m}`);
+    }
 
     await page.close();
 }

@@ -20,13 +20,30 @@
 // THE THAI LINE. The hero headline is the one key on this site with a real Thai value, Ian's own
 // words supplied 16:03 Bangkok. It is not rendered here conditionally: translations.js overrides
 // that single key in the `th` block, so this component stays language-agnostic.
+//
+// THE VISUAL PASS, 17:42 to 17:46 Bangkok, 14 September 2026. Ian, after reading the six pages
+// on the dev server: "Ok this is looking ok in terms of copy next please add visuals to
+// improve", then "Can we add numbered steps so it feels like a process." Copy is untouched: not
+// one visible string on this page changed. What changed is that "How we work" now reads as a
+// numbered process joined by a connecting line, each step shows which services belong to it
+// using the service titles already on the page, and each service card carries its icon on a
+// navy tile. The 1, 2, 3 are the only strings this pass added to the page, and they are marked
+// `data-visual` so the copy fixture lists them rather than silently allowing them.
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, FileText, Gauge, LayoutDashboard, Library, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
-import { HEADER_SERVICES } from '../constants/routes';
+import {
+    HEADER_SERVICES,
+    ROUTE_AI_OPPORTUNITY_AUDIT,
+    ROUTE_BUSINESS_READ,
+    ROUTE_EXECUTIVE_ASSISTANT,
+    ROUTE_OPENBRAIN,
+    ROUTE_OPS_COCKPIT,
+} from '../constants/routes';
+import ProcessNumber from '../components/mocks/ProcessNumber';
 
 const CTA_CLASSES =
     'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
@@ -36,6 +53,28 @@ const fadeUp = {
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, amount: 0.15 },
     transition: { duration: 0.5 },
+};
+
+// One icon per service, keyed by route so a renamed service keeps its icon. These are the same
+// lucide icons the service pages already use on their tier and step cards, so a card on the home
+// page and the page it opens carry the same mark.
+const SERVICE_ICONS = {
+    [ROUTE_AI_OPPORTUNITY_AUDIT]: Gauge,
+    [ROUTE_EXECUTIVE_ASSISTANT]: MessageSquare,
+    [ROUTE_OPS_COCKPIT]: LayoutDashboard,
+    [ROUTE_BUSINESS_READ]: FileText,
+    [ROUTE_OPENBRAIN]: Library,
+};
+
+// Which services belong to which beat, as Ian ruled at 17:46 Bangkok. The tags carry the
+// SERVICE TITLES ONLY, read from the same translation keys as the cards below, so this adds no
+// copy: rename a service once and its tag, its card and the header all change together.
+// Beat 2 carries none, deliberately — it is the design step, and no service on the site is sold
+// as design on its own.
+const BEAT_SERVICES = {
+    1: [ROUTE_BUSINESS_READ, ROUTE_AI_OPPORTUNITY_AUDIT],
+    2: [],
+    3: [ROUTE_EXECUTIVE_ASSISTANT, ROUTE_OPS_COCKPIT, ROUTE_OPENBRAIN],
 };
 
 const Home = () => {
@@ -58,11 +97,21 @@ const Home = () => {
         name: t(service.labelKey),
         desc: t(`homeCard${index + 1}Desc`),
         to: service.to,
+        Icon: SERVICE_ICONS[service.to],
     }));
 
+    // A service title, read from its own translation key, for the tags under the beats.
+    const titleFor = (route) => {
+        const entry = HEADER_SERVICES.find((service) => service.to === route);
+
+        return entry ? t(entry.labelKey) : null;
+    };
+
     const beats = [1, 2, 3].map((n) => ({
+        n,
         lead: t(`homeBeat${n}Lead`),
         body: t(`homeBeat${n}Body`),
+        tags: BEAT_SERVICES[n].map(titleFor).filter(Boolean),
     }));
 
     return (
@@ -117,22 +166,59 @@ const Home = () => {
                     >
                         {t('homeApproachHeading')}
                     </motion.h2>
-                    <div className="mt-12 grid gap-6 md:grid-cols-3">
+                    {/* THREE NUMBERED STEPS, JOINED. The numeral is the dominant mark on each
+                        step and the connector is drawn in the gap between the cards, so no
+                        percentage arithmetic is needed to make a line meet a badge: it runs from
+                        the edge of one card to the next, horizontally on desktop and vertically
+                        on a phone, and the opaque badge sits over it. The last step draws none. */}
+                    <ol className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
                         {beats.map((beat, index) => (
-                            <motion.article
+                            <motion.li
                                 key={beat.lead}
                                 {...fadeUp}
                                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                                className="rounded-2xl border border-slate-200 bg-stone-50 p-7 dark:border-white/10 dark:bg-white/[0.04]"
+                                className="relative flex flex-col rounded-2xl border border-slate-200 bg-stone-50 p-7 dark:border-white/10 dark:bg-white/[0.04]"
                             >
-                                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-200">
-                                    <Check size={20} aria-hidden="true" />
-                                </span>
+                                {index < beats.length - 1 ? (
+                                    <>
+                                        {/* The badge centre is the card's 1.75rem padding plus
+                                            half of its 4rem height, so both connectors meet it
+                                            at 3.75rem without any percentage maths. */}
+                                        <span
+                                            aria-hidden="true"
+                                            className="absolute left-[3.75rem] top-full h-8 w-px bg-slate-300 dark:bg-white/20 md:hidden"
+                                        />
+                                        <span
+                                            aria-hidden="true"
+                                            className="absolute left-full top-[3.75rem] hidden h-px w-6 bg-slate-300 dark:bg-white/20 md:block"
+                                        />
+                                    </>
+                                ) : null}
+
+                                <ProcessNumber label={`${beat.n}`} size="lg" decorative />
+
                                 <h3 className="mt-6 text-lg font-bold leading-7 text-slate-950 dark:text-white">{beat.lead}</h3>
                                 <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{beat.body}</p>
-                            </motion.article>
+
+                                {/* mt-auto on the wrapper, so the tag rows line up across the
+                                    three cards however long the beat above them runs. */}
+                                {beat.tags.length ? (
+                                    <div className="mt-auto pt-8">
+                                        <ul className="flex flex-wrap gap-2 border-t border-slate-200 pt-5 dark:border-white/10">
+                                            {beat.tags.map((tag) => (
+                                                <li
+                                                    key={tag}
+                                                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold leading-5 text-slate-700 dark:border-white/15 dark:bg-white/[0.06] dark:text-slate-200"
+                                                >
+                                                    {tag}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ) : null}
+                            </motion.li>
                         ))}
-                    </div>
+                    </ol>
                 </div>
             </section>
 
@@ -151,8 +237,18 @@ const Home = () => {
                             <motion.div key={service.to} {...fadeUp} transition={{ duration: 0.5, delay: index * 0.06 }}>
                                 <Link
                                     to={service.to}
-                                    className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-all hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-indigo-400/50"
+                                    className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-indigo-400/50"
                                 >
+                                    {/* The card's visual header: the service's own mark on a
+                                        navy tile, the same icon its page carries. */}
+                                    {service.Icon ? (
+                                        <span
+                                            aria-hidden="true"
+                                            className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-hltNavy text-white transition-colors group-hover:bg-hltNavy-lift dark:bg-white dark:text-hltNavy dark:group-hover:bg-slate-200"
+                                        >
+                                            <service.Icon size={22} />
+                                        </span>
+                                    ) : null}
                                     <h3 className="text-xl font-bold leading-7 text-slate-950 dark:text-white">{service.name}</h3>
                                     <p className="mt-3 flex-grow text-sm leading-7 text-slate-600 dark:text-slate-300">{service.desc}</p>
                                     <span className="mt-6 text-indigo-600 transition-transform group-hover:translate-x-1 dark:text-indigo-300">
