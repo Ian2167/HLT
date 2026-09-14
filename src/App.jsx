@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import MCTB from './pages/MCTB';
 import Quotes from './pages/Quotes';
 import RAG from './pages/RAG';
+import BusinessRead from './pages/BusinessRead';
 import Websites from './pages/Websites';
 import HomeServices from './pages/HomeServices';
 import Clinics from './pages/Clinics';
@@ -29,6 +30,7 @@ function App() {
             <Route path="/mctb" element={<MCTB />} />
             <Route path="/quotes" element={<Quotes />} />
             <Route path="/rag" element={<RAG />} />
+            <Route path="/business-read" element={<BusinessRead />} />
             <Route path="/websites" element={<Websites />} />
             <Route path="/home-services" element={<HomeServices />} />
             <Route path="/clinics" element={<Clinics />} />

@@ -266,7 +266,133 @@ export const translations = {
         altWebsites: 'Smart websites preview',
         altHomeServices: 'Home services operations preview',
         altClinics: 'Clinic operations preview',
-        altSalons: 'Salon booking and retention preview'
+        altSalons: 'Salon booking and retention preview',
+
+        // ---------------------------------------------------------------------------------
+        // The Business Read (/business-read), 14 September 2026.
+        // Every string in this block is lifted verbatim from a fenced block in the verified
+        // copy deck at:
+        //   C:\Projects\IWT\02-builds\executive-assistant\work\drafts\2026-09-14-HLT-BUSINESS-READ-PAGE-COPY.md
+        // Nothing here is the builder's own wording. Do not edit a line without going back to
+        // the deck first: the page is proved verbatim against it by
+        //   src/assets/brand/hlt-logo-v2/verify-business-read-copy.mjs
+        // ---------------------------------------------------------------------------------
+
+        // ADDED FROM DECK LINE 20 (the title tag): the deck carries no nav label, so the nav
+        // takes the product name out of the title tag rather than inventing one.
+        brNavLink: 'The Business Read',
+
+        brMetaTitle: 'The Business Read: one hour in, a written diagnosis out | High Level Thai',
+        brMetaDescription: 'One hour with our lead consultant, then a written read of where your margin is going. For service businesses across Thailand. From THB 15,000, three days.',
+
+        brHeroHeadline: 'One hour with us, then a written diagnosis of where your margin is going.',
+        brHeroLead: "Most owners aren't short of work. They're losing margin on the way to the invoice, and nobody inside the business can point at where. We spend an hour with you, do the desk work you don't see, and send you a written read in three working days. You're not obliged to do anything with it.",
+        brCtaLabel: 'Book the hour on LINE',
+        brHeroCtaNote: 'THB 15,000, excluding VAT at 7 per cent. Three working days.',
+
+        brSummaryHeading: 'Margin is down. Turnover is down. And nobody can point at the reason.',
+        brSummaryP1: "That isn't a mystery, it's a measurement problem. Somewhere between the enquiry and the invoice there's a place where a cost exists and nobody can see it, and by the time it shows up, the decision it should have informed has already been taken.",
+        brSummaryP2: "Here's what happens. We spend one hour on a call. No forms to fill in first, no data room, nothing to prepare. You talk about your business and our lead consultant asks the questions.",
+        brSummaryP3: "Then we do the work you don't see. Your company registration and the public record, your market, whatever regulation is landing on your trade this year, and the chain from enquiry to invoice as you've described it.",
+        brSummaryP4: 'Three working days later you get a written read. One page that names the problem, then the evidence behind it, then a costed list of what to do next.',
+        brSummaryP5: "The judgement is a person's, not a model's. AI does the hours that used to make this cost a week of consultancy time.",
+        brSummaryP6: 'We work with service businesses across Thailand, Hua Hin and Bangkok included.',
+        brSummaryP7: "You're not obliged to do anything with it.",
+
+        brTiersHeading: 'Three depths. Same method.',
+        brPriceNote: 'All prices in Thai baht, excluding VAT at 7 per cent.',
+        // The suffix is the tail of the deck's full price line (deck line 141, which rules that
+        // a price shown with no note in view reads "THB 15,000, excluding VAT at 7 per cent" in
+        // full). It renders immediately after each price, so each card's price reads as that
+        // whole line. ADDED FROM DECK LINE 141.
+        brPriceVatSuffix: ', excluding VAT at 7 per cent',
+
+        brTier1Name: 'The Read',
+        brTier1Desc: 'One hour with us, then a written diagnosis in three working days.',
+        brTier1Price: 'THB 15,000',
+        brTier1Delivery: 'Delivery: 3 working days',
+        brTier1Revisions: 'Revisions: 1',
+
+        brTier2Name: 'The Read, Widened',
+        brTier2Desc: 'Ninety minutes, a second voice from your team, and a walkthrough call.',
+        brTier2Price: 'THB 22,500',
+        brTier2Delivery: 'Delivery: 5 working days',
+        brTier2Revisions: 'Revisions: 1',
+
+        brTier3Name: 'The Read, Full Depth',
+        brTier3Desc: 'Two sessions, up to four people, competitor research, sized next steps.',
+        brTier3Price: 'THB 37,500',
+        brTier3Delivery: 'Delivery: 7 working days',
+        brTier3Revisions: 'Revisions: 2',
+
+        brRow1Label: 'Delivery',
+        brRow1A: '3 working days',
+        brRow1B: '5 working days',
+        brRow1C: '7 working days',
+        brRow2Label: 'Revisions',
+        brRow2A: '1',
+        brRow2B: '1',
+        brRow2C: '2',
+        brRow3Label: 'Interview',
+        brRow3A: '60 minutes',
+        brRow3B: '90 minutes',
+        brRow3C: '90 minutes, plus a second session',
+        brRow4Label: 'People interviewed',
+        brRow4A: 'You',
+        brRow4B: 'You, plus one other',
+        brRow4C: 'You, plus up to three others',
+        brRow5Label: 'Written read',
+        brRow5A: 'Yes',
+        brRow5B: 'Yes',
+        brRow5C: 'Yes',
+        brRow6Label: 'Desk research',
+        brRow6A: 'Your company registration and the public record',
+        brRow6B: 'Registration, public record, sector and regulation',
+        brRow6C: 'All of it, plus your named competitors',
+        brRow7Label: 'Costed next steps',
+        brRow7A: 'Yes',
+        brRow7B: 'Yes',
+        brRow7C: 'Yes, with each item sized separately',
+        brRow8Label: 'Walkthrough call',
+        brRow8A: 'No',
+        brRow8B: '30 minutes',
+        brRow8C: '60 minutes',
+
+        brIncludedHeading: 'What you get, on every tier',
+        brIncluded1: 'One recorded interview, run by our lead consultant, not by a form',
+        brIncluded2: 'Desk research against your company registration and the public record',
+        brIncluded3: 'A written read: one page that names the problem, then the working behind it',
+        brIncluded4: 'Everything labelled as verified or not established, so you never have to guess which parts were checked',
+        brIncluded5: 'The chain from enquiry to invoice as you actually run it, with the blind spots named',
+        brIncluded6: 'A costed list of what to change next',
+
+        brStepsHeading: 'How it runs',
+        brStep1Lead: 'Book the hour.',
+        brStep1Body: "You pick a time. There's nothing to prepare and nothing to send first.",
+        brStep2Lead: 'The interview.',
+        brStep2Body: 'Sixty to ninety minutes, recorded, on whatever platform suits you. You talk, we ask.',
+        brStep3Lead: 'The desk work.',
+        brStep3Body: 'Your company registration, your sector, the regulation landing on your trade, and the chain you described, checked against primary sources.',
+        brStep4Lead: 'The read is written.',
+        brStep4Body: 'One page you can act on, and the evidence behind it.',
+        brStep5Lead: 'Delivery.',
+        brStep5Body: 'It lands in your inbox on the promised day. On Standard and Advanced we walk you through it.',
+
+        brFaqHeading: 'Questions owners ask first',
+        brFaq1Q: 'Do I need to send you anything before the call?',
+        brFaq1A: "No. Come as you are. If something turns out to be worth seeing, we'll ask for it afterwards.",
+        brFaq2Q: 'Is this AI writing a report about my business?',
+        brFaq2A: "No. The hour is a person's, the questions are ours, and the judgement is ours. AI does the research and the drafting that used to take days. That difference is the whole reason this costs what it costs rather than what a consultancy charges.",
+        brFaq3Q: 'What if you tell me something I already know?',
+        brFaq3A: "Then you'll have it written down with the evidence behind it, which isn't the same thing as knowing it. Most of the value in the first read is the part you suspected and had never seen proved.",
+        brFaq4Q: 'Will you try to sell me something bigger?',
+        brFaq4A: "The read ends with a costed list of what to change. Some of it we could do and some of it you should do yourself, and the read says which is which. You're not obliged to buy anything.",
+        brFaq5Q: 'Who sees my information?',
+        brFaq5A: 'Us, and nobody else. Nothing about your business is named to anybody without your written agreement, and that holds after the work ends.',
+
+        brClosingHeading: 'One hour in. A written diagnosis out.',
+        brClosingBody: "Message us on LINE and pick a time that suits you. There's nothing to prepare and nothing to send first, and you'll have the written read three working days after we talk.",
+        brLineHandle: 'LINE Official Account @highlevelthai'
     },
     th: {
         home: 'หน้าแรก',
@@ -535,6 +661,139 @@ export const translations = {
         altWebsites: 'ภาพตัวอย่างเว็บไซต์อัจฉริยะ',
         altHomeServices: 'ภาพตัวอย่างระบบสำหรับงานบริการบ้าน',
         altClinics: 'ภาพตัวอย่างระบบสำหรับคลินิก',
-        altSalons: 'ภาพตัวอย่างระบบจองคิวและดูแลลูกค้าร้านเสริมสวย'
+        altSalons: 'ภาพตัวอย่างระบบจองคิวและดูแลลูกค้าร้านเสริมสวย',
+
+        // TH PENDING: native copy.
+        // Every Business Read key below carries the ENGLISH value on purpose, so the page falls
+        // back to English under the Thai toggle. HLT doctrine (HLT_GOVERNING_CONTEXT.md line 73)
+        // forbids producing Thai copy by line-by-line translation, and Ian ruled on 14 September
+        // 2026 that this page ships English-only until a native Thai deck exists. When that deck
+        // arrives, replace the values in this block only; the en block above stays as it is.
+        // ---------------------------------------------------------------------------------
+        // The Business Read (/business-read), 14 September 2026.
+        // Every string in this block is lifted verbatim from a fenced block in the verified
+        // copy deck at:
+        //   C:\Projects\IWT\02-builds\executive-assistant\work\drafts\2026-09-14-HLT-BUSINESS-READ-PAGE-COPY.md
+        // Nothing here is the builder's own wording. Do not edit a line without going back to
+        // the deck first: the page is proved verbatim against it by
+        //   src/assets/brand/hlt-logo-v2/verify-business-read-copy.mjs
+        // ---------------------------------------------------------------------------------
+
+        // ADDED FROM DECK LINE 20 (the title tag): the deck carries no nav label, so the nav
+        // takes the product name out of the title tag rather than inventing one.
+        brNavLink: 'The Business Read',
+
+        brMetaTitle: 'The Business Read: one hour in, a written diagnosis out | High Level Thai',
+        brMetaDescription: 'One hour with our lead consultant, then a written read of where your margin is going. For service businesses across Thailand. From THB 15,000, three days.',
+
+        brHeroHeadline: 'One hour with us, then a written diagnosis of where your margin is going.',
+        brHeroLead: "Most owners aren't short of work. They're losing margin on the way to the invoice, and nobody inside the business can point at where. We spend an hour with you, do the desk work you don't see, and send you a written read in three working days. You're not obliged to do anything with it.",
+        brCtaLabel: 'Book the hour on LINE',
+        brHeroCtaNote: 'THB 15,000, excluding VAT at 7 per cent. Three working days.',
+
+        brSummaryHeading: 'Margin is down. Turnover is down. And nobody can point at the reason.',
+        brSummaryP1: "That isn't a mystery, it's a measurement problem. Somewhere between the enquiry and the invoice there's a place where a cost exists and nobody can see it, and by the time it shows up, the decision it should have informed has already been taken.",
+        brSummaryP2: "Here's what happens. We spend one hour on a call. No forms to fill in first, no data room, nothing to prepare. You talk about your business and our lead consultant asks the questions.",
+        brSummaryP3: "Then we do the work you don't see. Your company registration and the public record, your market, whatever regulation is landing on your trade this year, and the chain from enquiry to invoice as you've described it.",
+        brSummaryP4: 'Three working days later you get a written read. One page that names the problem, then the evidence behind it, then a costed list of what to do next.',
+        brSummaryP5: "The judgement is a person's, not a model's. AI does the hours that used to make this cost a week of consultancy time.",
+        brSummaryP6: 'We work with service businesses across Thailand, Hua Hin and Bangkok included.',
+        brSummaryP7: "You're not obliged to do anything with it.",
+
+        brTiersHeading: 'Three depths. Same method.',
+        brPriceNote: 'All prices in Thai baht, excluding VAT at 7 per cent.',
+        // The suffix is the tail of the deck's full price line (deck line 141, which rules that
+        // a price shown with no note in view reads "THB 15,000, excluding VAT at 7 per cent" in
+        // full). It renders immediately after each price, so each card's price reads as that
+        // whole line. ADDED FROM DECK LINE 141.
+        brPriceVatSuffix: ', excluding VAT at 7 per cent',
+
+        brTier1Name: 'The Read',
+        brTier1Desc: 'One hour with us, then a written diagnosis in three working days.',
+        brTier1Price: 'THB 15,000',
+        brTier1Delivery: 'Delivery: 3 working days',
+        brTier1Revisions: 'Revisions: 1',
+
+        brTier2Name: 'The Read, Widened',
+        brTier2Desc: 'Ninety minutes, a second voice from your team, and a walkthrough call.',
+        brTier2Price: 'THB 22,500',
+        brTier2Delivery: 'Delivery: 5 working days',
+        brTier2Revisions: 'Revisions: 1',
+
+        brTier3Name: 'The Read, Full Depth',
+        brTier3Desc: 'Two sessions, up to four people, competitor research, sized next steps.',
+        brTier3Price: 'THB 37,500',
+        brTier3Delivery: 'Delivery: 7 working days',
+        brTier3Revisions: 'Revisions: 2',
+
+        brRow1Label: 'Delivery',
+        brRow1A: '3 working days',
+        brRow1B: '5 working days',
+        brRow1C: '7 working days',
+        brRow2Label: 'Revisions',
+        brRow2A: '1',
+        brRow2B: '1',
+        brRow2C: '2',
+        brRow3Label: 'Interview',
+        brRow3A: '60 minutes',
+        brRow3B: '90 minutes',
+        brRow3C: '90 minutes, plus a second session',
+        brRow4Label: 'People interviewed',
+        brRow4A: 'You',
+        brRow4B: 'You, plus one other',
+        brRow4C: 'You, plus up to three others',
+        brRow5Label: 'Written read',
+        brRow5A: 'Yes',
+        brRow5B: 'Yes',
+        brRow5C: 'Yes',
+        brRow6Label: 'Desk research',
+        brRow6A: 'Your company registration and the public record',
+        brRow6B: 'Registration, public record, sector and regulation',
+        brRow6C: 'All of it, plus your named competitors',
+        brRow7Label: 'Costed next steps',
+        brRow7A: 'Yes',
+        brRow7B: 'Yes',
+        brRow7C: 'Yes, with each item sized separately',
+        brRow8Label: 'Walkthrough call',
+        brRow8A: 'No',
+        brRow8B: '30 minutes',
+        brRow8C: '60 minutes',
+
+        brIncludedHeading: 'What you get, on every tier',
+        brIncluded1: 'One recorded interview, run by our lead consultant, not by a form',
+        brIncluded2: 'Desk research against your company registration and the public record',
+        brIncluded3: 'A written read: one page that names the problem, then the working behind it',
+        brIncluded4: 'Everything labelled as verified or not established, so you never have to guess which parts were checked',
+        brIncluded5: 'The chain from enquiry to invoice as you actually run it, with the blind spots named',
+        brIncluded6: 'A costed list of what to change next',
+
+        brStepsHeading: 'How it runs',
+        brStep1Lead: 'Book the hour.',
+        brStep1Body: "You pick a time. There's nothing to prepare and nothing to send first.",
+        brStep2Lead: 'The interview.',
+        brStep2Body: 'Sixty to ninety minutes, recorded, on whatever platform suits you. You talk, we ask.',
+        brStep3Lead: 'The desk work.',
+        brStep3Body: 'Your company registration, your sector, the regulation landing on your trade, and the chain you described, checked against primary sources.',
+        brStep4Lead: 'The read is written.',
+        brStep4Body: 'One page you can act on, and the evidence behind it.',
+        brStep5Lead: 'Delivery.',
+        brStep5Body: 'It lands in your inbox on the promised day. On Standard and Advanced we walk you through it.',
+
+        brFaqHeading: 'Questions owners ask first',
+        brFaq1Q: 'Do I need to send you anything before the call?',
+        brFaq1A: "No. Come as you are. If something turns out to be worth seeing, we'll ask for it afterwards.",
+        brFaq2Q: 'Is this AI writing a report about my business?',
+        brFaq2A: "No. The hour is a person's, the questions are ours, and the judgement is ours. AI does the research and the drafting that used to take days. That difference is the whole reason this costs what it costs rather than what a consultancy charges.",
+        brFaq3Q: 'What if you tell me something I already know?',
+        brFaq3A: "Then you'll have it written down with the evidence behind it, which isn't the same thing as knowing it. Most of the value in the first read is the part you suspected and had never seen proved.",
+        brFaq4Q: 'Will you try to sell me something bigger?',
+        brFaq4A: "The read ends with a costed list of what to change. Some of it we could do and some of it you should do yourself, and the read says which is which. You're not obliged to buy anything.",
+        brFaq5Q: 'Who sees my information?',
+        brFaq5A: 'Us, and nobody else. Nothing about your business is named to anybody without your written agreement, and that holds after the work ends.',
+
+        brClosingHeading: 'One hour in. A written diagnosis out.',
+        brClosingBody: "Message us on LINE and pick a time that suits you. There's nothing to prepare and nothing to send first, and you'll have the written read three working days after we talk.",
+        brLineHandle: 'LINE Official Account @highlevelthai'
+
     }
 };
