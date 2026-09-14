@@ -10,7 +10,7 @@ import BusinessRead from './pages/BusinessRead';
 // routes below stay live on purpose; only the nav stops pointing at them.
 import AiOpportunityAudit from './pages/AiOpportunityAudit';
 import BrandOs from './pages/BrandOs';
-import CustomAiAssistant from './pages/CustomAiAssistant';
+import ExecutiveAssistant from './pages/ExecutiveAssistant';
 import OpsCockpit from './pages/OpsCockpit';
 import OpenBrain from './pages/OpenBrain';
 import Websites from './pages/Websites';
@@ -23,6 +23,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
 import Support from './pages/Support';
 import NotFound from './pages/NotFound';
+import { ROUTE_EXECUTIVE_ASSISTANT, ROUTE_EXECUTIVE_ASSISTANT_ALIAS } from './constants/routes';
 import ScrollToTop from './components/ScrollToTop'; // We will need this to scroll top on nav
 
 function App() {
@@ -40,7 +41,10 @@ function App() {
             <Route path="/business-read" element={<BusinessRead />} />
             <Route path="/ai-opportunity-audit" element={<AiOpportunityAudit />} />
             <Route path="/brand-os" element={<BrandOs />} />
-            <Route path="/custom-ai-assistant" element={<CustomAiAssistant />} />
+            {/* Renamed 14 September 2026 on Ian's ruling. The old path stays live as an alias
+                so no link anybody has already opened 404s. */}
+            <Route path={ROUTE_EXECUTIVE_ASSISTANT} element={<ExecutiveAssistant />} />
+            <Route path={ROUTE_EXECUTIVE_ASSISTANT_ALIAS} element={<ExecutiveAssistant />} />
             <Route path="/ops-cockpit" element={<OpsCockpit />} />
             <Route path="/openbrain" element={<OpenBrain />} />
             <Route path="/websites" element={<Websites />} />

@@ -1,8 +1,9 @@
-// CustomAiAssistant.jsx — /custom-ai-assistant. Built 14 September 2026.
+// ExecutiveAssistant.jsx — /executive-assistant. Built 14 September 2026, renamed the same
+// afternoon on Ian's ruling at 16:27 Bangkok. /custom-ai-assistant stays live as an alias.
 //
-// No copy lives here. Every visible string comes from src/copy/customAiAssistant.js, lifted
+// No copy lives here. Every visible string comes from src/copy/executiveAssistant.js, lifted
 // verbatim from
-//   C:\Projects\IWT\02-builds\executive-assistant\work\drafts\2026-09-14-HLT-CUSTOM-AI-ASSISTANT-PAGE-COPY.md
+//   C:\Projects\IWT\02-builds\executive-assistant\work\drafts\2026-09-14-HLT-EXECUTIVE-ASSISTANT-PAGE-COPY.md
 // Layout is the shared src/components/ServicePage.jsx.
 //
 // Counts, straight off the deck: 7 summary paragraphs, 3 tiers, 11 inclusion rows (the PC3 tier
@@ -10,7 +11,7 @@
 import { ClipboardList, FileText, MapPin, MessageCircle, MessageSquare, Package, ShieldCheck, Sparkles } from 'lucide-react';
 import ServicePage from '../components/ServicePage';
 
-const CustomAiAssistant = () => (
+const ExecutiveAssistant = () => (
     <ServicePage
         prefix="caa"
         paragraphs={7}
@@ -24,4 +25,4 @@ const CustomAiAssistant = () => (
     />
 );
 
-export default CustomAiAssistant;
+export default ExecutiveAssistant;

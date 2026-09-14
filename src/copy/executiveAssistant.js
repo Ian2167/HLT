@@ -1,21 +1,28 @@
-// customAiAssistant.js — every visible string on /custom-ai-assistant.
+// executiveAssistant.js — every visible string on /executive-assistant.
 //
 // Each line below is lifted VERBATIM from a fenced block in the verified copy deck at
-//   C:\Projects\IWT\02-builds\executive-assistant\work\drafts\2026-09-14-HLT-CUSTOM-AI-ASSISTANT-PAGE-COPY.md
+//   C:\Projects\IWT\02-builds\executive-assistant\work\drafts\2026-09-14-HLT-EXECUTIVE-ASSISTANT-PAGE-COPY.md
 // Nothing here is the builder's own wording. Change the deck first, then this file. Proved by
-//   node src/assets/brand/hlt-logo-v2/verify-page-copy.mjs custom-ai-assistant <deck path>
+//   node src/assets/brand/hlt-logo-v2/verify-page-copy.mjs executive-assistant <deck path>
 //
 // PRICES. No THB figure is ruled for PC3 yet, so there is no price key and no price renders.
 // The catalogue's monthly patching rate is in USD, so the option is named in FAQ 4 without a
 // rate until Ian rules a THB figure.
-export const customAiAssistantCopy = {
-    caaNavLink: 'Custom AI Assistant Pack',
+// THE PRODUCT NAME LIVES HERE, IN ONE PLACE, and its route lives in ONE constant in
+// src/constants/routes.js. Ian renamed it on 14 September 2026 at 16:27 Bangkok: "I think EA
+// (Executive Assistant) is correct it's a step up from a PA". The Upwork listing keeps its own
+// name. Renaming it again is this one string plus the deck lines that quote it.
+const PRODUCT_NAME = 'Executive Assistant';
 
-    caaMetaTitle: "Custom AI Assistant Pack: your expert's judgement, installed | High Level Thai",
+export const customAiAssistantCopy = {
+    caaProductName: PRODUCT_NAME,
+    caaNavLink: PRODUCT_NAME,
+
+    caaMetaTitle: `${PRODUCT_NAME}: your expert's judgement, installed | High Level Thai`,
     caaMetaDescription: 'A numbered knowledge pack built from your own material, installed as a custom GPT or a Claude Project in your own account, with fixtures. Across Thailand.',
 
-    caaHeroHeadline: "Your expert's judgement, installed as an assistant in your own account.",
-    caaHeroLead: "Somebody in your business knows how to make the call. When they aren't there, nobody does, and a general AI assistant doesn't fix it: it gives you something confident and generic, which is worse than nothing when the answer actually matters. We build a numbered knowledge pack out of your own material, install it in your account, and ship it with fixtures so a later change can be proved rather than hoped for.",
+    caaHeroHeadline: "An executive assistant that holds your expert's judgement.",
+    caaHeroLead: "A PA handles the admin. This is the step up: an assistant that holds how your business actually makes its calls. Somebody knows how to make them, and when they aren't there nobody does. We build a numbered knowledge pack out of your own material, install it in your account, and ship it with fixtures so a later change can be proved rather than hoped for.",
     caaCtaLabel: 'Talk to us on LINE',
     caaHeroCtaNote: 'Delivery from seven days. You keep the pack.',
 
