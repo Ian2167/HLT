@@ -12,12 +12,18 @@
 //
 // Counts, straight off the deck: 4 summary paragraphs, 3 "who it's for" cards, 4 things the
 // client gets.
+//
+// THE VISUAL PASS, 14 September 2026: this page passes ONE artefact mock, the flow from the
+// client's own material through an index to an answer that says where it came from. It names no
+// vendor and no table, because the page names none.
 import { FileSearch, Quote, User } from 'lucide-react';
 import ServicePage from '../components/ServicePage';
+import OpenBrainFlowMock from '../components/mocks/OpenBrainFlowMock';
 
 const OpenBrain = () => (
     <ServicePage
         prefix="ob"
+        artefact={<OpenBrainFlowMock />}
         paragraphs={4}
         who={3}
         included={4}
