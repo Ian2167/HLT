@@ -11,11 +11,26 @@ import { useLanguage } from '../context/LanguageContext';
 import hltLockupColour from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-colour.svg';
 import hltLockupWhite from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-white.svg';
 import { hltWebsiteCopy } from '../config/hltWebsite';
+import { HEADER_SERVICES, ROUTE_HOME } from '../constants/routes';
+import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 
+// THE HEADER, REWRITTEN 14 September 2026 on Ian's ruling at 16:24 Bangkok: the links array is
+// exactly Home, the five live service pages, then the LINE button. Problem, Diagnostic, AIOS
+// Audit, Sectors and Insights all leave the header, desktop and mobile, because they point into
+// the retired offering. Brand OS leaves it too, on his 16:18 ruling, "Drop Brand OS, keep it on
+// Upwork". Every one of those routes stays live; only the header stops pointing at them.
+//
+// WHERE THE WORDS COME FROM. The service labels are each page's own nav key, already gated on
+// that page's copy deck. "Home" and the button label come from the home page's deck, section 6.
+// The order lives in src/constants/routes.js, so a renamed route is a one-line change.
+//
+// The breakpoint is lg, not md: six items plus two toggles and a button do not fit a tablet.
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { language, t } = useLanguage();
+    // Only the menu button's aria labels still come from the old copy file. Everything the
+    // visitor reads in this header comes from a gated deck.
     const copy = hltWebsiteCopy[language]?.nav || hltWebsiteCopy.th.nav;
 
     useEffect(() => {
@@ -26,27 +41,10 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const links = [
-        { name: copy.problem, href: '/#problem' },
-        { name: copy.diagnostic, href: '/#diagnostic' },
-        { name: copy.audit, href: '/#audit' },
-        { name: copy.sectors, href: '/#sectors' },
-        { name: copy.insights, href: '/#insights' },
-        // The Business Read, 14 September 2026. Routes render as router Links; the rest are hash
-        // targets on the home page.
-        { name: t('brNavLink'), href: '/business-read', route: true },
-        // The rebuilt catalogue-service pages, added one per page as each one lands so Ian can
-        // click straight to it on the dev server. This array is rewritten wholesale into
-        // Home + a Services group + the LINE button with the summary home page (item 6 of the
-        // 14 September brief), which is where the nav's own labels get their gated copy.
-        { name: t('aoaNavLink'), href: '/ai-opportunity-audit', route: true },
-        // Brand OS is OFF the nav on Ian's ruling of 14 September 2026, "Drop Brand OS, keep
-        // it on Upwork". The page and the /brand-os route stay live and unlinked; nothing was
-        // deleted and commit 2b55708 stands.
-        { name: t('caaNavLink'), href: '/custom-ai-assistant', route: true },
-        { name: t('ocpNavLink'), href: '/ops-cockpit', route: true },
-        { name: t('obNavLink'), href: '/openbrain', route: true },
-    ];
+    const links = HEADER_SERVICES.map((service) => ({
+        name: t(service.labelKey),
+        href: service.to,
+    }));
 
     return (
         <nav
@@ -58,7 +56,7 @@ const Navbar = () => {
             <div className="container mx-auto px-6 flex justify-between items-center">
 
                 {/* Logo */}
-                <Link to="/" className="flex items-center group" aria-label="High Level Thai">
+                <Link to={ROUTE_HOME} className="flex items-center group" aria-label="High Level Thai">
                     <img
                         src={hltLockupColour}
                         alt="High Level Thai"
@@ -73,44 +71,36 @@ const Navbar = () => {
                 </Link>
 
                 {/* Desktop Nav */}
-                <div className="hidden md:flex items-center gap-8">
-                    <Link to="/" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                        {copy.home}
+                <div className="hidden lg:flex items-center gap-6">
+                    <Link to={ROUTE_HOME} className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                        {t('homeNavHome')}
                     </Link>
 
-                    {links.map((link) =>
-                        link.route ? (
-                            <Link
-                                key={link.href}
-                                to={link.href}
-                                className="text-sm font-medium text-slate-600 transition-colors hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400"
-                            >
-                                {link.name}
-                            </Link>
-                        ) : (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                className="text-sm font-medium text-slate-600 transition-colors hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400"
-                            >
-                                {link.name}
-                            </a>
-                        )
-                    )}
+                    {links.map((link) => (
+                        <Link
+                            key={link.href}
+                            to={link.href}
+                            className="text-sm font-medium text-slate-600 transition-colors hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400"
+                        >
+                            {link.name}
+                        </Link>
+                    ))}
 
-                    <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-2"></div>
+                    <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
                     <ThemeToggle />
                     <LanguageToggle />
-                    <Link
-                        to="/diagnostic"
-                        className="px-5 py-2 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    <a
+                        href={LINE_OFFICIAL_ACCOUNT}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-500 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                     >
-                        {copy.cta}
-                    </Link>
+                        {t('homeNavCtaLabel')}
+                    </a>
                 </div>
 
                 {/* Mobile Menu Button */}
-                <div className="flex md:hidden items-center gap-4">
+                <div className="flex lg:hidden items-center gap-4">
                     <ThemeToggle />
                     <LanguageToggle />
                     <button
@@ -123,40 +113,37 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
+            {/* Mobile Menu Overlay. A flat list, in the same order as the desktop header. */}
             <AnimatePresence>
                 {mobileMenuOpen && (
-                    <div className="md:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 overflow-hidden">
+                    <div className="lg:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-white/10 overflow-hidden">
                         <div className="px-6 py-6 flex flex-col gap-4">
-                            <Link to="/" onClick={() => setMobileMenuOpen(false)} className="text-lg font-medium text-slate-900 dark:text-white">{copy.home}</Link>
-                            {links.map((link) =>
-                                link.route ? (
-                                    <Link
-                                        key={link.name}
-                                        to={link.href}
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="text-lg font-medium text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 pl-4 border-l-2 border-slate-100 dark:border-slate-800"
-                                    >
-                                        {link.name}
-                                    </Link>
-                                ) : (
-                                    <a
-                                        key={link.name}
-                                        href={link.href}
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="text-lg font-medium text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 pl-4 border-l-2 border-slate-100 dark:border-slate-800"
-                                    >
-                                        {link.name}
-                                    </a>
-                                )
-                            )}
                             <Link
-                                to="/diagnostic"
+                                to={ROUTE_HOME}
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="w-full py-3 mt-4 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 text-center"
+                                className="text-lg font-medium text-slate-900 dark:text-white"
                             >
-                                {copy.cta}
+                                {t('homeNavHome')}
                             </Link>
+                            {links.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    to={link.href}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="text-lg font-medium text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 pl-4 border-l-2 border-slate-100 dark:border-white/10"
+                                >
+                                    {link.name}
+                                </Link>
+                            ))}
+                            <a
+                                href={LINE_OFFICIAL_ACCOUNT}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="w-full py-3 mt-4 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-500 text-center"
+                            >
+                                {t('homeNavCtaLabel')}
+                            </a>
                         </div>
                     </div>
                 )}

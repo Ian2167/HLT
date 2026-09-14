@@ -10,9 +10,10 @@
 // by page, and nothing else in this file changes.
 import { aiOpportunityAuditCopy } from './copy/aiOpportunityAudit';
 import { brandOsCopy } from './copy/brandOs';
-import { customAiAssistantCopy } from './copy/customAiAssistant';
+import { customAiAssistantCopy } from './copy/executiveAssistant';
 import { opsCockpitCopy } from './copy/opsCockpit';
 import { openBrainCopy } from './copy/openBrain';
+import { homeCopy, homeHeroHeadlineTh } from './copy/home';
 
 export const translations = {
     en: {
@@ -21,6 +22,7 @@ export const translations = {
         ...customAiAssistantCopy,
         ...opsCockpitCopy,
         ...openBrainCopy,
+        ...homeCopy,
 
         home: 'Home',
         services: 'Services',
@@ -423,6 +425,11 @@ export const translations = {
         ...customAiAssistantCopy,
         ...opsCockpitCopy,
         ...openBrainCopy,
+        ...homeCopy,
+        // THE ONLY THAI STRING ON THE REBUILT SITE. Ian supplied it himself on 14 September
+        // 2026 at 16:03 Bangkok, for the home hero line and no other key. No seat translated
+        // it: HLT doctrine (HLT_GOVERNING_CONTEXT.md line 73) forbids line-by-line translation.
+        homeHeroHeadline: homeHeroHeadlineTh,
 
         home: 'หน้าแรก',
         services: 'บริการ',
