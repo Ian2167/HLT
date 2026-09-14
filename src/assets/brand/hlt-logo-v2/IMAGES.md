@@ -42,4 +42,24 @@ The receipt above was taken for all six in one run, before the first page was bu
 
 **How each image was chosen.** Forty-five candidates were pulled at thumbnail size into a scratchpad outside the repo and looked at one by one; six were picked for what they actually show, not for what an id was assumed to show. The rejected ones included the obvious stock clichés (a high-five over a laptop, a robot on a bench) and anything too busy to carry a headline over it.
 
+---
+
+## The visual pass, 14 September 2026 evening: no photograph was added, and why
+
+Ian asked for visuals ("Ok this is looking ok in terms of copy next please add visuals to improve", 17:42 Bangkok). The brief's item 5 asked for **one supporting photograph per service page** showing a Thai service business at work, free-licence, hotlinked, logged here — **or the slot left out** if no fitting image is found.
+
+**The slot is out on every page, and this is the receipt.** A new photograph could not be SEARCHED FOR from this session, let alone looked at:
+
+```
+401  https://unsplash.com/napi/search/photos?query=...   body: "Making sure you're not a bot!"
+403  https://www.pexels.com/search/...                    body: "Just a moment..." (Cloudflare)
+401  https://www.pexels.com/en-us/api/v3/search?...       body: {"error_messages":["Bad API credentials."]}
+```
+
+All three read from this machine on 14 September 2026, evening Bangkok. Only the Unsplash image CDN answers, and it serves a photo you already know the id of; it cannot be browsed. The rule this build kept is that **every image on a page was looked at before it was chosen**, and a guessed CDN id nobody has seen would break it. So nothing generic was used.
+
+**The slot is ready.** `verify-page-copy.mjs` now checks every `<img>` inside a `data-visual` subtree against the table above — its URL AND its alt text — rather than against the page's copy deck, because the decks are locked. Add the row here, put the photograph in a `data-visual` block on the page, and the fixture proves the two agree. An unlogged photograph fails, exactly as an unlogged hero image does.
+
+---
+
 **When the real photographs arrive** (after Connecting Hua Hin, 18 September 2026), swap the URL in the page's copy module under `src\copy\`, change the alt text in the same place, update the row here, and re-run the page's copy fixture, which fails if a page carries an image this file doesn't list.
