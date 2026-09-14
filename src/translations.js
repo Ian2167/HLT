@@ -9,10 +9,12 @@
 // line 73). When a native Thai deck exists it replaces the spread in the `th` block below, page
 // by page, and nothing else in this file changes.
 import { aiOpportunityAuditCopy } from './copy/aiOpportunityAudit';
+import { brandOsCopy } from './copy/brandOs';
 
 export const translations = {
     en: {
         ...aiOpportunityAuditCopy,
+        ...brandOsCopy,
 
         home: 'Home',
         services: 'Services',
@@ -411,6 +413,7 @@ export const translations = {
     th: {
         // TH PENDING: English values on purpose. See the note at the top of this file.
         ...aiOpportunityAuditCopy,
+        ...brandOsCopy,
 
         home: 'หน้าแรก',
         services: 'บริการ',

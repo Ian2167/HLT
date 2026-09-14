@@ -40,6 +40,7 @@ const Navbar = () => {
         // Home + a Services group + the LINE button with the summary home page (item 6 of the
         // 14 September brief), which is where the nav's own labels get their gated copy.
         { name: t('aoaNavLink'), href: '/ai-opportunity-audit', route: true },
+        { name: t('bosNavLink'), href: '/brand-os', route: true },
     ];
 
     return (
