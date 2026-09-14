@@ -7,12 +7,18 @@
 //
 // Counts, straight off the deck: 6 summary paragraphs, 3 tiers, 10 inclusion rows (the PC4 tier
 // table with the price row removed), 8 all-tier inclusions, 5 steps, 5 FAQs.
+//
+// THE VISUAL PASS, 14 September 2026: this page passes ONE artefact mock, the cockpit itself,
+// with the waiting-on-you strip at the top and a row in the third queue finishing and leaving
+// on a slow loop. That loop is the page's single rule, drawn: "disappear, not grey out".
 import { ClipboardCheck, Database, LayoutDashboard, ListOrdered, Rocket, ShieldCheck, Users } from 'lucide-react';
 import ServicePage from '../components/ServicePage';
+import CockpitMock from '../components/mocks/CockpitMock';
 
 const OpsCockpit = () => (
     <ServicePage
         prefix="ocp"
+        artefact={<CockpitMock />}
         paragraphs={6}
         tiers={3}
         rows={10}
