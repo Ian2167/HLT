@@ -18,11 +18,25 @@
 // PRICES. There is no price slot in this layout. No THB figure is ruled for PC1 to PC4 yet and
 // USD never renders on this site, so tier cards carry name, description, delivery and the
 // inclusion rows, and nothing where a price would go.
+//
+// THE VISUAL PASS, 14 September 2026 (Ian, 17:42 Bangkok: "please add visuals to improve"; and
+// 17:46: "Can we add numbered steps so it feels like a process"). Four things changed here and
+// NO COPY MOVED:
+//   1. "How it runs" is a vertical timeline with the same numbered badge the home page uses.
+//      The badge still renders the deck's own "1." so the copy fixture can rebuild the step
+//      line by joining badge, lead and body — see ProcessNumber's `decorative` prop.
+//   2. Each tier card carries a three-bar depth ladder beside its icon, so Starter, Standard
+//      and Advanced read as depths at a glance rather than as three equal cards.
+//   3. An inclusion cell that starts "Yes" gains a tick and a cell reading "No" a muted dash.
+//      The words stay: the icon is added beside the text, never in place of it.
+//   4. A page may pass ONE code-drawn artefact mock, which renders under its own "what you
+//      get" heading. The mocks live in src/components/mocks/.
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, Minus } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
+import ProcessNumber from './mocks/ProcessNumber';
 
 const CTA_CLASSES =
     'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
@@ -34,6 +48,41 @@ const fadeUp = {
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, amount: 0.15 },
     transition: { duration: 0.5 },
+};
+
+// The depth ladder on a tier card: three bars of rising height, filled up to this tier. It
+// carries no text, so there is nothing here for the copy fixture to check and nothing to
+// exempt — a visitor reads the depth off the shape.
+const DepthLadder = ({ depth }) => (
+    <span aria-hidden="true" className="flex items-end gap-1.5">
+        {[1, 2, 3].map((bar) => (
+            <span
+                key={bar}
+                style={{ height: `${8 + bar * 6}px` }}
+                className={`w-1.5 rounded-sm ${bar <= depth
+                    ? 'bg-hltNavy dark:bg-white'
+                    : 'bg-slate-200 dark:bg-white/20'}`}
+            />
+        ))}
+    </span>
+);
+
+// An inclusion cell. A "Yes" gains a tick and a "No" a muted dash, BESIDE the word, never
+// instead of it: the deck's cell text has to stay on the page or the forward check fails, and
+// rightly so.
+const CellValue = ({ value }) => {
+    const yes = /^yes/i.test(value);
+    const no = /^no$/i.test(value);
+
+    return (
+        <span className={`inline-flex items-start justify-end gap-1.5 ${no ? 'text-slate-400 dark:text-slate-500' : ''}`}>
+            {yes ? (
+                <Check size={15} className="mt-1 shrink-0 text-indigo-700 dark:text-indigo-300" aria-hidden="true" />
+            ) : null}
+            {no ? <Minus size={15} className="mt-1 shrink-0" aria-hidden="true" /> : null}
+            <span>{value}</span>
+        </span>
+    );
 };
 
 // Every count below defaults to 0, and a section with a count of 0 does not render. That is
@@ -52,6 +101,7 @@ const ServicePage = ({
     tierIcons = [],
     whoIcons = [],
     stepIcons = [],
+    artefact = null,
 }) => {
     const { t } = useLanguage();
     const k = (name) => t(`${prefix}${name}`);
@@ -205,18 +255,23 @@ const ServicePage = ({
                                 transition={{ duration: 0.5, delay: index * 0.08 }}
                                 className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
                             >
-                                {tier.Icon ? (
-                                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-200">
-                                        <tier.Icon size={22} aria-hidden="true" />
-                                    </div>
-                                ) : null}
+                                <div className="flex items-center justify-between gap-4">
+                                    {tier.Icon ? (
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-200">
+                                            <tier.Icon size={22} aria-hidden="true" />
+                                        </div>
+                                    ) : null}
+                                    <DepthLadder depth={index + 1} />
+                                </div>
                                 <h3 className="mt-6 text-xl font-bold leading-7 text-slate-950 dark:text-white">{tier.name}</h3>
                                 <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{tier.desc}</p>
                                 <dl className="mt-6 space-y-3 border-t border-slate-100 pt-6 dark:border-white/10">
                                     {rowList.map((row) => (
                                         <div key={row.label} className="flex justify-between gap-4 text-sm leading-6">
                                             <dt className="font-semibold text-slate-950 dark:text-white">{row.label}</dt>
-                                            <dd className="text-right text-slate-600 dark:text-slate-300">{row.cells[tier.column]}</dd>
+                                            <dd className="text-right text-slate-600 dark:text-slate-300">
+                                                <CellValue value={row.cells[tier.column]} />
+                                            </dd>
                                         </div>
                                     ))}
                                 </dl>
@@ -252,6 +307,14 @@ const ServicePage = ({
                             </motion.li>
                         ))}
                     </ul>
+
+                    {/* ONE artefact mock per page, under the heading that promises it. It is a
+                        drawing of the thing, not a screenshot of anybody's real one. */}
+                    {artefact ? (
+                        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="mx-auto mt-14 max-w-3xl">
+                            {artefact}
+                        </motion.div>
+                    ) : null}
                 </div>
             </section>
             ) : null}
@@ -266,7 +329,16 @@ const ServicePage = ({
                     >
                         {k('StepsHeading')}
                     </motion.h2>
-                    <ol className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    {/* A VERTICAL TIMELINE, not a grid of cards. Ian, 17:46 Bangkok: "Can we add
+                        numbered steps so it feels like a process." The connecting line is drawn
+                        once behind the column and each opaque badge sits over it, so the line
+                        can never miss a badge. The badge text is still the deck's "1." — see
+                        ProcessNumber. */}
+                    <ol className="relative mx-auto mt-12 max-w-3xl">
+                        <span
+                            aria-hidden="true"
+                            className="absolute left-7 top-7 bottom-7 w-px bg-slate-300 dark:bg-white/20"
+                        />
                         {range(steps).map((n) => {
                             const Icon = stepIcons[n - 1];
 
@@ -275,23 +347,20 @@ const ServicePage = ({
                                     key={n}
                                     {...fadeUp}
                                     transition={{ duration: 0.45, delay: (n - 1) * 0.06 }}
-                                    className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
+                                    className="relative flex gap-5 pb-10 last:pb-0 sm:gap-7"
                                 >
-                                    <div className="flex items-center gap-3">
-                                        {/* The dot is deliberate: the deck's step lines read "1. Intake. ...",
-                                            and the copy fixture joins this badge to the lead and body when it
-                                            compares the rendered step against that line. */}
-                                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 text-sm font-bold text-white dark:bg-white dark:text-slate-950">
-                                            {`${n}.`}
-                                        </span>
-                                        {Icon ? (
-                                            <span className="text-indigo-700 dark:text-indigo-300">
-                                                <Icon size={20} aria-hidden="true" />
-                                            </span>
-                                        ) : null}
+                                    <ProcessNumber label={`${n}.`} />
+                                    <div className="pt-2">
+                                        <div className="flex items-center gap-2.5">
+                                            {Icon ? (
+                                                <span className="text-indigo-700 dark:text-indigo-300">
+                                                    <Icon size={18} aria-hidden="true" />
+                                                </span>
+                                            ) : null}
+                                            <h3 className="font-bold leading-7 text-slate-950 dark:text-white">{k(`Step${n}Lead`)}</h3>
+                                        </div>
+                                        <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-300">{k(`Step${n}Body`)}</p>
                                     </div>
-                                    <h3 className="mt-5 font-bold leading-7 text-slate-950 dark:text-white">{k(`Step${n}Lead`)}</h3>
-                                    <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-300">{k(`Step${n}Body`)}</p>
                                 </motion.li>
                             );
                         })}

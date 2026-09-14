@@ -8,12 +8,19 @@
 //
 // Counts, straight off the deck: 7 summary paragraphs, 3 tiers, 9 inclusion rows (the PC1 tier
 // table with the price row removed), 6 all-tier inclusions, 5 steps, 5 FAQs.
+//
+// THE VISUAL PASS, 14 September 2026: this page passes ONE artefact mock, the adoption ladder
+// with the ranked five. It is the drawing of the two things the deck promises on every tier,
+// and it invents no score and no saving. Everything else it gained — the timeline, the depth
+// ladder on the tier cards, the ticks — came from the shared layout.
 import { ClipboardList, FileText, Gauge, Layers, ListOrdered, Mic } from 'lucide-react';
 import ServicePage from '../components/ServicePage';
+import AdoptionLadderMock from '../components/mocks/AdoptionLadderMock';
 
 const AiOpportunityAudit = () => (
     <ServicePage
         prefix="aoa"
+        artefact={<AdoptionLadderMock />}
         paragraphs={7}
         tiers={3}
         rows={9}
