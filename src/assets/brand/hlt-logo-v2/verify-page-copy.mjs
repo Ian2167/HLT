@@ -131,13 +131,26 @@ if (imageBlocks.length && (!expectedImages.size || !expectedAlts.size)) {
     process.exit(2);
 }
 
+// Three kinds of block are not ordinary page copy, and each is marked by its own heading:
+//   "(en only)" / "(th only)"  a language-conditional line. The home page's hero headline is
+//                              English in en and Ian's own Thai in th, so each is required in
+//                              its own language and allowed in the other's reverse check.
+//   "nav and footer"           chrome: it renders in the header or footer, OUTSIDE <main>, so
+//                              it is deck-sourced but never expected inside the page.
 const ctaTargets = new Set();
 const expectedVisible = new Set();
+const expectedEnOnly = new Set();
+const expectedThOnly = new Set();
+const chrome = new Set();
 for (const b of blocks) {
     if (b.heading.includes("page title and meta") || b.heading.includes("hero image")) continue;
+    const bucket = b.heading.includes("(th only)") ? expectedThOnly
+        : b.heading.includes("(en only)") ? expectedEnOnly
+            : b.heading.includes("nav and footer") ? chrome
+                : expectedVisible;
     for (const line of clean(b)) {
         if (/^https:\/\/line\.me/.test(line)) { ctaTargets.add(line); continue; }
-        expectedVisible.add(line);
+        bucket.add(line);
     }
 }
 if (ctaTargets.size !== 1) {
@@ -167,6 +180,10 @@ for (const line of deckLines) {
 console.log(`deck   ${DECK}`);
 console.log(`route  ${ROUTE}`);
 console.log(`copy   ${expectedVisible.size} deck lines (${tableRows} table row(s)), ${expectedImages.size} image(s), CTA ${expectedHref}`);
+if (expectedEnOnly.size || expectedThOnly.size) {
+    console.log(`lang   ${expectedEnOnly.size} en-only line(s), ${expectedThOnly.size} th-only line(s)`);
+}
+if (chrome.size) console.log(`chrome ${chrome.size} header and footer line(s), checked outside <main>`);
 
 // ---------------------------------------------------------------------------------------
 // 2. Serve the build and read the page out of a real browser.
@@ -270,16 +287,27 @@ for (const lang of ["en", "th"]) {
         }
     }
 
+    // Forward: the shared lines plus this language's own conditional lines.
+    const wantThisLang = new Set([...expectedVisible, ...(lang === "th" ? expectedThOnly : expectedEnOnly)]);
     let missing = 0;
-    for (const want of expectedVisible) {
+    for (const want of wantThisLang) {
         if (!allSet.has(want)) { fail(`deck line not rendered: ${JSON.stringify(want)}`); missing++; }
     }
-    console.log(`${missing === 0 ? "ok" : "FAIL"}    forward  ${expectedVisible.size} deck copy lines, ${missing} missing`);
+    console.log(`${missing === 0 ? "ok" : "FAIL"}    forward  ${wantThisLang.size} deck copy lines, ${missing} missing`);
 
+    // The other language's conditional line must NOT be on the page: a th-only line rendering
+    // in en means the override leaked.
+    const wrongLang = lang === "th" ? expectedEnOnly : expectedThOnly;
+    for (const nope of wrongLang) {
+        if (allSet.has(nope)) fail(`${lang === "th" ? "en" : "th"}-only line rendered under language=${lang}: ${JSON.stringify(nope)}`);
+    }
+
+    // Reverse: a rendered string must be part of SOME deck line, in either language.
+    const anyDeckLine = new Set([...expectedVisible, ...expectedEnOnly, ...expectedThOnly]);
     let invented = 0;
     for (const got of shot.leaves.map(norm)) {
         let covered = false;
-        for (const want of expectedVisible) { if (want.includes(got)) { covered = true; break; } }
+        for (const want of anyDeckLine) { if (want.includes(got)) { covered = true; break; } }
         if (!covered) { fail(`rendered string is not in the deck: ${JSON.stringify(got)}`); invented++; }
     }
     console.log(`${invented === 0 ? "ok" : "FAIL"}    reverse  ${shot.leaves.length} rendered leaf strings, ${invented} not found in the deck`);

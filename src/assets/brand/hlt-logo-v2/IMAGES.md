@@ -18,9 +18,10 @@
 |---|---|---|---|---|
 | `/ai-opportunity-audit` | `https://images.unsplash.com/photo-1590402494587-44b71d7772f6?auto=format&fit=crop&w=1600&q=70` | NOT ESTABLISHED (see the gap note above) | Unsplash, photo id `1590402494587-44b71d7772f6`. Unsplash Licence: free for commercial use, no attribution required (`https://unsplash.com/license`) | Two people mapping out a week of work on a glass wall covered in sticky notes. |
 | `/brand-os` | `https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1600&q=70` | NOT ESTABLISHED (see the gap note above) | Unsplash, photo id `1561070791-2526d30994b5`. Unsplash Licence: free for commercial use, no attribution required (`https://unsplash.com/license`) | A designer's desk with printed colour swatches and brand sketches on a tablet. |
-| `/custom-ai-assistant` | `https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1600&q=70` | NOT ESTABLISHED (see the gap note above) | Unsplash, photo id `1486312338219-ce68d2c6f44d`. Unsplash Licence: free for commercial use, no attribution required (`https://unsplash.com/license`) | Someone typing at a laptop with a second screen open behind it. |
+| `/executive-assistant` | `https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1600&q=70` | NOT ESTABLISHED (see the gap note above) | Unsplash, photo id `1486312338219-ce68d2c6f44d`. Unsplash Licence: free for commercial use, no attribution required (`https://unsplash.com/license`) | Someone typing at a laptop with a second screen open behind it. |
 | `/ops-cockpit` | `https://images.unsplash.com/photo-1556155092-490a1ba16284?auto=format&fit=crop&w=1600&q=70` | NOT ESTABLISHED (see the gap note above) | Unsplash, photo id `1556155092-490a1ba16284`. Unsplash Licence: free for commercial use, no attribution required (`https://unsplash.com/license`) | A laptop on a wooden table showing a clean dashboard of figures. |
 | `/openbrain` | `https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=70` | NOT ESTABLISHED (see the gap note above) | Unsplash, photo id `1524995997946-a1c2e315a42f`. Unsplash Licence: free for commercial use, no attribution required (`https://unsplash.com/license`) | A long curved library shelf, filled and indexed. |
+| `/` (home) | `https://images.unsplash.com/photo-1563492065599-3520f775eeed?auto=format&fit=crop&w=1600&q=70` | NOT ESTABLISHED (see the gap note above) | Unsplash, photo id `1563492065599-3520f775eeed`. Unsplash Licence: free for commercial use, no attribution required (`https://unsplash.com/license`) | Thai temple rooftops under a wide open sky. |
 
 ---
 
@@ -37,7 +38,7 @@
 200 image/jpeg 365KB  / (home)  https://images.unsplash.com/photo-1563492065599-3520f775eeed?auto=format&fit=crop&w=1600&q=70
 ```
 
-The rows below `/ai-opportunity-audit` are added to the table as each page lands; the receipt above was taken for all six in one run, before the first page was built.
+The receipt above was taken for all six in one run, before the first page was built, and the table above now carries every one of them. The `/custom-ai-assistant` line in the receipt is the pre-rename path of `/executive-assistant`, which is the same page and the same image; the old path stays live as an alias.
 
 **How each image was chosen.** Forty-five candidates were pulled at thumbnail size into a scratchpad outside the repo and looked at one by one; six were picked for what they actually show, not for what an id was assumed to show. The rejected ones included the obvious stock clichés (a high-five over a laptop, a robot on a bench) and anything too busy to carry a headline over it.
 
