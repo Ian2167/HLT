@@ -40,9 +40,12 @@ const Navbar = () => {
         // Home + a Services group + the LINE button with the summary home page (item 6 of the
         // 14 September brief), which is where the nav's own labels get their gated copy.
         { name: t('aoaNavLink'), href: '/ai-opportunity-audit', route: true },
-        { name: t('bosNavLink'), href: '/brand-os', route: true },
+        // Brand OS is OFF the nav on Ian's ruling of 14 September 2026, "Drop Brand OS, keep
+        // it on Upwork". The page and the /brand-os route stay live and unlinked; nothing was
+        // deleted and commit 2b55708 stands.
         { name: t('caaNavLink'), href: '/custom-ai-assistant', route: true },
         { name: t('ocpNavLink'), href: '/ops-cockpit', route: true },
+        { name: t('obNavLink'), href: '/openbrain', route: true },
     ];
 
     return (

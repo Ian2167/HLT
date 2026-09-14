@@ -36,15 +36,21 @@ const fadeUp = {
     transition: { duration: 0.5 },
 };
 
+// Every count below defaults to 0, and a section with a count of 0 does not render. That is
+// how /openbrain works: no tiers exist for it, no delivery days are on file for it, and no
+// price is ruled, so the page is a description page with a "who it's for" band where the tier
+// ladder sits on the other five. Nothing is invented to fill a slot.
 const ServicePage = ({
     prefix,
-    paragraphs,
-    tiers,
-    rows,
-    included,
-    steps,
-    faqs,
+    paragraphs = 0,
+    tiers = 0,
+    rows = 0,
+    who = 0,
+    included = 0,
+    steps = 0,
+    faqs = 0,
     tierIcons = [],
+    whoIcons = [],
     stepIcons = [],
 }) => {
     const { t } = useLanguage();
@@ -144,7 +150,44 @@ const ServicePage = ({
                 </motion.div>
             </section>
 
+            {/* Who it's for. Only /openbrain carries this band, where the tier ladder sits on the
+                other five pages, because no tiers exist for it. */}
+            {who > 0 ? (
+                <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
+                    <div className="mx-auto max-w-6xl">
+                        <motion.h2
+                            {...fadeUp}
+                            className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
+                        >
+                            {k('WhoHeading')}
+                        </motion.h2>
+                        <div className="mt-12 grid gap-6 md:grid-cols-3">
+                            {range(who).map((n) => {
+                                const Icon = whoIcons[n - 1];
+
+                                return (
+                                    <motion.article
+                                        key={n}
+                                        {...fadeUp}
+                                        transition={{ duration: 0.5, delay: (n - 1) * 0.08 }}
+                                        className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
+                                    >
+                                        {Icon ? (
+                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-200">
+                                                <Icon size={22} aria-hidden="true" />
+                                            </div>
+                                        ) : null}
+                                        <p className="mt-6 leading-7 text-slate-700 dark:text-slate-300">{k(`Who${n}`)}</p>
+                                    </motion.article>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </section>
+            ) : null}
+
             {/* The tiers. Name, description and the catalogue's inclusion rows. No price. */}
+            {tiers > 0 ? (
             <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2
@@ -182,8 +225,10 @@ const ServicePage = ({
                     </div>
                 </div>
             </section>
+            ) : null}
 
             {/* What's included */}
+            {included > 0 ? (
             <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-5xl">
                     <motion.h2
@@ -209,8 +254,10 @@ const ServicePage = ({
                     </ul>
                 </div>
             </section>
+            ) : null}
 
             {/* How it runs */}
+            {steps > 0 ? (
             <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2
@@ -251,8 +298,10 @@ const ServicePage = ({
                     </ol>
                 </div>
             </section>
+            ) : null}
 
             {/* The FAQs */}
+            {faqs > 0 ? (
             <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-5xl">
                     <motion.h2
@@ -271,6 +320,7 @@ const ServicePage = ({
                     </div>
                 </div>
             </section>
+            ) : null}
 
             {/* Closing CTA */}
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">

@@ -12,6 +12,7 @@ import { aiOpportunityAuditCopy } from './copy/aiOpportunityAudit';
 import { brandOsCopy } from './copy/brandOs';
 import { customAiAssistantCopy } from './copy/customAiAssistant';
 import { opsCockpitCopy } from './copy/opsCockpit';
+import { openBrainCopy } from './copy/openBrain';
 
 export const translations = {
     en: {
@@ -19,6 +20,7 @@ export const translations = {
         ...brandOsCopy,
         ...customAiAssistantCopy,
         ...opsCockpitCopy,
+        ...openBrainCopy,
 
         home: 'Home',
         services: 'Services',
@@ -420,6 +422,7 @@ export const translations = {
         ...brandOsCopy,
         ...customAiAssistantCopy,
         ...opsCockpitCopy,
+        ...openBrainCopy,
 
         home: 'หน้าแรก',
         services: 'บริการ',
