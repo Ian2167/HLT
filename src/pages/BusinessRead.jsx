@@ -19,11 +19,31 @@
 // CTA. One CTA on the page, the LINE Official Account ruled by Ian on 14 September 2026.
 // It is deliberately NOT the site's utm-tagged contact constant: the deck rules "this exact
 // URL, nothing appended without Ian's word". See the flag in the build notes.
+//
+// THE VISUAL PASS, 14 September 2026 (Ian, 17:42 Bangkok: "please add visuals to improve"; and
+// 17:46: "Can we add numbered steps so it feels like a process"). NO COPY MOVED. This page is
+// not on the shared ServicePage layout, so it gets the same four marks by importing the same
+// two small components the layout uses:
+//   1. "How it runs" is a vertical timeline with the site's numbered badge. The badge still
+//      renders the deck's own "1.", so the copy fixture can rebuild the step line by joining
+//      badge, lead and body.
+//   2. Each tier card carries its icon and a three-bar depth ladder.
+//   3. A comparison cell reading "Yes" gains a tick and "No" a muted dash, beside the word.
+//   4. One code-drawn artefact mock under "What you get, on every tier": the written read.
+// The price on the tier cards is untouched, and the mock's own costed lines read "THB —"
+// because no figure for a client's next steps exists anywhere. See BusinessReadMock.jsx.
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, FileText, Layers, Users } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_BUSINESS_READ } from '../constants/contact';
+import ProcessNumber from '../components/mocks/ProcessNumber';
+import BusinessReadMock from '../components/mocks/BusinessReadMock';
+import { CellValue, DepthLadder } from '../components/mocks/TierVisuals';
+
+// One mark per tier, in the deck's order: the read itself, the read with a second voice from the
+// team, the read at full depth.
+const TIER_ICONS = [FileText, Users, Layers];
 
 const CTA_CLASSES =
     'inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all shadow-lg hover:shadow-xl';
@@ -43,6 +63,8 @@ const BusinessRead = () => {
         price: t(`brTier${n}Price`),
         delivery: t(`brTier${n}Delivery`),
         revisions: t(`brTier${n}Revisions`),
+        Icon: TIER_ICONS[n - 1],
+        depth: n,
     }));
 
     const steps = [1, 2, 3, 4, 5].map((n) => ({
@@ -145,6 +167,12 @@ const BusinessRead = () => {
                                 key={tier.name}
                                 className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col"
                             >
+                                <div className="mb-6 flex items-center justify-between gap-4">
+                                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-200">
+                                        <tier.Icon size={22} aria-hidden="true" />
+                                    </span>
+                                    <DepthLadder depth={tier.depth} />
+                                </div>
                                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{tier.name}</h3>
                                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-grow">{tier.desc}</p>
                                 {/* The price line reads in full as the deck's line 141 form. */}
@@ -185,7 +213,7 @@ const BusinessRead = () => {
                                         </th>
                                         {row.cells.map((cell, i) => (
                                             <td key={i} className="p-4 text-slate-600 dark:text-slate-300 align-top">
-                                                {cell}
+                                                <CellValue value={cell} align="left" />
                                             </td>
                                         ))}
                                     </tr>
@@ -206,7 +234,9 @@ const BusinessRead = () => {
                                     {rows.map((row) => (
                                         <div key={row.label} className="flex justify-between gap-4 text-sm">
                                             <dt className="font-semibold text-slate-900 dark:text-white">{row.label}</dt>
-                                            <dd className="text-right text-slate-600 dark:text-slate-300">{row.cells[tierIndex]}</dd>
+                                            <dd className="text-right text-slate-600 dark:text-slate-300">
+                                                <CellValue value={row.cells[tierIndex]} />
+                                            </dd>
                                         </div>
                                     ))}
                                 </dl>
@@ -232,6 +262,12 @@ const BusinessRead = () => {
                             </li>
                         ))}
                     </ul>
+
+                    {/* The deliverable, drawn: the named problem, the evidence with its verified
+                        and not-established labels, and the costed next steps. */}
+                    <div className="max-w-3xl mx-auto mt-14">
+                        <BusinessReadMock />
+                    </div>
                 </div>
             </section>
 
@@ -241,13 +277,18 @@ const BusinessRead = () => {
                     <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 dark:text-white mb-12">
                         {t('brStepsHeading')}
                     </h2>
-                    <ol className="max-w-3xl mx-auto space-y-8">
+                    {/* The same vertical timeline the service pages carry, so the whole site has
+                        one process language. The connecting line is drawn once behind the
+                        column and each opaque badge sits over it. */}
+                    <ol className="max-w-3xl mx-auto relative">
+                        <span
+                            aria-hidden="true"
+                            className="absolute left-7 top-7 bottom-7 w-px bg-slate-300 dark:bg-white/20"
+                        />
                         {steps.map((step) => (
-                            <li key={step.number} className="flex gap-5">
-                                <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 shrink-0 w-8">
-                                    {step.number}
-                                </span>
-                                <p className="text-slate-600 dark:text-slate-300">
+                            <li key={step.number} className="relative flex gap-5 sm:gap-7 pb-10 last:pb-0">
+                                <ProcessNumber label={step.number} />
+                                <p className="text-slate-600 dark:text-slate-300 pt-3">
                                     <span className="font-bold text-slate-900 dark:text-white">{step.lead}</span>{' '}
                                     <span>{step.body}</span>
                                 </p>

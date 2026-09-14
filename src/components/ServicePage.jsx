@@ -33,10 +33,11 @@
 //      get" heading. The mocks live in src/components/mocks/.
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, Minus } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 import ProcessNumber from './mocks/ProcessNumber';
+import { CellValue, DepthLadder } from './mocks/TierVisuals';
 
 const CTA_CLASSES =
     'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
@@ -50,40 +51,9 @@ const fadeUp = {
     transition: { duration: 0.5 },
 };
 
-// The depth ladder on a tier card: three bars of rising height, filled up to this tier. It
-// carries no text, so there is nothing here for the copy fixture to check and nothing to
-// exempt — a visitor reads the depth off the shape.
-const DepthLadder = ({ depth }) => (
-    <span aria-hidden="true" className="flex items-end gap-1.5">
-        {[1, 2, 3].map((bar) => (
-            <span
-                key={bar}
-                style={{ height: `${8 + bar * 6}px` }}
-                className={`w-1.5 rounded-sm ${bar <= depth
-                    ? 'bg-hltNavy dark:bg-white'
-                    : 'bg-slate-200 dark:bg-white/20'}`}
-            />
-        ))}
-    </span>
-);
-
-// An inclusion cell. A "Yes" gains a tick and a "No" a muted dash, BESIDE the word, never
-// instead of it: the deck's cell text has to stay on the page or the forward check fails, and
-// rightly so.
-const CellValue = ({ value }) => {
-    const yes = /^yes/i.test(value);
-    const no = /^no$/i.test(value);
-
-    return (
-        <span className={`inline-flex items-start justify-end gap-1.5 ${no ? 'text-slate-400 dark:text-slate-500' : ''}`}>
-            {yes ? (
-                <Check size={15} className="mt-1 shrink-0 text-indigo-700 dark:text-indigo-300" aria-hidden="true" />
-            ) : null}
-            {no ? <Minus size={15} className="mt-1 shrink-0" aria-hidden="true" /> : null}
-            <span>{value}</span>
-        </span>
-    );
-};
+// DepthLadder and CellValue moved to ./mocks/TierVisuals.jsx when /business-read needed the
+// same two marks: that page is deliberately not on this shared layout, and one definition beats
+// two that drift.
 
 // Every count below defaults to 0, and a section with a count of 0 does not render. That is
 // how /openbrain works: no tiers exist for it, no delivery days are on file for it, and no
