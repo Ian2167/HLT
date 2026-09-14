@@ -21,11 +21,13 @@
 // scoring, the blueprint.
 import { BookOpen, FileText, Handshake, Layers, Mic, Target, Users, Workflow } from 'lucide-react';
 import ServicePage from '../components/ServicePage';
+import { ROUTE_AIOS_AUDIT } from '../constants/routes';
 import InterviewMapMock from '../components/mocks/InterviewMapMock';
 
 const AiosAudit = () => (
     <ServicePage
         prefix="aios"
+        route={ROUTE_AIOS_AUDIT}
         artefact={<InterviewMapMock />}
         paragraphs={7}
         tiers={3}

@@ -38,8 +38,10 @@ import { ArrowRight, Check, FileText, Layers, Users } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_BUSINESS_READ } from '../constants/contact';
 import ProcessNumber from '../components/mocks/ProcessNumber';
+import StepIndicator from '../components/mocks/StepIndicator';
 import BusinessReadMock from '../components/mocks/BusinessReadMock';
 import { CellValue, DepthLadder } from '../components/mocks/TierVisuals';
+import { ROUTE_BUSINESS_READ } from '../constants/routes';
 
 // One mark per tier, in the deck's order: the read itself, the read with a second voice from the
 // team, the read at full depth.
@@ -132,6 +134,11 @@ const BusinessRead = () => {
                     </motion.div>
                 </div>
             </section>
+
+            {/* Where this service sits on the ladder. It is step 1: Ian, 18:10 Bangkok, "The 5
+                different elements should naturally stack on each other starting with the
+                Business Read." */}
+            <StepIndicator route={ROUTE_BUSINESS_READ} />
 
             {/* The summary */}
             <section className="py-16 bg-white dark:bg-slate-950">

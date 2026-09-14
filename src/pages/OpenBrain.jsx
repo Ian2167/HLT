@@ -18,11 +18,13 @@
 // vendor and no table, because the page names none.
 import { FileSearch, Quote, User } from 'lucide-react';
 import ServicePage from '../components/ServicePage';
+import { ROUTE_OPENBRAIN } from '../constants/routes';
 import OpenBrainFlowMock from '../components/mocks/OpenBrainFlowMock';
 
 const OpenBrain = () => (
     <ServicePage
         prefix="ob"
+        route={ROUTE_OPENBRAIN}
         artefact={<OpenBrainFlowMock />}
         paragraphs={4}
         who={3}

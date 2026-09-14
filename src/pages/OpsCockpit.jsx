@@ -13,11 +13,13 @@
 // on a slow loop. That loop is the page's single rule, drawn: "disappear, not grey out".
 import { ClipboardCheck, Database, LayoutDashboard, ListOrdered, Rocket, ShieldCheck, Users } from 'lucide-react';
 import ServicePage from '../components/ServicePage';
+import { ROUTE_OPS_COCKPIT } from '../constants/routes';
 import CockpitMock from '../components/mocks/CockpitMock';
 
 const OpsCockpit = () => (
     <ServicePage
         prefix="ocp"
+        route={ROUTE_OPS_COCKPIT}
         artefact={<CockpitMock />}
         paragraphs={6}
         tiers={3}

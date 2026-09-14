@@ -37,6 +37,7 @@ import { ArrowRight, Check } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 import ProcessNumber from './mocks/ProcessNumber';
+import StepIndicator from './mocks/StepIndicator';
 import { CellValue, DepthLadder } from './mocks/TierVisuals';
 
 const CTA_CLASSES =
@@ -72,6 +73,9 @@ const ServicePage = ({
     whoIcons = [],
     stepIcons = [],
     artefact = null,
+    // The page's own path. It is passed in rather than read from the router so a page that is
+    // NOT on the ladder (/brand-os) simply doesn't pass one and shows no indicator.
+    route = null,
 }) => {
     const { t } = useLanguage();
     const k = (name) => t(`${prefix}${name}`);
@@ -150,6 +154,9 @@ const ServicePage = ({
                     </motion.div>
                 </div>
             </section>
+
+            {/* Where this service sits on the ladder, and what is either side of it. */}
+            {route ? <StepIndicator route={route} /> : null}
 
             {/* The summary */}
             <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">

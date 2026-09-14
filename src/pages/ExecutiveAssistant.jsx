@@ -14,11 +14,13 @@
 // conversation would only show a chat app.
 import { ClipboardList, FileText, MapPin, MessageCircle, MessageSquare, Package, ShieldCheck, Sparkles } from 'lucide-react';
 import ServicePage from '../components/ServicePage';
+import { ROUTE_EXECUTIVE_ASSISTANT } from '../constants/routes';
 import AssistantChatMock from '../components/mocks/AssistantChatMock';
 
 const ExecutiveAssistant = () => (
     <ServicePage
         prefix="caa"
+        route={ROUTE_EXECUTIVE_ASSISTANT}
         artefact={<AssistantChatMock />}
         paragraphs={7}
         tiers={3}

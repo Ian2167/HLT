@@ -71,10 +71,12 @@ const SERVICE_ICONS = {
 // copy: rename a service once and its tag, its card and the header all change together.
 // Beat 2 carries none, deliberately — it is the design step, and no service on the site is sold
 // as design on its own.
+// Each list is in LADDER ORDER, so a tag under a beat and the stack below it read the same way
+// round (Ian, 18:10 Bangkok).
 const BEAT_SERVICES = {
     1: [ROUTE_BUSINESS_READ, ROUTE_AIOS_AUDIT],
     2: [],
-    3: [ROUTE_EXECUTIVE_ASSISTANT, ROUTE_OPS_COCKPIT, ROUTE_OPENBRAIN],
+    3: [ROUTE_OPENBRAIN, ROUTE_EXECUTIVE_ASSISTANT, ROUTE_OPS_COCKPIT],
 };
 
 const Home = () => {
@@ -93,9 +95,13 @@ const Home = () => {
 
     // The cards are the header's own list, in the header's own order, so the two can never
     // disagree about what the firm sells or where a service lives.
+    // The cards are the ladder, in the ladder's order, so the header, the stack below and the
+    // "Step n of 5" strip on every service page can never disagree. The one-liner is read from
+    // the service's own `homeDescKey`, never from where it happens to sit in the array.
     const services = HEADER_SERVICES.map((service, index) => ({
+        step: index + 1,
         name: t(service.labelKey),
-        desc: t(`homeCard${index + 1}Desc`),
+        desc: t(service.homeDescKey),
         to: service.to,
         Icon: SERVICE_ICONS[service.to],
     }));
@@ -232,32 +238,57 @@ const Home = () => {
                         {t('homeServicesHeading')}
                     </motion.h2>
 
-                    <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {/* THE STACK. Ian, 18:10 Bangkok: "The 5 different elements should naturally
+                        stack on each other starting with the Business Read." So the five are one
+                        numbered ladder rather than a grid of equals: each rung steps in a little
+                        further than the one above it, and the numeral is the same badge the
+                        approach beats and every service page's timeline use.
+                        The indent is drawn by a spacer that only exists from md up, because a
+                        staircase on a phone is just a squeezed card. */}
+                    <ol className="mx-auto mt-12 max-w-4xl space-y-4">
                         {services.map((service, index) => (
-                            <motion.div key={service.to} {...fadeUp} transition={{ duration: 0.5, delay: index * 0.06 }}>
+                            <motion.li
+                                key={service.to}
+                                {...fadeUp}
+                                transition={{ duration: 0.5, delay: index * 0.06 }}
+                                className="flex items-stretch"
+                            >
+                                <span
+                                    aria-hidden="true"
+                                    style={{ width: `${index * 1.75}rem` }}
+                                    className="hidden shrink-0 md:block"
+                                />
                                 <Link
                                     to={service.to}
-                                    className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-indigo-400/50"
+                                    className="group flex flex-1 items-start gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-indigo-400/50 sm:p-7"
                                 >
-                                    {/* The card's visual header: the service's own mark on a
-                                        navy tile, the same icon its page carries. */}
-                                    {service.Icon ? (
-                                        <span
-                                            aria-hidden="true"
-                                            className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-hltNavy text-white transition-colors group-hover:bg-hltNavy-lift dark:bg-white dark:text-hltNavy dark:group-hover:bg-slate-200"
-                                        >
-                                            <service.Icon size={22} />
+                                    <ProcessNumber label={`${service.step}`} decorative />
+
+                                    <span className="min-w-0 flex-1">
+                                        <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                                            <h3 className="text-xl font-bold leading-7 text-slate-950 dark:text-white">
+                                                {service.name}
+                                            </h3>
+                                            {/* The service's own mark, the same icon its page carries. */}
+                                            {service.Icon ? (
+                                                <span
+                                                    aria-hidden="true"
+                                                    className="text-slate-400 transition-colors group-hover:text-hltNavy dark:text-slate-500 dark:group-hover:text-white"
+                                                >
+                                                    <service.Icon size={18} />
+                                                </span>
+                                            ) : null}
                                         </span>
-                                    ) : null}
-                                    <h3 className="text-xl font-bold leading-7 text-slate-950 dark:text-white">{service.name}</h3>
-                                    <p className="mt-3 flex-grow text-sm leading-7 text-slate-600 dark:text-slate-300">{service.desc}</p>
-                                    <span className="mt-6 text-indigo-600 transition-transform group-hover:translate-x-1 dark:text-indigo-300">
+                                        <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-300">{service.desc}</p>
+                                    </span>
+
+                                    <span className="mt-1 shrink-0 text-indigo-600 transition-transform group-hover:translate-x-1 dark:text-indigo-300">
                                         <ArrowRight size={20} aria-hidden="true" />
                                     </span>
                                 </Link>
-                            </motion.div>
+                            </motion.li>
                         ))}
-                    </div>
+                    </ol>
 
                     <motion.p
                         {...fadeUp}
