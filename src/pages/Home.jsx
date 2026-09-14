@@ -37,7 +37,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 import {
     HEADER_SERVICES,
-    ROUTE_AI_OPPORTUNITY_AUDIT,
+    ROUTE_AIOS_AUDIT,
     ROUTE_BUSINESS_READ,
     ROUTE_EXECUTIVE_ASSISTANT,
     ROUTE_OPENBRAIN,
@@ -59,7 +59,7 @@ const fadeUp = {
 // lucide icons the service pages already use on their tier and step cards, so a card on the home
 // page and the page it opens carry the same mark.
 const SERVICE_ICONS = {
-    [ROUTE_AI_OPPORTUNITY_AUDIT]: Gauge,
+    [ROUTE_AIOS_AUDIT]: Gauge,
     [ROUTE_EXECUTIVE_ASSISTANT]: MessageSquare,
     [ROUTE_OPS_COCKPIT]: LayoutDashboard,
     [ROUTE_BUSINESS_READ]: FileText,
@@ -72,7 +72,7 @@ const SERVICE_ICONS = {
 // Beat 2 carries none, deliberately — it is the design step, and no service on the site is sold
 // as design on its own.
 const BEAT_SERVICES = {
-    1: [ROUTE_BUSINESS_READ, ROUTE_AI_OPPORTUNITY_AUDIT],
+    1: [ROUTE_BUSINESS_READ, ROUTE_AIOS_AUDIT],
     2: [],
     3: [ROUTE_EXECUTIVE_ASSISTANT, ROUTE_OPS_COCKPIT, ROUTE_OPENBRAIN],
 };

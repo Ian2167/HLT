@@ -1,3 +1,15 @@
+// AdoptionLadderMock.jsx — RETIRED THE SAME EVENING IT WAS BUILT, and now imported by nothing.
+//
+// It drew the 0 to 4 adoption ladder of the AI Opportunity Audit. Ian corrected that page at
+// 17:50 Bangkok on 14 September 2026 — the service is the AIOS Audit, which interviews the
+// functions of the business — so the ladder is gone from the site and
+// src/components/mocks/InterviewMapMock.jsx stands in its place.
+//
+// WHY IT IS STILL HERE. This seat does not delete files; deleting is the caller's call at the
+// merge. One line and it goes. It is flagged in the build notes and in the bridge report.
+//
+// The original header follows.
+//
 // AdoptionLadderMock.jsx — the artefact /ai-opportunity-audit sells, drawn in HTML.
 // Added 14 September 2026 in the visual pass.
 //

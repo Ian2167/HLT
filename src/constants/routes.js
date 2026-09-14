@@ -7,7 +7,11 @@
 // Clinics, Salons, the diagnostic) are deliberately NOT in this file: they stay live, they are
 // off the header, and nothing in the rebuild links to them.
 export const ROUTE_HOME = '/';
-export const ROUTE_AI_OPPORTUNITY_AUDIT = '/ai-opportunity-audit';
+// Renamed 14 September 2026, 17:50 Bangkok, on Ian's correction: the service is the AIOS Audit,
+// and it interviews the functions of the business rather than reviewing the week in one call.
+// The pre-rename path stays live as an alias, as /custom-ai-assistant did.
+export const ROUTE_AIOS_AUDIT = '/aios-audit';
+export const ROUTE_AIOS_AUDIT_ALIAS = '/ai-opportunity-audit';
 export const ROUTE_BRAND_OS = '/brand-os'; // live and unlinked: Ian, 14 Sept 2026, "Drop Brand OS, keep it on Upwork"
 export const ROUTE_EXECUTIVE_ASSISTANT = '/executive-assistant';
 export const ROUTE_EXECUTIVE_ASSISTANT_ALIAS = '/custom-ai-assistant'; // the pre-rename path, kept so nothing 404s
@@ -19,7 +23,7 @@ export const ROUTE_OPENBRAIN = '/openbrain';
 // these five, then the LINE button. Brand OS is not in it. The labels are translation keys, each
 // one already gated on that page's own copy deck.
 export const HEADER_SERVICES = [
-    { labelKey: 'aoaNavLink', to: ROUTE_AI_OPPORTUNITY_AUDIT },
+    { labelKey: 'aiosNavLink', to: ROUTE_AIOS_AUDIT },
     { labelKey: 'caaProductName', to: ROUTE_EXECUTIVE_ASSISTANT },
     { labelKey: 'ocpNavLink', to: ROUTE_OPS_COCKPIT },
     { labelKey: 'brNavLink', to: ROUTE_BUSINESS_READ },

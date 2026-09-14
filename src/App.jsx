@@ -8,7 +8,7 @@ import RAG from './pages/RAG';
 import BusinessRead from './pages/BusinessRead';
 // The rebuilt catalogue-service pages, 14 September 2026 (Ian's ruling 3.1). The older service
 // routes below stay live on purpose; only the nav stops pointing at them.
-import AiOpportunityAudit from './pages/AiOpportunityAudit';
+import AiosAudit from './pages/AiosAudit';
 import BrandOs from './pages/BrandOs';
 import ExecutiveAssistant from './pages/ExecutiveAssistant';
 import OpsCockpit from './pages/OpsCockpit';
@@ -23,7 +23,12 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
 import Support from './pages/Support';
 import NotFound from './pages/NotFound';
-import { ROUTE_EXECUTIVE_ASSISTANT, ROUTE_EXECUTIVE_ASSISTANT_ALIAS } from './constants/routes';
+import {
+  ROUTE_AIOS_AUDIT,
+  ROUTE_AIOS_AUDIT_ALIAS,
+  ROUTE_EXECUTIVE_ASSISTANT,
+  ROUTE_EXECUTIVE_ASSISTANT_ALIAS,
+} from './constants/routes';
 import ScrollToTop from './components/ScrollToTop'; // We will need this to scroll top on nav
 
 function App() {
@@ -39,7 +44,10 @@ function App() {
             <Route path="/quotes" element={<Quotes />} />
             <Route path="/rag" element={<RAG />} />
             <Route path="/business-read" element={<BusinessRead />} />
-            <Route path="/ai-opportunity-audit" element={<AiOpportunityAudit />} />
+            {/* Renamed 14 September 2026 on Ian's correction at 17:50. The old path stays
+                live as an alias so nothing anybody has already opened 404s. */}
+            <Route path={ROUTE_AIOS_AUDIT} element={<AiosAudit />} />
+            <Route path={ROUTE_AIOS_AUDIT_ALIAS} element={<AiosAudit />} />
             <Route path="/brand-os" element={<BrandOs />} />
             {/* Renamed 14 September 2026 on Ian's ruling. The old path stays live as an alias
                 so no link anybody has already opened 404s. */}

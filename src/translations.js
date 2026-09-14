@@ -8,7 +8,7 @@
 // doctrine forbids producing Thai copy by line-by-line translation (HLT_GOVERNING_CONTEXT.md
 // line 73). When a native Thai deck exists it replaces the spread in the `th` block below, page
 // by page, and nothing else in this file changes.
-import { aiOpportunityAuditCopy } from './copy/aiOpportunityAudit';
+import { aiosAuditCopy } from './copy/aiosAudit';
 import { brandOsCopy } from './copy/brandOs';
 import { customAiAssistantCopy } from './copy/executiveAssistant';
 import { opsCockpitCopy } from './copy/opsCockpit';
@@ -17,7 +17,7 @@ import { homeCopy, homeHeroHeadlineTh } from './copy/home';
 
 export const translations = {
     en: {
-        ...aiOpportunityAuditCopy,
+        ...aiosAuditCopy,
         ...brandOsCopy,
         ...customAiAssistantCopy,
         ...opsCockpitCopy,
@@ -420,7 +420,7 @@ export const translations = {
     },
     th: {
         // TH PENDING: English values on purpose. See the note at the top of this file.
-        ...aiOpportunityAuditCopy,
+        ...aiosAuditCopy,
         ...brandOsCopy,
         ...customAiAssistantCopy,
         ...opsCockpitCopy,
