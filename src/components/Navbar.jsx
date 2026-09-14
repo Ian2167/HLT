@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import LanguageToggle from './LanguageToggle';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { CONTACT_URL } from '../constants/contact';
-import hltSimpleIcon from '../assets/brand/hlt-logo-system/svg/hlt-simple-icon-dark.svg';
+// Logo v2, 14 Sept 2026: the real High Level Thai mark, derived from Ian's Canva source
+// vector. See src/assets/brand/hlt-logo-v2/README.md, which records what the earlier violet
+// set was and why it is archived rather than deleted.
+import hltLockupColour from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-colour.svg';
+import hltLockupWhite from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-white.svg';
+import { hltWebsiteCopy } from '../config/hltWebsite';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const { t } = useLanguage();
+    const { language, t } = useLanguage();
+    const copy = hltWebsiteCopy[language]?.nav || hltWebsiteCopy.th.nav;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -21,17 +26,20 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const services = [
-        { name: t('mctb'), href: '/mctb' },
-        { name: t('quotes'), href: '/quotes' },
-        { name: t('rag'), href: '/rag' },
-        { name: t('websites'), href: '/websites' },
-    ];
-
-    const sectors = [
-        { name: t('homeServices'), href: '/home-services' },
-        { name: t('clinics'), href: '/clinics' },
-        { name: t('salons'), href: '/salons' },
+    const links = [
+        { name: copy.problem, href: '/#problem' },
+        { name: copy.diagnostic, href: '/#diagnostic' },
+        { name: copy.audit, href: '/#audit' },
+        { name: copy.sectors, href: '/#sectors' },
+        { name: copy.insights, href: '/#insights' },
+        // The Business Read, 14 September 2026. Routes render as router Links; the rest are hash
+        // targets on the home page.
+        { name: t('brNavLink'), href: '/business-read', route: true },
+        // The rebuilt catalogue-service pages, added one per page as each one lands so Ian can
+        // click straight to it on the dev server. This array is rewritten wholesale into
+        // Home + a Services group + the LINE button with the summary home page (item 6 of the
+        // 14 September brief), which is where the nav's own labels get their gated copy.
+        { name: t('aoaNavLink'), href: '/ai-opportunity-audit', route: true },
     ];
 
     return (
@@ -44,71 +52,55 @@ const Navbar = () => {
             <div className="container mx-auto px-6 flex justify-between items-center">
 
                 {/* Logo */}
-                <Link to="/" className="flex items-center gap-2 group">
+                <Link to="/" className="flex items-center group" aria-label="High Level Thai">
                     <img
-                        src={hltSimpleIcon}
+                        src={hltLockupColour}
+                        alt="High Level Thai"
+                        className="h-9 w-auto block dark:hidden"
+                    />
+                    <img
+                        src={hltLockupWhite}
                         alt=""
                         aria-hidden="true"
-                        className="h-9 w-9 rounded-lg shadow-sm"
+                        className="h-9 w-auto hidden dark:block"
                     />
-                    <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                        HighLevel<span className="text-indigo-600 dark:text-indigo-400">Thai</span>
-                    </span>
                 </Link>
 
                 {/* Desktop Nav */}
                 <div className="hidden md:flex items-center gap-8">
                     <Link to="/" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                        {t('home')}
+                        {copy.home}
                     </Link>
 
-                    {/* Services Dropdown */}
-                    <div className="relative group">
-                        <button className="flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                            {t('services')} <ChevronDown size={14} />
-                        </button>
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0">
-                            {services.map((service) => (
-                                <Link
-                                    key={service.name}
-                                    to={service.href}
-                                    className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400"
-                                >
-                                    {service.name}
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Sectors Dropdown */}
-                    <div className="relative group">
-                        <button className="flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                            {t('sectors')} <ChevronDown size={14} />
-                        </button>
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0">
-                            {sectors.map((sector) => (
-                                <Link
-                                    key={sector.name}
-                                    to={sector.href}
-                                    className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400"
-                                >
-                                    {sector.name}
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
+                    {links.map((link) =>
+                        link.route ? (
+                            <Link
+                                key={link.href}
+                                to={link.href}
+                                className="text-sm font-medium text-slate-600 transition-colors hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400"
+                            >
+                                {link.name}
+                            </Link>
+                        ) : (
+                            <a
+                                key={link.href}
+                                href={link.href}
+                                className="text-sm font-medium text-slate-600 transition-colors hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400"
+                            >
+                                {link.name}
+                            </a>
+                        )
+                    )}
 
                     <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-2"></div>
                     <ThemeToggle />
                     <LanguageToggle />
-                    <a
-                        href={CONTACT_URL}
-                        target="_blank"
-                        rel="noreferrer"
+                    <Link
+                        to="/diagnostic"
                         className="px-5 py-2 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                     >
-                        {t('getStarted')}
-                    </a>
+                        {copy.cta}
+                    </Link>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -117,6 +109,7 @@ const Navbar = () => {
                     <LanguageToggle />
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        aria-label={mobileMenuOpen ? copy.menuClose : copy.menuOpen}
                         className="text-slate-900 dark:text-white focus:outline-none"
                     >
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -129,37 +122,35 @@ const Navbar = () => {
                 {mobileMenuOpen && (
                     <div className="md:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 overflow-hidden">
                         <div className="px-6 py-6 flex flex-col gap-4">
-                            <Link to="/" onClick={() => setMobileMenuOpen(false)} className="text-lg font-medium text-slate-900 dark:text-white">{t('home')}</Link>
-                            <div className="text-sm font-bold text-indigo-500 uppercase tracking-wider mt-2">{t('services')}</div>
-                            {services.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    to={link.href}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="text-lg font-medium text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 pl-4 border-l-2 border-slate-100 dark:border-slate-800"
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
-                            <div className="text-sm font-bold text-indigo-500 uppercase tracking-wider mt-4">{t('sectors')}</div>
-                            {sectors.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    to={link.href}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="text-lg font-medium text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 pl-4 border-l-2 border-slate-100 dark:border-slate-800"
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
-                            <a
-                                href={CONTACT_URL}
-                                target="_blank"
-                                rel="noreferrer"
+                            <Link to="/" onClick={() => setMobileMenuOpen(false)} className="text-lg font-medium text-slate-900 dark:text-white">{copy.home}</Link>
+                            {links.map((link) =>
+                                link.route ? (
+                                    <Link
+                                        key={link.name}
+                                        to={link.href}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="text-lg font-medium text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 pl-4 border-l-2 border-slate-100 dark:border-slate-800"
+                                    >
+                                        {link.name}
+                                    </Link>
+                                ) : (
+                                    <a
+                                        key={link.name}
+                                        href={link.href}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="text-lg font-medium text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 pl-4 border-l-2 border-slate-100 dark:border-slate-800"
+                                    >
+                                        {link.name}
+                                    </a>
+                                )
+                            )}
+                            <Link
+                                to="/diagnostic"
+                                onClick={() => setMobileMenuOpen(false)}
                                 className="w-full py-3 mt-4 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 text-center"
                             >
-                                {t('getStarted')}
-                            </a>
+                                {copy.cta}
+                            </Link>
                         </div>
                     </div>
                 )}

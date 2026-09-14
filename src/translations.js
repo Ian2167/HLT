@@ -1,5 +1,19 @@
+// The rebuilt service pages (14 September 2026) keep their copy in one module per page under
+// src/copy/. Each module is lifted verbatim from that page's verified deck under
+// C:\Projects\IWT\02-builds\executive-assistant\work\drafts\, and the SAME object is spread
+// into both `en` and `th`.
+//
+// TH PENDING. The Thai keys carry the English values on purpose. Ian ruled the rebuild English
+// only for now (14 September 2026, intent section 3.8, "Yes only English for the demo"), and HLT
+// doctrine forbids producing Thai copy by line-by-line translation (HLT_GOVERNING_CONTEXT.md
+// line 73). When a native Thai deck exists it replaces the spread in the `th` block below, page
+// by page, and nothing else in this file changes.
+import { aiOpportunityAuditCopy } from './copy/aiOpportunityAudit';
+
 export const translations = {
     en: {
+        ...aiOpportunityAuditCopy,
+
         home: 'Home',
         services: 'Services',
         sectors: 'Sectors',
@@ -395,6 +409,9 @@ export const translations = {
         brLineHandle: 'LINE Official Account @highlevelthai'
     },
     th: {
+        // TH PENDING: English values on purpose. See the note at the top of this file.
+        ...aiOpportunityAuditCopy,
+
         home: 'หน้าแรก',
         services: 'บริการ',
         sectors: 'กลุ่มธุรกิจ',

@@ -6,6 +6,9 @@ import MCTB from './pages/MCTB';
 import Quotes from './pages/Quotes';
 import RAG from './pages/RAG';
 import BusinessRead from './pages/BusinessRead';
+// The rebuilt catalogue-service pages, 14 September 2026 (Ian's ruling 3.1). The older service
+// routes below stay live on purpose; only the nav stops pointing at them.
+import AiOpportunityAudit from './pages/AiOpportunityAudit';
 import Websites from './pages/Websites';
 import HomeServices from './pages/HomeServices';
 import Clinics from './pages/Clinics';
@@ -31,6 +34,7 @@ function App() {
             <Route path="/quotes" element={<Quotes />} />
             <Route path="/rag" element={<RAG />} />
             <Route path="/business-read" element={<BusinessRead />} />
+            <Route path="/ai-opportunity-audit" element={<AiOpportunityAudit />} />
             <Route path="/websites" element={<Websites />} />
             <Route path="/home-services" element={<HomeServices />} />
             <Route path="/clinics" element={<Clinics />} />
