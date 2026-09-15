@@ -77,11 +77,18 @@ const AiosDiagnostic = () => {
     const [answers, setAnswers] = useState({});
 
     const answeredCount = Object.keys(answers).length;
-    const score = Object.values(answers).filter(Boolean).length;
+    // SCORING DIRECTION, corrected 15 September 2026 by the EA Desk. Every question in
+    // aiosDiagnostic.js describes the PROBLEM HAPPENING ("Customers call, but nobody answers"),
+    // and the buttons are Yes and No, so a Yes is a leak. This line counted the Yes answers,
+    // while the bands run low-is-bad (0 to 5 critical leakage, 11 to 15 controlled). An owner
+    // answering honestly that everything was broken scored 15 and was told he was in control.
+    // The score is therefore the count of problems the business does NOT have.
+    const score = Object.values(answers).filter((value) => value === false).length;
     const isComplete = answeredCount === questions.length;
     const progress = Math.round((answeredCount / questions.length) * 100);
     const resultBand = localizedBands.find((band) => score >= band.min && score <= band.max);
-    const topLeaks = questions.filter((question) => answers[question.id] === false).slice(0, 3);
+    // Same inversion, same fix: a leak is a question the owner answered YES to.
+    const topLeaks = questions.filter((question) => answers[question.id] === true).slice(0, 3);
 
     const handleAnswer = (questionId, value) => {
         setAnswers((current) => ({ ...current, [questionId]: value }));
