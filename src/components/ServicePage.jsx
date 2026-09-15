@@ -127,7 +127,10 @@ const ServicePage = ({
                     a pure white pixel behind it (blend #444F62, relative luminance 0.077). WCAG
                     AA large text wants 3:1 and AAA wants 4.5:1. The gradient below only adds
                     depth at the edges; the wash is what carries the contrast. */}
-                <div className="absolute inset-0 bg-hltNavy/80" />
+                {/* Ian, 15 Sept 2026 08:0x: wash reduced from 80 to 55 so the photo reads; a left
+                    gradient is added so the headline column keeps its contrast. */}
+                <div className="absolute inset-0 bg-hltNavy/55" />
+                <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-b from-hltNavy/30 via-transparent to-hltNavy/60" />
 

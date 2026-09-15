@@ -135,7 +135,9 @@ const Home = () => {
                 {/* The same flat card-navy wash as the service pages, for the same measured
                     reason: white text over #0A1F44 at 80 per cent is 8.3:1 even where the
                     photograph is pure white. */}
-                <div className="absolute inset-0 bg-hltNavy/80" />
+                {/* Ian, 15 Sept 2026 08:0x: "The opacity of the Navy over the Image needs reducing so the
+                    Image is clearer". 80 to 55; the left gradient below keeps the headline legible. */}
+                <div className="absolute inset-0 bg-hltNavy/55" />
                 <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-b from-hltNavy/30 via-transparent to-hltNavy/60" />
 
