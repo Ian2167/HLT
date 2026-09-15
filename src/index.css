@@ -39,6 +39,12 @@
   @apply backdrop-blur-md bg-white/70 dark:bg-slate-900/70 border border-slate-200/50 dark:border-white/10;
 }
 
+/* Ian, 15 Sept 2026 08:1x Bangkok: "give the cards a glass appearance". Frosted surface, light
+   edge, inner highlight; sits over the navy so the section band shows through the blur. */
+.card-glass {
+  @apply backdrop-blur-xl bg-white/75 border border-slate-200 shadow-lg shadow-slate-900/5 dark:bg-white/[0.08] dark:border-white/20 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10;
+}
+
 .glass-card {
   @apply backdrop-blur-xl bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 shadow-xl dark:shadow-none;
 }

@@ -41,7 +41,7 @@ const InterviewMapMock = () => (
         <ul className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-3">
             {FUNCTIONS.map((name, index) => (
                 <li key={name} className="flex items-center gap-2">
-                    <span className="rounded-xl border border-slate-300 bg-stone-100 px-3 py-2 text-xs font-bold text-slate-800 dark:border-white/20 dark:bg-white/[0.10] dark:text-slate-100">
+                    <span className="rounded-xl border border-slate-300 bg-stone-100 px-3 py-2 text-xs font-bold text-slate-800 card-glass dark:text-slate-100">
                         {name}
                     </span>
                     {index < FUNCTIONS.length - 1 ? (
@@ -66,7 +66,7 @@ const InterviewMapMock = () => (
                 </div>
 
                 <div className="flex-1">
-                    <div className="relative h-44 rounded-xl border border-slate-200 bg-stone-100 dark:border-white/20 dark:bg-white/[0.10]">
+                    <div className="relative h-44 rounded-xl border border-slate-200 bg-stone-100 card-glass">
                         {/* The quadrant lines, and the corner that matters. */}
                         <span className="absolute left-1/2 top-0 h-full w-px bg-slate-300 dark:bg-white/15" />
                         <span className="absolute left-0 top-1/2 h-px w-full bg-slate-300 dark:bg-white/15" />

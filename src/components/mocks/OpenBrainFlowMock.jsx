@@ -34,7 +34,7 @@ const OpenBrainFlowMock = () => (
                     {MATERIAL.map((item) => (
                         <li
                             key={item}
-                            className="flex items-center gap-2 rounded-lg bg-stone-100 px-2.5 py-2 text-xs font-semibold text-slate-700 dark:bg-white/[0.10] dark:text-slate-200"
+                            className="flex items-center gap-2 rounded-lg bg-stone-100 px-2.5 py-2 text-xs font-semibold text-slate-700 card-glass dark:text-slate-200"
                         >
                             <FileText size={13} className="shrink-0 text-slate-500 dark:text-slate-400" />
                             {item}
@@ -54,7 +54,7 @@ const OpenBrainFlowMock = () => (
                             key={i}
                             className={`h-7 rounded-md ${filled
                                 ? 'bg-hltNavy dark:bg-white'
-                                : 'bg-stone-100 dark:bg-white/[0.10]'}`}
+                                : 'bg-stone-100 card-glass'}`}
                         />
                     ))}
                 </div>
@@ -65,7 +65,7 @@ const OpenBrainFlowMock = () => (
             {/* 3. The answer, and where it came from. */}
             <div className="rounded-xl border border-slate-200 p-4 dark:border-white/20">
                 <MockLabel>The answer</MockLabel>
-                <div className="mt-3 space-y-2 rounded-lg bg-stone-100 p-3 dark:bg-white/[0.10]">
+                <div className="mt-3 space-y-2 rounded-lg bg-stone-100 p-3 card-glass">
                     <span className="block h-2 w-full rounded-full bg-slate-300 dark:bg-white/30" />
                     <span className="block h-2 w-11/12 rounded-full bg-slate-300 dark:bg-white/30" />
                     <span className="block h-2 w-3/5 rounded-full bg-slate-300 dark:bg-white/30" />

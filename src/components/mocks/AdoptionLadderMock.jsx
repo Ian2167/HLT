@@ -74,7 +74,7 @@ const AdoptionLadderMock = () => (
                 {CANDIDATES.map((candidate) => (
                     <li
                         key={candidate.rank}
-                        className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl bg-stone-100 px-3.5 py-2.5 dark:bg-white/[0.10]"
+                        className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl bg-stone-100 px-3.5 py-2.5 card-glass"
                     >
                         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-hltNavy text-[11px] font-bold text-white dark:bg-white dark:text-hltNavy">
                             {candidate.rank}

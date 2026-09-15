@@ -43,7 +43,7 @@ const BusinessReadMock = () => (
                 {EVIDENCE.map((item) => (
                     <li
                         key={item.line}
-                        className="flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg bg-stone-100 px-3 py-2 text-xs dark:bg-white/[0.10]"
+                        className="flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg bg-stone-100 px-3 py-2 text-xs card-glass"
                     >
                         <span className="mr-auto text-slate-700 dark:text-slate-200">{item.line}</span>
                         <MockChip tone={item.tone}>{item.tag}</MockChip>
