@@ -125,11 +125,18 @@ const Home = () => {
             <title>{t('homeMetaTitle')}</title>
 
             {/* Hero */}
-            <section className="relative overflow-hidden">
+            {/* Ian, 15 September 2026 12:5x Bangkok: "the Homepage Image that was initially approved
+                has changed to a lesser depth so the buildings are severely cropped". The markup had
+                not changed; the hero's height is set by the text inside it, and the Thai headline
+                runs shorter than the English, so object-cover took a tighter crop out of the same
+                photograph. Two fixes, so the crop no longer depends on how long the headline is:
+                a minimum height that holds the frame open, and object-bottom, which anchors the
+                crop on the temple roofline rather than the sky. The headline still sits over sky. */}
+            <section className="relative flex min-h-[32rem] items-center overflow-hidden lg:min-h-[36rem]">
                 <img
                     src={t('homeHeroImage')}
                     alt={t('homeHeroImageAlt')}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover object-bottom"
                     loading="eager"
                 />
                 {/* The same flat card-navy wash as the service pages, for the same measured
@@ -141,7 +148,7 @@ const Home = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-b from-hltNavy/30 via-transparent to-hltNavy/60" />
 
-                <div className="relative mx-auto max-w-6xl px-5 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-32">
+                <div className="relative mx-auto w-full max-w-6xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
                     <motion.div
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
