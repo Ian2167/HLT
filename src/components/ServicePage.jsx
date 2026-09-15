@@ -213,43 +213,6 @@ const ServicePage = ({
                 </section>
             ) : null}
 
-            {/* What's included */}
-            {included > 0 ? (
-            <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-5xl">
-                    <motion.h2
-                        {...fadeUp}
-                        className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
-                    >
-                        {k('IncludedHeading')}
-                    </motion.h2>
-                    <ul className="mt-10 grid gap-4 sm:grid-cols-2">
-                        {range(included).map((n) => (
-                            <motion.li
-                                key={n}
-                                {...fadeUp}
-                                transition={{ duration: 0.45, delay: (n % 2) * 0.06 }}
-                                className="flex gap-4 rounded-xl border border-slate-200 bg-stone-50 p-5 dark:border-white/10 dark:bg-white/[0.04]"
-                            >
-                                <span className="mt-0.5 shrink-0 text-indigo-700 dark:text-indigo-300">
-                                    <Check size={20} aria-hidden="true" />
-                                </span>
-                                <span className="text-sm leading-7 text-slate-700 dark:text-slate-300">{k(`Included${n}`)}</span>
-                            </motion.li>
-                        ))}
-                    </ul>
-
-                    {/* ONE artefact mock per page, under the heading that promises it. It is a
-                        drawing of the thing, not a screenshot of anybody's real one. */}
-                    {artefact ? (
-                        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="mx-auto mt-14 max-w-3xl">
-                            {artefact}
-                        </motion.div>
-                    ) : null}
-                </div>
-            </section>
-            ) : null}
-
             {/* How it runs */}
             {steps > 0 ? (
             <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
@@ -296,6 +259,43 @@ const ServicePage = ({
                             );
                         })}
                     </ol>
+                </div>
+            </section>
+            ) : null}
+
+            {/* What's included */}
+            {included > 0 ? (
+            <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-5xl">
+                    <motion.h2
+                        {...fadeUp}
+                        className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
+                    >
+                        {k('IncludedHeading')}
+                    </motion.h2>
+                    <ul className="mt-10 grid gap-4 sm:grid-cols-2">
+                        {range(included).map((n) => (
+                            <motion.li
+                                key={n}
+                                {...fadeUp}
+                                transition={{ duration: 0.45, delay: (n % 2) * 0.06 }}
+                                className="flex gap-4 rounded-xl border border-slate-200 bg-stone-50 p-5 dark:border-white/10 dark:bg-white/[0.04]"
+                            >
+                                <span className="mt-0.5 shrink-0 text-indigo-700 dark:text-indigo-300">
+                                    <Check size={20} aria-hidden="true" />
+                                </span>
+                                <span className="text-sm leading-7 text-slate-700 dark:text-slate-300">{k(`Included${n}`)}</span>
+                            </motion.li>
+                        ))}
+                    </ul>
+
+                    {/* ONE artefact mock per page, under the heading that promises it. It is a
+                        drawing of the thing, not a screenshot of anybody's real one. */}
+                    {artefact ? (
+                        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="mx-auto mt-14 max-w-3xl">
+                            {artefact}
+                        </motion.div>
+                    ) : null}
                 </div>
             </section>
             ) : null}
