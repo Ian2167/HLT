@@ -14,6 +14,7 @@ import { customAiAssistantCopy } from './copy/executiveAssistant';
 import { opsCockpitCopy } from './copy/opsCockpit';
 import { openBrainCopy } from './copy/openBrain';
 import { homeCopy, homeHeroHeadlineTh } from './copy/home';
+import { thaiDraft } from './copy/thaiDraft';
 
 export const translations = {
     en: {
@@ -833,7 +834,17 @@ export const translations = {
 
         brClosingHeading: 'One hour in. A written diagnosis out.',
         brClosingBody: "Message us on LINE and pick a time that suits you. There's nothing to prepare and nothing to send first, and you'll have the written read three working days after we talk.",
-        brLineHandle: 'LINE Official Account @highlevelthai'
+        brLineHandle: 'LINE Official Account @highlevelthai',
 
+        // THE MACHINE THAI DRAFT, WIRED IN LAST SO IT OVERRIDES THE ENGLISH FALLBACKS ABOVE.
+        // Ian, 15 September 2026 09:4x Bangkok: "I misunderstood on the Thai, I thought you would
+        // translate now and Ann would check later." So the draft goes on the site now and the
+        // native-speaker review follows, rather than gating it. IT IS UNREVIEWED: the review
+        // sheet is at C:\Projects\IWT\02-builds\executive-assistant\work\drafts\
+        // 2026-09-15-HLT-THAI-REVIEW-SHEET.md and her corrections are written back into
+        // src/copy/thaiDraft.js, never into this block.
+        // The spread is last on purpose: it wins over the English fallbacks, and it does not
+        // contain the original site's own Thai keys, which are untouched.
+        ...thaiDraft
     }
 };

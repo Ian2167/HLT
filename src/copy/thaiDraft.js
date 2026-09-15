@@ -1,4 +1,6 @@
-// thaiDraft.js — UNREVIEWED MACHINE THAI. IMPORTED BY NOTHING.
+// thaiDraft.js — UNREVIEWED MACHINE THAI. WIRED INTO src/translations.js SINCE 15 September 2026,
+// 09:4x Bangkok, on Ian's ruling that the draft goes on the site now and Ann reviews after.
+// Her corrections come back INTO THIS FILE, never into translations.js.
 //
 // WHAT THIS FILE IS. A machine-produced Thai draft of every string on the six rebuilt pages
 // that currently falls back to English in the `th` block of src/translations.js. It is a REVIEW

@@ -25,7 +25,7 @@ const LINK_CLASSES =
     'inline-flex items-center gap-1.5 rounded-full border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:border-slate-500 hover:text-slate-950 dark:border-white/20 dark:text-slate-300 dark:hover:border-white/50 dark:hover:text-white';
 
 const StepIndicator = ({ route }) => {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const position = ladderPosition(route);
 
     if (!position) return null;
@@ -37,7 +37,9 @@ const StepIndicator = ({ route }) => {
         >
             <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-3">
                 <span className="rounded-full bg-hltNavy px-3 py-1.5 text-xs font-bold text-white dark:bg-white dark:text-hltNavy">
-                    {`Step ${position.step} of ${position.total}`}
+                    {language === 'th'
+                        ? `ขั้นที่ ${position.step} จาก ${position.total}`
+                        : `Step ${position.step} of ${position.total}`}
                 </span>
 
                 <span className="ml-auto flex flex-wrap items-center gap-2">
