@@ -213,52 +213,6 @@ const ServicePage = ({
                 </section>
             ) : null}
 
-            {/* The tiers. Name, description and the catalogue's inclusion rows. No price. */}
-            {tiers > 0 ? (
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-6xl">
-                    <motion.h2
-                        {...fadeUp}
-                        className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
-                    >
-                        {k('TiersHeading')}
-                    </motion.h2>
-
-                    <div className="mt-12 grid gap-6 md:grid-cols-3">
-                        {tierList.map((tier, index) => (
-                            <motion.article
-                                key={tier.name}
-                                {...fadeUp}
-                                transition={{ duration: 0.5, delay: index * 0.08 }}
-                                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
-                            >
-                                <div className="flex items-center justify-between gap-4">
-                                    {tier.Icon ? (
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-200">
-                                            <tier.Icon size={22} aria-hidden="true" />
-                                        </div>
-                                    ) : null}
-                                    <DepthLadder depth={index + 1} />
-                                </div>
-                                <h3 className="mt-6 text-xl font-bold leading-7 text-slate-950 dark:text-white">{tier.name}</h3>
-                                <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{tier.desc}</p>
-                                <dl className="mt-6 space-y-3 border-t border-slate-100 pt-6 dark:border-white/10">
-                                    {rowList.map((row) => (
-                                        <div key={row.label} className="flex justify-between gap-4 text-sm leading-6">
-                                            <dt className="font-semibold text-slate-950 dark:text-white">{row.label}</dt>
-                                            <dd className="text-right text-slate-600 dark:text-slate-300">
-                                                <CellValue value={row.cells[tier.column]} />
-                                            </dd>
-                                        </div>
-                                    ))}
-                                </dl>
-                            </motion.article>
-                        ))}
-                    </div>
-                </div>
-            </section>
-            ) : null}
-
             {/* What's included */}
             {included > 0 ? (
             <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
@@ -342,6 +296,52 @@ const ServicePage = ({
                             );
                         })}
                     </ol>
+                </div>
+            </section>
+            ) : null}
+
+            {/* The tiers. Name, description and the catalogue's inclusion rows. No price. */}
+            {tiers > 0 ? (
+            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-6xl">
+                    <motion.h2
+                        {...fadeUp}
+                        className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
+                    >
+                        {k('TiersHeading')}
+                    </motion.h2>
+
+                    <div className="mt-12 grid gap-6 md:grid-cols-3">
+                        {tierList.map((tier, index) => (
+                            <motion.article
+                                key={tier.name}
+                                {...fadeUp}
+                                transition={{ duration: 0.5, delay: index * 0.08 }}
+                                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
+                            >
+                                <div className="flex items-center justify-between gap-4">
+                                    {tier.Icon ? (
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-200">
+                                            <tier.Icon size={22} aria-hidden="true" />
+                                        </div>
+                                    ) : null}
+                                    <DepthLadder depth={index + 1} />
+                                </div>
+                                <h3 className="mt-6 text-xl font-bold leading-7 text-slate-950 dark:text-white">{tier.name}</h3>
+                                <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{tier.desc}</p>
+                                <dl className="mt-6 space-y-3 border-t border-slate-100 pt-6 dark:border-white/10">
+                                    {rowList.map((row) => (
+                                        <div key={row.label} className="flex justify-between gap-4 text-sm leading-6">
+                                            <dt className="font-semibold text-slate-950 dark:text-white">{row.label}</dt>
+                                            <dd className="text-right text-slate-600 dark:text-slate-300">
+                                                <CellValue value={row.cells[tier.column]} />
+                                            </dd>
+                                        </div>
+                                    ))}
+                                </dl>
+                            </motion.article>
+                        ))}
+                    </div>
                 </div>
             </section>
             ) : null}
