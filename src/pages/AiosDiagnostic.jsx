@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowRight, Check, CircleAlert, MessageCircle, RotateCcw } from 'lucide-react';
-import { CONTACT_URL } from '../constants/contact';
+import { Link, useSearchParams } from 'react-router-dom';
+import { LINE_DIAGNOSTIC } from '../constants/contact';
 import { useLanguage } from '../context/LanguageContext';
 import { aiosDiagnosticCopy, diagnosticNiches, resultBands } from '../config/aiosDiagnostic';
 import acRepairHero from '../assets/hlt_ac_repair_guy_clean.png';
@@ -35,7 +36,9 @@ const formatScoreSummary = (template, score) => template.replace('{score}', scor
 
 const AiosDiagnostic = () => {
     const { language } = useLanguage();
-    const niche = diagnosticNiches.acServices;
+    const [searchParams] = useSearchParams();
+    const nicheKey = searchParams.get('niche') || 'acServices';
+    const niche = diagnosticNiches[nicheKey] ?? diagnosticNiches.acServices;
     const copy = useMemo(
         () => Object.fromEntries(
             Object.entries(aiosDiagnosticCopy).map(([key, value]) => [key, getLocalizedText(value, language)]),
@@ -91,6 +94,14 @@ const AiosDiagnostic = () => {
 
     return (
         <div className="min-h-screen pt-24 bg-slate-50 dark:bg-slate-950">
+            <div className="px-5 pt-4 sm:px-6 lg:px-8">
+                <Link
+                    to="/aios-diagnostic"
+                    className="inline-flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+                >
+                    ← {language === 'en' ? 'Back to overview' : 'กลับไปดูภาพรวม'}
+                </Link>
+            </div>
             <section className="relative overflow-hidden px-5 pb-10 pt-14 sm:px-6 lg:px-8">
                 <img
                     src={acRepairHero}
@@ -273,7 +284,7 @@ const AiosDiagnostic = () => {
                         </div>
                         <div className="flex flex-col gap-3 sm:items-end">
                             <a
-                                href={CONTACT_URL}
+                                href={LINE_DIAGNOSTIC}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300"

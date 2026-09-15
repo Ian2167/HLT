@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Bot, Globe } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { CONTACT_URL } from '../constants/contact';
+import { LINE_ECOSYSTEM } from '../constants/contact';
 
 const Ecosystem = () => {
     const { t } = useLanguage();
@@ -32,7 +32,7 @@ const Ecosystem = () => {
                             {t('smartWebsitesDesc')}
                         </p>
                         <a
-                            href={CONTACT_URL}
+                            href={LINE_ECOSYSTEM}
                             target="_blank"
                             rel="noreferrer"
                             className="inline-flex px-6 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold hover:shadow-md transition-all"

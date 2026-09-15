@@ -33,7 +33,7 @@ const StepIndicator = ({ route }) => {
     return (
         <div
             data-visual="step-indicator"
-            className="border-b border-slate-200 bg-stone-50 px-5 py-4 dark:border-white/10 dark:bg-white/[0.02] sm:px-6 lg:px-8"
+            className="border-b border-slate-200 bg-stone-50 px-5 py-4 dark:border-white/20 dark:bg-white/[0.10] sm:px-6 lg:px-8"
         >
             <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-3">
                 <span className="rounded-full bg-hltNavy px-3 py-1.5 text-xs font-bold text-white dark:bg-white dark:text-hltNavy">

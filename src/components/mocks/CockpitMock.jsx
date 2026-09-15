@@ -37,13 +37,13 @@ const CockpitMock = () => {
     return (
         <MockShell title="Ops cockpit" meta="your login, your domain" icon={LayoutDashboard}>
             {/* Waiting on you: what you do, what it holds up, what it costs to clear. */}
-            <div className="rounded-xl border border-hltNavy/20 bg-stone-100 p-4 dark:border-white/20 dark:bg-white/[0.06]">
+            <div className="rounded-xl border border-hltNavy/20 bg-stone-100 p-4 dark:border-white/20 dark:bg-white/[0.10]">
                 <MockLabel>Waiting on you</MockLabel>
                 <ul className="mt-3 space-y-2">
                     {BLOCKERS.map((item) => (
                         <li
                             key={item.do}
-                            className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg bg-white px-3 py-2 text-xs dark:bg-white/[0.06]"
+                            className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg bg-white px-3 py-2 text-xs dark:bg-white/[0.10]"
                         >
                             <span className="font-bold text-slate-900 dark:text-white">{item.do}</span>
                             <span className="text-slate-500 dark:text-slate-400">{item.blocks}</span>
@@ -58,7 +58,7 @@ const CockpitMock = () => {
                 {PANELS.map((panel) => (
                     <div
                         key={panel.name}
-                        className="rounded-xl border border-slate-200 p-4 dark:border-white/10"
+                        className="rounded-xl border border-slate-200 p-4 dark:border-white/20"
                     >
                         <p className="text-xs font-bold text-slate-900 dark:text-white">{panel.name}</p>
                         <div className="mt-3 space-y-2">

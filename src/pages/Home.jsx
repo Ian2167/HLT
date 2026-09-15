@@ -185,7 +185,7 @@ const Home = () => {
                                 key={beat.lead}
                                 {...fadeUp}
                                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                                className="relative flex flex-col rounded-2xl border border-slate-200 bg-stone-50 p-7 dark:border-white/10 dark:bg-white/[0.04]"
+                                className="relative flex flex-col rounded-2xl border border-slate-200 bg-stone-50 p-7 dark:border-white/20 dark:bg-white/[0.10]"
                             >
                                 {index < beats.length - 1 ? (
                                     <>
@@ -212,11 +212,11 @@ const Home = () => {
                                     three cards however long the beat above them runs. */}
                                 {beat.tags.length ? (
                                     <div className="mt-auto pt-8">
-                                        <ul className="flex flex-wrap gap-2 border-t border-slate-200 pt-5 dark:border-white/10">
+                                        <ul className="flex flex-wrap gap-2 border-t border-slate-200 pt-5 dark:border-white/20">
                                             {beat.tags.map((tag) => (
                                                 <li
                                                     key={tag}
-                                                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold leading-5 text-slate-700 dark:border-white/15 dark:bg-white/[0.06] dark:text-slate-200"
+                                                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold leading-5 text-slate-700 dark:border-white/25 dark:bg-white/[0.10] dark:text-slate-200"
                                                 >
                                                     {tag}
                                                 </li>
@@ -231,7 +231,7 @@ const Home = () => {
             </section>
 
             {/* The services. One card per live service, each linking to its own page. */}
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.10] sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2
                         {...fadeUp}
@@ -262,7 +262,7 @@ const Home = () => {
                                 />
                                 <Link
                                     to={service.to}
-                                    className="group flex flex-1 items-start gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-indigo-400/50 sm:p-7"
+                                    className="group flex flex-1 items-start gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl dark:border-white/20 dark:bg-white/[0.10] dark:hover:border-indigo-400/50 sm:p-7"
                                 >
                                     <ProcessNumber label={`${service.step}`} decorative />
 

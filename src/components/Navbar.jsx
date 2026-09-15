@@ -116,7 +116,7 @@ const Navbar = () => {
             {/* Mobile Menu Overlay. A flat list, in the same order as the desktop header. */}
             <AnimatePresence>
                 {mobileMenuOpen && (
-                    <div className="lg:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-white/10 overflow-hidden">
+                    <div className="lg:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-white/20 overflow-hidden">
                         <div className="px-6 py-6 flex flex-col gap-4">
                             <Link
                                 to={ROUTE_HOME}
@@ -130,7 +130,7 @@ const Navbar = () => {
                                     key={link.href}
                                     to={link.href}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="text-lg font-medium text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 pl-4 border-l-2 border-slate-100 dark:border-white/10"
+                                    className="text-lg font-medium text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 pl-4 border-l-2 border-slate-100 dark:border-white/20"
                                 >
                                     {link.name}
                                 </Link>

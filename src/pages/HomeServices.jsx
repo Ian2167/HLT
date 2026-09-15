@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 import { ShieldCheck, MapPin, Calendar, UserCheck, Hammer, Zap, Droplets, Trees, Ruler, Search, ArrowRight, Truck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { CONTACT_URL } from '../constants/contact';
 import cardHome from '../assets/card-home.png';
+import DiagnosticBridge from '../components/DiagnosticBridge';
 
 const HomeServices = () => {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+    const isEn = language === 'en';
 
     const industries = [
         { icon: Hammer, key: "tradeJoinery" },
@@ -151,18 +154,17 @@ const HomeServices = () => {
                     </div>
 
                     <div className="mt-16 text-center">
-                        <a
-                            href={CONTACT_URL}
-                            target="_blank"
-                            rel="noreferrer"
+                        <Link
+                            to="/diagnostic"
                             className="inline-flex px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all items-center gap-2 mx-auto"
                         >
-                            {t('modernizeLogistics')}
+                            {isEn ? 'Start the free check' : 'เริ่มเช็กฟรี'}
                             <ArrowRight size={20} />
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </section>
+            <DiagnosticBridge />
         </div>
     );
 };

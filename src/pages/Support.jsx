@@ -1,5 +1,5 @@
 import { useLanguage } from '../context/LanguageContext';
-import { CONTACT_URL } from '../constants/contact';
+import { LINE_SUPPORT } from '../constants/contact';
 
 const Support = () => {
     const { t } = useLanguage();
@@ -14,7 +14,7 @@ const Support = () => {
                     <p>{t('supportBody2')}</p>
                 </div>
                 <a
-                    href={CONTACT_URL}
+                    href={LINE_SUPPORT}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center justify-center mt-8 px-6 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold"

@@ -37,11 +37,11 @@ export default {
         // navy; it exists only so an edge survives. Flagged for Ian in the build notes.
         hltNavy: {
           DEFAULT: '#0A1F44',
-          lift: '#17356B',
+          lift: '#1B4384', // Ian, 15 Sept 2026: cards must pop on the navy; lifted from #17356B
         },
         slate: {
           ...colors.slate,
-          800: '#17356B',
+          800: '#1B4384',
           900: '#0A1F44',
           950: '#0A1F44',
         },

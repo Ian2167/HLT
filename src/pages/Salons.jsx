@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion';
-import { Scissors, Calendar, CreditCard, Gift, Star, RefreshCw, Smartphone, Camera, Gem } from 'lucide-react';
+import { Scissors, Calendar, CreditCard, Gift, Star, RefreshCw, Smartphone, Camera, Gem, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import cardSalon from '../assets/card-salon.png';
+import DiagnosticBridge from '../components/DiagnosticBridge';
 
 const Salons = () => {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+    const isEn = language === 'en';
 
     return (
         <div className="pt-24 min-h-screen">
@@ -151,8 +154,19 @@ const Salons = () => {
                         </div>
 
                     </div>
+
+                    <div className="mt-16 text-center">
+                        <Link
+                            to="/diagnostic"
+                            className="inline-flex px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all items-center gap-2 mx-auto"
+                        >
+                            {isEn ? 'Start the free check' : 'เริ่มเช็กฟรี'}
+                            <ArrowRight size={20} />
+                        </Link>
+                    </div>
                 </div>
             </section>
+            <DiagnosticBridge />
         </div>
     );
 };

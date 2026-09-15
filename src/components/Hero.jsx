@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { CONTACT_URL } from '../constants/contact';
+import { LINE_HERO } from '../constants/contact';
 
 const Hero = () => {
     const { t } = useLanguage();
@@ -44,7 +44,7 @@ const Hero = () => {
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <a
-                            href={CONTACT_URL}
+                            href={LINE_HERO}
                             target="_blank"
                             rel="noreferrer"
                             className="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:bg-slate-800 dark:hover:bg-slate-200 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"

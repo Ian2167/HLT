@@ -3,7 +3,7 @@ export const aiosDiagnosticCopy = {
     heroTitle: 'ลูกค้าหายไปตอนไหนในธุรกิจของคุณ? (When are customers disappearing in your business?)',
     heroSubtitle: 'ตอบ 15 ข้อสั้น ๆ แล้วดูว่าลูกค้าหลุดตรงไหน (Answer 15 short questions and see where customers drop off)',
     explanationTitle: 'ตอบตามสิ่งที่เกิดขึ้นจริงในร้านคุณ (Answer based on what actually happens in your business)',
-    explanationBody: '',
+    explanationBody: 'ไม่มีคำตอบถูกหรือผิด ตอบตามที่เกิดขึ้นจริงในธุรกิจของคุณ แล้วคุณจะเห็นชัดเจนขึ้นว่าลูกค้าหลุดตรงไหน (There are no right or wrong answers — answer based on what actually happens in your business, and you will see clearly where customers are dropping off.)',
     progressLabel: 'ตอบแล้ว (Answered)',
     scoreLabel: 'คะแนนรวม (Total score)',
     yesLabel: 'ใช่ (Yes)',

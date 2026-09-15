@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 import { Smartphone, CheckCircle, XCircle, ArrowRight, Zap, MessageSquare } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { CONTACT_URL } from '../constants/contact';
 import cardMctb from '../assets/card-mctb.png';
+import DiagnosticBridge from '../components/DiagnosticBridge';
 
 const MCTB = () => {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+    const isEn = language === 'en';
 
     return (
         <div className="pt-24 min-h-screen">
@@ -111,18 +114,17 @@ const MCTB = () => {
                     </div>
 
                     <div className="mt-16 text-center">
-                        <a
-                            href={CONTACT_URL}
-                            target="_blank"
-                            rel="noreferrer"
+                        <Link
+                            to="/diagnostic"
                             className="inline-flex px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all items-center gap-2 mx-auto"
                         >
-                            {t('getTheBoxSetup')}
+                            {isEn ? 'Start the free check' : 'เริ่มเช็กฟรี'}
                             <ArrowRight size={20} />
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </section>
+            <DiagnosticBridge />
         </div>
     );
 };

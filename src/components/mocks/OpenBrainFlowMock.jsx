@@ -28,13 +28,13 @@ const OpenBrainFlowMock = () => (
     <MockShell title="From your material to an answer" meta="sample layout" icon={Library}>
         <div className="grid items-stretch gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
             {/* 1. What the business already knows. */}
-            <div className="rounded-xl border border-slate-200 p-4 dark:border-white/10">
+            <div className="rounded-xl border border-slate-200 p-4 dark:border-white/20">
                 <MockLabel>Your material</MockLabel>
                 <ul className="mt-3 space-y-2">
                     {MATERIAL.map((item) => (
                         <li
                             key={item}
-                            className="flex items-center gap-2 rounded-lg bg-stone-100 px-2.5 py-2 text-xs font-semibold text-slate-700 dark:bg-white/[0.06] dark:text-slate-200"
+                            className="flex items-center gap-2 rounded-lg bg-stone-100 px-2.5 py-2 text-xs font-semibold text-slate-700 dark:bg-white/[0.10] dark:text-slate-200"
                         >
                             <FileText size={13} className="shrink-0 text-slate-500 dark:text-slate-400" />
                             {item}
@@ -46,7 +46,7 @@ const OpenBrainFlowMock = () => (
             <Arrow />
 
             {/* 2. The index. */}
-            <div className="rounded-xl border border-slate-200 p-4 dark:border-white/10">
+            <div className="rounded-xl border border-slate-200 p-4 dark:border-white/20">
                 <MockLabel>Indexed chunks</MockLabel>
                 <div className="mt-3 grid grid-cols-3 gap-2">
                     {CHUNKS.map((filled, i) => (
@@ -63,9 +63,9 @@ const OpenBrainFlowMock = () => (
             <Arrow />
 
             {/* 3. The answer, and where it came from. */}
-            <div className="rounded-xl border border-slate-200 p-4 dark:border-white/10">
+            <div className="rounded-xl border border-slate-200 p-4 dark:border-white/20">
                 <MockLabel>The answer</MockLabel>
-                <div className="mt-3 space-y-2 rounded-lg bg-stone-100 p-3 dark:bg-white/[0.06]">
+                <div className="mt-3 space-y-2 rounded-lg bg-stone-100 p-3 dark:bg-white/[0.10]">
                     <span className="block h-2 w-full rounded-full bg-slate-300 dark:bg-white/30" />
                     <span className="block h-2 w-11/12 rounded-full bg-slate-300 dark:bg-white/30" />
                     <span className="block h-2 w-3/5 rounded-full bg-slate-300 dark:bg-white/30" />

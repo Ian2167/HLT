@@ -19,7 +19,7 @@ const AssistantChatMock = () => (
         <div className="space-y-5">
             {/* The owner asks. */}
             <div className="flex justify-end">
-                <p className="max-w-[85%] rounded-2xl rounded-br-md bg-stone-100 px-4 py-3 text-sm leading-6 text-slate-800 dark:bg-white/[0.08] dark:text-slate-100">
+                <p className="max-w-[85%] rounded-2xl rounded-br-md bg-stone-100 px-4 py-3 text-sm leading-6 text-slate-800 dark:bg-white/[0.12] dark:text-slate-100">
                     Can we discount this job?
                 </p>
             </div>

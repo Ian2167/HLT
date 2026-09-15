@@ -184,6 +184,20 @@ const AiosDiagnosticLanding = () => {
 
             <section className="bg-white px-5 py-12 dark:bg-slate-950 sm:px-6 sm:py-16 lg:px-8">
                 <div className="mx-auto max-w-6xl">
+                    <p className="text-sm font-bold uppercase text-indigo-700 dark:text-indigo-300">{copy.answers.kicker}</p>
+                    <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+                        {copy.answers.items.map((item) => (
+                            <article key={item.question} className="rounded-lg border border-slate-200 bg-stone-50 p-5 dark:border-slate-800 dark:bg-slate-900">
+                                <h3 className="font-bold leading-7 text-slate-950 dark:text-white">{item.question}</h3>
+                                <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-300">{item.answer}</p>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="bg-white px-5 py-12 dark:bg-slate-950 sm:px-6 sm:py-16 lg:px-8">
+                <div className="mx-auto max-w-6xl">
                     <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
                         <div>
                             <h2 className="text-3xl font-bold leading-tight text-slate-950 dark:text-white sm:text-4xl">{copy.flowTitle}</h2>

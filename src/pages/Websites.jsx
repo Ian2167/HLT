@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 import { Layout, Search, Zap, Gauge, ArrowRight, Layers, Smartphone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { CONTACT_URL } from '../constants/contact';
 import cardWeb from '../assets/card-web.png';
+import DiagnosticBridge from '../components/DiagnosticBridge';
 
 const Websites = () => {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+    const isEn = language === 'en';
 
     return (
         <div className="pt-24 min-h-screen">
@@ -138,18 +141,17 @@ const Websites = () => {
                     </div>
 
                     <div className="mt-16 text-center">
-                        <a
-                            href={CONTACT_URL}
-                            target="_blank"
-                            rel="noreferrer"
+                        <Link
+                            to="/diagnostic"
                             className="inline-flex px-8 py-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all items-center gap-2 mx-auto"
                         >
-                            {t('getSiteAudit')}
+                            {isEn ? 'Start the free check' : 'เริ่มเช็กฟรี'}
                             <ArrowRight size={20} />
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </section>
+            <DiagnosticBridge />
         </div>
     );
 };

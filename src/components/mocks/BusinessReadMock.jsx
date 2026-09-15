@@ -37,13 +37,13 @@ const BusinessReadMock = () => (
             first.
         </p>
 
-        <div className="mt-6 border-t border-slate-200 pt-5 dark:border-white/10">
+        <div className="mt-6 border-t border-slate-200 pt-5 dark:border-white/20">
             <MockLabel>The evidence behind it</MockLabel>
             <ul className="mt-3 space-y-2">
                 {EVIDENCE.map((item) => (
                     <li
                         key={item.line}
-                        className="flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg bg-stone-100 px-3 py-2 text-xs dark:bg-white/[0.05]"
+                        className="flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg bg-stone-100 px-3 py-2 text-xs dark:bg-white/[0.10]"
                     >
                         <span className="mr-auto text-slate-700 dark:text-slate-200">{item.line}</span>
                         <MockChip tone={item.tone}>{item.tag}</MockChip>
@@ -52,12 +52,12 @@ const BusinessReadMock = () => (
             </ul>
         </div>
 
-        <div className="mt-6 border-t border-slate-200 pt-5 dark:border-white/10">
+        <div className="mt-6 border-t border-slate-200 pt-5 dark:border-white/20">
             <MockLabel>What to do next, costed</MockLabel>
             <table className="mt-3 w-full text-xs">
                 <tbody>
                     {NEXT_STEPS.map((step) => (
-                        <tr key={step} className="border-b border-slate-100 last:border-0 dark:border-white/10">
+                        <tr key={step} className="border-b border-slate-100 last:border-0 dark:border-white/20">
                             <td className="py-2.5 pr-4 text-slate-700 dark:text-slate-200">{step}</td>
                             <td className="w-20 py-2.5 text-right font-bold text-slate-900 dark:text-white">
                                 THB —

@@ -23,7 +23,7 @@ const MockShell = ({ title, meta, icon: Icon, children, className = '' }) => (
     <div
         data-visual="mock"
         aria-hidden="true"
-        className={`overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-950/5 dark:border-white/10 dark:bg-white/[0.04] dark:shadow-black/20 ${className}`}
+        className={`overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-950/5 dark:border-white/20 dark:bg-white/[0.10] dark:shadow-black/20 ${className}`}
     >
         <div className="flex items-center gap-2.5 bg-hltNavy px-5 py-3 text-white dark:bg-hltNavy-lift">
             {Icon ? <Icon size={15} strokeWidth={2.2} /> : null}

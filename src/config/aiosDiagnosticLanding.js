@@ -4,8 +4,8 @@ export const aiosDiagnosticLandingCopy = {
         heroTitle: 'คุณอาจมีลูกค้าอยู่แล้ว ปัญหาคือพวกเขาหลุดตรงไหน',
         heroSubtitle: 'บางคนเห็นร้านแล้วไม่ทัก บางคนทัก LINE แล้วหาย บางคนขอราคาแล้วเงียบ บางคนจบงานแล้วไม่กลับมา Diagnostic นี้ช่วยดูว่าลูกค้าหลุดตรงไหนก่อนเปลี่ยนอะไรทั้งระบบ',
         heroPrimaryCta: 'เช็กจุดที่งานหลุด',
-        heroSecondaryCta: 'ดู 5 จุดที่ต้องตรวจ',
-        heroTrustNote: 'ตอบจากสิ่งที่เกิดขึ้นจริง ใช้เวลาไม่นาน และยังไม่ต้องตัดสินใจซื้ออะไร',
+        heroSecondaryCta: 'ดูคำถามก่อนเริ่ม',
+        heroTrustNote: 'เริ่มจากเช็ก 15 ข้อ แล้วส่งผลใน LINE เพื่อดูต่อว่าควรทำ AIOS Audit หรือไม่',
         heroImageAlt: 'ช่างแอร์กำลังตรวจเครื่องปรับอากาศหน้างาน',
         mapTitle: 'งานไม่ได้หายเฉย ๆ มันหลุดเป็นช่วง',
         mapSubtitle: 'ดูเส้นทางลูกค้าก่อนเดาว่าควรแก้อะไร',
@@ -24,7 +24,7 @@ export const aiosDiagnosticLandingCopy = {
         vslBody: 'วิดีโอนี้จะอธิบายว่าลูกค้าหลุดตรงไหนได้บ้าง และทำไมควรตรวจเส้นทางลูกค้าก่อนเพิ่มโฆษณาหรือเปลี่ยนวิธีทำงาน',
         vslPlaceholder: 'วิดีโอจะถูกเพิ่มหลังถ่ายทำ',
 
-        stagesKicker: 'Diagnostic ตรวจอะไร',
+        stagesKicker: 'แบบเช็กนี้ตรวจอะไร',
         stagesTitle: '5 จุดที่ทำให้งานรั่วโดยไม่รู้ตัว',
         stagesBody: 'แต่ละจุดคือช่วงที่ลูกค้ามีโอกาสหลุดจริงในธุรกิจบริการ ไม่ใช่กรอบทฤษฎี และไม่ใช่การขายเครื่องมือ',
 
@@ -32,36 +32,36 @@ export const aiosDiagnosticLandingCopy = {
         trustBody: 'ถ้ายังไม่รู้ว่าลูกค้าหลุดช่วงไหน การเพิ่มโฆษณาอาจแค่พาคนใหม่เข้ามารั่วที่เดิม การเปลี่ยนวิธีทำงานอาจแก้ผิดจุด Diagnostic ช่วยให้เห็นว่าควรแก้ตรงไหนก่อน',
 
         flowTitle: 'เริ่มแบบเบา ๆ แต่ได้ภาพชัดขึ้น',
-        flowBody: 'ตอบคำถามสั้น ๆ ตามงานจริง ดูว่าจุดไหนน่าจะทำให้งานหลุด แล้วค่อยตัดสินใจว่าจะคุยต่อหรือปรับอะไร',
+        flowBody: 'ตอบคำถามสั้น ๆ ตามงานจริง ดูว่าจุดไหนน่าจะทำให้งานหลุด ส่งผลใน LINE แล้วค่อยตัดสินใจว่าจะทำ AIOS Audit หรือปรับอะไรต่อ',
 
         finalCtaTitle: 'ก่อนแก้ระบบ ลองเช็กก่อนว่างานหลุดตรงไหน',
-        finalCtaBody: 'เริ่มจาก Diagnostic ฟรีแรงกดดันต่ำ ตอบตามความจริง แล้วดูภาพรวมก่อนตัดสินใจขั้นต่อไป',
+        finalCtaBody: 'เริ่มจากแบบเช็กฟรีแรงกดดันต่ำ ตอบตามความจริง แล้วส่งผลใน LINE เพื่อดูว่าควรทำ AIOS Audit และวางแผนต่ออย่างไร',
         finalCtaButton: 'เริ่มเช็กจุดรั่ว',
         finalCtaNote: 'ไม่มีคำถามเทคนิค ไม่ต้องเตรียมข้อมูลเยอะ และไม่ผูกมัดให้ซื้ออะไร',
 
         stages: [
             {
-                title: 'Discovery',
+                title: 'การเจอร้าน',
                 label: 'มีคนเห็นร้าน แต่ไม่ทักมา',
                 body: 'ลูกค้าอาจสนใจอยู่แล้ว แต่หน้าร้านออนไลน์ รีวิว พื้นที่รับงาน หรือปุ่มติดต่อยังไม่ชัดพอให้เขาก้าวต่อ',
             },
             {
-                title: 'Response',
+                title: 'การตอบกลับ',
                 label: 'ทักมาแล้ว แต่รอจนเย็น',
                 body: 'ลูกค้าบริการมักคุยกับหลายเจ้า ถ้าข้อความแรกหรือสายแรกหลุด โอกาสปิดงานก็หายไปตั้งแต่ยังไม่ได้เริ่ม',
             },
             {
-                title: 'Conversion',
+                title: 'การปิดงาน',
                 label: 'ขอราคาแล้วเงียบ',
                 body: 'จุดนี้มักทำให้เจ้าของร้านคิดว่าลูกค้าไม่จริงจัง ทั้งที่บางครั้งลูกค้าแค่ไม่มั่นใจ ไม่รู้ขั้นตอนต่อไป หรือไม่มีใครตามต่อ',
             },
             {
-                title: 'Delivery',
+                title: 'การส่งมอบงาน',
                 label: 'งานเริ่มแล้ว แต่ลูกค้ายังต้องถามซ้ำ',
                 body: 'ถ้าลูกค้าไม่รู้ช่างอยู่ไหน รวมอะไรบ้าง หรือจบงานแล้วได้หลักฐานอะไร ความไว้ใจจะรั่วระหว่างส่งมอบ',
             },
             {
-                title: 'Retention',
+                title: 'การกลับมาใช้ซ้ำ',
                 label: 'จบงานแล้วเงียบยาว',
                 body: 'ลูกค้าเก่า รีวิว และคนที่เคยสนใจคือรายได้ที่ใกล้ที่สุด แต่หลายธุรกิจปล่อยให้หายไปหลังจบงาน',
             },
@@ -88,6 +88,31 @@ export const aiosDiagnosticLandingCopy = {
                 body: 'แยกให้ออกว่าควรแก้หน้าร้าน การตอบกลับ การตามราคา หรือการดึงลูกค้าเก่า',
             },
         ],
+        answers: {
+            kicker: 'ก่อนเริ่มเช็ก',
+            items: [
+                {
+                    question: 'แบบเช็กนี้เหมาะกับใคร?',
+                    answer: 'เหมาะกับเจ้าของธุรกิจบริการที่มีลูกค้าเข้ามาอยู่แล้ว แต่ยังไม่แน่ใจว่าหลุดช่วงไหน',
+                },
+                {
+                    question: 'เช็กเสร็จแล้วเกิดอะไรขึ้น?',
+                    answer: 'คุณจะเห็นภาพรวมก่อน แล้วส่งผลมาใน LINE เพื่อดูว่าควรแก้ตรงไหนหรือทำ AIOS Audit ต่อไหม',
+                },
+                {
+                    question: 'ต้องซื้ออะไรไหม?',
+                    answer: 'ไม่ต้อง แบบเช็กนี้มีไว้เพื่อดูจุดรั่วก่อน ยังไม่ผูกกับการซื้ออะไร',
+                },
+                {
+                    question: 'ยังเลือกเองได้อยู่ไหม?',
+                    answer: 'ได้ทั้งหมด คุณเป็นคนตัดสินใจเองว่าจะคุยต่อ ทำ Audit หรือหยุดไว้แค่นี้',
+                },
+                {
+                    question: 'คุยกันออนไลน์ได้ไหม?',
+                    answer: 'ได้ AIOS Audit ทำผ่านเซสชันออนไลน์ และบันทึกไว้กลับไปทบทวนได้',
+                },
+            ],
+        },
 
         flowSteps: [
             {
@@ -109,8 +134,8 @@ export const aiosDiagnosticLandingCopy = {
         heroTitle: 'You may already have demand. The problem is where jobs are leaking.',
         heroSubtitle: 'Some customers see you and never message. Some message on LINE and disappear. Some ask for a quote and go quiet. Some finish a job and never come back. This diagnostic shows where customers drop off before you change the whole setup.',
         heroPrimaryCta: 'Find the leakage points',
-        heroSecondaryCta: 'See the 5 checks',
-        heroTrustNote: 'Answer from what really happens. It is quick, practical, and does not ask you to buy anything.',
+        heroSecondaryCta: 'See the questions first',
+        heroTrustNote: 'Start with the 15-question check, then send the result on LINE to see whether an AIOS Audit is needed.',
         heroImageAlt: 'An AC technician inspecting an air conditioner on site',
         mapTitle: 'Jobs do not just vanish. They leak by stage.',
         mapSubtitle: 'Review the customer journey before guessing what to fix',
@@ -137,10 +162,10 @@ export const aiosDiagnosticLandingCopy = {
         trustBody: 'If you do not know where customers are leaking, more ads can simply send more people into the same gap. Changing the workflow can solve the wrong problem. The diagnostic helps you see what should be fixed first.',
 
         flowTitle: 'A light first step with a clearer picture',
-        flowBody: 'Answer short questions based on the real business, see where jobs may be leaking, then decide whether anything needs changing.',
+        flowBody: 'Answer short questions based on the real business, see where jobs may be leaking, send the result on LINE, then decide whether an AIOS Audit should follow.',
 
         finalCtaTitle: 'Before changing the system, check where jobs are leaking',
-        finalCtaBody: 'Start with a low-pressure diagnostic. Answer honestly, see the pattern, then decide the next step.',
+        finalCtaBody: 'Start with a low-pressure diagnostic, send the result on LINE, then decide whether an AIOS Audit and implementation should follow.',
         finalCtaButton: 'Start the leakage check',
         finalCtaNote: 'No technical questions, no heavy preparation, and no obligation to buy anything.',
 
@@ -193,6 +218,31 @@ export const aiosDiagnosticLandingCopy = {
                 body: 'Separate whether the issue is discovery, response, quoting, delivery, or old customer follow-up.',
             },
         ],
+        answers: {
+            kicker: 'Before you start',
+            items: [
+                {
+                    question: 'Who is this check for?',
+                    answer: 'It is for service business owners who already have some demand but cannot yet see where customers are dropping off.',
+                },
+                {
+                    question: 'What happens after the check?',
+                    answer: 'You see the pattern first, then send the result on LINE to decide what should be fixed or whether AIOS Audit should follow.',
+                },
+                {
+                    question: 'Do I have to buy anything?',
+                    answer: 'No. The check is there to reveal the leak first, not to force a purchase.',
+                },
+                {
+                    question: 'Can I stay in control?',
+                    answer: 'Yes. You decide whether to continue, run an audit, or stop after the check.',
+                },
+                {
+                    question: 'Are sessions online?',
+                    answer: 'Yes. AIOS Audit sessions are online and can be recorded for review later.',
+                },
+            ],
+        },
 
         flowSteps: [
             {

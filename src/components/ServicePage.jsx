@@ -182,7 +182,7 @@ const ServicePage = ({
             {/* Who it's for. Only /openbrain carries this band, where the tier ladder sits on the
                 other five pages, because no tiers exist for it. */}
             {who > 0 ? (
-                <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
+                <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.10] sm:px-6 sm:py-20 lg:px-8">
                     <div className="mx-auto max-w-6xl">
                         <motion.h2
                             {...fadeUp}
@@ -199,7 +199,7 @@ const ServicePage = ({
                                         key={n}
                                         {...fadeUp}
                                         transition={{ duration: 0.5, delay: (n - 1) * 0.08 }}
-                                        className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
+                                        className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-white/20 dark:bg-white/[0.10]"
                                     >
                                         {Icon ? (
                                             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-200">
@@ -217,7 +217,7 @@ const ServicePage = ({
 
             {/* How it runs */}
             {steps > 0 ? (
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.10] sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2
                         {...fadeUp}
@@ -281,7 +281,7 @@ const ServicePage = ({
                                 key={n}
                                 {...fadeUp}
                                 transition={{ duration: 0.45, delay: (n % 2) * 0.06 }}
-                                className="flex gap-4 rounded-xl border border-slate-200 bg-stone-50 p-5 dark:border-white/10 dark:bg-white/[0.04]"
+                                className="flex gap-4 rounded-xl border border-slate-200 bg-stone-50 p-5 dark:border-white/20 dark:bg-white/[0.10]"
                             >
                                 <span className="mt-0.5 shrink-0 text-indigo-700 dark:text-indigo-300">
                                     <Check size={20} aria-hidden="true" />
@@ -304,7 +304,7 @@ const ServicePage = ({
 
             {/* The tiers. Name, description and the catalogue's inclusion rows. No price. */}
             {tiers > 0 ? (
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.03] sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.10] sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2
                         {...fadeUp}
@@ -319,7 +319,7 @@ const ServicePage = ({
                                 key={tier.name}
                                 {...fadeUp}
                                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
+                                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-white/20 dark:bg-white/[0.10]"
                             >
                                 <div className="flex items-center justify-between gap-4">
                                     {tier.Icon ? (
@@ -331,7 +331,7 @@ const ServicePage = ({
                                 </div>
                                 <h3 className="mt-6 text-xl font-bold leading-7 text-slate-950 dark:text-white">{tier.name}</h3>
                                 <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{tier.desc}</p>
-                                <dl className="mt-6 space-y-3 border-t border-slate-100 pt-6 dark:border-white/10">
+                                <dl className="mt-6 space-y-3 border-t border-slate-100 pt-6 dark:border-white/20">
                                     {rowList.map((row) => (
                                         <div key={row.label} className="flex justify-between gap-4 text-sm leading-6">
                                             <dt className="font-semibold text-slate-950 dark:text-white">{row.label}</dt>

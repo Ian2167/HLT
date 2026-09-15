@@ -68,13 +68,13 @@ const AdoptionLadderMock = () => (
             <MockChip tone="solid">you are here</MockChip>
         </div>
 
-        <div className="mt-7 border-t border-slate-200 pt-6 dark:border-white/10">
+        <div className="mt-7 border-t border-slate-200 pt-6 dark:border-white/20">
             <MockLabel>Ranked by effort and impact</MockLabel>
             <ul className="mt-4 space-y-2.5">
                 {CANDIDATES.map((candidate) => (
                     <li
                         key={candidate.rank}
-                        className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl bg-stone-100 px-3.5 py-2.5 dark:bg-white/[0.05]"
+                        className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl bg-stone-100 px-3.5 py-2.5 dark:bg-white/[0.10]"
                     >
                         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-hltNavy text-[11px] font-bold text-white dark:bg-white dark:text-hltNavy">
                             {candidate.rank}
