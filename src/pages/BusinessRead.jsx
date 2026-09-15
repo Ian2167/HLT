@@ -211,11 +211,11 @@ const BusinessRead = () => {
                     {/* id is a screenshot target for shoot-business-read-proof.mjs, nothing else. */}
                     <div
                         id="br-tier-table"
-                        className="hidden md:block max-w-5xl mx-auto mt-14 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
+                        className="hidden md:block max-w-5xl mx-auto mt-14 overflow-hidden rounded-xl card-glass"
                     >
                         <table className="w-full text-left text-sm">
                             <thead>
-                                <tr className="border-b border-slate-200 dark:border-slate-700">
+                                <tr className="border-b border-slate-200 dark:border-white/20">
                                     <th className="p-4"></th>
                                     {tiers.map((tier) => (
                                         <th key={tier.name} className="p-4 font-bold text-slate-900 dark:text-white">
@@ -226,7 +226,7 @@ const BusinessRead = () => {
                             </thead>
                             <tbody>
                                 {rows.map((row) => (
-                                    <tr key={row.label} className="border-b border-slate-100 dark:border-slate-700/60 last:border-0">
+                                    <tr key={row.label} className="border-b border-slate-100 dark:border-white/10 last:border-0">
                                         <th scope="row" className="p-4 font-semibold text-slate-900 dark:text-white align-top">
                                             {row.label}
                                         </th>

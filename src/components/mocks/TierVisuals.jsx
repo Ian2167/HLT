@@ -15,8 +15,13 @@ export const DepthLadder = ({ depth }) => (
             <span
                 key={bar}
                 style={{ height: `${8 + bar * 6}px` }}
+                // Ian, 15 September 2026 09:2x Bangkok: "make the bars on the chart Icons purple
+                // for added impact", then 09:3x: the purple was too faded and must match the
+                // "Talk to us on LINE" button, which is bg-indigo-600 in both themes. So the
+                // filled bars are indigo-600 flat, never a lighter dark-mode variant. The
+                // unfilled ones stay quiet so the depth still reads as a count.
                 className={`w-1.5 rounded-sm ${bar <= depth
-                    ? 'bg-hltNavy dark:bg-white'
+                    ? 'bg-indigo-600'
                     : 'bg-slate-200 dark:bg-white/20'}`}
             />
         ))}

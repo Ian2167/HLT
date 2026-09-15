@@ -39,10 +39,20 @@
   @apply backdrop-blur-md bg-white/70 dark:bg-slate-900/70 border border-slate-200/50 dark:border-white/10;
 }
 
-/* Ian, 15 Sept 2026 08:1x Bangkok: "give the cards a glass appearance". Frosted surface, light
-   edge, inner highlight; sits over the navy so the section band shows through the blur. */
+/* THE HLT CARD TREATMENT. LOCKED BY IAN, 15 September 2026, 09:2x Bangkok: "I really like this
+   style can we lock in this Card treatment for the site." Every card on this site uses this class
+   and nothing else: frosted surface, light edge, inner highlight, sitting over the navy so the
+   section band shows through the blur. A new card gets `card-glass`; it never gets its own
+   bg/border pair. Changing it changes every card at once, which is the point. */
 .card-glass {
-  @apply backdrop-blur-xl bg-white/75 border border-slate-200 shadow-lg shadow-slate-900/5 dark:bg-white/[0.08] dark:border-white/20 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10;
+  @apply backdrop-blur-xl bg-white/75 border border-slate-200 shadow-lg shadow-slate-900/5 transition-colors duration-200 dark:bg-white/[0.08] dark:border-white/20 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10;
+}
+
+/* Ian, 15 September 2026 09:3x Bangkok: "Maybe you can have it that the brighter blue appears on
+   hover over cards?" The card lifts to the button's own indigo edge and a warmer ground on hover,
+   so the brighter blue is a reward for the pointer rather than the resting state. */
+.card-glass:hover {
+  @apply border-indigo-500 shadow-indigo-900/10 dark:border-indigo-500 dark:bg-indigo-500/[0.14] dark:ring-indigo-400/30;
 }
 
 .glass-card {
