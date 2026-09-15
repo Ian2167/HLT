@@ -131,7 +131,6 @@ const ServicePage = ({
                     gradient is added so the headline column keeps its contrast. */}
                 <div className="absolute inset-0 bg-hltNavy/55" />
                 <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-b from-hltNavy/30 via-transparent to-hltNavy/60" />
 
                 <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28">

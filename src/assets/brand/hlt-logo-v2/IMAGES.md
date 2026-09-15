@@ -63,3 +63,7 @@ All three read from this machine on 14 September 2026, evening Bangkok. Only the
 ---
 
 **When the real photographs arrive** (after Connecting Hua Hin, 18 September 2026), swap the URL in the page's copy module under `src\copy\`, change the alt text in the same place, update the row here, and re-run the page's copy fixture, which fails if a page carries an image this file doesn't list.
+
+## /business-read hero, added 15 September 2026 08:1x Bangkok by the EA Desk
+
+- `https://images.unsplash.com/photo-1743796055664-3473eedab36e?auto=format&fit=crop&w=1600&q=70` : "Magnifying glass sits near a laptop on a table", MJ Duford (@duforddigital), Unsplash License (free, no attribution required), page https://unsplash.com/photos/magnifying-glass-sits-near-a-laptop-on-a-table-P_5mirRrg0k, read in the in-app browser this run. Ian asked for "a person with a magnifying glass"; the person images found were Unsplash+ (paid) and were not used.

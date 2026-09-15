@@ -105,18 +105,30 @@ const BusinessRead = () => {
                 is handled by the effect above, for the reason recorded there. */}
             <title>{t('brMetaTitle')}</title>
 
-            {/* Hero */}
+            {/* Hero. Ian, 15 Sept 2026 08:1x Bangkok: "the Business Read needs an Image, maybe a person
+                with a magnifying glass". A free-licence Unsplash photograph (magnifying glass by a
+                laptop; the person-with-glass images on Unsplash are paid Unsplash+), under the same
+                card-navy wash and gradients as the ServicePage heroes, at the 55 per cent Ian set. */}
             <section className="relative py-20 overflow-hidden">
-                <div className="container mx-auto px-6 text-center">
+                <img
+                    src={t('brHeroImage')}
+                    alt={t('brHeroImageAlt')}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading="eager"
+                />
+                <div className="absolute inset-0 bg-hltNavy/55" />
+                <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-b from-hltNavy/30 via-transparent to-hltNavy/60" />
+                <div className="relative container mx-auto px-6 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
-                        <h1 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-8 max-w-4xl mx-auto leading-tight">
+                        <h1 className="text-3xl md:text-5xl font-bold text-white mb-8 max-w-4xl mx-auto leading-tight">
                             {t('brHeroHeadline')}
                         </h1>
-                        <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-10">
+                        <p className="text-lg md:text-xl text-slate-100 max-w-3xl mx-auto mb-10">
                             {t('brHeroLead')}
                         </p>
                         <a
@@ -128,7 +140,7 @@ const BusinessRead = () => {
                             {t('brCtaLabel')}
                             <ArrowRight size={20} aria-hidden="true" />
                         </a>
-                        <p className="mt-5 text-sm text-slate-500 dark:text-slate-400">
+                        <p className="mt-5 text-sm text-slate-200">
                             {t('brHeroCtaNote')}
                         </p>
                     </motion.div>

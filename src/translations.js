@@ -313,6 +313,8 @@ export const translations = {
         brHeroLead: "Most owners aren't short of work. They're losing margin on the way to the invoice, and nobody inside the business can point at where. We spend an hour with you, do the desk work you don't see, and send you a written read in three working days. You're not obliged to do anything with it.",
         brCtaLabel: 'Book the hour on LINE',
         brHeroCtaNote: 'THB 15,000, excluding VAT at 7 per cent. Three working days.',
+        brHeroImage: 'https://images.unsplash.com/photo-1743796055664-3473eedab36e?auto=format&fit=crop&w=1600&q=70',
+        brHeroImageAlt: 'A magnifying glass beside a laptop on a table.',
 
         brSummaryHeading: 'Margin is down. Turnover is down. And nobody can point at the reason.',
         brSummaryP1: "That isn't a mystery, it's a measurement problem. Somewhere between the enquiry and the invoice there's a place where a cost exists and nobody can see it, and by the time it shows up, the decision it should have informed has already been taken.",
@@ -726,6 +728,8 @@ export const translations = {
         brHeroLead: "Most owners aren't short of work. They're losing margin on the way to the invoice, and nobody inside the business can point at where. We spend an hour with you, do the desk work you don't see, and send you a written read in three working days. You're not obliged to do anything with it.",
         brCtaLabel: 'Book the hour on LINE',
         brHeroCtaNote: 'THB 15,000, excluding VAT at 7 per cent. Three working days.',
+        brHeroImage: 'https://images.unsplash.com/photo-1743796055664-3473eedab36e?auto=format&fit=crop&w=1600&q=70',
+        brHeroImageAlt: 'A magnifying glass beside a laptop on a table.',
 
         brSummaryHeading: 'Margin is down. Turnover is down. And nobody can point at the reason.',
         brSummaryP1: "That isn't a mystery, it's a measurement problem. Somewhere between the enquiry and the invoice there's a place where a cost exists and nobody can see it, and by the time it shows up, the decision it should have informed has already been taken.",
