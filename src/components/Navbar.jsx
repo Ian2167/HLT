@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import LanguageToggle from './LanguageToggle';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 // Logo v2, 14 Sept 2026: the real High Level Thai mark, derived from Ian's Canva source
 // vector. See src/assets/brand/hlt-logo-v2/README.md, which records what the earlier violet
@@ -11,7 +11,7 @@ import { useLanguage } from '../context/LanguageContext';
 import hltLockupColour from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-colour.svg';
 import hltLockupWhite from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-white.svg';
 import { hltWebsiteCopy } from '../config/hltWebsite';
-import { HEADER_SERVICES, ROUTE_HOME } from '../constants/routes';
+import { HEADER_SERVICES, ROUTE_EXECUTIVE_ASSISTANT, ROUTE_HOME } from '../constants/routes';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 
 // THE HEADER, REWRITTEN 14 September 2026 on Ian's ruling at 16:24 Bangkok: the links array is
@@ -46,6 +46,22 @@ const Navbar = () => {
         href: service.to,
     }));
 
+    // Ian, 15 September 2026 12:5x Bangkok: "make the header names stay in purple when you are on
+    // that page". Home matches only exactly; a service page matches its own path and anything
+    // under it, so a future sub-page keeps its parent lit. The alias /custom-ai-assistant also
+    // lights Executive Assistant, because it is the same page under its old name.
+    const { pathname } = useLocation();
+    const isHere = (href) => {
+        if (href === ROUTE_HOME) return pathname === ROUTE_HOME;
+        if (href === ROUTE_EXECUTIVE_ASSISTANT && pathname.startsWith('/custom-ai-assistant')) return true;
+
+        return pathname === href || pathname.startsWith(`${href}/`);
+    };
+    const deskLink = (href) =>
+        `text-sm font-medium transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 ${isHere(href)
+            ? 'text-indigo-600 dark:text-indigo-400'
+            : 'text-slate-600 dark:text-slate-300'}`;
+
     return (
         <nav
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || mobileMenuOpen
@@ -72,7 +88,7 @@ const Navbar = () => {
 
                 {/* Desktop Nav */}
                 <div className="hidden lg:flex items-center gap-6">
-                    <Link to={ROUTE_HOME} className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                    <Link to={ROUTE_HOME} className={deskLink(ROUTE_HOME)} aria-current={isHere(ROUTE_HOME) ? 'page' : undefined}>
                         {t('homeNavHome')}
                     </Link>
 
@@ -80,7 +96,8 @@ const Navbar = () => {
                         <Link
                             key={link.href}
                             to={link.href}
-                            className="text-sm font-medium text-slate-600 transition-colors hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400"
+                            className={deskLink(link.href)}
+                            aria-current={isHere(link.href) ? 'page' : undefined}
                         >
                             {link.name}
                         </Link>
@@ -121,7 +138,10 @@ const Navbar = () => {
                             <Link
                                 to={ROUTE_HOME}
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="text-lg font-medium text-slate-900 dark:text-white"
+                                className={`text-lg font-medium ${isHere(ROUTE_HOME)
+                                    ? 'text-indigo-600 dark:text-indigo-400'
+                                    : 'text-slate-900 dark:text-white'}`}
+                                aria-current={isHere(ROUTE_HOME) ? 'page' : undefined}
                             >
                                 {t('homeNavHome')}
                             </Link>
@@ -130,7 +150,10 @@ const Navbar = () => {
                                     key={link.href}
                                     to={link.href}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="text-lg font-medium text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 pl-4 border-l-2 border-slate-100 dark:border-white/20"
+                                    className={`text-lg font-medium pl-4 border-l-2 hover:text-indigo-600 dark:hover:text-indigo-400 ${isHere(link.href)
+                                        ? 'text-indigo-600 dark:text-indigo-400 border-indigo-600 dark:border-indigo-400'
+                                        : 'text-slate-900 dark:text-white border-slate-100 dark:border-white/20'}`}
+                                    aria-current={isHere(link.href) ? 'page' : undefined}
                                 >
                                     {link.name}
                                 </Link>
