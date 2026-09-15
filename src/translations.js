@@ -402,7 +402,7 @@ export const translations = {
         brStep4Lead: 'The read is written.',
         brStep4Body: 'One page you can act on, and the evidence behind it.',
         brStep5Lead: 'Delivery.',
-        brStep5Body: 'It lands in your inbox on the promised day. On Standard and Advanced we walk you through it.',
+        brStep5Body: 'It lands in your inbox on the promised day. On the two deeper reads we walk you through it.',
 
         brFaqHeading: 'Questions owners ask first',
         brFaq1Q: 'Do I need to send you anything before the call?',
@@ -817,7 +817,7 @@ export const translations = {
         brStep4Lead: 'The read is written.',
         brStep4Body: 'One page you can act on, and the evidence behind it.',
         brStep5Lead: 'Delivery.',
-        brStep5Body: 'It lands in your inbox on the promised day. On Standard and Advanced we walk you through it.',
+        brStep5Body: 'It lands in your inbox on the promised day. On the two deeper reads we walk you through it.',
 
         brFaqHeading: 'Questions owners ask first',
         brFaq1Q: 'Do I need to send you anything before the call?',
