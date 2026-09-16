@@ -1,4 +1,5 @@
-const LINE_BASE = 'https://line.me/ti/p/5_uWYMe4nU';
+// Ian, 17 September 2026, 06:5x Bangkok, supplied this exact URL for every LINE button on the site.
+const LINE_BASE = 'https://line.me/ti/p/5_UWYMe4nU';
 const utm = (content) =>
     `${LINE_BASE}?utm_source=hlt_website&utm_medium=line_cta&utm_campaign=contact&utm_content=${content}`;
 
@@ -19,7 +20,10 @@ export const LINE_SUPPORT = utm('support');
 // the CTA target block) says "this exact URL, nothing appended without Ian's word". Every
 // other constant in this file is left exactly as it was. Flag 2 of that deck asks Ian to rule
 // the split between the two accounts; until he does, both live side by side.
-export const LINE_BUSINESS_READ = 'https://line.me/R/ti/p/@highlevelthai';
+// 17 September 2026: https://line.me/R/ti/p/@highlevelthai answered HTTP 404 (no Official Account
+// under that ID; node fetch 16 Sept 17:02 Bangkok). Ian supplied the working add-friend URL on
+// 17 September; it is the one LINE target for the whole site until he rules otherwise.
+export const LINE_BUSINESS_READ = 'https://line.me/ti/p/5_UWYMe4nU';
 
 // The six rebuilt pages (14 September 2026: the five catalogue services, OpenBrain and the
 // summary home page) all point at the SAME Official Account Ian ruled above. This is an alias,
