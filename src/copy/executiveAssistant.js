@@ -124,5 +124,5 @@ export const customAiAssistantCopy = {
 
     caaClosingHeading: "Your expert's judgement, working when they're not.",
     caaClosingBody: "Message us on LINE with three real cases and a few lines in your own words. That's everything we need to start, and you'll have the pack whatever happens next.",
-    caaLineHandle: 'LINE Official Account @highlevelthai',
+    caaLineHandle: 'LINE Official Account',
 };

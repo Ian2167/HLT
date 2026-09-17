@@ -419,7 +419,7 @@ export const translations = {
 
         brClosingHeading: 'One hour in. A written diagnosis out.',
         brClosingBody: "Message us on LINE and pick a time that suits you. There's nothing to prepare and nothing to send first, and you'll have the written read three working days after we talk.",
-        brLineHandle: 'LINE Official Account @highlevelthai'
+        brLineHandle: 'LINE Official Account'
     },
     th: {
         // TH PENDING: English values on purpose. See the note at the top of this file.
@@ -834,7 +834,7 @@ export const translations = {
 
         brClosingHeading: 'One hour in. A written diagnosis out.',
         brClosingBody: "Message us on LINE and pick a time that suits you. There's nothing to prepare and nothing to send first, and you'll have the written read three working days after we talk.",
-        brLineHandle: 'LINE Official Account @highlevelthai',
+        brLineHandle: 'LINE Official Account',
 
         // THE MACHINE THAI DRAFT, WIRED IN LAST SO IT OVERRIDES THE ENGLISH FALLBACKS ABOVE.
         // Ian, 15 September 2026 09:4x Bangkok: "I misunderstood on the Thai, I thought you would

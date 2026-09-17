@@ -1,5 +1,6 @@
-// Ian, 17 September 2026, 06:5x Bangkok, supplied this exact URL for every LINE button on the site.
-const LINE_BASE = 'https://line.me/ti/p/5_UWYMe4nU';
+// Ian, 17 September 2026, 07:0x Bangkok, supplied the High Level Thai Official Account add-friend
+// link (lin.ee → line.me/R/ti/p/@535zlmbx). One target for every LINE button on the site.
+const LINE_BASE = 'https://lin.ee/YQMkWI3';
 const utm = (content) =>
     `${LINE_BASE}?utm_source=hlt_website&utm_medium=line_cta&utm_campaign=contact&utm_content=${content}`;
 
@@ -21,9 +22,9 @@ export const LINE_SUPPORT = utm('support');
 // other constant in this file is left exactly as it was. Flag 2 of that deck asks Ian to rule
 // the split between the two accounts; until he does, both live side by side.
 // 17 September 2026: https://line.me/R/ti/p/@highlevelthai answered HTTP 404 (no Official Account
-// under that ID; node fetch 16 Sept 17:02 Bangkok). Ian supplied the working add-friend URL on
-// 17 September; it is the one LINE target for the whole site until he rules otherwise.
-export const LINE_BUSINESS_READ = 'https://line.me/ti/p/5_UWYMe4nU';
+// under that ID; node fetch 16 Sept 17:02 Bangkok). Ian supplied the Official Account's own
+// add-friend link on 17 September; it is the one LINE target for the whole site.
+export const LINE_BUSINESS_READ = 'https://lin.ee/YQMkWI3';
 
 // The six rebuilt pages (14 September 2026: the five catalogue services, OpenBrain and the
 // summary home page) all point at the SAME Official Account Ian ruled above. This is an alias,

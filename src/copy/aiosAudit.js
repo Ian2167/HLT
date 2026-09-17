@@ -135,5 +135,5 @@ export const aiosAuditCopy = {
 
     aiosClosingHeading: 'Interviews in. A ranked, costed plan out.',
     aiosClosingBody: 'Message us on LINE and tell us which parts of the business you want us to speak to. We read the business before the first session, so the sooner you say yes the sooner that starts.',
-    aiosLineHandle: 'LINE Official Account @highlevelthai',
+    aiosLineHandle: 'LINE Official Account',
 };

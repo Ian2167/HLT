@@ -55,7 +55,7 @@ export const homeCopy = {
 
     homeClosingHeading: 'Not sure which one you need?',
     homeClosingBody: "Message us on LINE and say what's going wrong. If the honest answer is that none of these five is right for you yet, we'll say so.",
-    homeLineHandle: 'LINE Official Account @highlevelthai',
+    homeLineHandle: 'LINE Official Account',
 };
 
 // Ian's own Thai for his positioning line, 14 September 2026, 16:03 Bangkok. It overrides ONE

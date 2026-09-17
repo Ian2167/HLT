@@ -92,7 +92,7 @@ export const thaiDraft = {
 
     homeClosingHeading: 'ยังไม่แน่ใจว่าควรเริ่มจากอันไหน?',
     homeClosingBody: 'ทักมาใน LINE แล้วเล่าว่าตอนนี้ติดตรงไหน ถ้าคำตอบตรงๆ คือยังไม่มีอันไหนในห้าอันนี้ที่เหมาะกับคุณตอนนี้ เราก็จะบอกตามนั้น',
-    homeLineHandle: 'LINE Official Account @highlevelthai',
+    homeLineHandle: 'LINE Official Account',
 
     // =====================================================================================
     // THE BUSINESS READ (/business-read)
@@ -210,7 +210,7 @@ export const thaiDraft = {
 
     brClosingHeading: 'ให้เวลาหนึ่งชั่วโมง ได้รายงานวิเคราะห์กลับไป',
     brClosingBody: 'ทักมาใน LINE แล้วเลือกเวลาที่คุณสะดวก ไม่ต้องเตรียมอะไร ไม่ต้องส่งอะไรมาก่อน และคุณจะได้รายงานภายใน 3 วันทำการหลังจากที่เราคุยกัน',
-    brLineHandle: 'LINE Official Account @highlevelthai',
+    brLineHandle: 'LINE Official Account',
 
     // =====================================================================================
     // AIOS AUDIT (/aios-audit)
@@ -318,7 +318,7 @@ export const thaiDraft = {
 
     aiosClosingHeading: 'ให้เราสัมภาษณ์ แล้วรับแผนงานที่จัดลำดับและตีราคาไว้แล้วกลับไป',
     aiosClosingBody: 'ทักมาใน LINE แล้วบอกว่าอยากให้เราคุยกับส่วนไหนของธุรกิจบ้าง เราอ่านธุรกิจก่อนเริ่มเซสชันแรก ยิ่งตกลงเร็ว งานส่วนนั้นก็ยิ่งเริ่มเร็ว',
-    aiosLineHandle: 'LINE Official Account @highlevelthai',
+    aiosLineHandle: 'LINE Official Account',
 
     // =====================================================================================
     // OPENBRAIN (/openbrain)
@@ -352,7 +352,7 @@ export const thaiDraft = {
 
     obClosingHeading: 'เริ่มจากสิ่งที่ธุรกิจคุณรู้อยู่แล้ว',
     obClosingBody: 'ทักมาใน LINE แล้วบอกว่าตอนนี้ความรู้อยู่ที่ไหน อยู่ที่คน อยู่ในโฟลเดอร์ หรืออยู่ในกล่องอีเมล บริการนี้ยังไม่มีแพ็กเกจตายตัว เราจะกำหนดขอบเขตไปด้วยกันก่อนจะเสนอราคา',
-    obLineHandle: 'LINE Official Account @highlevelthai',
+    obLineHandle: 'LINE Official Account',
 
     // =====================================================================================
     // EXECUTIVE ASSISTANT (/executive-assistant)
@@ -462,7 +462,7 @@ export const thaiDraft = {
 
     caaClosingHeading: 'วิธีตัดสินใจของคนเก่งในธุรกิจคุณ ยังทำงานต่อแม้วันที่เขาไม่อยู่',
     caaClosingBody: 'ทักมาใน LINE พร้อมเคสจริงสามเคส และประโยคสองสามบรรทัดที่เขียนด้วยคำพูดของคุณเอง แค่นี้เราก็เริ่มได้ และชุดความรู้จะเป็นของคุณไม่ว่าจะเกิดอะไรขึ้นต่อจากนั้น',
-    caaLineHandle: 'LINE Official Account @highlevelthai',
+    caaLineHandle: 'LINE Official Account',
 
     // =====================================================================================
     // OPS COCKPIT (/ops-cockpit)
@@ -572,5 +572,5 @@ export const thaiDraft = {
 
     ocpClosingHeading: 'หน้าจอแรกที่คุณเปิด พร้อมงานของคุณอยู่ในนั้น',
     ocpClosingBody: 'ทักมาใน LINE พร้อมบอกว่าคุณเดินคิวงานอะไรอยู่จริงๆ และสถานะไหนแปลว่าเสร็จ เอกสารทดสอบการยอมรับงานจะถูกเขียนก่อนเริ่มโค้ด คุณจะได้เห็นว่าคำว่าเสร็จหน้าตาเป็นยังไงตั้งแต่ก่อนเราเริ่ม',
-    ocpLineHandle: 'LINE Official Account @highlevelthai',
+    ocpLineHandle: 'LINE Official Account',
 };

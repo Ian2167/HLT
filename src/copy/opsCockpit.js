@@ -115,5 +115,5 @@ export const opsCockpitCopy = {
 
     ocpClosingHeading: 'The screen you open first, with your work in it.',
     ocpClosingBody: 'Message us on LINE with the queues you actually run and which status means done. The acceptance test gets written before any code, so you know what finished looks like before we start.',
-    ocpLineHandle: 'LINE Official Account @highlevelthai',
+    ocpLineHandle: 'LINE Official Account',
 };

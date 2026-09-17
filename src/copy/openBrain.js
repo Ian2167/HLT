@@ -43,5 +43,5 @@ export const openBrainCopy = {
 
     obClosingHeading: 'Start with what your business already knows.',
     obClosingBody: "Message us on LINE and tell us where the knowledge lives now: the person, the folder, the inbox. There's no fixed package for this one yet, so it gets scoped with you before anything is quoted.",
-    obLineHandle: 'LINE Official Account @highlevelthai',
+    obLineHandle: 'LINE Official Account',
 };

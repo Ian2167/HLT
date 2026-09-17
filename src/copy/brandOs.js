@@ -113,5 +113,5 @@ export const brandOsCopy = {
 
     bosClosingHeading: 'One file. Your colours, your words, your templates.',
     bosClosingBody: 'Message us on LINE with whatever you have already, even if you dislike it. Ninety minutes on the call, and the files are yours to keep.',
-    bosLineHandle: 'LINE Official Account @highlevelthai',
+    bosLineHandle: 'LINE Official Account',
 };
