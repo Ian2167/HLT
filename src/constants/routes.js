@@ -19,9 +19,51 @@ export const ROUTE_OPS_COCKPIT = '/ops-cockpit';
 export const ROUTE_BUSINESS_READ = '/business-read';
 export const ROUTE_OPENBRAIN = '/openbrain';
 
+// ---------------------------------------------------------------------------------------
+// THE SIMPLIFIED PUBLIC SITE, 18 September 2026.
+// Authority: C:\Projects\hlt-estate\01-doctrine\HLT-SITE-DIRECTIVE-2026-09-17.md, Ian's own
+// words, and his GO of 07:41 Bangkok 18 September 2026: "Proceed with all six public pages.
+// Preserve the simplified navigation. Do not improvise new product pages."
+//
+// Six public pages and one login stub. The five service pages are NOT retired: their routes,
+// their files and their copy all stay exactly as they are, on Ian's opening line "Do not delete
+// existing service or methodology content". What changes is that the header stops listing them.
+//
+// THERE IS NO /systems-we-build. The restructure plan offered it and the Desk ruled it out on
+// 18 September: no eighth page of any kind in this build. The consequence is recorded where it
+// bites, on the three capability cards in src/copy/homeRebuild.js, which render without a
+// Learn more link because there is nowhere for one to go.
+// ---------------------------------------------------------------------------------------
+export const ROUTE_HOW_IT_WORKS = '/how-it-works';
+export const ROUTE_EXAMPLES = '/examples';
+export const ROUTE_ABOUT = '/about';
+export const ROUTE_CONTACT = '/contact';
+export const ROUTE_CLIENT_LOGIN = '/client-login';
+
+// THE PUBLIC NAVIGATION, exactly as Ian ruled it: "Home | Business Read | How It Works |
+// Examples | About | Contact, with Client Login on the right. No service names in the main
+// navigation."
+//
+// Client Login is deliberately NOT in this array. It renders separately, on the right of the
+// divider, because his navigation line puts it there and because it is not part of the buying
+// journey. ROUTE_CLIENT_LOGIN above is what the header imports for it.
+export const PUBLIC_NAV = [
+    { labelKey: 'homeNavHome', to: ROUTE_HOME },
+    { labelKey: 'brNavLink', to: ROUTE_BUSINESS_READ },
+    { labelKey: 'hiwNavLink', to: ROUTE_HOW_IT_WORKS },
+    { labelKey: 'exNavLink', to: ROUTE_EXAMPLES },
+    { labelKey: 'aboutNavLink', to: ROUTE_ABOUT },
+    { labelKey: 'contactNavLink', to: ROUTE_CONTACT },
+];
+
 // THE LADDER. One order for the whole site: the header, the home page's stack and the "Step n of
 // 5" indicator on each service page all read this array, so a reorder is this array and nothing
 // else.
+//
+// 18 September 2026: THE HEADER NO LONGER READS THIS ARRAY, and neither does the rebuilt home
+// page. It is left exactly as it was because `ladderPosition` below still drives the "Step n of
+// 5" strip on the five service pages, which stay live and unlinked. Do not edit it in this
+// restructure.
 //
 // IAN, 14 September 2026, 18:10 Bangkok: "The 5 different elements should naturally stack on
 // each other starting with the Business Read." The order below is the Desk's reading of
