@@ -14,6 +14,23 @@ import { customAiAssistantCopy } from './copy/executiveAssistant';
 import { opsCockpitCopy } from './copy/opsCockpit';
 import { openBrainCopy } from './copy/openBrain';
 import { homeCopy, homeHeroHeadlineTh } from './copy/home';
+// The six simplified public pages, 18 September 2026, on Ian's directive of 17 September and
+// his GO of 07:41 Bangkok on the 18th. Same pattern as the modules above: one module per page,
+// every line lifted verbatim from that page's gated deck in
+//   C:\Projects\hlt-estate\02-builds\hlt-site-kit\copy\
+// and the SAME object spread into both `en` and `th`.
+//
+// TWO SECOND EXPORTS ARE DELIBERATELY NOT IMPORTED HERE. `contactFormCopyHeld` and
+// `clientLoginCopyHeld` hold the enquiry form's strings and the Workspace's sign-in and reset
+// messages. Neither flow exists, so neither object reaches this table, and a string outside this
+// table cannot be rendered by t() anywhere on the site. That is the mechanism behind two of
+// Ian's GO lines: "Do not activate the Contact form without a working destination" and the
+// Client Workspace security rule. Spread them when the builds that need them land, not before.
+import { howItWorksCopy } from './copy/howItWorks';
+import { examplesCopy } from './copy/examples';
+import { aboutCopy } from './copy/about';
+import { contactCopy } from './copy/contact';
+import { clientLoginCopy } from './copy/clientLogin';
 import { thaiDraft } from './copy/thaiDraft';
 
 export const translations = {
@@ -24,6 +41,13 @@ export const translations = {
         ...opsCockpitCopy,
         ...openBrainCopy,
         ...homeCopy,
+
+        // The six simplified public pages, 18 September 2026.
+        ...howItWorksCopy,
+        ...examplesCopy,
+        ...aboutCopy,
+        ...contactCopy,
+        ...clientLoginCopy,
 
         home: 'Home',
         services: 'Services',
@@ -429,6 +453,18 @@ export const translations = {
         ...opsCockpitCopy,
         ...openBrainCopy,
         ...homeCopy,
+
+        // The six simplified public pages, 18 September 2026. TH PENDING: English values on
+        // purpose, exactly as every module above does it. No line here was machine-translated
+        // and none may be: the Thai pass is a native speaker's job and a separate brief. The
+        // `thaiDraft` spread at the foot of this block carries no key from these five modules,
+        // so nothing here is overridden by the unreviewed draft.
+        ...howItWorksCopy,
+        ...examplesCopy,
+        ...aboutCopy,
+        ...contactCopy,
+        ...clientLoginCopy,
+
         // THE ONLY THAI STRING ON THE REBUILT SITE. Ian supplied it himself on 14 September
         // 2026 at 16:03 Bangkok, for the home hero line and no other key. No seat translated
         // it: HLT doctrine (HLT_GOVERNING_CONTEXT.md line 73) forbids line-by-line translation.
