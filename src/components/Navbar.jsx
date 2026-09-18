@@ -13,7 +13,7 @@ import { useLanguage } from '../context/LanguageContext';
 // no place here any more, because there is no longer a dark header for it to sit on.
 import hltLockupColour from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-colour.svg';
 import { hltWebsiteCopy } from '../config/hltWebsite';
-import { PUBLIC_NAV, ROUTE_CLIENT_LOGIN, ROUTE_EXECUTIVE_ASSISTANT, ROUTE_HOME } from '../constants/routes';
+import { PUBLIC_NAV, ROUTE_EXECUTIVE_ASSISTANT, ROUTE_HOME } from '../constants/routes';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 
 // THE HEADER, REWRITTEN 18 September 2026 on Ian's simplification directive of 17 September,
@@ -31,9 +31,23 @@ import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 // header stops pointing at them. That is his opening line, "Do not delete existing service or
 // methodology content", kept literally.
 //
-// WHY CLIENT LOGIN IS NOT IN PUBLIC_NAV. It renders separately, after the divider, as a quiet
-// text link rather than a button, so the LINE button stays the only primary action in the
-// header. It is not part of the buying journey and Ian's own line puts it on the right.
+// CLIENT LOGIN IS OUT OF THE HEADER. Ian, 13:3x Bangkok, 18 September 2026, verbatim: "The
+// Client Login can be dropped from the header." It used to render after the divider as a quiet
+// text link, on his earlier line that put it on the right. THE ROUTE AND THE PAGE STAY LIVE:
+// /client-login is still served in src/App.jsx and ROUTE_CLIENT_LOGIN still lives in
+// src/constants/routes.js. Only the header, desktop and mobile, stops pointing at it, which is
+// why this file no longer imports that constant. The divider stays, now separating the six nav
+// links from the language toggle and the LINE button.
+//
+// THE SPACING, 18 September 2026. Ian, a minute earlier, with a screenshot of the live header at
+// desktop width, verbatim: "Also the Header isn't well spaced and is quite clumsy looking." What
+// his screenshot showed was a row on two baselines: Business Read, How It Works and Talk to us on
+// LINE each broke over two lines while Home, Examples, About and Contact sat on one, so the gaps
+// read as uneven and the logo was jammed against Home. Four lines fix it and none of them touch a
+// word of copy: whitespace-nowrap on every nav link and on the LINE button, so no label may break;
+// lg:mr-10 on the logo lockup, so the mark has air before Home; gap-7 rather than gap-6 across the
+// desktop row, with the divider keeping mx-1; and the row's breakpoint, which is measured below
+// rather than guessed.
 //
 // WHY THE HARD-CODED HOME LINK WENT. Home is PUBLIC_NAV's first entry now, so rendering it
 // twice would have put two Home links in the header.
@@ -59,8 +73,10 @@ import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 // as dead styling on purpose: sweeping them was ruled out of scope for this commit, and dead
 // classes cost nothing once nothing can add the dark class.
 //
-// The breakpoint is lg, not md: six items plus a login link, a toggle and a button do not fit
-// a tablet.
+// THE BREAKPOINT IS MEASURED, NOT GUESSED. It was lg (1024px) and it stays lg: with the login
+// link gone and nothing allowed to wrap, the DOM read at 1024 wide puts the logo, the six links,
+// the divider, the toggle and the button on one line inside the container with room to spare. It
+// was never md: six items plus a toggle and a button do not fit a tablet.
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -94,7 +110,7 @@ const Navbar = () => {
         return pathname === href || pathname.startsWith(`${href}/`);
     };
     const deskLink = (href) =>
-        `text-sm font-medium transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 ${isHere(href)
+        `text-sm font-medium whitespace-nowrap transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 ${isHere(href)
             ? 'text-indigo-600 dark:text-indigo-400'
             : 'text-slate-600 dark:text-slate-300'}`;
 
@@ -108,7 +124,7 @@ const Navbar = () => {
             <div className="container mx-auto px-6 flex justify-between items-center">
 
                 {/* Logo */}
-                <Link to={ROUTE_HOME} className="flex items-center group" aria-label="High Level Thai">
+                <Link to={ROUTE_HOME} className="flex items-center group lg:mr-10" aria-label="High Level Thai">
                     <img
                         src={hltLockupColour}
                         alt="High Level Thai"
@@ -117,7 +133,7 @@ const Navbar = () => {
                 </Link>
 
                 {/* Desktop Nav */}
-                <div className="hidden lg:flex items-center gap-6">
+                <div className="hidden lg:flex items-center gap-7">
                     {links.map((link) => (
                         <Link
                             key={link.href}
@@ -129,23 +145,16 @@ const Navbar = () => {
                         </Link>
                     ))}
 
+                    {/* The divider, between the six nav links and the two controls. It kept its
+                        mx-1 when Client Login came out from behind it on Ian's 18 September
+                        ruling. */}
                     <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
-                    {/* Client Login, on the right of the divider, as Ian ruled. A quiet text
-                        link, never a button: the LINE button stays the header's one primary
-                        action and the login is not part of the buying journey. */}
-                    <Link
-                        to={ROUTE_CLIENT_LOGIN}
-                        className={deskLink(ROUTE_CLIENT_LOGIN)}
-                        aria-current={isHere(ROUTE_CLIENT_LOGIN) ? 'page' : undefined}
-                    >
-                        {t('clNavLink')}
-                    </Link>
                     <LanguageToggle />
                     <a
                         href={LINE_OFFICIAL_ACCOUNT}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-5 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-500 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                        className="px-5 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold whitespace-nowrap hover:bg-indigo-500 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                     >
                         {t('homeNavCtaLabel')}
                     </a>
@@ -164,9 +173,10 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay. THE SAME SEVEN ITEMS AS THE DESKTOP HEADER, IN THE SAME
-                ORDER, and that is the whole point of doing both halves in one commit: a header
-                that differs between a phone and a laptop is worse than either.
+            {/* Mobile Menu Overlay. THE SAME SIX ITEMS AS THE DESKTOP HEADER, IN THE SAME ORDER
+                (seven until Client Login came out of both halves on 18 September), and that is the
+                whole point of doing both halves in one commit: a header that differs between a
+                phone and a laptop is worse than either.
 
                 The hard-coded Home link that used to open this list went with the desktop one:
                 Home is PUBLIC_NAV's first entry now, so keeping it would have rendered Home
@@ -191,20 +201,12 @@ const Navbar = () => {
                                 </Link>
                             ))}
 
-                            {/* Client Login, below the divider and above the LINE button, which
-                                is where "on the right" lands once the header stacks. Same quiet
-                                text link as the desktop, never a button, for the same reason. */}
+                            {/* Client Login sat here, below the divider and above the LINE button.
+                                It came out on Ian's 18 September ruling, the same one that took it
+                                off the desktop bar, so the two halves still show the same items.
+                                The divider stays and now separates the six links from the one
+                                action. */}
                             <div className="h-px bg-slate-200 dark:bg-slate-700" />
-                            <Link
-                                to={ROUTE_CLIENT_LOGIN}
-                                onClick={() => setMobileMenuOpen(false)}
-                                className={`text-lg font-medium hover:text-indigo-600 dark:hover:text-indigo-400 ${isHere(ROUTE_CLIENT_LOGIN)
-                                    ? 'text-indigo-600 dark:text-indigo-400'
-                                    : 'text-slate-900 dark:text-white'}`}
-                                aria-current={isHere(ROUTE_CLIENT_LOGIN) ? 'page' : undefined}
-                            >
-                                {t('clNavLink')}
-                            </Link>
                             <a
                                 href={LINE_OFFICIAL_ACCOUNT}
                                 target="_blank"
