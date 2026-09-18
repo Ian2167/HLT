@@ -11,20 +11,38 @@ import { useLanguage } from '../context/LanguageContext';
 import hltLockupColour from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-colour.svg';
 import hltLockupWhite from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-white.svg';
 import { hltWebsiteCopy } from '../config/hltWebsite';
-import { HEADER_SERVICES, ROUTE_EXECUTIVE_ASSISTANT, ROUTE_HOME } from '../constants/routes';
+import { PUBLIC_NAV, ROUTE_CLIENT_LOGIN, ROUTE_EXECUTIVE_ASSISTANT, ROUTE_HOME } from '../constants/routes';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 
-// THE HEADER, REWRITTEN 14 September 2026 on Ian's ruling at 16:24 Bangkok: the links array is
-// exactly Home, the five live service pages, then the LINE button. Problem, Diagnostic, AIOS
-// Audit, Sectors and Insights all leave the header, desktop and mobile, because they point into
-// the retired offering. Brand OS leaves it too, on his 16:18 ruling, "Drop Brand OS, keep it on
-// Upwork". Every one of those routes stays live; only the header stops pointing at them.
+// THE HEADER, REWRITTEN 18 September 2026 on Ian's simplification directive of 17 September,
+// held verbatim at C:\Projects\hlt-estate\01-doctrine\HLT-SITE-DIRECTIVE-2026-09-17.md, and his
+// GO of 07:41 Bangkok on the 18th: "Preserve the simplified navigation."
 //
-// WHERE THE WORDS COME FROM. The service labels are each page's own nav key, already gated on
-// that page's copy deck. "Home" and the button label come from the home page's deck, section 6.
-// The order lives in src/constants/routes.js, so a renamed route is a one-line change.
+// His navigation line, verbatim: "Home | Business Read | How It Works | Examples | About |
+// Contact, with Client Login on the right. No service names in the main navigation."
 //
-// The breakpoint is lg, not md: six items plus two toggles and a button do not fit a tablet.
+// WHAT CHANGED, AND WHAT DID NOT. This header now reads PUBLIC_NAV rather than HEADER_SERVICES,
+// so the five service pages leave it, the way Problem, Diagnostic, Sectors and Insights left it
+// on 14 September and Brand OS left it on his 16:18 ruling the same day. EVERY ONE OF THOSE
+// ROUTES STAYS LIVE: nothing is deleted, nothing is redirected, and the "Step n of 5" strip on
+// each service page still works, because ladderPosition still reads HEADER_SERVICES. Only the
+// header stops pointing at them. That is his opening line, "Do not delete existing service or
+// methodology content", kept literally.
+//
+// WHY CLIENT LOGIN IS NOT IN PUBLIC_NAV. It renders separately, after the divider, as a quiet
+// text link rather than a button, so the LINE button stays the only primary action in the
+// header. It is not part of the buying journey and Ian's own line puts it on the right.
+//
+// WHY THE HARD-CODED HOME LINK WENT. Home is PUBLIC_NAV's first entry now, so rendering it
+// twice would have put two Home links in the header.
+//
+// WHERE THE WORDS COME FROM. Every label is a gated deck's own nav key: homeNavHome and the LINE
+// button label from the home deck, brNavLink from the Business Read deck, and hiwNavLink,
+// exNavLink, aboutNavLink, contactNavLink and clNavLink from the four new decks in the 18
+// September pack. The order lives in src/constants/routes.js, so a reorder is one array.
+//
+// The breakpoint is lg, not md: six items plus a login link, two toggles and a button do not fit
+// a tablet.
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -41,9 +59,9 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const links = HEADER_SERVICES.map((service) => ({
-        name: t(service.labelKey),
-        href: service.to,
+    const links = PUBLIC_NAV.map((item) => ({
+        name: t(item.labelKey),
+        href: item.to,
     }));
 
     // Ian, 15 September 2026 12:5x Bangkok: "make the header names stay in purple when you are on
@@ -88,10 +106,6 @@ const Navbar = () => {
 
                 {/* Desktop Nav */}
                 <div className="hidden lg:flex items-center gap-6">
-                    <Link to={ROUTE_HOME} className={deskLink(ROUTE_HOME)} aria-current={isHere(ROUTE_HOME) ? 'page' : undefined}>
-                        {t('homeNavHome')}
-                    </Link>
-
                     {links.map((link) => (
                         <Link
                             key={link.href}
@@ -104,6 +118,16 @@ const Navbar = () => {
                     ))}
 
                     <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+                    {/* Client Login, on the right of the divider, as Ian ruled. A quiet text
+                        link, never a button: the LINE button stays the header's one primary
+                        action and the login is not part of the buying journey. */}
+                    <Link
+                        to={ROUTE_CLIENT_LOGIN}
+                        className={deskLink(ROUTE_CLIENT_LOGIN)}
+                        aria-current={isHere(ROUTE_CLIENT_LOGIN) ? 'page' : undefined}
+                    >
+                        {t('clNavLink')}
+                    </Link>
                     <ThemeToggle />
                     <LanguageToggle />
                     <a
@@ -130,34 +154,47 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay. A flat list, in the same order as the desktop header. */}
+            {/* Mobile Menu Overlay. THE SAME SEVEN ITEMS AS THE DESKTOP HEADER, IN THE SAME
+                ORDER, and that is the whole point of doing both halves in one commit: a header
+                that differs between a phone and a laptop is worse than either.
+
+                The hard-coded Home link that used to open this list went with the desktop one:
+                Home is PUBLIC_NAV's first entry now, so keeping it would have rendered Home
+                twice on a phone. The five service links used to sit indented under it, behind a
+                left border, because they were its children. PUBLIC_NAV's six items are peers, so
+                the indent went too and the list is flat, exactly as it reads on the desktop. */}
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <div className="lg:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-white/20 overflow-hidden">
                         <div className="px-6 py-6 flex flex-col gap-4">
-                            <Link
-                                to={ROUTE_HOME}
-                                onClick={() => setMobileMenuOpen(false)}
-                                className={`text-lg font-medium ${isHere(ROUTE_HOME)
-                                    ? 'text-indigo-600 dark:text-indigo-400'
-                                    : 'text-slate-900 dark:text-white'}`}
-                                aria-current={isHere(ROUTE_HOME) ? 'page' : undefined}
-                            >
-                                {t('homeNavHome')}
-                            </Link>
                             {links.map((link) => (
                                 <Link
                                     key={link.href}
                                     to={link.href}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className={`text-lg font-medium pl-4 border-l-2 hover:text-indigo-600 dark:hover:text-indigo-400 ${isHere(link.href)
-                                        ? 'text-indigo-600 dark:text-indigo-400 border-indigo-600 dark:border-indigo-400'
-                                        : 'text-slate-900 dark:text-white border-slate-100 dark:border-white/20'}`}
+                                    className={`text-lg font-medium hover:text-indigo-600 dark:hover:text-indigo-400 ${isHere(link.href)
+                                        ? 'text-indigo-600 dark:text-indigo-400'
+                                        : 'text-slate-900 dark:text-white'}`}
                                     aria-current={isHere(link.href) ? 'page' : undefined}
                                 >
                                     {link.name}
                                 </Link>
                             ))}
+
+                            {/* Client Login, below the divider and above the LINE button, which
+                                is where "on the right" lands once the header stacks. Same quiet
+                                text link as the desktop, never a button, for the same reason. */}
+                            <div className="h-px bg-slate-200 dark:bg-slate-700" />
+                            <Link
+                                to={ROUTE_CLIENT_LOGIN}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={`text-lg font-medium hover:text-indigo-600 dark:hover:text-indigo-400 ${isHere(ROUTE_CLIENT_LOGIN)
+                                    ? 'text-indigo-600 dark:text-indigo-400'
+                                    : 'text-slate-900 dark:text-white'}`}
+                                aria-current={isHere(ROUTE_CLIENT_LOGIN) ? 'page' : undefined}
+                            >
+                                {t('clNavLink')}
+                            </Link>
                             <a
                                 href={LINE_OFFICIAL_ACCOUNT}
                                 target="_blank"
