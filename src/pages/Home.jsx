@@ -170,15 +170,25 @@ const Home = () => {
                         {t('homeProblemLead')}
                     </motion.p>
 
-                    <ul className="mt-8 space-y-4">
+                    {/* CARDED 18 September 2026, creative-director defects 1 and 7. The seven signs
+                        rendered as indigo-ruled list rows on a flat ground, which is what took the
+                        home page's bare-band share from 13 to 44 per cent and its glass elements
+                        from 13 to 6. One sign per card-glass panel, each carrying the site's own
+                        ProcessNumber badge, so this band reads as furniture rather than running
+                        text. The badge is a visual device, not copy — no sign string carries a
+                        numeral — so it is marked `decorative`. No string changed. */}
+                    <ul className="mt-8 grid gap-4 sm:grid-cols-2">
                         {signs.map((sign, index) => (
                             <motion.li
                                 key={sign}
                                 {...fadeUp}
                                 transition={{ duration: 0.5, delay: index * 0.04 }}
-                                className="border-l-2 border-indigo-600 pl-5 text-base leading-8 text-slate-600 dark:border-indigo-400 dark:text-slate-300"
+                                className="flex items-start gap-4 rounded-2xl border border-slate-200 p-6 card-glass"
                             >
-                                {sign}
+                                <ProcessNumber label={`${index + 1}`} decorative />
+                                <span className="text-base leading-8 text-slate-600 dark:text-slate-300">
+                                    {sign}
+                                </span>
                             </motion.li>
                         ))}
                     </ul>
@@ -261,7 +271,11 @@ const Home = () => {
             </section>
 
             {/* The capabilities, a level down from the stages, as Ian ruled. Three cards and no
-                link on any of them: see this file's header and the copy module. */}
+                link on any of them: see this file's header and the copy module.
+                THEY CARRY `card-static` (added 18 September 2026, creative-director defect 6).
+                Ian's locked hover lights the indigo edge on every card, which on the live site is
+                always a promise of a destination. These three have none, so the promise is
+                withdrawn with it; the rule lives beneath .card-glass in src/index.css. */}
             <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2
@@ -283,7 +297,7 @@ const Home = () => {
                                 key={capability.name}
                                 {...fadeUp}
                                 transition={{ duration: 0.5, delay: index * 0.06 }}
-                                className="rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass"
+                                className="rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass card-static"
                             >
                                 <span
                                     aria-hidden="true"
@@ -319,7 +333,10 @@ const Home = () => {
                     <motion.h2 {...fadeUp} className="text-2xl font-bold leading-tight sm:text-3xl">
                         {t('homeProofHeading')}
                     </motion.h2>
-                    <ul className="mt-8 space-y-4">
+                    {/* CARDED 18 September 2026, creative-director defect 1. The five commitments
+                        sit in ONE card-glass panel rather than on the flat ground, and the indigo
+                        left rules stay exactly as they were, inside it. No string changed. */}
+                    <ul className="mt-8 space-y-4 rounded-2xl border border-slate-200 p-7 card-glass">
                         {proof.map((line, index) => (
                             <motion.li
                                 key={line}

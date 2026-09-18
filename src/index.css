@@ -55,6 +55,17 @@
   @apply border-indigo-500 shadow-indigo-900/10 dark:border-indigo-500 dark:bg-indigo-500/[0.14] dark:ring-indigo-400/30;
 }
 
+/* THE MODIFIER FOR A CARD THAT IS NOT A DESTINATION. Added 18 September 2026, creative-director
+   defect 6. Ian's hover reward above is a promise: every card on the live home page is a real
+   link, so the indigo edge reads as "this goes somewhere". The three home capability cards
+   deliberately carry no link — the Desk ruled out an eighth page on 18 September 2026 — so they
+   take this modifier and the promise is withdrawn with the destination. It resets the two
+   properties the hover rule moves the surface with, border colour and background; nothing above
+   is touched, and a card without this class behaves exactly as Ian locked it. */
+.card-glass.card-static:hover {
+  @apply border-slate-200 dark:border-white/20 dark:bg-white/[0.08] dark:ring-white/10;
+}
+
 .glass-card {
   @apply backdrop-blur-xl bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 shadow-xl dark:shadow-none;
 }
