@@ -1,3 +1,11 @@
 {
+  "headers": [
+    {
+      "source": "/(aios-diagnostic|diagnostic|brand-os|mctb|quotes|rag|websites|home-services|clinics|salons)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex" }
+      ]
+    }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
