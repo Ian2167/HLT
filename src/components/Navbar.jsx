@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import ThemeToggle from './ThemeToggle';
 import LanguageToggle from './LanguageToggle';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 // Logo v2, 14 Sept 2026: the real High Level Thai mark, derived from Ian's Canva source
 // vector. See src/assets/brand/hlt-logo-v2/README.md, which records what the earlier violet
 // set was and why it is archived rather than deleted.
+//
+// ONE LOCKUP, 18 September 2026. The colour lockup is the only one this header imports. The
+// white lockup is still in the set and the footer still uses it on the navy band; it simply has
+// no place here any more, because there is no longer a dark header for it to sit on.
 import hltLockupColour from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-colour.svg';
-import hltLockupWhite from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-white.svg';
 import { hltWebsiteCopy } from '../config/hltWebsite';
 import { PUBLIC_NAV, ROUTE_CLIENT_LOGIN, ROUTE_EXECUTIVE_ASSISTANT, ROUTE_HOME } from '../constants/routes';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
@@ -41,7 +43,23 @@ import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 // exNavLink, aboutNavLink, contactNavLink and clNavLink from the four new decks in the 18
 // September pack. The order lives in src/constants/routes.js, so a reorder is one array.
 //
-// The breakpoint is lg, not md: six items plus a login link, two toggles and a button do not fit
+// ONE HEADER, ONE LOGO, NO THEME SWITCH. Ian, 12:2x Bangkok, 18 September 2026, verbatim: "I
+// just want one common header with the blue logo." He said it after the Desk showed him that
+// this header swapped to the white lockup whenever the browser held theme=dark, so two visitors
+// on the same page saw two different headers and his own browser came up dark.
+//
+// WHAT THAT MEANS IN THIS FILE. The light glass header and the blue colour lockup, on every page
+// and in every browser. The white lockup <img> and its dark:hidden / dark:block pair are gone,
+// so there is one <img> and nothing to swap. ThemeToggle is gone from the desktop bar and from
+// the mobile button row, and its import with it; the component file stays on disk, retired, and
+// src/main.jsx clears any dark class and any stored theme key a browser is still holding.
+//
+// WHAT DID NOT CHANGE. The Language toggle (EN/TH) is untouched and stays exactly where it was.
+// No copy, no navigation, no structure. The dark: utility classes elsewhere in the tree are left
+// as dead styling on purpose: sweeping them was ruled out of scope for this commit, and dead
+// classes cost nothing once nothing can add the dark class.
+//
+// The breakpoint is lg, not md: six items plus a login link, a toggle and a button do not fit
 // a tablet.
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -94,13 +112,7 @@ const Navbar = () => {
                     <img
                         src={hltLockupColour}
                         alt="High Level Thai"
-                        className="h-9 w-auto block dark:hidden"
-                    />
-                    <img
-                        src={hltLockupWhite}
-                        alt=""
-                        aria-hidden="true"
-                        className="h-9 w-auto hidden dark:block"
+                        className="h-9 w-auto block"
                     />
                 </Link>
 
@@ -128,7 +140,6 @@ const Navbar = () => {
                     >
                         {t('clNavLink')}
                     </Link>
-                    <ThemeToggle />
                     <LanguageToggle />
                     <a
                         href={LINE_OFFICIAL_ACCOUNT}
@@ -142,7 +153,6 @@ const Navbar = () => {
 
                 {/* Mobile Menu Button */}
                 <div className="flex lg:hidden items-center gap-4">
-                    <ThemeToggle />
                     <LanguageToggle />
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

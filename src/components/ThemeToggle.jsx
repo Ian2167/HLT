@@ -1,38 +1,29 @@
-import { useState, useEffect } from 'react';
-import { Moon, Sun } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Sun } from 'lucide-react';
 
-const ThemeToggle = () => {
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
-    useEffect(() => {
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-        localStorage.setItem('theme', theme);
-    }, [theme]);
-
-    const toggleTheme = () => {
-        setTheme(theme === 'dark' ? 'light' : 'dark');
-    };
-
-    return (
-        <button
-            onClick={toggleTheme}
-            className="relative p-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 transition-colors hover:bg-slate-300 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            aria-label="Toggle Theme"
-        >
-            <motion.div
-                initial={false}
-                animate={{ rotate: theme === 'dark' ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-            >
-                {theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />}
-            </motion.div>
-        </button>
-    );
-};
+// RETIRED 18 September 2026, NOT DELETED. Ian, 12:2x Bangkok that day, verbatim: "I just want
+// one common header with the blue logo." One header means one theme, so the site no longer has a
+// dark mode and nothing imports this component any more. It is kept on disk because the file is
+// the record of what the toggle used to do, and because deleting it would lose that.
+//
+// IT CAN NO LONGER TURN THE SITE DARK. The effect that added the `dark` class to
+// document.documentElement and wrote localStorage.theme is gone. If some future file imports it
+// again by mistake, the worst it can do is render a sun button that does nothing. The one-time
+// clear for browsers that still hold theme=dark from before this ruling lives in src/main.jsx,
+// not here, because this component no longer mounts.
+//
+// The `dark:` utility classes elsewhere in the tree were left in place on the same ruling: they
+// are dead styling now, and sweeping them was out of scope for this commit.
+const ThemeToggle = () => (
+    <button
+        type="button"
+        disabled
+        aria-hidden="true"
+        tabIndex={-1}
+        className="hidden"
+        aria-label="Theme toggle, retired"
+    >
+        <Sun size={20} />
+    </button>
+);
 
 export default ThemeToggle;
