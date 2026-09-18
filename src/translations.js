@@ -40,6 +40,10 @@ import { aboutCopy } from './copy/about';
 import { contactCopy } from './copy/contact';
 import { clientLoginCopy } from './copy/clientLogin';
 import { thaiDraft } from './copy/thaiDraft';
+// The machine Thai draft for the seven restructured pages, 18 September 2026. Spread LAST in the
+// `th` block, after the two English rebuild spreads, which is the whole point of it. See its own
+// header and the block comment at the foot of this file.
+import { thaiDraftRestructure } from './copy/thaiDraftRestructure';
 
 export const translations = {
     en: {
@@ -471,11 +475,10 @@ export const translations = {
         ...openBrainCopy,
         ...homeCopy,
 
-        // The six simplified public pages, 18 September 2026. TH PENDING: English values on
-        // purpose, exactly as every module above does it. No line here was machine-translated
-        // and none may be: the Thai pass is a native speaker's job and a separate brief. The
-        // `thaiDraft` spread at the foot of this block carries no key from these five modules,
-        // so nothing here is overridden by the unreviewed draft.
+        // The six simplified public pages, 18 September 2026. These five spreads are the ENGLISH
+        // floor for those pages; they are no longer the final word. The `thaiDraftRestructure`
+        // spread at the foot of this block carries a Thai value for every key these five modules
+        // define and overrides all of it. See that block's comment for the ruling behind it.
         ...howItWorksCopy,
         ...examplesCopy,
         ...aboutCopy,
@@ -900,30 +903,40 @@ export const translations = {
         // contain the original site's own Thai keys, which are untouched.
         ...thaiDraft,
 
-        // THE RESTRUCTURED HOME PAGE, LAST OF ALL, AND THIS IS THE ONE THING IN THIS FILE THAT
-        // PUTS ENGLISH BACK OVER THAI ON PURPOSE. 18 September 2026.
-        //
-        // thaiDraft above carries Thai for the 14 September home page: the five-service
-        // positioning line, "ห้าบริการ ..." as the sub-head, and a CTA label reading "คุยกับเราทาง
-        // LINE". The page below those keys is gone. Left as it stands, a Thai visitor would read
-        // the retired catalogue message under the new layout, and would see a button labelled
-        // "talk to us on LINE" that navigates to the Business Read page instead. That is worse
-        // than an English fallback, which is the state every other new public page is already in.
-        //
-        // So the English of the restructured page wins on its own keys, and NOTHING ELSE MOVES:
-        // every key in homeRebuildCopy is a home-page key, so no other page's Thai is touched,
-        // and the header and footer chrome (homeNavHome, homeNavCtaLabel, homeFooterBrand) is not
-        // in this module and keeps its Thai.
-        //
-        // NO LINE OF THAI WAS WRITTEN OR MACHINE-TRANSLATED FOR THIS PAGE, and none may be: the
-        // Thai pass is a native speaker's job and a separate brief. When that deck exists it
-        // replaces this spread, exactly as the note at the top of this file describes.
+        // THE TWO ENGLISH REBUILD SPREADS. They are here so that no key of the restructured home
+        // page or the re-copied Business Read can fall through to a RETIRED Thai string: thaiDraft
+        // above carries Thai for the 14 September pages, whose sections are gone, so on a shared
+        // key its sentence would be the wrong promise rather than merely an untranslated one.
+        // English on a shared key is the safe floor. It is a floor, not the answer, and
+        // thaiDraftRestructure below is spread after it to take every one of those keys back.
         ...homeRebuildCopy,
+        ...businessReadRebuildCopy,
 
-        // The re-copied Business Read, for the same reason and under the same rule: thaiDraft
-        // carries Thai for the margin-led page of 14 September, and the sections those strings
-        // belong to are gone. English falls back on the keys this page renders and nothing else
-        // moves. No Thai was written or machine-translated here either.
-        ...businessReadRebuildCopy
+        // THE MACHINE THAI DRAFT FOR THE SEVEN RESTRUCTURED PAGES, LAST OF ALL. 18 September 2026.
+        //
+        // WHAT THIS FIXES. Ian, ~11:1x Bangkok on the restructure preview: "the Thai toggle
+        // doesn't work again". He was right, and the cause was the spread order directly above.
+        // The two English rebuild spreads sat AFTER thaiDraft, so English overrode Thai on every
+        // home and Business Read key; and the five newer copy modules (howItWorksCopy,
+        // examplesCopy, aboutCopy, contactCopy, clientLoginCopy) had no Thai anywhere. Under the
+        // Thai toggle the restructured site was therefore English end to end.
+        //
+        // WHAT REPLACED THE ENGLISH FALLBACK. Not a native deck: an UNREVIEWED MACHINE THAI DRAFT,
+        // covering every one of the 257 keys the seven modules define, under the ONE NAMED
+        // EXCEPTION Ian ruled on 15 September 2026 ("Please use Route 2 for Thai translation",
+        // HLT_GOVERNING_CONTEXT.md line 77) — a machine draft may go on the site provided a native
+        // Thai speaker reviews every line afterwards. That review has NOT happened yet. Ann's
+        // review sheet is at C:\Projects\IWT\02-builds\executive-assistant\work\drafts\
+        // 2026-09-18-HLT-THAI-REVIEW-SHEET-RESTRUCTURE.md and her corrections are written back
+        // into src/copy/thaiDraftRestructure.js, never into this block.
+        //
+        // ONE ROW OF THAT SHEET IS IAN'S, NOT ANN'S: homeHeroHeadline. He wrote the Thai for the
+        // RETIRED headline himself on 14 September; the new English headline says something else,
+        // so the draft replaces his sentence and the sheet flags it for his word.
+        //
+        // NOTHING OUTSIDE THE SEVEN MODULES MOVES. Every key in this spread is a key one of those
+        // modules defines, so no legacy service page's Thai and no header or footer chrome is
+        // touched.
+        ...thaiDraftRestructure
     }
 };
