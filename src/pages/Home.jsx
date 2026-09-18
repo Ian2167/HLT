@@ -283,6 +283,12 @@ const Home = () => {
 
             {/* The capabilities, a level down from the stages, as Ian ruled. Three cards and no
                 link on any of them: see this file's header and the copy module.
+                THE LAYOUT IS ICON-LEFT (18 September 2026, creative-director defect 5). This band
+                and the stages above it were two `md:grid-cols-3` rows of near-identical glass
+                cards, 630px and 618px, stacked directly on each other with the same radius, the
+                same padding and the same body length: one page reading as the same device twice.
+                The tile moves to the left of the heading and body, so the two rows are two
+                rhythms again. The tile itself is unchanged.
                 THEY CARRY `card-static` (added 18 September 2026, creative-director defect 6).
                 Ian's locked hover lights the indigo edge on every card, which on the live site is
                 always a promise of a destination. These three have none, so the promise is
@@ -308,20 +314,22 @@ const Home = () => {
                                 key={capability.name}
                                 {...fadeUp}
                                 transition={{ duration: 0.5, delay: index * 0.06 }}
-                                className="rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass card-static"
+                                className="flex items-start gap-5 rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass card-static"
                             >
                                 <span
                                     aria-hidden="true"
-                                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-hltNavy text-white"
+                                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white"
                                 >
                                     <capability.Icon size={20} />
                                 </span>
-                                <h3 className="mt-5 text-lg font-bold leading-7 text-slate-950 dark:text-white">
-                                    {capability.name}
-                                </h3>
-                                <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
-                                    {capability.body}
-                                </p>
+                                <div className="min-w-0">
+                                    <h3 className="text-lg font-bold leading-7 text-slate-950 dark:text-white">
+                                        {capability.name}
+                                    </h3>
+                                    <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+                                        {capability.body}
+                                    </p>
+                                </div>
                             </motion.li>
                         ))}
                     </ul>

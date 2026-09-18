@@ -97,6 +97,10 @@ const BusinessRead = () => {
         a: t(`brFaq${n}A`),
     }));
 
+    // The four "What the Business Read does" paragraphs, read as a list so each can take its own
+    // panel (creative-director defect 4). Same four keys, same order, same words.
+    const does = [1, 2, 3, 4].map((n) => t(`brDoesP${n}`));
+
     const receive = [1, 2, 3, 4, 5].map((n) => t(`brReceive${n}`));
     const notThis = [1, 2, 3].map((n) => t(`brNot${n}`));
 
@@ -181,7 +185,14 @@ const BusinessRead = () => {
                         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
                             {t('brHappeningHeading')}
                         </h2>
-                        <div className="space-y-6 text-lg text-slate-600 dark:text-slate-300">
+                        {/* CARDED 18 September 2026, creative-director defect 4. The restructure
+                            put three prose bands and a tick list between the hero and the tiers,
+                            so the first card, icon or table on the page moved from 24 per cent
+                            down to 46 per cent and a price moved from the second screen to the
+                            fourth. The sections stay exactly where Ian put them — this is
+                            treatment, not order. One card-glass panel, so the reader passes
+                            furniture on the way to the price instead of grey text. */}
+                        <div className="space-y-6 rounded-2xl border border-slate-200 p-7 text-lg text-slate-600 card-glass dark:text-slate-300 sm:p-9">
                             <p className="font-semibold text-slate-900 dark:text-white">{t('brHappeningP1')}</p>
                             <p>{t('brHappeningP2')}</p>
                             <p>{t('brHappeningP3')}</p>
@@ -198,11 +209,18 @@ const BusinessRead = () => {
                         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
                             {t('brDoesHeading')}
                         </h2>
-                        <div className="space-y-6 text-lg text-slate-600 dark:text-slate-300">
-                            <p>{t('brDoesP1')}</p>
-                            <p>{t('brDoesP2')}</p>
-                            <p>{t('brDoesP3')}</p>
-                            <p>{t('brDoesP4')}</p>
+                        {/* CARDED 18 September 2026, creative-director defect 4. Four paragraphs,
+                            four panels, two up. Same reason as the band above and the same
+                            treatment; no paragraph was split, merged or reworded. */}
+                        <div className="grid gap-6 md:grid-cols-2">
+                            {does.map((para) => (
+                                <div
+                                    key={para}
+                                    className="rounded-2xl border border-slate-200 p-7 text-base leading-8 text-slate-600 card-glass dark:text-slate-300"
+                                >
+                                    {para}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
