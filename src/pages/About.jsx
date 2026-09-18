@@ -11,12 +11,23 @@
 // published anywhere. What is left is what HLT does, how it works and what it will not do, and
 // that is what this page is.
 //
-// FOUR BLOCKS ARE WAITING ON IAN AND NONE OF THEM IS IN THIS BUNDLE: the named founder
-// paragraph, the unnamed founder paragraph, the company facts block with the registration
-// number, and any photograph or team section. They live as NOTE blocks in the pack at
+// FOUR BLOCKS WERE WAITING ON IAN. HE RULED ON ALL FOUR AT GATE 128 ON 18 SEPTEMBER 2026
+// (bridge row 3681; ruling of record
+//   C:\Projects\hlt-estate\01-doctrine\HLT-ABOUT-PAGE-RULING-2026-09-18.md):
+//   - the named founder paragraph      RULED OUT, "named or unnamed, at this stage"
+//   - the unnamed founder paragraph    RULED OUT, same words
+//   - the company facts block          RULED IN, in his own three-line layout, and it now
+//                                      renders between "What we won't do" and the closing CTA
+//   - any photograph or team section   UNCHANGED, still out
+// The three that are out are NOT in this bundle and must not be typed into this file. They live
+// as NOTE blocks in the pack at
 //   C:\Projects\hlt-estate\02-builds\hlt-site-kit\copy\2026-09-18-about.md
 // and they reach the site through his word, then the pack, then src/copy/about.js. Never by
-// being typed into this file.
+// being typed into this file. No address appears here, by his standing rule.
+//
+// tests/about-company-facts.mjs holds this page to both halves of that ruling: it drives a real
+// browser to /about to prove the three company lines render, and reads the built bundle to prove
+// the two founder paragraphs do not ship.
 //
 // WHY THIS FILE HOLDS NO COPY OF ITS OWN
 // Every visible string comes from src/copy/about.js, lifted verbatim from that pack's SENDABLE
@@ -116,6 +127,24 @@ const About = () => {
                             </li>
                         ))}
                     </ul>
+                </motion.div>
+            </section>
+
+            {/*
+                The company facts block. Ian ruled it IN at gate 128 on 18 September 2026, in this
+                three-line form, to sit between "What we won't do" and the closing CTA. It answers
+                the first question a cautious Thai buyer asks: is this a real company. Existing type
+                scale, no icon, no address.
+            */}
+            <section className="bg-white px-5 pb-16 dark:bg-slate-950 sm:px-6 sm:pb-20 lg:px-8">
+                <motion.div {...fadeUp} className="mx-auto max-w-3xl">
+                    <p className="text-sm leading-7 text-slate-500 dark:text-slate-400">
+                        {t('abCompanyName')}
+                        <br />
+                        {t('abCompanyNameThai')}
+                        <br />
+                        {t('abCompanyRegistered')}
+                    </p>
                 </motion.div>
             </section>
 

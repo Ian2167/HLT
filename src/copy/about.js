@@ -7,18 +7,33 @@
 // THE PAGE'S ONE JOB, as Ian locked it: why HLT is credible.
 //
 // WHY THIS PAGE IS THIN, AND WHAT IS DELIBERATELY NOT IN THIS FILE. Ian's GO of 18 September
-// 2026 says "Do not publish unresolved About content". Four blocks in the pack are NOTE blocks
-// awaiting his word and NONE of them is here:
+// 2026 says "Do not publish unresolved About content". Four blocks in the pack were NOTE blocks
+// awaiting his word. He ruled on all four at gate 128 on 18 September 2026 (bridge row 3681,
+// ruling of record C:\Projects\hlt-estate\01-doctrine\HLT-ABOUT-PAGE-RULING-2026-09-18.md):
 //   NOTE A  the founder paragraph, named, with the forty-five years and the six countries
+//           RULED OUT 18 September 2026. His words: "Do not include either founder paragraph,
+//           named or unnamed, at this stage." NOT in this file.
 //   NOTE B  the founder paragraph, unnamed
+//           RULED OUT 18 September 2026, same ruling, same words. NOT in this file.
 //   NOTE C  the company facts block, the Thai and English company names and the registration
 //           number
+//           RULED IN 18 September 2026, in Ian's own three-line layout. It is no longer
+//           withheld: it is block 10 of THE POST in the pack and it is the abCompanyName,
+//           abCompanyNameThai and abCompanyRegistered keys at the foot of this file.
 //   NOTE D  a photograph of anybody, and a team section
+//           UNCHANGED, still out. NOT in this file.
 // No address appears here or anywhere else on the site: the registered office is open on the
-// record and the certificate's address is no longer current.
+// record and the certificate's address is no longer current. That rule survived gate 128.
 //
-// If a later editor is tempted to add any of the four, the answer is Ian's word first, in his
+// The founder section is revisited only when HLT has generated sales and Ian decides to
+// formalise his working position in Thailand. That is his call and nobody else's.
+//
+// If a later editor is tempted to add NOTE A, B or D, the answer is Ian's word first, in his
 // own dated line, then the pack, then this file. Not the other way round.
+//
+// tests/about-company-facts.mjs enforces both halves of gate 128: it builds the site, drives a
+// browser to /about and proves the three company-facts lines render, and it reads the built
+// bundle to prove no NOTE A or NOTE B wording ships.
 export const aboutCopy = {
     aboutNavLink: 'About',
 
@@ -45,6 +60,12 @@ export const aboutCopy = {
     abWont2: "We won't quote results we can't show you. We'd rather have a thin page than a persuasive one.",
     abWont3: "We won't hold your accounts, your data or your domain hostage after the work ends.",
     abWont4: "We won't claim AI does the judgement. AI does the hours. A person decides, and that person is accountable to you.",
+
+    // Block 10 of THE POST, Ian's own three-line layout, gate 128, 18 September 2026.
+    // The company number is public record. No address, by his standing rule.
+    abCompanyName: 'High Level Thai Ltd.',
+    abCompanyNameThai: 'บริษัท ไฮ เลเวล ไทย จำกัด',
+    abCompanyRegistered: 'Registered in Thailand, company number 0835568013864',
 
     abClosingHeading: 'Judge us on the first hour',
     abClosingBody: 'The Business Read is the cheapest way to find out whether any of the above is true. An hour with us, a written read on a promised day, and no obligation after it.',
