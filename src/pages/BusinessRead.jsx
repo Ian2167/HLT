@@ -165,9 +165,18 @@ const BusinessRead = () => {
                 </div>
             </section>
 
+            {/* ONE CONTAINER ACROSS THE SITE. 18 September 2026, creative-director defect 3: the
+                three prose bands on this page ran on Tailwind's `container`, which is 1280px at
+                this width, while the home page's bands ran on max-w-6xl, so the two pages put
+                their text at different edges. The three bands named in the defect — "What is
+                happening", "What the Business Read does" and "What it is not" — now run on
+                mx-auto max-w-6xl px-6, which lands their inner max-w-3xl text column on the same
+                336px edge as the home page's. The tier, receive, steps, FAQ and closing bands are
+                not in the defect and keep their container. */}
+
             {/* QUESTION ONE. What is happening. Ian's own opening line for this section. */}
             <section className="py-16 bg-white dark:bg-slate-950">
-                <div className="container mx-auto px-6">
+                <div className="mx-auto max-w-6xl px-6">
                     <div className="max-w-3xl mx-auto">
                         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
                             {t('brHappeningHeading')}
@@ -184,7 +193,7 @@ const BusinessRead = () => {
             {/* QUESTION TWO. What the Business Read does. Mechanism before recommendation, which
                 is doctrine and is also the order Ian wrote the questions in. */}
             <section className="py-16 bg-slate-50 dark:bg-slate-900/50">
-                <div className="container mx-auto px-6">
+                <div className="mx-auto max-w-6xl px-6">
                     <div className="max-w-3xl mx-auto">
                         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
                             {t('brDoesHeading')}
@@ -231,7 +240,7 @@ const BusinessRead = () => {
             {/* QUESTION FOUR. What it is not. Ian's own three, verbatim, and the most persuasive
                 block on the page precisely because it is the only one that draws a boundary. */}
             <section className="py-16 bg-slate-50 dark:bg-slate-900/50">
-                <div className="container mx-auto px-6">
+                <div className="mx-auto max-w-6xl px-6">
                     <div className="max-w-3xl mx-auto">
                         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
                             {t('brNotHeading')}

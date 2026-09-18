@@ -159,13 +159,22 @@ const Home = () => {
 
             {/* The problem, in the owner's own week. Seven signs, in the pack's order. */}
             <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-4xl">
-                    <motion.h2 {...fadeUp} className="text-2xl font-bold leading-tight sm:text-3xl">
+                {/* ONE CONTAINER, ONE TEXT MEASURE. 18 September 2026, creative-director defect 3:
+                    this band ran on max-w-4xl with a left-aligned heading while the card bands ran
+                    on max-w-6xl with centred ones, which put four heading edges on one page. The
+                    band now runs on the site's own max-w-6xl, the cards sit on that 1152px column
+                    with every other card on the page, and the prose sits in a centred max-w-3xl
+                    column so the line length does not grow with the container. */}
+                <div className="mx-auto max-w-6xl">
+                    <motion.h2
+                        {...fadeUp}
+                        className="text-center text-2xl font-bold leading-tight sm:text-3xl"
+                    >
                         {t('homeProblemHeading')}
                     </motion.h2>
                     <motion.p
                         {...fadeUp}
-                        className="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300 sm:text-lg"
+                        className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 dark:text-slate-300 sm:text-lg"
                     >
                         {t('homeProblemLead')}
                     </motion.p>
@@ -193,12 +202,14 @@ const Home = () => {
                         ))}
                     </ul>
 
-                    <motion.p {...fadeUp} className="mt-10 text-base leading-8 text-slate-950 dark:text-white sm:text-lg">
-                        {t('homeConsequenceP1')}
-                    </motion.p>
-                    <motion.p {...fadeUp} className="mt-4 text-base leading-8 text-slate-950 dark:text-white sm:text-lg">
-                        {t('homeConsequenceP2')}
-                    </motion.p>
+                    <div className="mx-auto max-w-3xl">
+                        <motion.p {...fadeUp} className="mt-10 text-base leading-8 text-slate-950 dark:text-white sm:text-lg">
+                            {t('homeConsequenceP1')}
+                        </motion.p>
+                        <motion.p {...fadeUp} className="mt-4 text-base leading-8 text-slate-950 dark:text-white sm:text-lg">
+                            {t('homeConsequenceP2')}
+                        </motion.p>
+                    </div>
                 </div>
             </section>
 
@@ -329,28 +340,37 @@ const Home = () => {
             {/* Proof. Commitments and mechanism, never a result: no delivered HLT engagement
                 exists on file, so none is claimed. The pack's NOTE 4 records why. */}
             <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-4xl">
-                    <motion.h2 {...fadeUp} className="text-2xl font-bold leading-tight sm:text-3xl">
+                {/* Same container and same axis as the band above, creative-director defect 3. */}
+                <div className="mx-auto max-w-6xl">
+                    <motion.h2
+                        {...fadeUp}
+                        className="text-center text-2xl font-bold leading-tight sm:text-3xl"
+                    >
                         {t('homeProofHeading')}
                     </motion.h2>
                     {/* CARDED 18 September 2026, creative-director defect 1. The five commitments
                         sit in ONE card-glass panel rather than on the flat ground, and the indigo
-                        left rules stay exactly as they were, inside it. No string changed. */}
-                    <ul className="mt-8 space-y-4 rounded-2xl border border-slate-200 p-7 card-glass">
-                        {proof.map((line, index) => (
-                            <motion.li
-                                key={line}
-                                {...fadeUp}
-                                transition={{ duration: 0.5, delay: index * 0.04 }}
-                                className="border-l-2 border-indigo-600 pl-5 text-base leading-8 text-slate-600 dark:border-indigo-400 dark:text-slate-300"
-                            >
-                                {line}
-                            </motion.li>
-                        ))}
-                    </ul>
-                    <motion.p {...fadeUp} className="mt-8 text-base leading-8 text-slate-950 dark:text-white">
-                        {t('homeProofClosing')}
-                    </motion.p>
+                        left rules stay exactly as they were, inside it. No string changed.
+                        The panel keeps the band's text measure rather than the 1152px card column:
+                        it is a wrapper around five lines of running text, and a 1152px-wide box of
+                        one-line rules would trade one defect for another. */}
+                    <div className="mx-auto max-w-3xl">
+                        <ul className="mt-8 space-y-4 rounded-2xl border border-slate-200 p-7 card-glass">
+                            {proof.map((line, index) => (
+                                <motion.li
+                                    key={line}
+                                    {...fadeUp}
+                                    transition={{ duration: 0.5, delay: index * 0.04 }}
+                                    className="border-l-2 border-indigo-600 pl-5 text-base leading-8 text-slate-600 dark:border-indigo-400 dark:text-slate-300"
+                                >
+                                    {line}
+                                </motion.li>
+                            ))}
+                        </ul>
+                        <motion.p {...fadeUp} className="mt-8 text-base leading-8 text-slate-950 dark:text-white">
+                            {t('homeProofClosing')}
+                        </motion.p>
+                    </div>
                 </div>
             </section>
 

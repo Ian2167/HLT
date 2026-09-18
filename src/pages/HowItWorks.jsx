@@ -27,6 +27,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 import { ROUTE_BUSINESS_READ } from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
+import BusinessReadMock from '../components/mocks/BusinessReadMock';
 
 const CTA_CLASSES =
     'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
@@ -59,6 +60,12 @@ const HowItWorks = () => {
             name: t('hiwStage1Name'),
             paras: [t('hiwStage1P1'), t('hiwStage1P2'), t('hiwStage1P3')],
             linkLabel: t('hiwStage1LinkLabel'),
+            // THE ARTEFACT STAGE 1 DELIVERS, DRAWN. Added 18 September 2026, creative-director
+            // defect 2: the page ran 3,855px with no photograph, no mock and no table. This is
+            // the same component /business-read already renders under "What you receive", so a
+            // visitor who reads the stage and a visitor who reads the page he is sold see the
+            // same object. Nothing new was designed and no string moved.
+            Artefact: BusinessReadMock,
         },
         {
             n: 2,
@@ -66,6 +73,7 @@ const HowItWorks = () => {
             name: t('hiwStage2Name'),
             paras: [t('hiwStage2P1'), t('hiwStage2P2'), t('hiwStage2P3'), t('hiwStage2P4')],
             linkLabel: null,
+            Artefact: null,
         },
         {
             n: 3,
@@ -73,6 +81,7 @@ const HowItWorks = () => {
             name: t('hiwStage3Name'),
             paras: [t('hiwStage3P1'), t('hiwStage3P2'), t('hiwStage3P3')],
             linkLabel: null,
+            Artefact: null,
         },
     ];
 
@@ -80,28 +89,48 @@ const HowItWorks = () => {
         <div className="min-h-screen bg-stone-50 pt-24 text-slate-950 dark:bg-hltNavy dark:text-white">
             <title>{t('hiwMetaTitle')}</title>
 
-            {/* Hero. No photograph: this page argues an order of operations, and a stock image
-                behind it would be decoration rather than evidence. */}
-            <section className="px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="mx-auto max-w-3xl"
-                >
-                    <h1 className="text-3xl font-bold leading-tight sm:text-5xl sm:leading-[1.1]">
-                        {t('hiwHeroHeadline')}
-                    </h1>
-                    <p className="mt-6 text-base leading-8 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-9">
-                        {t('hiwHeroLead')}
-                    </p>
-                    <div className="mt-8">
-                        <Link to={ROUTE_BUSINESS_READ} className={CTA_CLASSES}>
-                            {t('hiwCtaLabel')}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
-                    </div>
-                </motion.div>
+            {/* Hero. PHOTOGRAPH ADDED 18 September 2026, creative-director defect 2. This band used
+                to open on a plain stone ground, and the comment that stood here ruled a photograph
+                out as decoration. The gate measured what that cost: every other public page on the
+                site opens on a photographic hero under the locked wash, so a page sitting in the
+                primary navigation with no photograph, no mock and no table read as unfinished
+                beside the six it sits with. The block below is Home.jsx's hero verbatim — the same
+                <img>, the same bg-hltNavy/55 wash Ian set on 15 September, the same two gradients
+                and the same min-height that holds the frame open whatever the headline's length.
+                The image keys are the home page's own, because no string may be added or changed
+                on this pass and no second photograph was licensed. */}
+            <section className="relative flex min-h-[32rem] items-center overflow-hidden lg:min-h-[36rem]">
+                <img
+                    src={t('homeHeroImage')}
+                    alt={t('homeHeroImageAlt')}
+                    className="absolute inset-0 h-full w-full object-cover object-bottom"
+                    loading="eager"
+                />
+                <div className="absolute inset-0 bg-hltNavy/55" />
+                <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-b from-hltNavy/30 via-transparent to-hltNavy/60" />
+
+                <div className="relative mx-auto w-full max-w-6xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+                    <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="max-w-3xl"
+                    >
+                        <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl sm:leading-[1.1]">
+                            {t('hiwHeroHeadline')}
+                        </h1>
+                        <p className="mt-6 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg sm:leading-9">
+                            {t('hiwHeroLead')}
+                        </p>
+                        <div className="mt-8">
+                            <Link to={ROUTE_BUSINESS_READ} className={CTA_CLASSES}>
+                                {t('hiwCtaLabel')}
+                                <ArrowRight size={18} aria-hidden="true" />
+                            </Link>
+                        </div>
+                    </motion.div>
+                </div>
             </section>
 
             {/* The three stages. One panel each, in order, and the order is the argument. */}
@@ -132,6 +161,12 @@ const HowItWorks = () => {
                                 ))}
                             </div>
 
+                            {stage.Artefact ? (
+                                <div className="mt-8">
+                                    <stage.Artefact />
+                                </div>
+                            ) : null}
+
                             {stage.linkLabel ? (
                                 <Link
                                     to={ROUTE_BUSINESS_READ}
@@ -146,10 +181,17 @@ const HowItWorks = () => {
                 </ol>
             </section>
 
+            {/* ONE TEXT EDGE ON THIS PAGE, from here down. 18 September 2026, creative-director
+                defect 3: the stage cards sat at x=272 and every text band around them at x=336,
+                64px apart, which is the kind of gap a reader feels without being able to name it.
+                The three text bands below moved from max-w-3xl to max-w-4xl, so the text edge and
+                the card edge are the same 272px at 1440. The closing call to action keeps its
+                narrower centred measure, which is the form it takes on every page of the site. */}
+
             {/* The diagnosis chooses, not the visitor. Ian's own instruction, turned into a line
                 the visitor can read. */}
             <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl">
+                <motion.div {...fadeUp} className="mx-auto max-w-4xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('hiwDecidesHeading')}</h2>
                     <p className="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">{t('hiwDecidesP1')}</p>
                     <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">{t('hiwDecidesP2')}</p>
@@ -158,7 +200,7 @@ const HowItWorks = () => {
 
             {/* AI visible, and subordinate, in Ian's own order: the operating improvement first. */}
             <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl">
+                <motion.div {...fadeUp} className="mx-auto max-w-4xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('hiwAiHeading')}</h2>
                     <p className="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">{t('hiwAiP1')}</p>
                     <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">{t('hiwAiP2')}</p>
@@ -166,7 +208,7 @@ const HowItWorks = () => {
             </section>
 
             <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl">
+                <motion.div {...fadeUp} className="mx-auto max-w-4xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('hiwHoldHeading')}</h2>
                     <ul className="mt-6 space-y-4">
                         {[t('hiwHold1'), t('hiwHold2'), t('hiwHold3'), t('hiwHold4')].map((line) => (
