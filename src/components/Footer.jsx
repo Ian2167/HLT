@@ -7,7 +7,25 @@ import { hltWebsiteCopy } from '../config/hltWebsite';
 // and "Thai" as two spans, which read closed up and did not match the mark above it. Using the
 // header's own asset means the two can never drift apart again.
 import hltLockupWhite from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-white.svg';
+import { ROUTE_BUSINESS_READ, ROUTE_HOW_IT_WORKS } from '../constants/routes';
 
+// THE FOOTER'S TWO FUNNEL LINKS WENT, 18 September 2026, on Ian's simplification directive of
+// 17 September, held at C:\Projects\hlt-estate\01-doctrine\HLT-SITE-DIRECTIVE-2026-09-17.md.
+//
+// It pointed at /aios-diagnostic and /diagnostic, the landing page and the fifteen-question
+// funnel that were the old first step. The new first step is the Business Read, so those two
+// slots now hold the Business Read and How It Works: the commercial page and the page that
+// explains the order of work.
+//
+// BOTH OLD ROUTES ARE STILL LIVE. Nothing is deleted and nothing is redirected. Their page files,
+// their routes and their copy are untouched, on Ian's opening line "Do not delete existing
+// service or methodology content"; the footer simply stops pointing at them, and vercel.json
+// carries a noindex header for them so they fall out of search on their own.
+//
+// WHERE THE TWO LABELS COME FROM. brNavLink and hiwNavLink, each page's own gated nav key, the
+// same strings the header renders. No word here is the builder's. The remaining three links keep
+// their existing config strings, because Privacy, Terms and Support are unchanged by this
+// restructure.
 const Footer = () => {
     const { language, t } = useLanguage();
     const copy = hltWebsiteCopy[language]?.footer || hltWebsiteCopy.th.footer;
@@ -25,8 +43,8 @@ const Footer = () => {
                 </div>
 
                 <div className="flex gap-8 text-sm font-medium">
-                    <Link to="/aios-diagnostic" className="hover:text-white transition-colors">{copy.aiosDiagnostic}</Link>
-                    <Link to="/diagnostic" className="hover:text-white transition-colors">{copy.startCheck}</Link>
+                    <Link to={ROUTE_BUSINESS_READ} className="hover:text-white transition-colors">{t('brNavLink')}</Link>
+                    <Link to={ROUTE_HOW_IT_WORKS} className="hover:text-white transition-colors">{t('hiwNavLink')}</Link>
                     <Link to="/privacy" className="hover:text-white transition-colors">{copy.privacy}</Link>
                     <Link to="/terms" className="hover:text-white transition-colors">{copy.terms}</Link>
                     <a href={LINE_FOOTER} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">{copy.support}</a>

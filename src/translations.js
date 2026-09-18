@@ -26,6 +26,14 @@ import { homeCopy, homeHeroHeadlineTh } from './copy/home';
 // table cannot be rendered by t() anywhere on the site. That is the mechanism behind two of
 // Ian's GO lines: "Do not activate the Contact form without a working destination" and the
 // Client Workspace security rule. Spread them when the builds that need them land, not before.
+// The restructured home page, 18 September 2026. A SECOND home module rather than an edit to
+// src/copy/home.js: the 14 September strings stay on disk untouched and this one overrides them
+// key by key, because it is spread after homeCopy in both blocks below.
+import { homeRebuildCopy } from './copy/homeRebuild';
+// The re-copied Business Read, 18 September 2026. Its 14 September strings are written INLINE in
+// the en block below rather than in a module, so this spread has to sit at the FOOT of each
+// block to win. See the module's own header.
+import { businessReadRebuildCopy } from './copy/businessReadRebuild';
 import { howItWorksCopy } from './copy/howItWorks';
 import { examplesCopy } from './copy/examples';
 import { aboutCopy } from './copy/about';
@@ -41,6 +49,8 @@ export const translations = {
         ...opsCockpitCopy,
         ...openBrainCopy,
         ...homeCopy,
+        // AFTER homeCopy, so the 18 September home page wins every key the two share.
+        ...homeRebuildCopy,
 
         // The six simplified public pages, 18 September 2026.
         ...howItWorksCopy,
@@ -443,7 +453,14 @@ export const translations = {
 
         brClosingHeading: 'One hour in. A written diagnosis out.',
         brClosingBody: "Message us on LINE and pick a time that suits you. There's nothing to prepare and nothing to send first, and you'll have the written read three working days after we talk.",
-        brLineHandle: 'LINE Official Account'
+        brLineHandle: 'LINE Official Account',
+
+        // THE RE-COPIED BUSINESS READ, 18 September 2026, SPREAD LAST IN THIS BLOCK ON PURPOSE.
+        // The br* keys above are written inline rather than in a module, so a spread at the top
+        // of this block would lose to them. Every line it overrides is still on the line above
+        // and still in the 14 September deck; the keys it does not name (brSummary*, brIncluded*)
+        // keep their values and simply stop being rendered.
+        ...businessReadRebuildCopy
     },
     th: {
         // TH PENDING: English values on purpose. See the note at the top of this file.
@@ -881,6 +898,32 @@ export const translations = {
         // src/copy/thaiDraft.js, never into this block.
         // The spread is last on purpose: it wins over the English fallbacks, and it does not
         // contain the original site's own Thai keys, which are untouched.
-        ...thaiDraft
+        ...thaiDraft,
+
+        // THE RESTRUCTURED HOME PAGE, LAST OF ALL, AND THIS IS THE ONE THING IN THIS FILE THAT
+        // PUTS ENGLISH BACK OVER THAI ON PURPOSE. 18 September 2026.
+        //
+        // thaiDraft above carries Thai for the 14 September home page: the five-service
+        // positioning line, "ห้าบริการ ..." as the sub-head, and a CTA label reading "คุยกับเราทาง
+        // LINE". The page below those keys is gone. Left as it stands, a Thai visitor would read
+        // the retired catalogue message under the new layout, and would see a button labelled
+        // "talk to us on LINE" that navigates to the Business Read page instead. That is worse
+        // than an English fallback, which is the state every other new public page is already in.
+        //
+        // So the English of the restructured page wins on its own keys, and NOTHING ELSE MOVES:
+        // every key in homeRebuildCopy is a home-page key, so no other page's Thai is touched,
+        // and the header and footer chrome (homeNavHome, homeNavCtaLabel, homeFooterBrand) is not
+        // in this module and keeps its Thai.
+        //
+        // NO LINE OF THAI WAS WRITTEN OR MACHINE-TRANSLATED FOR THIS PAGE, and none may be: the
+        // Thai pass is a native speaker's job and a separate brief. When that deck exists it
+        // replaces this spread, exactly as the note at the top of this file describes.
+        ...homeRebuildCopy,
+
+        // The re-copied Business Read, for the same reason and under the same rule: thaiDraft
+        // carries Thai for the margin-led page of 14 September, and the sections those strings
+        // belong to are gone. English falls back on the keys this page renders and nothing else
+        // moves. No Thai was written or machine-translated here either.
+        ...businessReadRebuildCopy
     }
 };

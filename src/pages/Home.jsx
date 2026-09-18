@@ -1,52 +1,51 @@
-// Home.jsx — the summary home page. Rewritten 14 September 2026.
+// Home.jsx — the home page. RESTRUCTURED 18 September 2026.
 //
 // WHAT THIS PAGE IS, IN IAN'S WORDS
-// "a revised Home Page that summarises the company approach" (14 September 2026, 16:24 Bangkok),
-// carrying his positioning line, three beats of how the firm works, and one card per live
-// service. The old page's content, the free 15-question diagnostic funnel and the five-stage
-// AIOS journey, sold the retired offering and is gone from this route. Nothing was deleted: the
-// old copy is still in src/config/hltWebsite.js and in git history, and every old route is live.
+// Its one job, from his locked page-hierarchy table of 17 September 2026: "Problem, value, proof,
+// CTA." The lead message is owner dependence, not a catalogue of services, and there is one
+// commercial action on the page: the Business Read.
+//
+// WHAT WENT, AND WHY NOTHING WAS DELETED
+// The five service cards are gone from this route, along with the "How we work" beats that
+// introduced them. Every one of those five pages is still live at its own URL, its file is still
+// on disk and its copy is still in src/copy/, on Ian's opening line "Do not delete existing
+// service or methodology content". HEADER_SERVICES and ladderPosition are untouched, so the
+// "Step n of 5" strip on each service page still works: this page simply stops importing them.
 //
 // WHY THIS FILE HOLDS NO COPY OF ITS OWN
-// Every visible string comes from src/copy/home.js, lifted verbatim from the verified deck at
-//   C:\Projects\IWT\02-builds\executive-assistant\work\drafts\2026-09-14-HLT-HOME-PAGE-COPY.md
-// except the five service NAMES, which come from each service's own gated translation key, so a
-// renamed service is renamed in one place. Proved verbatim by
-//   node src/assets/brand/hlt-logo-v2/verify-page-copy.mjs home <deck path>
+// Every visible string comes from src/copy/homeRebuild.js, lifted verbatim from the gated pack at
+//   C:\Projects\hlt-estate\02-builds\hlt-site-kit\copy\2026-09-18-home.md
+// Only SENDABLE blocks are there. Every NOTE block stayed in the pack. The 14 September strings
+// stay on disk in src/copy/home.js and are overridden key by key, never edited.
 //
-// FIVE CARDS, NOT SIX. Brand OS is off the front of the site on Ian's ruling of 14 September
-// 2026, 16:18 Bangkok. Its page and route stay live and unlinked.
+// TWO CALLS TO ACTION IN THE HERO, AND THAT IS IAN'S OWN HERO. He wrote both lines in the same
+// paragraph of the directive: the Business Read is the commercial action, LINE is the contact
+// rail beside it. The pack's NOTE 1 carries the research finding that argues for one and leaves
+// the ruling with him. If he wants the secondary gone it is a delete and nothing else moves.
 //
-// THE THAI LINE. The hero headline is the one key on this site with a real Thai value, Ian's own
-// words supplied 16:03 Bangkok. It is not rendered here conditionally: translations.js overrides
-// that single key in the `th` block, so this component stays language-agnostic.
+// THE THREE CAPABILITY CARDS CARRY NO LINK. The pack's NOTE 3 says they need three destinations
+// and that none of the seven pages is one. The Desk ruled out an eighth page on 18 September, so
+// there is nowhere for a "Learn more" to go and the label is not rendered. That decision is
+// recorded in src/constants/routes.js where the ruling lives, and in the copy module.
 //
-// THE VISUAL PASS, 17:42 to 17:46 Bangkok, 14 September 2026. Ian, after reading the six pages
-// on the dev server: "Ok this is looking ok in terms of copy next please add visuals to
-// improve", then "Can we add numbered steps so it feels like a process." Copy is untouched: not
-// one visible string on this page changed. What changed is that "How we work" now reads as a
-// numbered process joined by a connecting line, each step shows which services belong to it
-// using the service titles already on the page, and each service card carries its icon on a
-// navy tile. The 1, 2, 3 are the only strings this pass added to the page, and they are marked
-// `data-visual` so the copy fixture lists them rather than silently allowing them.
+// THE HERO PHOTOGRAPH stays exactly as it was, keys and all. It is Ian's demo ruling and the
+// pack routes the question of hero imagery to the creative director rather than answering it.
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, FileText, Gauge, LayoutDashboard, Library, MessageSquare } from 'lucide-react';
+import { ArrowRight, Eye, Library, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
-import {
-    HEADER_SERVICES,
-    ROUTE_AIOS_AUDIT,
-    ROUTE_BUSINESS_READ,
-    ROUTE_EXECUTIVE_ASSISTANT,
-    ROUTE_OPENBRAIN,
-    ROUTE_OPS_COCKPIT,
-} from '../constants/routes';
+import { ROUTE_BUSINESS_READ, ROUTE_HOW_IT_WORKS } from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
 
 const CTA_CLASSES =
     'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
+
+// The secondary action is a quiet outline, never a second filled button, so the first screen
+// still has one obvious thing to do.
+const SECONDARY_CTA_CLASSES =
+    'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/40 px-7 py-4 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
 
 const fadeUp = {
     initial: { opacity: 0, y: 24 },
@@ -55,29 +54,9 @@ const fadeUp = {
     transition: { duration: 0.5 },
 };
 
-// One icon per service, keyed by route so a renamed service keeps its icon. These are the same
-// lucide icons the service pages already use on their tier and step cards, so a card on the home
-// page and the page it opens carry the same mark.
-const SERVICE_ICONS = {
-    [ROUTE_AIOS_AUDIT]: Gauge,
-    [ROUTE_EXECUTIVE_ASSISTANT]: MessageSquare,
-    [ROUTE_OPS_COCKPIT]: LayoutDashboard,
-    [ROUTE_BUSINESS_READ]: FileText,
-    [ROUTE_OPENBRAIN]: Library,
-};
-
-// Which services belong to which beat, as Ian ruled at 17:46 Bangkok. The tags carry the
-// SERVICE TITLES ONLY, read from the same translation keys as the cards below, so this adds no
-// copy: rename a service once and its tag, its card and the header all change together.
-// Beat 2 carries none, deliberately — it is the design step, and no service on the site is sold
-// as design on its own.
-// Each list is in LADDER ORDER, so a tag under a beat and the stack below it read the same way
-// round (Ian, 18:10 Bangkok).
-const BEAT_SERVICES = {
-    1: [ROUTE_BUSINESS_READ, ROUTE_AIOS_AUDIT],
-    2: [],
-    3: [ROUTE_OPENBRAIN, ROUTE_EXECUTIVE_ASSISTANT, ROUTE_OPS_COCKPIT],
-};
+// One icon per capability card. These are marks, not copy: the card's words are the only thing a
+// visitor reads, and each icon is the same lucide glyph the matching system page already uses.
+const CAPABILITY_ICONS = [MessageSquare, Eye, Library];
 
 const Home = () => {
     const { t } = useLanguage();
@@ -93,32 +72,30 @@ const Home = () => {
         return () => tag.setAttribute('content', previous);
     }, [metaDescription]);
 
-    // The cards are the header's own list, in the header's own order, so the two can never
-    // disagree about what the firm sells or where a service lives.
-    // The cards are the ladder, in the ladder's order, so the header, the stack below and the
-    // "Step n of 5" strip on every service page can never disagree. The one-liner is read from
-    // the service's own `homeDescKey`, never from where it happens to sit in the array.
-    const services = HEADER_SERVICES.map((service, index) => ({
-        step: index + 1,
-        name: t(service.labelKey),
-        desc: t(service.homeDescKey),
-        to: service.to,
-        Icon: SERVICE_ICONS[service.to],
-    }));
+    const signs = [
+        t('homeSign1'),
+        t('homeSign2'),
+        t('homeSign3'),
+        t('homeSign4'),
+        t('homeSign5'),
+        t('homeSign6'),
+        t('homeSign7'),
+    ];
 
-    // A service title, read from its own translation key, for the tags under the beats.
-    const titleFor = (route) => {
-        const entry = HEADER_SERVICES.find((service) => service.to === route);
-
-        return entry ? t(entry.labelKey) : null;
-    };
-
-    const beats = [1, 2, 3].map((n) => ({
+    // Understand, Diagnose, Improve. His three stages, in his order, and the order is the point.
+    const stages = [1, 2, 3].map((n) => ({
         n,
-        lead: t(`homeBeat${n}Lead`),
-        body: t(`homeBeat${n}Body`),
-        tags: BEAT_SERVICES[n].map(titleFor).filter(Boolean),
+        name: t(`homeStage${n}Name`),
+        body: t(`homeStage${n}Body`),
     }));
+
+    const capabilities = [1, 2, 3].map((n) => ({
+        name: t(`homeCap${n}Name`),
+        body: t(`homeCap${n}Body`),
+        Icon: CAPABILITY_ICONS[n - 1],
+    }));
+
+    const proof = [t('homeProof1'), t('homeProof2'), t('homeProof3'), t('homeProof4'), t('homeProof5')];
 
     return (
         <div className="min-h-screen bg-stone-50 pt-24 text-slate-950 dark:bg-hltNavy dark:text-white">
@@ -161,10 +138,18 @@ const Home = () => {
                         <p className="mt-6 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg sm:leading-9">
                             {t('homeHeroLead')}
                         </p>
-                        <div className="mt-8">
-                            <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className={CTA_CLASSES}>
+                        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                            <Link to={ROUTE_BUSINESS_READ} className={CTA_CLASSES}>
                                 {t('homeCtaLabel')}
                                 <ArrowRight size={18} aria-hidden="true" />
+                            </Link>
+                            <a
+                                href={LINE_OFFICIAL_ACCOUNT}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={SECONDARY_CTA_CLASSES}
+                            >
+                                {t('homeSecondaryCtaLabel')}
                             </a>
                         </div>
                         <p className="mt-4 text-sm leading-6 text-slate-300">{t('homeHeroCtaNote')}</p>
@@ -172,29 +157,66 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* How we work, in three beats. Every line is lifted from a file; see the deck. */}
+            {/* The problem, in the owner's own week. Seven signs, in the pack's order. */}
             <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-4xl">
+                    <motion.h2 {...fadeUp} className="text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('homeProblemHeading')}
+                    </motion.h2>
+                    <motion.p
+                        {...fadeUp}
+                        className="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300 sm:text-lg"
+                    >
+                        {t('homeProblemLead')}
+                    </motion.p>
+
+                    <ul className="mt-8 space-y-4">
+                        {signs.map((sign, index) => (
+                            <motion.li
+                                key={sign}
+                                {...fadeUp}
+                                transition={{ duration: 0.5, delay: index * 0.04 }}
+                                className="border-l-2 border-indigo-600 pl-5 text-base leading-8 text-slate-600 dark:border-indigo-400 dark:text-slate-300"
+                            >
+                                {sign}
+                            </motion.li>
+                        ))}
+                    </ul>
+
+                    <motion.p {...fadeUp} className="mt-10 text-base leading-8 text-slate-950 dark:text-white sm:text-lg">
+                        {t('homeConsequenceP1')}
+                    </motion.p>
+                    <motion.p {...fadeUp} className="mt-4 text-base leading-8 text-slate-950 dark:text-white sm:text-lg">
+                        {t('homeConsequenceP2')}
+                    </motion.p>
+                </div>
+            </section>
+
+            {/* Understand, Diagnose, Improve. THE THREE STAGES REPLACE THE FIVE SERVICE CARDS.
+                Same numbered process language the site already uses, because the order is the
+                argument: nothing gets built before the business is read. */}
+            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2
                         {...fadeUp}
                         className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
                     >
-                        {t('homeApproachHeading')}
+                        {t('homeStagesHeading')}
                     </motion.h2>
-                    {/* THREE NUMBERED STEPS, JOINED. The numeral is the dominant mark on each
-                        step and the connector is drawn in the gap between the cards, so no
-                        percentage arithmetic is needed to make a line meet a badge: it runs from
-                        the edge of one card to the next, horizontally on desktop and vertically
-                        on a phone, and the opaque badge sits over it. The last step draws none. */}
+
+                    {/* The connector is drawn in the gap between the cards, so no percentage
+                        arithmetic is needed to make a line meet a badge: it runs from the edge of
+                        one card to the next, horizontally on desktop and vertically on a phone,
+                        and the opaque badge sits over it. The last stage draws none. */}
                     <ol className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
-                        {beats.map((beat, index) => (
+                        {stages.map((stage, index) => (
                             <motion.li
-                                key={beat.lead}
+                                key={stage.name}
                                 {...fadeUp}
                                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                                className="relative flex flex-col rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass"
+                                className="relative flex flex-col rounded-2xl border border-slate-200 bg-white p-7 card-glass"
                             >
-                                {index < beats.length - 1 ? (
+                                {index < stages.length - 1 ? (
                                     <>
                                         {/* The badge centre is the card's 1.75rem padding plus
                                             half of its 4rem height, so both connectors meet it
@@ -210,116 +232,135 @@ const Home = () => {
                                     </>
                                 ) : null}
 
-                                <ProcessNumber label={`${beat.n}`} size="lg" decorative />
+                                <ProcessNumber label={`${stage.n}`} size="lg" decorative />
 
-                                <h3 className="mt-6 text-lg font-bold leading-7 text-slate-950 dark:text-white">{beat.lead}</h3>
-                                <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{beat.body}</p>
-
-                                {/* mt-auto on the wrapper, so the tag rows line up across the
-                                    three cards however long the beat above them runs. */}
-                                {beat.tags.length ? (
-                                    <div className="mt-auto pt-8">
-                                        <ul className="flex flex-wrap gap-2 border-t border-slate-200 pt-5 dark:border-white/20">
-                                            {beat.tags.map((tag) => (
-                                                <li
-                                                    key={tag}
-                                                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold leading-5 text-slate-700 card-glass dark:text-slate-200"
-                                                >
-                                                    {tag}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ) : null}
-                            </motion.li>
-                        ))}
-                    </ol>
-                </div>
-            </section>
-
-            {/* The services. One card per live service, each linking to its own page. */}
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-6xl">
-                    <motion.h2
-                        {...fadeUp}
-                        className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
-                    >
-                        {t('homeServicesHeading')}
-                    </motion.h2>
-
-                    {/* THE STACK. Ian, 18:10 Bangkok: "The 5 different elements should naturally
-                        stack on each other starting with the Business Read." So the five are one
-                        numbered ladder rather than a grid of equals: each rung steps in a little
-                        further than the one above it, and the numeral is the same badge the
-                        approach beats and every service page's timeline use.
-                        The indent is drawn by a spacer that only exists from md up, because a
-                        staircase on a phone is just a squeezed card. */}
-                    <ol className="mx-auto mt-12 max-w-4xl space-y-4">
-                        {services.map((service, index) => (
-                            <motion.li
-                                key={service.to}
-                                {...fadeUp}
-                                transition={{ duration: 0.5, delay: index * 0.06 }}
-                                className="flex items-stretch"
-                            >
-                                <span
-                                    aria-hidden="true"
-                                    style={{ width: `${index * 1.75}rem` }}
-                                    className="hidden shrink-0 md:block"
-                                />
-                                <Link
-                                    to={service.to}
-                                    className="group flex flex-1 items-start gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl card-glass dark:hover:border-indigo-400/50 sm:p-7"
-                                >
-                                    <ProcessNumber label={`${service.step}`} decorative />
-
-                                    <span className="min-w-0 flex-1">
-                                        <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                                            <h3 className="text-xl font-bold leading-7 text-slate-950 dark:text-white">
-                                                {service.name}
-                                            </h3>
-                                            {/* The service's own mark, the same icon its page carries. */}
-                                            {service.Icon ? (
-                                                <span
-                                                    aria-hidden="true"
-                                                    className="text-slate-400 transition-colors group-hover:text-hltNavy dark:text-slate-500 dark:group-hover:text-white"
-                                                >
-                                                    <service.Icon size={18} />
-                                                </span>
-                                            ) : null}
-                                        </span>
-                                        <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-300">{service.desc}</p>
-                                    </span>
-
-                                    <span className="mt-1 shrink-0 text-indigo-600 transition-transform group-hover:translate-x-1 dark:text-indigo-300">
-                                        <ArrowRight size={20} aria-hidden="true" />
-                                    </span>
-                                </Link>
+                                <h3 className="mt-6 text-lg font-bold leading-7 text-slate-950 dark:text-white">
+                                    {stage.name}
+                                </h3>
+                                <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{stage.body}</p>
                             </motion.li>
                         ))}
                     </ol>
 
                     <motion.p
                         {...fadeUp}
-                        className="mt-10 text-center text-sm leading-7 text-slate-600 dark:text-slate-300"
+                        className="mt-10 text-center text-base leading-8 text-slate-600 dark:text-slate-300"
                     >
-                        {t('homeCardsNote')}
+                        {t('homeStagesClosing')}
+                    </motion.p>
+                    <motion.div {...fadeUp} className="mt-5 text-center">
+                        <Link
+                            to={ROUTE_HOW_IT_WORKS}
+                            className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 transition-colors hover:text-indigo-500 dark:text-indigo-300"
+                        >
+                            {t('homeStagesLinkLabel')}
+                            <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* The capabilities, a level down from the stages, as Ian ruled. Three cards and no
+                link on any of them: see this file's header and the copy module. */}
+            <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-6xl">
+                    <motion.h2
+                        {...fadeUp}
+                        className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
+                    >
+                        {t('homeCapHeading')}
+                    </motion.h2>
+                    <motion.p
+                        {...fadeUp}
+                        className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 dark:text-slate-300"
+                    >
+                        {t('homeCapLead')}
+                    </motion.p>
+
+                    <ul className="mt-12 grid gap-6 md:grid-cols-3">
+                        {capabilities.map((capability, index) => (
+                            <motion.li
+                                key={capability.name}
+                                {...fadeUp}
+                                transition={{ duration: 0.5, delay: index * 0.06 }}
+                                className="rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass"
+                            >
+                                <span
+                                    aria-hidden="true"
+                                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-hltNavy text-white"
+                                >
+                                    <capability.Icon size={20} />
+                                </span>
+                                <h3 className="mt-5 text-lg font-bold leading-7 text-slate-950 dark:text-white">
+                                    {capability.name}
+                                </h3>
+                                <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+                                    {capability.body}
+                                </p>
+                            </motion.li>
+                        ))}
+                    </ul>
+
+                    {/* AI visible, and subordinate, in Ian's own order: the operating improvement
+                        first, AI second. */}
+                    <motion.p
+                        {...fadeUp}
+                        className="mx-auto mt-10 max-w-3xl text-center text-base leading-8 text-slate-600 dark:text-slate-300"
+                    >
+                        {t('homeAiLine')}
                     </motion.p>
                 </div>
             </section>
 
-            {/* Closing CTA. The same one CTA as the hero: one label, one target, no second ask. */}
+            {/* Proof. Commitments and mechanism, never a result: no delivered HLT engagement
+                exists on file, so none is claimed. The pack's NOTE 4 records why. */}
+            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-4xl">
+                    <motion.h2 {...fadeUp} className="text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('homeProofHeading')}
+                    </motion.h2>
+                    <ul className="mt-8 space-y-4">
+                        {proof.map((line, index) => (
+                            <motion.li
+                                key={line}
+                                {...fadeUp}
+                                transition={{ duration: 0.5, delay: index * 0.04 }}
+                                className="border-l-2 border-indigo-600 pl-5 text-base leading-8 text-slate-600 dark:border-indigo-400 dark:text-slate-300"
+                            >
+                                {line}
+                            </motion.li>
+                        ))}
+                    </ul>
+                    <motion.p {...fadeUp} className="mt-8 text-base leading-8 text-slate-950 dark:text-white">
+                        {t('homeProofClosing')}
+                    </motion.p>
+                </div>
+            </section>
+
+            {/* Closing CTA. The same label as the hero, on purpose: one commercial action, placed
+                twice on a page the reader scrolls. */}
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('homeClosingHeading')}</h2>
-                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">{t('homeClosingBody')}</p>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+                        {t('homeClosingBody')}
+                    </p>
                     <div className="mt-8">
-                        <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className={CTA_CLASSES}>
+                        <Link to={ROUTE_BUSINESS_READ} className={CTA_CLASSES}>
                             {t('homeCtaLabel')}
                             <ArrowRight size={18} aria-hidden="true" />
-                        </a>
+                        </Link>
                     </div>
-                    <p className="mt-4 text-sm text-slate-400">{t('homeLineHandle')}</p>
+                    <p className="mt-4 text-sm text-slate-400">
+                        <a
+                            href={LINE_OFFICIAL_ACCOUNT}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline underline-offset-4 transition-colors hover:text-white"
+                        >
+                            {t('homeClosingNote')}
+                        </a>
+                    </p>
                 </motion.div>
             </section>
         </div>

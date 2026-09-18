@@ -1,47 +1,64 @@
 // BusinessRead.jsx — /business-read, "The Business Read". Built 14 September 2026.
+// RE-COPIED AND RESTRUCTURED 18 September 2026.
 //
 // WHY THIS FILE HOLDS NO COPY OF ITS OWN
-// Every visible string on this page comes from the verified copy deck at
-//   C:\Projects\IWT\02-builds\executive-assistant\work\drafts\2026-09-14-HLT-BUSINESS-READ-PAGE-COPY.md
-// and is stored verbatim in src/translations.js under the br* keys. Nothing here is the
-// builder's wording. If a line needs changing, change the deck first, then the key, never
-// this file. The page is proved verbatim against the deck by
-//   src/assets/brand/hlt-logo-v2/verify-business-read-copy.mjs
+// Every visible string on this page comes from the gated copy pack at
+//   C:\Projects\hlt-estate\02-builds\hlt-site-kit\copy\2026-09-18-business-read.md
+// and is stored verbatim in src/copy/businessReadRebuild.js, which src/translations.js spreads
+// at the foot of both language blocks. Nothing here is the builder's wording. If a line needs
+// changing, change the pack first, then the module, never this file.
 //
-// LANGUAGE. English only this pass. The th keys carry the English values on purpose, so the
-// Thai toggle falls back to English rather than showing a machine translation — HLT doctrine
-// (HLT_GOVERNING_CONTEXT.md line 73) forbids line-by-line translation, and Ian ruled the page
-// ships English-only until a native Thai deck exists.
+// WHAT THE RESTRUCTURE DID, 18 September 2026. Ian's directive of 17 September makes this "the
+// main commercial page" and writes out the four questions it should answer, in order: what is
+// happening, what the Business Read does, what you receive, what it is not. Those four sections
+// are now the spine of the page and they run before the tiers, because the reader should know
+// what he is buying before he is shown three prices for it. The margin-led summary of 14
+// September is what they replace; its seven paragraphs are still in src/translations.js and still
+// in their own deck, and nothing was deleted anywhere.
+//
+// THE FOURTH SECTION IS THE UNUSUAL ONE AND IT STAYS. "What it is not" is the only block on the
+// page that tells the reader what he is not buying. It is Ian's own list, verbatim, and it is the
+// part a seat would be tempted to soften.
+//
+// WHY THE "STEP 1 OF 5" STRIP WENT. It read HEADER_SERVICES through ladderPosition and rendered
+// a link to the AIOS Audit under the hero, so the site's main commercial page opened by pointing
+// at a service page that is now deliberately off the navigation, and claimed a ladder of five the
+// public site no longer presents. Ian's line is "No service names in the main navigation". The
+// component, HEADER_SERVICES and ladderPosition are all untouched, and the strip still renders on
+// each of the five service pages, which keep their routes and their files.
+//
+// LANGUAGE. English only this pass. The th block falls back to English for the keys this page
+// renders, for the reason recorded at the foot of src/translations.js: the machine Thai draft
+// describes the page this one replaced, and no line of Thai may be written or translated here.
 //
 // PRICES. Thai baht only, always with the ex-VAT wording beside them. HLT's own VAT
-// registration is NOT ESTABLISHED, so no VAT-inclusive figure appears anywhere on this page.
+// registration is NOT ESTABLISHED, so no VAT-inclusive figure appears anywhere on this page. The
+// three figures are Ian's ruling of 14 September; size banding is modelled and unruled, and the
+// pack's NOTE 1 leaves that decision with him.
 //
-// CTA. One CTA on the page, the LINE Official Account ruled by Ian on 14 September 2026.
-// It is deliberately NOT the site's utm-tagged contact constant: the deck rules "this exact
-// URL, nothing appended without Ian's word". See the flag in the build notes.
+// CTA. One CTA on the page, the LINE Official Account ruled by Ian. It is deliberately NOT the
+// site's utm-tagged contact constant: the deck rules "this exact URL, nothing appended without
+// Ian's word".
 //
 // THE VISUAL PASS, 14 September 2026 (Ian, 17:42 Bangkok: "please add visuals to improve"; and
-// 17:46: "Can we add numbered steps so it feels like a process"). NO COPY MOVED. This page is
-// not on the shared ServicePage layout, so it gets the same four marks by importing the same
-// two small components the layout uses:
+// 17:46: "Can we add numbered steps so it feels like a process"). Carried through the restructure
+// unchanged:
 //   1. "How it runs" is a vertical timeline with the site's numbered badge. The badge still
 //      renders the deck's own "1.", so the copy fixture can rebuild the step line by joining
 //      badge, lead and body.
 //   2. Each tier card carries its icon and a three-bar depth ladder.
 //   3. A comparison cell reading "Yes" gains a tick and "No" a muted dash, beside the word.
-//   4. One code-drawn artefact mock under "What you get, on every tier": the written read.
+//   4. One code-drawn artefact mock, now under "What you receive": the written read.
 // The price on the tier cards is untouched, and the mock's own costed lines read "THB —"
 // because no figure for a client's next steps exists anywhere. See BusinessReadMock.jsx.
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, FileText, Layers, Users } from 'lucide-react';
+import { ArrowRight, Check, FileText, Layers, Users, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_BUSINESS_READ } from '../constants/contact';
 import ProcessNumber from '../components/mocks/ProcessNumber';
-import StepIndicator from '../components/mocks/StepIndicator';
 import BusinessReadMock from '../components/mocks/BusinessReadMock';
 import { CellValue, DepthLadder } from '../components/mocks/TierVisuals';
-import { ROUTE_BUSINESS_READ } from '../constants/routes';
 
 // One mark per tier, in the deck's order: the read itself, the read with a second voice from the
 // team, the read at full depth.
@@ -80,7 +97,8 @@ const BusinessRead = () => {
         a: t(`brFaq${n}A`),
     }));
 
-    const included = [1, 2, 3, 4, 5, 6].map((n) => t(`brIncluded${n}`));
+    const receive = [1, 2, 3, 4, 5].map((n) => t(`brReceive${n}`));
+    const notThis = [1, 2, 3].map((n) => t(`brNot${n}`));
 
     // The description meta is swapped in place rather than rendered.
     // React 19 hoists a rendered <meta> by APPENDING it to <head>, and index.html already
@@ -147,33 +165,93 @@ const BusinessRead = () => {
                 </div>
             </section>
 
-            {/* Where this service sits on the ladder. It is step 1: Ian, 18:10 Bangkok, "The 5
-                different elements should naturally stack on each other starting with the
-                Business Read." */}
-            <StepIndicator route={ROUTE_BUSINESS_READ} />
-
-            {/* The summary */}
+            {/* QUESTION ONE. What is happening. Ian's own opening line for this section. */}
             <section className="py-16 bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-6">
                     <div className="max-w-3xl mx-auto">
                         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
-                            {t('brSummaryHeading')}
+                            {t('brHappeningHeading')}
                         </h2>
                         <div className="space-y-6 text-lg text-slate-600 dark:text-slate-300">
-                            <p>{t('brSummaryP1')}</p>
-                            <p>{t('brSummaryP2')}</p>
-                            <p>{t('brSummaryP3')}</p>
-                            <p>{t('brSummaryP4')}</p>
-                            <p>{t('brSummaryP5')}</p>
-                            <p>{t('brSummaryP6')}</p>
-                            <p className="font-semibold text-slate-900 dark:text-white">{t('brSummaryP7')}</p>
+                            <p className="font-semibold text-slate-900 dark:text-white">{t('brHappeningP1')}</p>
+                            <p>{t('brHappeningP2')}</p>
+                            <p>{t('brHappeningP3')}</p>
                         </div>
                     </div>
                 </div>
             </section>
 
+            {/* QUESTION TWO. What the Business Read does. Mechanism before recommendation, which
+                is doctrine and is also the order Ian wrote the questions in. */}
+            <section className="py-16 bg-slate-50 dark:bg-slate-900/50">
+                <div className="container mx-auto px-6">
+                    <div className="max-w-3xl mx-auto">
+                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
+                            {t('brDoesHeading')}
+                        </h2>
+                        <div className="space-y-6 text-lg text-slate-600 dark:text-slate-300">
+                            <p>{t('brDoesP1')}</p>
+                            <p>{t('brDoesP2')}</p>
+                            <p>{t('brDoesP3')}</p>
+                            <p>{t('brDoesP4')}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* QUESTION THREE. What you receive: the five, then the labelling line, then the
+                deliverable drawn. */}
+            <section className="py-20 bg-white dark:bg-slate-950">
+                <div className="container mx-auto px-6">
+                    <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 dark:text-white mb-12">
+                        {t('brReceiveHeading')}
+                    </h2>
+                    <ul className="max-w-3xl mx-auto space-y-5">
+                        {receive.map((item) => (
+                            <li key={item} className="flex gap-4 text-slate-600 dark:text-slate-300">
+                                <span className="mt-1 shrink-0 text-indigo-600 dark:text-indigo-400">
+                                    <Check size={20} aria-hidden="true" />
+                                </span>
+                                <span>{item}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <p className="max-w-3xl mx-auto mt-8 text-slate-600 dark:text-slate-300">
+                        {t('brReceiveNote')}
+                    </p>
+
+                    {/* The deliverable, drawn: the named problem, the evidence with its verified
+                        and not-established labels, and the costed next steps. */}
+                    <div className="max-w-3xl mx-auto mt-14">
+                        <BusinessReadMock />
+                    </div>
+                </div>
+            </section>
+
+            {/* QUESTION FOUR. What it is not. Ian's own three, verbatim, and the most persuasive
+                block on the page precisely because it is the only one that draws a boundary. */}
+            <section className="py-16 bg-slate-50 dark:bg-slate-900/50">
+                <div className="container mx-auto px-6">
+                    <div className="max-w-3xl mx-auto">
+                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-8">
+                            {t('brNotHeading')}
+                        </h2>
+                        <ul className="space-y-5">
+                            {notThis.map((item) => (
+                                <li key={item} className="flex gap-4 text-lg text-slate-600 dark:text-slate-300">
+                                    <span className="mt-1.5 shrink-0 text-slate-400 dark:text-slate-500">
+                                        <X size={18} aria-hidden="true" />
+                                    </span>
+                                    <span>{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
             {/* The three tiers */}
-            <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
+            <section className="py-20 bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-6">
                     <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 dark:text-white mb-12">
                         {t('brTiersHeading')}
@@ -194,7 +272,7 @@ const BusinessRead = () => {
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{tier.name}</h3>
                                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-grow">{tier.desc}</p>
-                                {/* The price line reads in full as the deck's line 141 form. */}
+                                {/* The price line reads in full as the pack's block 8 form. */}
                                 <p className="mb-4">
                                     <span className="text-3xl font-bold text-slate-900 dark:text-white">{tier.price}</span>
                                     <span className="text-xs text-slate-500 dark:text-slate-400">{t('brPriceVatSuffix')}</span>
@@ -265,31 +343,6 @@ const BusinessRead = () => {
                 </div>
             </section>
 
-            {/* What's included */}
-            <section className="py-20 bg-white dark:bg-slate-950">
-                <div className="container mx-auto px-6">
-                    <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900 dark:text-white mb-12">
-                        {t('brIncludedHeading')}
-                    </h2>
-                    <ul className="max-w-3xl mx-auto space-y-5">
-                        {included.map((item) => (
-                            <li key={item} className="flex gap-4 text-slate-600 dark:text-slate-300">
-                                <span className="mt-1 shrink-0 text-indigo-600 dark:text-indigo-400">
-                                    <Check size={20} aria-hidden="true" />
-                                </span>
-                                <span>{item}</span>
-                            </li>
-                        ))}
-                    </ul>
-
-                    {/* The deliverable, drawn: the named problem, the evidence with its verified
-                        and not-established labels, and the costed next steps. */}
-                    <div className="max-w-3xl mx-auto mt-14">
-                        <BusinessReadMock />
-                    </div>
-                </div>
-            </section>
-
             {/* How it runs */}
             <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
                 <div className="container mx-auto px-6">
@@ -352,7 +405,7 @@ const BusinessRead = () => {
                         {t('brCtaLabel')}
                         <ArrowRight size={20} aria-hidden="true" />
                     </a>
-                    <p className="mt-5 text-sm text-slate-500 dark:text-slate-400">{t('brLineHandle')}</p>
+                    <p className="mt-5 text-sm text-slate-500 dark:text-slate-400">{t('brClosingNote')}</p>
                 </div>
             </section>
         </div>
