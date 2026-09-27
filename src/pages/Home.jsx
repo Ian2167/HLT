@@ -32,7 +32,7 @@
 // pack routes the question of hero imagery to the creative director rather than answering it.
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Eye, Library, MessageSquare } from 'lucide-react';
+import { ArrowRight, BookOpen, Eye, Library, MessageSquare, Scissors, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
@@ -57,6 +57,9 @@ const fadeUp = {
 // One icon per capability card. These are marks, not copy: the card's words are the only thing a
 // visitor reads, and each icon is the same lucide glyph the matching system page already uses.
 const CAPABILITY_ICONS = [MessageSquare, Eye, Library];
+
+// Keep, transfer, remove, 27 September 2026. Marks, not copy, same as the capability icons.
+const KTR_ICONS = [ShieldCheck, BookOpen, Scissors];
 
 const Home = () => {
     const { t } = useLanguage();
@@ -93,6 +96,13 @@ const Home = () => {
         name: t(`homeCap${n}Name`),
         body: t(`homeCap${n}Body`),
         Icon: CAPABILITY_ICONS[n - 1],
+    }));
+
+    // Keep, transfer, remove: Ian's three kinds of owner dependency, 27 September 2026.
+    const ktr = [1, 2, 3].map((n) => ({
+        name: t(`homeKtr${n}Name`),
+        body: t(`homeKtr${n}Body`),
+        Icon: KTR_ICONS[n - 1],
     }));
 
     const proof = [t('homeProof1'), t('homeProof2'), t('homeProof3'), t('homeProof4'), t('homeProof5')];
@@ -135,6 +145,11 @@ const Home = () => {
                         <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl sm:leading-[1.1]">
                             {t('homeHeroHeadline')}
                         </h1>
+                        {/* 27 September 2026, Ian's "Agreed": the line under his headline. The
+                            headline and lead above and below it stay in his ruled words. */}
+                        <p className="mt-4 text-lg font-semibold leading-8 text-indigo-100 sm:text-xl">
+                            {t('homeHeroKeepLine')}
+                        </p>
                         <p className="mt-6 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg sm:leading-9">
                             {t('homeHeroLead')}
                         </p>
@@ -210,6 +225,43 @@ const Home = () => {
                             {t('homeConsequenceP2')}
                         </motion.p>
                     </div>
+                </div>
+            </section>
+
+
+            {/* KEEP, TRANSFER, REMOVE. 27 September 2026, Ian's new direction: sort every way the
+                business depends on the owner into three and treat each differently. It answers the
+                owner's fear straight after the problem is named: nothing that makes the business
+                theirs is taken away. Navy, so it reads as the turn from problem to answer. Copy:
+                src/copy/newDirection.js, from the 27 September pack. */}
+            <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-6xl">
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('homeKtrHeading')}
+                    </motion.h2>
+                    <motion.p
+                        {...fadeUp}
+                        className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-200 sm:text-lg"
+                    >
+                        {t('homeKtrLead')}
+                    </motion.p>
+                    <ul className="mt-10 grid gap-5 md:grid-cols-3">
+                        {ktr.map((item, index) => (
+                            <motion.li
+                                key={item.name}
+                                {...fadeUp}
+                                transition={{ duration: 0.5, delay: index * 0.06 }}
+                                className="rounded-2xl border border-white/15 bg-white/[0.06] p-7"
+                            >
+                                <item.Icon size={26} className="text-indigo-200" aria-hidden="true" />
+                                <h3 className="mt-4 text-xl font-bold">{item.name}</h3>
+                                <p className="mt-3 text-base leading-7 text-slate-200">{item.body}</p>
+                            </motion.li>
+                        ))}
+                    </ul>
+                    <motion.p {...fadeUp} className="mx-auto mt-10 max-w-2xl text-center text-lg font-semibold leading-8">
+                        {t('homeKtrClosing')}
+                    </motion.p>
                 </div>
             </section>
 

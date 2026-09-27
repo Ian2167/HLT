@@ -137,7 +137,7 @@ export const hltWebsiteCopy = {
             secondaryCta: 'คุยผ่าน LINE',
         },
         footer: {
-            tagline: 'ช่วยธุรกิจบริการไทยหาว่าลูกค้าหลุดตรงไหน ก่อนติดตั้งอะไรเพิ่ม',
+            tagline: 'ช่วยธุรกิจบริการไทยให้พึ่งพาเจ้าของน้อยลง',
             brandPrefix: 'HighLevel',
             brandAccent: 'Thai',
             company: 'HLT',
@@ -278,7 +278,7 @@ export const hltWebsiteCopy = {
             secondaryCta: 'Chat on LINE',
         },
         footer: {
-            tagline: 'Helping Thai service businesses find where customers disappear before installing anything new.',
+            tagline: 'Helping Thai service businesses depend less on their owners.',
             brandPrefix: 'HighLevel',
             brandAccent: 'Thai',
             company: 'HLT',

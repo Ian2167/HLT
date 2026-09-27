@@ -44,6 +44,9 @@ import { thaiDraft } from './copy/thaiDraft';
 // `th` block, after the two English rebuild spreads, which is the whole point of it. See its own
 // header and the block comment at the foot of this file.
 import { thaiDraftRestructure } from './copy/thaiDraftRestructure';
+// The keep, transfer, remove layer and the five fixes, 27 September 2026, on Ian's rulings of that
+// day. Spread LAST in each block so it wins. See the module's own header.
+import { newDirectionCopy, newDirectionTh } from './copy/newDirection';
 
 export const translations = {
     en: {
@@ -464,7 +467,10 @@ export const translations = {
         // of this block would lose to them. Every line it overrides is still on the line above
         // and still in the 14 September deck; the keys it does not name (brSummary*, brIncluded*)
         // keep their values and simply stop being rendered.
-        ...businessReadRebuildCopy
+        ...businessReadRebuildCopy,
+
+        // 27 September 2026: the new direction. LAST, so it wins.
+        ...newDirectionCopy
     },
     th: {
         // TH PENDING: English values on purpose. See the note at the top of this file.
@@ -937,6 +943,9 @@ export const translations = {
         // NOTHING OUTSIDE THE SEVEN MODULES MOVES. Every key in this spread is a key one of those
         // modules defines, so no legacy service page's Thai and no header or footer chrome is
         // touched.
-        ...thaiDraftRestructure
+        ...thaiDraftRestructure,
+
+        // 27 September 2026: the new direction's machine Thai draft, for Ann's review. LAST.
+        ...newDirectionTh
     }
 };

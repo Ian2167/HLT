@@ -61,6 +61,8 @@ const { contactCopy } = await mod('copy/contact.js');
 const { clientLoginCopy } = await mod('copy/clientLogin.js');
 const { thaiDraft } = await mod('copy/thaiDraft.js');
 const { thaiDraftRestructure } = await mod('copy/thaiDraftRestructure.js');
+// 27 September 2026: the new-direction module, spread last in both blocks.
+const { newDirectionCopy, newDirectionTh } = await mod('copy/newDirection.js');
 
 // The seven restructured modules, in page order. This IS the scope of the brief.
 const SEVEN = [
@@ -79,13 +81,13 @@ const ARGS = [
     'aiosAuditCopy', 'brandOsCopy', 'customAiAssistantCopy', 'opsCockpitCopy', 'openBrainCopy',
     'homeCopy', 'homeHeroHeadlineTh', 'homeRebuildCopy', 'businessReadRebuildCopy',
     'howItWorksCopy', 'examplesCopy', 'aboutCopy', 'contactCopy', 'clientLoginCopy',
-    'thaiDraft', 'thaiDraftRestructure',
+    'thaiDraft', 'thaiDraftRestructure', 'newDirectionCopy', 'newDirectionTh',
 ];
 const VALS = [
     aiosAuditCopy, brandOsCopy, customAiAssistantCopy, opsCockpitCopy, openBrainCopy,
     homeCopy, homeHeroHeadlineTh, homeRebuildCopy, businessReadRebuildCopy,
     howItWorksCopy, examplesCopy, aboutCopy, contactCopy, clientLoginCopy,
-    thaiDraft, thaiDraftRestructure,
+    thaiDraft, thaiDraftRestructure, newDirectionCopy, newDirectionTh,
 ];
 const buildTranslations = (source) => {
     const marker = 'export const translations = ';
@@ -158,9 +160,16 @@ if (thAt < 0) fail('could not find the th block');
 else {
     const thBlock = nowSource.slice(thAt);
     const spreads = [...thBlock.matchAll(/^\s*\.\.\.(\w+)/gm)].map((m) => m[1]);
+    // 27 September 2026: newDirectionTh (the new-direction machine Thai) is now spread last, and
+    // thaiDraftRestructure immediately before it. Both orders are required, so neither can slip.
     const last = spreads[spreads.length - 1];
-    if (last !== 'thaiDraftRestructure') fail(`last spread in th is ...${last}, not ...thaiDraftRestructure`);
+    const second = spreads[spreads.length - 2];
+    if (last !== 'newDirectionTh' || second !== 'thaiDraftRestructure')
+        fail(`th spread order ends ...${second} -> ...${last}, not ...thaiDraftRestructure -> ...newDirectionTh`);
     else pass(`th spread order ends: ${spreads.slice(-4).map((s) => '...' + s).join(' -> ')}`);
+    const nd = Object.entries(newDirectionTh).filter(([, v]) => !THAI.test(v));
+    if (nd.length) fail(`${nd.length} newDirectionTh value(s) carry no Thai: ${nd.map(([k]) => k).join(', ')}`);
+    else pass(`all ${Object.keys(newDirectionTh).length} newDirectionTh values carry Thai script`);
 }
 
 // ---- check six: nothing outside the seven modules moved ---------------------------------------

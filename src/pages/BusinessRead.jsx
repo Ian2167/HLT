@@ -101,7 +101,7 @@ const BusinessRead = () => {
     // panel (creative-director defect 4). Same four keys, same order, same words.
     const does = [1, 2, 3, 4].map((n) => t(`brDoesP${n}`));
 
-    const receive = [1, 2, 3, 4, 5].map((n) => t(`brReceive${n}`));
+    const receive = [1, 2, 3, 4, 5, 6].map((n) => t(`brReceive${n}`)); // 6: the first dependency map, 27 Sept 2026
     const notThis = [1, 2, 3].map((n) => t(`brNot${n}`));
 
     // The description meta is swapped in place rather than rendered.

@@ -48,7 +48,7 @@ const Examples = () => {
         return () => tag.setAttribute('content', previous);
     }, [metaDescription]);
 
-    const examples = [1, 2, 3].map((n) => ({
+    const examples = [1, 2, 3, 4].map((n) => ({ // 4: the call that should stay yours, 27 Sept 2026
         title: t(`ex${n}Title`),
         now: t(`ex${n}Now`),
         after: t(`ex${n}After`),
