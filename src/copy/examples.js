@@ -12,8 +12,10 @@
 // file, so there is no case study, no client name and no outcome figure anywhere on this page.
 // Cutting that line for space would turn three patterns into three implied clients.
 //
-// THREE EXAMPLES, NOT FOUR. Ian's directive allows three or four and names three. A fourth would
-// have to be invented. The fourth slot is where the first real engagement goes when one completes.
+// FOUR EXAMPLES SINCE 27 SEPTEMBER 2026. Ian's directive allows three or four. On 27 September he
+// agreed a fourth PATTERN (ex4, "The decision that should stay yours", in src/copy/newDirection.js),
+// framed by the same honesty line as the other three. The first real, consented client story gets
+// its own slot when one exists; it replaces none of these.
 export const examplesCopy = {
     exNavLink: 'Examples',
 
