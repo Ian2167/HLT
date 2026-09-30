@@ -58,6 +58,11 @@ export const SECONDARY_CTA_CLASSES =
 const TEXT_LINK_CLASSES =
     'inline-flex items-center gap-2 text-base font-bold text-indigo-600 transition-colors hover:text-indigo-500';
 
+// The free test's button: outlined in the site's indigo on the light ground, full width on a phone.
+// Ian, 30 September: the Blindspot Test call "should include FREE and be more obvious".
+export const OUTLINE_CTA_CLASSES =
+    'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border-2 border-indigo-600 px-7 py-4 text-base font-bold text-indigo-700 transition-colors hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
+
 // Marks, not copy: one glyph per card. The three keep, transfer, remove glyphs are the 27 September
 // ones; the six blindspot glyphs are new, chosen from the same lucide set the site already uses.
 const KTR_ICONS = [ShieldCheck, BookOpen, Scissors];
@@ -246,9 +251,9 @@ const Home = () => {
                         {t('homeBlind4Note')}
                     </motion.p>
                     <motion.div {...fadeUp} className="mt-8 text-center">
-                        <Link to={lp(ROUTE_BUSINESS_BLINDSPOTS)} className={TEXT_LINK_CLASSES}>
+                        <Link to={lp(ROUTE_BUSINESS_BLINDSPOTS)} className={OUTLINE_CTA_CLASSES}>
                             {t('homeBlindCtaLabel')}
-                            <ArrowRight size={16} aria-hidden="true" />
+                            <ArrowRight size={18} aria-hidden="true" />
                         </Link>
                     </motion.div>
                 </div>

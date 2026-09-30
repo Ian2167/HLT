@@ -129,7 +129,7 @@ export const visibilityRefreshCopy = {
     homeBlind5Body: 'Where does finding, contacting, trusting or buying become harder than the owner realises?',
     homeBlind6Name: 'Control blindspots',
     homeBlind6Body: 'Where can nobody prove that an important step actually happened?',
-    homeBlindCtaLabel: 'Try the Blindspot Test',
+    homeBlindCtaLabel: 'Take the free Blindspot Test',
 
     // Trust, section 12.
     homeTrustHeading: 'How we work',
@@ -177,7 +177,7 @@ export const visibilityRefreshCopy = {
     brMethod1Body:
         'Before the conversation, we review what a new customer can actually discover. Can they find you, understand you, trust you, contact you and know what to do next?',
     brMethod1Note: "It's the test we ran on High Level Thai first.",
-    brMethod1Link: 'Try the Blindspot Test',
+    brMethod1Link: 'Take the free Blindspot Test',
     brMethod2Name: 'Inside-Out Business Read',
     brMethod2Body:
         'We then follow what happens after the enquiry arrives: who receives it, what decisions are needed, where information is stored, what gets handed off and where work waits.',
@@ -243,7 +243,7 @@ export const visibilityRefreshCopy = {
     od5Name: 'Escalate',
     od5Body: 'Normal situations are handled elsewhere, with clear conditions for when senior involvement is needed.',
     odClosing: "The goal isn't to make the owner irrelevant. It's to give the owner a choice about where their time and judgement are used.",
-    odBlindLink: 'Try the Blindspot Test',
+    odBlindLink: 'Take the free Blindspot Test',
 
     // ---------------------------------------------------------------- Business Blindspots, 23 to 25
     blindSeoTitle: 'Business Blindspot Test | High Level Thai',
@@ -397,7 +397,7 @@ export const visibilityRefreshTh = {
     homeBlind5Body: 'การค้นหา ติดต่อ ไว้ใจ หรือซื้อ ยากกว่าที่เจ้าของคิดตรงไหน',
     homeBlind6Name: 'จุดบอดด้านการควบคุม',
     homeBlind6Body: 'ตรงไหนที่ไม่มีใครพิสูจน์ได้ว่าขั้นตอนสำคัญเกิดขึ้นจริง',
-    homeBlindCtaLabel: 'ลองทำแบบทดสอบจุดบอด',
+    homeBlindCtaLabel: 'ทำแบบทดสอบจุดบอดฟรี',
 
     homeTrustHeading: 'วิธีการทำงานของเรา',
     homeTrust1: 'เราไม่เริ่มด้วยการขายซอฟต์แวร์',
@@ -434,7 +434,7 @@ export const visibilityRefreshTh = {
     brMethod1Body:
         'ก่อนการพูดคุย เราทบทวนว่าลูกค้าใหม่ค้นพบอะไรได้จริงบ้าง เขาหาคุณเจอไหม เข้าใจคุณไหม ไว้ใจคุณไหม ติดต่อคุณได้ไหม และรู้ไหมว่าต้องทำอะไรต่อ',
     brMethod1Note: 'นี่คือแบบทดสอบที่เราใช้กับ High Level Thai ก่อน',
-    brMethod1Link: 'ลองทำแบบทดสอบจุดบอด',
+    brMethod1Link: 'ทำแบบทดสอบจุดบอดฟรี',
     brMethod2Name: 'อ่านธุรกิจจากข้างใน',
     brMethod2Body:
         'จากนั้นเราตามดูว่าเกิดอะไรขึ้นหลังจากมีลูกค้าติดต่อเข้ามา: ใครรับเรื่อง ต้องตัดสินใจอะไรบ้าง ข้อมูลเก็บไว้ที่ไหน ส่งต่ออะไร และงานรออยู่ตรงไหน',
@@ -498,7 +498,7 @@ export const visibilityRefreshTh = {
     od5Name: 'ส่งขึ้นเมื่อจำเป็น',
     od5Body: 'สถานการณ์ปกติจัดการที่อื่น โดยมีเงื่อนไขชัดเจนว่าเมื่อไหร่ต้องให้ผู้บริหารเข้ามา',
     odClosing: 'เป้าหมายไม่ใช่การทำให้เจ้าของไม่จำเป็น แต่คือการให้เจ้าของเลือกได้ว่าจะใช้เวลาและดุลยพินิจของตัวเองไปกับเรื่องไหน',
-    odBlindLink: 'ลองทำแบบทดสอบจุดบอด',
+    odBlindLink: 'ทำแบบทดสอบจุดบอดฟรี',
 
     blindSeoTitle: 'แบบทดสอบจุดบอดธุรกิจ | High Level Thai',
     blindMetaDescription: 'ทดสอบธุรกิจของคุณจากมุมมองภายนอก และค้นหาว่าลูกค้าอาจค้นหา เข้าใจ ไว้ใจ หรือติดต่อคุณได้ยากตรงไหน',
