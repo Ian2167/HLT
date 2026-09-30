@@ -1,113 +1,104 @@
-// Contact.jsx — /contact. Built 18 September 2026.
+// Contact.jsx — /contact and /en/contact. Built 18 September 2026; the other rails ADDED
+// 30 September 2026 on the visibility refresh.
 //
 // WHAT THIS PAGE IS, IN IAN'S WORDS
 // Its one job, from his locked page-hierarchy table of 17 September 2026: "LINE and simple
 // enquiry."
 //
-// ------------------------------------------------------------------------------------------
 // THERE IS NO FORM ON THIS PAGE, AND IT IS NOT AN OVERSIGHT
-// ------------------------------------------------------------------------------------------
 // Ian's GO of 18 September 2026, verbatim: "Do not activate the Contact form without a working
-// destination." This site is a Vite and React single-page app with no backend, so a form here
-// would have nowhere to send. There is therefore NO <form>, NO input, NO submit button and NO
-// handler in this file, which is a stronger guarantee than an inert form: there is nothing here
-// to accidentally wire up.
+// destination." This site has no backend, so there is NO <form>, NO input, NO submit button and
+// NO handler in this file. The form's every string is held in `contactFormCopyHeld` in
+// src/copy/contact.js, which is NOT spread into src/translations.js.
 //
-// The form's every string is written and gated, and it is held in `contactFormCopyHeld` in
-// src/copy/contact.js, which is NOT spread into src/translations.js. A string outside the
-// translation table cannot be rendered by t() anywhere on the site.
-//
-// THREE SLOTS ARE EMPTY AND NOTHING WAS INVENTED FOR THEM. No email address: none is recorded on
-// any file the copy pack's author read, and the pack calls this "the rail a cautious buyer uses
-// when he doesn't want to add a company on LINE". No telephone number, and no address. Each is
-// Ian's to rule.
-//
-// WHY THIS FILE HOLDS NO COPY OF ITS OWN
-// Every visible string comes from src/copy/contact.js, lifted verbatim from the gated pack at
-//   C:\Projects\hlt-estate\02-builds\hlt-site-kit\copy\2026-09-18-contact.md
-import { useEffect } from 'react';
+// WHAT THE 30 SEPTEMBER REFRESH ADDED. The rails the spec's contact rules name for English readers
+// beside LINE: the email address, the phone number and WhatsApp, from src/constants/contact.js.
+// Nothing is invented: every value there is the ruled contact block. No address.
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Mail, MessageCircle, Phone } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
+import {
+    CONTACT_EMAIL,
+    CONTACT_PHONE_DISPLAY,
+    CONTACT_PHONE_TEL,
+    CONTACT_WHATSAPP_URL,
+    LINE_OFFICIAL_ACCOUNT,
+} from '../constants/contact';
+import { ROUTE_CONTACT } from '../constants/routes';
+import Seo from '../components/Seo';
+import { CTA_CLASSES } from './Home';
+import { fadeUp, heroIn } from '../lib/motion';
 
-const CTA_CLASSES =
-    'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
-
-const fadeUp = {
-    initial: { opacity: 0, y: 24 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.15 },
-    transition: { duration: 0.5 },
-};
+const RAIL_CLASSES =
+    'flex min-h-12 items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition-colors hover:border-indigo-500 hover:text-indigo-600';
 
 const Contact = () => {
     const { t } = useLanguage();
-
-    const metaDescription = t('ctMetaDescription');
-    useEffect(() => {
-        const tag = document.querySelector('meta[name="description"]');
-        if (!tag) return undefined;
-        const previous = tag.getAttribute('content');
-        tag.setAttribute('content', metaDescription);
-        return () => tag.setAttribute('content', previous);
-    }, [metaDescription]);
-
     const next = [t('ctNext1'), t('ctNext2'), t('ctNext3')];
 
     return (
-        <div className="min-h-screen bg-stone-50 pt-24 text-slate-950 dark:bg-hltNavy dark:text-white">
-            <title>{t('ctMetaTitle')}</title>
+        <div className="min-h-screen bg-stone-50 pt-20 text-slate-950 lg:pt-24">
+            <Seo title={t('ctMetaTitle')} description={t('ctMetaDescription')} route={ROUTE_CONTACT} />
 
             <section className="px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="mx-auto max-w-3xl"
-                >
-                    <h1 className="text-3xl font-bold leading-tight sm:text-5xl sm:leading-[1.1]">
-                        {t('ctHeroHeadline')}
-                    </h1>
-                    <p className="mt-6 text-base leading-8 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-9">
-                        {t('ctHeroLead')}
-                    </p>
+                <motion.div {...heroIn} className="mx-auto max-w-3xl">
+                    <h1 className="text-[2rem] font-bold leading-[1.15] sm:text-5xl sm:leading-[1.1]">{t('ctHeroHeadline')}</h1>
+                    <p className="mt-6 text-base leading-8 text-slate-600 sm:text-lg sm:leading-9">{t('ctHeroLead')}</p>
                 </motion.div>
             </section>
 
-            {/* The LINE rail, and on this page it is the whole of the ask. */}
-            <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div
-                    {...fadeUp}
-                    className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass sm:p-9"
-                >
+            {/* The LINE rail, first, as Ian ruled. Then the other three, each a real link. */}
+            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass card-static sm:p-9">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('ctLineHeading')}</h2>
-                    <p className="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">{t('ctLineBody')}</p>
+                    <p className="mt-5 text-base leading-8 text-slate-600">{t('ctLineBody')}</p>
                     <div className="mt-8">
                         <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className={CTA_CLASSES}>
                             {t('ctLineLabel')}
                             <ArrowRight size={18} aria-hidden="true" />
                         </a>
                     </div>
+
+                    <h3 className="mt-10 text-lg font-bold text-slate-950">{t('ctRailsHeading')}</h3>
+                    <ul className="mt-4 grid gap-3 sm:grid-cols-1">
+                        <li>
+                            <a href={`mailto:${CONTACT_EMAIL}`} className={RAIL_CLASSES}>
+                                <Mail size={18} aria-hidden="true" className="shrink-0 text-indigo-600" />
+                                <span className="font-semibold">{t('ctEmailLabel')}</span>
+                                <span className="break-all text-slate-600">{CONTACT_EMAIL}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href={CONTACT_PHONE_TEL} className={RAIL_CLASSES}>
+                                <Phone size={18} aria-hidden="true" className="shrink-0 text-indigo-600" />
+                                <span className="font-semibold">{t('ctPhoneLabel')}</span>
+                                <span className="text-slate-600">{CONTACT_PHONE_DISPLAY}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href={CONTACT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={RAIL_CLASSES}>
+                                <MessageCircle size={18} aria-hidden="true" className="shrink-0 text-indigo-600" />
+                                <span className="font-semibold">{t('ctWhatsAppLabel')}</span>
+                                <span className="text-slate-600">{CONTACT_PHONE_DISPLAY}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p className="mt-5 text-sm leading-6 text-slate-500">{t('footerContactLocation')}</p>
                 </motion.div>
             </section>
 
-            {/* What happens next. The part most contact pages leave out, and the part that makes
-                a reader willing to start the conversation at all. */}
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
+            {/* What happens next. */}
+            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('ctNextHeading')}</h2>
                     <ul className="mt-6 space-y-5">
                         {next.map((line) => (
-                            <li
-                                key={line}
-                                className="border-l-2 border-indigo-600 pl-5 text-base leading-8 text-slate-600 dark:border-indigo-400 dark:text-slate-300"
-                            >
+                            <li key={line} className="border-l-2 border-indigo-600 pl-5 text-base leading-8 text-slate-600">
                                 {line}
                             </li>
                         ))}
                     </ul>
-                    <p className="mt-8 text-base leading-8 text-slate-950 dark:text-white">{t('ctClosingLine')}</p>
+                    <p className="mt-8 text-base leading-8 text-slate-950">{t('ctClosingLine')}</p>
                 </motion.div>
             </section>
         </div>

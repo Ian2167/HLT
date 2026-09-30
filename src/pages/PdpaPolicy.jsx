@@ -1,19 +1,20 @@
-// PdpaPolicy.jsx — /pdpa. Built 30 September 2026 (bridge row 4007's footer_spec legal_links).
-//
-// PLACEHOLDER ONLY, per constraint (7) of the visibility-refresh brief: "pointing to placeholder
-// pages that say 'coming soon' in plain words until Ian supplies or approves legal copy (no
-// invented terms, privacy or PDPA text)." Nothing here is legal advice or a legal claim.
+// PdpaPolicy.jsx — /pdpa and /en/pdpa. Built 30 September 2026 (bridge row 4007's footer legal
+// links). PLACEHOLDER ONLY, per constraint 7 of the visibility-refresh brief: "coming soon" in
+// plain words, no invented legal text. Nothing here is legal advice or a legal claim. Marked
+// noindex until real text exists.
 import { useLanguage } from '../context/LanguageContext';
+import { ROUTE_PDPA } from '../constants/routes';
+import Seo from '../components/Seo';
 
 const PdpaPolicy = () => {
     const { t } = useLanguage();
 
     return (
-        <section className="pt-32 pb-20 min-h-screen">
-            <title>{t('pdpaTitle')} | High Level Thai</title>
-            <div className="container mx-auto px-6 max-w-3xl">
-                <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-6">{t('pdpaTitle')}</h1>
-                <p className="text-lg text-slate-600 dark:text-slate-300">{t('pdpaBody')}</p>
+        <section className="min-h-screen pb-20 pt-32">
+            <Seo title={`${t('pdpaTitle')} | High Level Thai`} description={t('pdpaBody')} route={ROUTE_PDPA} noindex />
+            <div className="container mx-auto max-w-3xl px-6">
+                <h1 className="mb-6 text-4xl font-bold text-slate-900">{t('pdpaTitle')}</h1>
+                <p className="text-lg leading-8 text-slate-600">{t('pdpaBody')}</p>
             </div>
         </section>
     );

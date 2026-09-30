@@ -1,4 +1,9 @@
 {
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/th", "destination": "/", "permanent": true },
+    { "source": "/th/:path*", "destination": "/:path*", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(aios-diagnostic|diagnostic|brand-os|mctb|quotes|rag|websites|home-services|clinics|salons)",

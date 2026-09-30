@@ -1,57 +1,33 @@
-// HowItWorks.jsx — /how-it-works. Built 18 September 2026.
+// HowItWorks.jsx — /how-it-works and /en/how-it-works. Built 18 September 2026.
+// 30 September 2026, the visibility refresh: per-page head through Seo, every link through lp() so
+// the language in the URL is kept, motion from src/lib/motion.js so the prerender can switch it
+// off, and the CTA label harmonised to the site's one primary action. No copy of this page moved.
 //
 // WHAT THIS PAGE IS, IN IAN'S WORDS
 // Its one job, from his locked page-hierarchy table of 17 September 2026: "Understand -> Diagnose
 // -> Improve". Three stages in order, each said as problem, outcome and mechanism, which is his
 // point 7: "Shorten public capability pages to problem, outcome and mechanism."
 //
-// WHY THIS FILE HOLDS NO COPY OF ITS OWN
-// Every visible string comes from src/copy/howItWorks.js, lifted verbatim from the gated pack at
-//   C:\Projects\hlt-estate\02-builds\hlt-site-kit\copy\2026-09-18-how-it-works.md
-// Only SENDABLE blocks are there. Every NOTE block stayed in the pack.
-//
 // WHAT IS NOT ON THIS PAGE AND MUST NOT ARRIVE LATER
 // No methodology, no audit framework, no scoring, no diagnostic matrix, no implementation
-// specification. Ian's directive moves all of it behind the Client Workspace login. The three
-// system names are absent for the reason in the copy module's header.
+// specification. Ian's directive moves all of it behind the Client Workspace login.
 //
-// THE NUMERALS ARE VISUAL, THE STAGE LABELS ARE COPY. "Stage 1. Understand" is a deck line and
-// renders as text. The badge beside it is a device this build added, so it carries
-// ProcessNumber's `decorative` mark and is listed as a mock string rather than smuggled past a
-// copy fixture.
-import { useEffect } from 'react';
+// COPY: src/copy/howItWorks.js, lifted verbatim from the gated pack at
+//   C:\Projects\hlt-estate\02-builds\hlt-site-kit\copy\2026-09-18-how-it-works.md
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
-import { ROUTE_BUSINESS_READ } from '../constants/routes';
+import { ROUTE_BUSINESS_READ, ROUTE_EXAMPLES, ROUTE_HOW_IT_WORKS } from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
 import BusinessReadMock from '../components/mocks/BusinessReadMock';
-
-const CTA_CLASSES =
-    'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
-
-const fadeUp = {
-    initial: { opacity: 0, y: 24 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.15 },
-    transition: { duration: 0.5 },
-};
+import Seo from '../components/Seo';
+import { CTA_CLASSES } from './Home';
+import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
 const HowItWorks = () => {
-    const { t } = useLanguage();
-
-    // Swapped in place rather than rendered, for the reason recorded in src/pages/Home.jsx:
-    // React 19 hoists a rendered <meta> by APPENDING it, which leaves two on the page.
-    const metaDescription = t('hiwMetaDescription');
-    useEffect(() => {
-        const tag = document.querySelector('meta[name="description"]');
-        if (!tag) return undefined;
-        const previous = tag.getAttribute('content');
-        tag.setAttribute('content', metaDescription);
-        return () => tag.setAttribute('content', previous);
-    }, [metaDescription]);
+    const { t, lp } = useLanguage();
 
     const stages = [
         {
@@ -60,11 +36,7 @@ const HowItWorks = () => {
             name: t('hiwStage1Name'),
             paras: [t('hiwStage1P1'), t('hiwStage1P2'), t('hiwStage1P3')],
             linkLabel: t('hiwStage1LinkLabel'),
-            // THE ARTEFACT STAGE 1 DELIVERS, DRAWN. Added 18 September 2026, creative-director
-            // defect 2: the page ran 3,855px with no photograph, no mock and no table. This is
-            // the same component /business-read already renders under "What you receive", so a
-            // visitor who reads the stage and a visitor who reads the page he is sold see the
-            // same object. Nothing new was designed and no string moved.
+            // The artefact stage 1 delivers, drawn: the same component /business-read renders.
             Artefact: BusinessReadMock,
         },
         {
@@ -86,19 +58,11 @@ const HowItWorks = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-stone-50 pt-24 text-slate-950 dark:bg-hltNavy dark:text-white">
-            <title>{t('hiwMetaTitle')}</title>
+        <div className="min-h-screen bg-stone-50 pt-20 text-slate-950 lg:pt-24">
+            <Seo title={t('hiwMetaTitle')} description={t('hiwMetaDescription')} route={ROUTE_HOW_IT_WORKS} />
 
-            {/* Hero. PHOTOGRAPH ADDED 18 September 2026, creative-director defect 2. This band used
-                to open on a plain stone ground, and the comment that stood here ruled a photograph
-                out as decoration. The gate measured what that cost: every other public page on the
-                site opens on a photographic hero under the locked wash, so a page sitting in the
-                primary navigation with no photograph, no mock and no table read as unfinished
-                beside the six it sits with. The block below is Home.jsx's hero verbatim — the same
-                <img>, the same bg-hltNavy/55 wash Ian set on 15 September, the same two gradients
-                and the same min-height that holds the frame open whatever the headline's length.
-                The image keys are the home page's own, because no string may be added or changed
-                on this pass and no second photograph was licensed. */}
+            {/* Hero: the home page's photograph under the same wash, so the page sits with the six
+                it belongs to (creative-director defect 2, 18 September 2026). */}
             <section className="relative flex min-h-[32rem] items-center overflow-hidden lg:min-h-[36rem]">
                 <img
                     src={t('homeHeroImage')}
@@ -111,20 +75,11 @@ const HowItWorks = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-hltNavy/30 via-transparent to-hltNavy/60" />
 
                 <div className="relative mx-auto w-full max-w-6xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-                    <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="max-w-3xl"
-                    >
-                        <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl sm:leading-[1.1]">
-                            {t('hiwHeroHeadline')}
-                        </h1>
-                        <p className="mt-6 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg sm:leading-9">
-                            {t('hiwHeroLead')}
-                        </p>
+                    <motion.div {...heroIn} className="max-w-3xl">
+                        <h1 className="text-[2rem] font-bold leading-[1.15] text-white sm:text-5xl sm:leading-[1.1]">{t('hiwHeroHeadline')}</h1>
+                        <p className="mt-6 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg sm:leading-9">{t('hiwHeroLead')}</p>
                         <div className="mt-8">
-                            <Link to={ROUTE_BUSINESS_READ} className={CTA_CLASSES}>
+                            <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
                                 {t('hiwCtaLabel')}
                                 <ArrowRight size={18} aria-hidden="true" />
                             </Link>
@@ -134,28 +89,23 @@ const HowItWorks = () => {
             </section>
 
             {/* The three stages. One panel each, in order, and the order is the argument. */}
-            <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <ol className="mx-auto max-w-4xl space-y-8">
                     {stages.map((stage, index) => (
                         <motion.li
                             key={stage.label}
-                            {...fadeUp}
-                            transition={{ duration: 0.5, delay: index * 0.08 }}
+                            {...fadeUpDelayed(index, 0.08)}
                             className="rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass sm:p-9"
                         >
                             <div className="flex items-start gap-5">
                                 <ProcessNumber label={`${stage.n}`} decorative />
                                 <div className="min-w-0 flex-1">
-                                    <p className="text-sm font-bold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
-                                        {stage.label}
-                                    </p>
-                                    <h2 className="mt-2 text-2xl font-bold leading-8 text-slate-950 dark:text-white">
-                                        {stage.name}
-                                    </h2>
+                                    <p className="text-sm font-bold uppercase tracking-wide text-indigo-600">{stage.label}</p>
+                                    <h2 className="mt-2 text-2xl font-bold leading-8 text-slate-950">{stage.name}</h2>
                                 </div>
                             </div>
 
-                            <div className="mt-6 space-y-4 text-base leading-8 text-slate-600 dark:text-slate-300">
+                            <div className="mt-6 space-y-4 text-base leading-8 text-slate-600">
                                 {stage.paras.map((para) => (
                                     <p key={para}>{para}</p>
                                 ))}
@@ -169,8 +119,8 @@ const HowItWorks = () => {
 
                             {stage.linkLabel ? (
                                 <Link
-                                    to={ROUTE_BUSINESS_READ}
-                                    className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-indigo-600 transition-colors hover:text-indigo-500 dark:text-indigo-300"
+                                    to={lp(ROUTE_BUSINESS_READ)}
+                                    className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-indigo-600 transition-colors hover:text-indigo-500"
                                 >
                                     {stage.linkLabel}
                                     <ArrowRight size={16} aria-hidden="true" />
@@ -181,67 +131,54 @@ const HowItWorks = () => {
                 </ol>
             </section>
 
-            {/* ONE TEXT EDGE ON THIS PAGE, from here down. 18 September 2026, creative-director
-                defect 3: the stage cards sat at x=272 and every text band around them at x=336,
-                64px apart, which is the kind of gap a reader feels without being able to name it.
-                The three text bands below moved from max-w-3xl to max-w-4xl, so the text edge and
-                the card edge are the same 272px at 1440. The closing call to action keeps its
-                narrower centred measure, which is the form it takes on every page of the site. */}
-
-            {/* The diagnosis chooses, not the visitor. Ian's own instruction, turned into a line
-                the visitor can read. */}
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-4xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('hiwDecidesHeading')}</h2>
-                    <p className="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">{t('hiwDecidesP1')}</p>
-                    <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">{t('hiwDecidesP2')}</p>
+                    <p className="mt-5 text-base leading-8 text-slate-600">{t('hiwDecidesP1')}</p>
+                    <p className="mt-4 text-base leading-8 text-slate-600">{t('hiwDecidesP2')}</p>
                 </motion.div>
             </section>
 
-            {/* AI visible, and subordinate, in Ian's own order: the operating improvement first. */}
-            <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-4xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('hiwAiHeading')}</h2>
-                    <p className="mt-5 text-base leading-8 text-slate-600 dark:text-slate-300">{t('hiwAiP1')}</p>
-                    <p className="mt-4 text-base leading-8 text-slate-600 dark:text-slate-300">{t('hiwAiP2')}</p>
+                    <p className="mt-5 text-base leading-8 text-slate-600">{t('hiwAiP1')}</p>
+                    <p className="mt-4 text-base leading-8 text-slate-600">{t('hiwAiP2')}</p>
                 </motion.div>
             </section>
 
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-4xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('hiwHoldHeading')}</h2>
                     <ul className="mt-6 space-y-4">
                         {[t('hiwHold1'), t('hiwHold2'), t('hiwHold3'), t('hiwHold4')].map((line) => (
-                            <li
-                                key={line}
-                                className="border-l-2 border-indigo-600 pl-5 text-base leading-8 text-slate-600 dark:border-indigo-400 dark:text-slate-300"
-                            >
+                            <li key={line} className="border-l-2 border-indigo-600 pl-5 text-base leading-8 text-slate-600">
                                 {line}
                             </li>
                         ))}
                     </ul>
+                    <Link
+                        to={lp(ROUTE_EXAMPLES)}
+                        className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-indigo-600 transition-colors hover:text-indigo-500"
+                    >
+                        {t('exNavLink')}
+                        <ArrowRight size={16} aria-hidden="true" />
+                    </Link>
                 </motion.div>
             </section>
 
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('hiwClosingHeading')}</h2>
-                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
-                        {t('hiwClosingBody')}
-                    </p>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">{t('hiwClosingBody')}</p>
                     <div className="mt-8">
-                        <Link to={ROUTE_BUSINESS_READ} className={CTA_CLASSES}>
+                        <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
                             {t('hiwCtaLabel')}
                             <ArrowRight size={18} aria-hidden="true" />
                         </Link>
                     </div>
                     <p className="mt-4 text-sm text-slate-400">
-                        <a
-                            href={LINE_OFFICIAL_ACCOUNT}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline underline-offset-4 transition-colors hover:text-white"
-                        >
+                        <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 transition-colors hover:text-white">
                             {t('hiwLineNote')}
                         </a>
                     </p>

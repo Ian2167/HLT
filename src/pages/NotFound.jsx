@@ -1,18 +1,23 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { ROUTE_HOME } from '../constants/routes';
+import Seo from '../components/Seo';
 
+// 30 September 2026: the head is set through Seo and marked noindex; the way home keeps the
+// visitor's language.
 const NotFound = () => {
-    const { t } = useLanguage();
+    const { t, lp } = useLanguage();
 
     return (
-        <section className="pt-32 pb-20 min-h-screen">
-            <div className="container mx-auto px-6 max-w-3xl text-center">
-                <p className="text-sm font-semibold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 mb-4">404</p>
-                <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">{t('notFoundTitle')}</h1>
-                <p className="text-lg text-slate-600 dark:text-slate-300 mb-8">{t('notFoundBody')}</p>
+        <section className="min-h-screen pb-20 pt-32">
+            <Seo title={`${t('notFoundTitle')} | High Level Thai`} description={t('notFoundBody')} route={ROUTE_HOME} noindex />
+            <div className="container mx-auto max-w-3xl px-6 text-center">
+                <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-indigo-600">404</p>
+                <h1 className="mb-4 text-4xl font-bold text-slate-900">{t('notFoundTitle')}</h1>
+                <p className="mb-8 text-lg text-slate-600">{t('notFoundBody')}</p>
                 <Link
-                    to="/"
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold"
+                    to={lp(ROUTE_HOME)}
+                    className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white"
                 >
                     {t('notFoundAction')}
                 </Link>

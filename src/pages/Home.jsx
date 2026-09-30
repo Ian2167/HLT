@@ -1,303 +1,206 @@
-// Home.jsx — the home page. RESTRUCTURED 18 September 2026.
+// Home.jsx — the home page. REBUILT 30 September 2026, the visibility refresh (bridge row 4007 and
+// Ian's fuller spec of the same day, sections 6 to 14, "you build based on the following").
 //
-// WHAT THIS PAGE IS, IN IAN'S WORDS
-// Its one job, from his locked page-hierarchy table of 17 September 2026: "Problem, value, proof,
-// CTA." The lead message is owner dependence, not a catalogue of services, and there is one
-// commercial action on the page: the Business Read.
+// THE ORDER IS THE SPEC'S. Hero; the problem as the owner's week; how HLT works in three steps;
+// the human-judgement section; the six blindspots; how we work; case study zero; the closing call
+// to action. Every string comes from src/copy/visibilityRefresh.js except the three keep, transfer,
+// remove cards (src/copy/newDirection.js, Ian's "Agreed" of 27 September) and the AI line under the
+// three steps (src/copy/homeRebuild.js, Ian's own words of 17 September). Nothing on this page is
+// the builder's wording.
 //
-// WHAT WENT, AND WHY NOTHING WAS DELETED
-// The five service cards are gone from this route, along with the "How we work" beats that
-// introduced them. Every one of those five pages is still live at its own URL, its file is still
-// on disk and its copy is still in src/copy/, on Ian's opening line "Do not delete existing
-// service or methodology content". HEADER_SERVICES and ladderPosition are untouched, so the
-// "Step n of 5" strip on each service page still works: this page simply stops importing them.
+// WHAT WENT. The 18 September bands this replaces (the three capability cards, the five-line
+// "what you can hold us to" panel, the 30 September six-blindspot list of the 12:42 session) stop
+// rendering; their strings stay in their modules, on Ian's "do not delete". The capabilities now
+// live inside step three of the spec's copy, which names them. The 27 September line under the
+// hero headline, "Keep the judgement. Remove the dependency.", moved down the page to head the
+// section the spec gives it, with the three cards it belongs to.
 //
-// WHY THIS FILE HOLDS NO COPY OF ITS OWN
-// Every visible string comes from src/copy/homeRebuild.js, lifted verbatim from the gated pack at
-//   C:\Projects\hlt-estate\02-builds\hlt-site-kit\copy\2026-09-18-home.md
-// Only SENDABLE blocks are there. Every NOTE block stayed in the pack. The 14 September strings
-// stay on disk in src/copy/home.js and are overridden key by key, never edited.
+// ONE PRIMARY ACTION, TWICE. "Start with the Business Read" in the hero and in the closing band, on
+// the spec's CTA architecture (section 37); "Talk to us" beside it opens LINE. On a phone both are
+// full width and there are never more than two above the fold.
 //
-// TWO CALLS TO ACTION IN THE HERO, AND THAT IS IAN'S OWN HERO. He wrote both lines in the same
-// paragraph of the directive: the Business Read is the commercial action, LINE is the contact
-// rail beside it. The pack's NOTE 1 carries the research finding that argues for one and leaves
-// the ruling with him. If he wants the secondary gone it is a delete and nothing else moves.
+// MOTION comes from src/lib/motion.js so the prerender can switch it off; see that file.
 //
-// THE THREE CAPABILITY CARDS CARRY NO LINK. The pack's NOTE 3 says they need three destinations
-// and that none of the seven pages is one. The Desk ruled out an eighth page on 18 September, so
-// there is nowhere for a "Learn more" to go and the label is not rendered. That decision is
-// recorded in src/constants/routes.js where the ruling lives, and in the copy module.
-//
-// THE HERO PHOTOGRAPH stays exactly as it was, keys and all. It is Ian's demo ruling and the
-// pack routes the question of hero imagery to the creative director rather than answering it.
-import { useEffect } from 'react';
+// THE HERO PHOTOGRAPH is unchanged, keys and all: Ian's own ruling of 15 September, wash at 55 per
+// cent, the crop anchored on the roofline.
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Eye, Library, MessageSquare, Scissors, ShieldCheck } from 'lucide-react';
+import {
+    ArrowRight,
+    BookOpen,
+    ClipboardCheck,
+    GitBranch,
+    Lightbulb,
+    Puzzle,
+    Scissors,
+    Search,
+    ShieldCheck,
+    Users,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
-import { ROUTE_BUSINESS_READ, ROUTE_HOW_IT_WORKS, ROUTE_BUSINESS_BLINDSPOTS } from '../constants/routes';
+import {
+    ROUTE_BUSINESS_BLINDSPOTS,
+    ROUTE_BUSINESS_READ,
+    ROUTE_HOME,
+    ROUTE_HOW_IT_WORKS,
+} from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
+import Seo from '../components/Seo';
+import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
-const CTA_CLASSES =
-    'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
+export const CTA_CLASSES =
+    'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-base font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
 
-// The secondary action is a quiet outline, never a second filled button, so the first screen
-// still has one obvious thing to do.
-const SECONDARY_CTA_CLASSES =
-    'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/40 px-7 py-4 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
+export const SECONDARY_CTA_CLASSES =
+    'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/50 px-7 py-4 text-base font-bold text-white transition-colors hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
 
-const fadeUp = {
-    initial: { opacity: 0, y: 24 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.15 },
-    transition: { duration: 0.5 },
-};
+const TEXT_LINK_CLASSES =
+    'inline-flex items-center gap-2 text-base font-bold text-indigo-600 transition-colors hover:text-indigo-500';
 
-// One icon per capability card. These are marks, not copy: the card's words are the only thing a
-// visitor reads, and each icon is the same lucide glyph the matching system page already uses.
-const CAPABILITY_ICONS = [MessageSquare, Eye, Library];
-
-// Keep, transfer, remove, 27 September 2026. Marks, not copy, same as the capability icons.
+// Marks, not copy: one glyph per card. The three keep, transfer, remove glyphs are the 27 September
+// ones; the six blindspot glyphs are new, chosen from the same lucide set the site already uses.
 const KTR_ICONS = [ShieldCheck, BookOpen, Scissors];
+const BLIND_ICONS = [Users, Lightbulb, GitBranch, Puzzle, Search, ClipboardCheck];
 
 const Home = () => {
-    const { t } = useLanguage();
+    const { t, lp } = useLanguage();
 
-    // The description meta is swapped in place rather than rendered, for the reason recorded in
-    // src/pages/BusinessRead.jsx: React 19 hoists a rendered <meta> by APPENDING it.
-    const metaDescription = t('homeMetaDescription');
-    useEffect(() => {
-        const tag = document.querySelector('meta[name="description"]');
-        if (!tag) return undefined;
-        const previous = tag.getAttribute('content');
-        tag.setAttribute('content', metaDescription);
-        return () => tag.setAttribute('content', previous);
-    }, [metaDescription]);
-
-    const signs = [
-        t('homeSign1'),
-        t('homeSign2'),
-        t('homeSign3'),
-        t('homeSign4'),
-        t('homeSign5'),
-        t('homeSign6'),
-        t('homeSign7'),
-    ];
-
-    // Understand, Diagnose, Improve. His three stages, in his order, and the order is the point.
-    const stages = [1, 2, 3].map((n) => ({
-        n,
-        name: t(`homeStage${n}Name`),
-        body: t(`homeStage${n}Body`),
+    const signs = [1, 2, 3, 4, 5, 6, 7].map((n) => t(`homeSign${n}`));
+    const stages = [1, 2, 3].map((n) => ({ n, name: t(`homeStage${n}Name`), body: t(`homeStage${n}Body`) }));
+    const ktr = [1, 2, 3].map((n) => ({ name: t(`homeKtr${n}Name`), body: t(`homeKtr${n}Body`), Icon: KTR_ICONS[n - 1] }));
+    const blindspots = [1, 2, 3, 4, 5, 6].map((n) => ({
+        name: t(`homeBlind${n}Name`),
+        body: t(`homeBlind${n}Body`),
+        note: n === 4 ? t('homeBlind4Note') : null,
+        Icon: BLIND_ICONS[n - 1],
     }));
-
-    const capabilities = [1, 2, 3].map((n) => ({
-        name: t(`homeCap${n}Name`),
-        body: t(`homeCap${n}Body`),
-        Icon: CAPABILITY_ICONS[n - 1],
-    }));
-
-    // Keep, transfer, remove: Ian's three kinds of owner dependency, 27 September 2026.
-    const ktr = [1, 2, 3].map((n) => ({
-        name: t(`homeKtr${n}Name`),
-        body: t(`homeKtr${n}Body`),
-        Icon: KTR_ICONS[n - 1],
-    }));
-
-    const proof = [t('homeProof1'), t('homeProof2'), t('homeProof3'), t('homeProof4'), t('homeProof5')];
-
-    // The six blindspot categories, 30 September 2026 (bridge row 4007, homepage_copy_en.
-    // blindspots). Additive: nothing existing on this page is removed or reordered.
-    const blindspots = [
-        t('homeBlind1'),
-        t('homeBlind2'),
-        t('homeBlind3'),
-        t('homeBlind4'),
-        t('homeBlind5'),
-        t('homeBlind6'),
-    ];
+    const trust = [1, 2, 3, 4, 5, 6].map((n) => t(`homeTrust${n}`));
 
     return (
-        <div className="min-h-screen bg-stone-50 pt-24 text-slate-950 dark:bg-hltNavy dark:text-white">
-            <title>{t('homeMetaTitle')}</title>
+        <div className="min-h-screen bg-stone-50 pt-20 text-slate-950 lg:pt-24">
+            <Seo title={t('homeMetaTitle')} description={t('homeMetaDescription')} route={ROUTE_HOME} organization />
 
-            {/* Hero */}
-            {/* Ian, 15 September 2026 12:5x Bangkok: "the Homepage Image that was initially approved
-                has changed to a lesser depth so the buildings are severely cropped". The markup had
-                not changed; the hero's height is set by the text inside it, and the Thai headline
-                runs shorter than the English, so object-cover took a tighter crop out of the same
-                photograph. Two fixes, so the crop no longer depends on how long the headline is:
-                a minimum height that holds the frame open, and object-bottom, which anchors the
-                crop on the temple roofline rather than the sky. The headline still sits over sky. */}
+            {/* 1. Hero. One outcome, one supporting sentence, two actions, one line of microcopy. */}
             <section className="relative flex min-h-[32rem] items-center overflow-hidden lg:min-h-[36rem]">
                 <img
                     src={t('homeHeroImage')}
                     alt={t('homeHeroImageAlt')}
                     className="absolute inset-0 h-full w-full object-cover object-bottom"
                     loading="eager"
+                    fetchPriority="high"
                 />
-                {/* The same flat card-navy wash as the service pages, for the same measured
-                    reason: white text over #0A1F44 at 80 per cent is 8.3:1 even where the
-                    photograph is pure white. */}
-                {/* Ian, 15 Sept 2026 08:0x: "The opacity of the Navy over the Image needs reducing so the
-                    Image is clearer". 80 to 55; the left gradient below keeps the headline legible. */}
                 <div className="absolute inset-0 bg-hltNavy/55" />
                 <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-b from-hltNavy/30 via-transparent to-hltNavy/60" />
 
                 <div className="relative mx-auto w-full max-w-6xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-                    <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="max-w-3xl"
-                    >
-                        <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl sm:leading-[1.1]">
+                    <motion.div {...heroIn} className="max-w-3xl">
+                        <h1 className="text-[2.125rem] font-bold leading-[1.15] text-white sm:text-5xl sm:leading-[1.1]">
                             {t('homeHeroHeadline')}
                         </h1>
-                        {/* 27 September 2026, Ian's "Agreed": the line under his headline. The
-                            headline and lead above and below it stay in his ruled words. */}
-                        <p className="mt-4 text-lg font-semibold leading-8 text-indigo-100 sm:text-xl">
-                            {t('homeHeroKeepLine')}
-                        </p>
-                        <p className="mt-6 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg sm:leading-9">
+                        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-100 sm:text-xl sm:leading-9">
                             {t('homeHeroLead')}
                         </p>
                         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                            <Link to={ROUTE_BUSINESS_READ} className={CTA_CLASSES}>
+                            <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
                                 {t('homeCtaLabel')}
                                 <ArrowRight size={18} aria-hidden="true" />
                             </Link>
-                            <a
-                                href={LINE_OFFICIAL_ACCOUNT}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={SECONDARY_CTA_CLASSES}
-                            >
+                            <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className={SECONDARY_CTA_CLASSES}>
                                 {t('homeSecondaryCtaLabel')}
                             </a>
                         </div>
-                        <p className="mt-4 text-sm leading-6 text-slate-300">{t('homeHeroCtaNote')}</p>
+                        <p className="mt-5 text-sm leading-6 text-slate-200 sm:text-base">{t('homeHeroCtaNote')}</p>
                     </motion.div>
                 </div>
             </section>
 
-            {/* The problem, in the owner's own week. Seven signs, in the pack's order. */}
-            <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
-                {/* ONE CONTAINER, ONE TEXT MEASURE. 18 September 2026, creative-director defect 3:
-                    this band ran on max-w-4xl with a left-aligned heading while the card bands ran
-                    on max-w-6xl with centred ones, which put four heading edges on one page. The
-                    band now runs on the site's own max-w-6xl, the cards sit on that 1152px column
-                    with every other card on the page, and the prose sits in a centred max-w-3xl
-                    column so the line length does not grow with the container. */}
+            {/* 2. The problem, in the owner's own week. Seven signs, one card each, one column on a
+                phone so nothing reads as a dense grid, then the line that names the cause. */}
+            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
-                    <motion.h2
-                        {...fadeUp}
-                        className="text-center text-2xl font-bold leading-tight sm:text-3xl"
-                    >
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
                         {t('homeProblemHeading')}
                     </motion.h2>
-                    <motion.p
-                        {...fadeUp}
-                        className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 dark:text-slate-300 sm:text-lg"
-                    >
+                    <motion.p {...fadeUp} className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 sm:text-lg">
                         {t('homeProblemLead')}
                     </motion.p>
-
-                    {/* CARDED 18 September 2026, creative-director defects 1 and 7. The seven signs
-                        rendered as indigo-ruled list rows on a flat ground, which is what took the
-                        home page's bare-band share from 13 to 44 per cent and its glass elements
-                        from 13 to 6. One sign per card-glass panel, each carrying the site's own
-                        ProcessNumber badge, so this band reads as furniture rather than running
-                        text. The badge is a visual device, not copy — no sign string carries a
-                        numeral — so it is marked `decorative`. No string changed. */}
                     <ul className="mt-8 grid gap-4 sm:grid-cols-2">
                         {signs.map((sign, index) => (
                             <motion.li
                                 key={sign}
-                                {...fadeUp}
-                                transition={{ duration: 0.5, delay: index * 0.04 }}
-                                className="flex items-start gap-4 rounded-2xl border border-slate-200 p-6 card-glass"
+                                {...fadeUpDelayed(index)}
+                                className="flex items-start gap-4 rounded-2xl border border-slate-200 p-5 card-glass sm:p-6"
                             >
                                 <ProcessNumber label={`${index + 1}`} decorative />
-                                <span className="text-base leading-8 text-slate-600 dark:text-slate-300">
-                                    {sign}
-                                </span>
+                                <span className="text-base leading-7 text-slate-700">{sign}</span>
                             </motion.li>
                         ))}
                     </ul>
-
-                    <div className="mx-auto max-w-3xl">
-                        <motion.p {...fadeUp} className="mt-10 text-base leading-8 text-slate-950 dark:text-white sm:text-lg">
-                            {t('homeConsequenceP1')}
-                        </motion.p>
-                        <motion.p {...fadeUp} className="mt-4 text-base leading-8 text-slate-950 dark:text-white sm:text-lg">
-                            {t('homeConsequenceP2')}
-                        </motion.p>
-                    </div>
+                    <motion.p {...fadeUp} className="mx-auto mt-10 max-w-3xl text-center text-lg font-semibold leading-8 text-slate-950">
+                        {t('homeConsequenceP1')}
+                    </motion.p>
                 </div>
             </section>
 
-            {/* THE SIX BLINDSPOT CATEGORIES. 30 September 2026 (bridge row 4007, the visibility
-                refresh). Additive section, placed between the owner's-week problem list and the
-                keep/transfer/remove answer, matching the spec's own order (symptoms, then
-                blindspots). It links to the new Business Blindspots page's free test, the one new
-                link this band carries. */}
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
+            {/* 3. How HLT works: understand, diagnose, improve. The connector between the cards is
+                drawn in the gap, as on 18 September. AI's one line sits under the steps, in Ian's
+                own words, visible and subordinate. */}
+            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
-                    <motion.h2
-                        {...fadeUp}
-                        className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
-                    >
-                        {t('homeBlindHeading')}
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('homeStagesHeading')}
                     </motion.h2>
-                    <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {blindspots.map((item, index) => (
+                    <ol className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
+                        {stages.map((stage, index) => (
                             <motion.li
-                                key={item}
-                                {...fadeUp}
-                                transition={{ duration: 0.5, delay: index * 0.04 }}
-                                className="rounded-2xl border border-slate-200 bg-white p-6 text-sm leading-7 text-slate-600 card-glass dark:bg-slate-950 dark:text-slate-300"
+                                key={stage.name}
+                                {...fadeUpDelayed(index, 0.08)}
+                                className="relative flex flex-col rounded-2xl border border-slate-200 bg-white p-7 card-glass"
                             >
-                                {item}
+                                {index < stages.length - 1 ? (
+                                    <>
+                                        <span aria-hidden="true" className="absolute left-[3.75rem] top-full h-8 w-px bg-slate-300 md:hidden" />
+                                        <span aria-hidden="true" className="absolute left-full top-[3.75rem] hidden h-px w-6 bg-slate-300 md:block" />
+                                    </>
+                                ) : null}
+                                <ProcessNumber label={`${stage.n}`} size="lg" decorative />
+                                <h3 className="mt-6 text-xl font-bold leading-7 text-slate-950">{stage.name}</h3>
+                                <p className="mt-3 text-base leading-7 text-slate-600">{stage.body}</p>
                             </motion.li>
                         ))}
-                    </ul>
-                    <motion.div {...fadeUp} className="mt-8 text-center">
-                        <Link
-                            to={ROUTE_BUSINESS_BLINDSPOTS}
-                            className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 transition-colors hover:text-indigo-500 dark:text-indigo-300"
-                        >
-                            {t('homeBlindCtaLabel')}
+                    </ol>
+                    <motion.p {...fadeUp} className="mx-auto mt-10 max-w-3xl text-center text-base leading-8 text-slate-600">
+                        {t('homeAiLine')}
+                    </motion.p>
+                    <motion.div {...fadeUp} className="mt-5 text-center">
+                        <Link to={lp(ROUTE_HOW_IT_WORKS)} className={TEXT_LINK_CLASSES}>
+                            {t('homeStagesLinkLabel')}
                             <ArrowRight size={16} aria-hidden="true" />
                         </Link>
                     </motion.div>
                 </div>
             </section>
 
-            {/* KEEP, TRANSFER, REMOVE. 27 September 2026, Ian's new direction: sort every way the
-                business depends on the owner into three and treat each differently. It answers the
-                owner's fear straight after the problem is named: nothing that makes the business
-                theirs is taken away. Navy, so it reads as the turn from problem to answer. Copy:
-                src/copy/newDirection.js, from the 27 September pack. */}
+            {/* 4. Keep the judgement. Remove the dependency. The spec's three lines, then Ian's three
+                cards of 27 September, which are how the sorting is done. Navy, the turn from problem
+                to answer. */}
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('homeKtrHeading')}
+                        {t('homeHumanHeading')}
                     </motion.h2>
-                    <motion.p
-                        {...fadeUp}
-                        className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-200 sm:text-lg"
-                    >
-                        {t('homeKtrLead')}
-                    </motion.p>
+                    <motion.div {...fadeUp} className="mx-auto mt-6 max-w-2xl space-y-3 text-center text-base leading-8 text-slate-200 sm:text-lg">
+                        <p>{t('homeHumanP1')}</p>
+                        <p>{t('homeHumanP2')}</p>
+                        <p className="font-semibold text-white">{t('homeHumanP3')}</p>
+                    </motion.div>
                     <ul className="mt-10 grid gap-5 md:grid-cols-3">
                         {ktr.map((item, index) => (
                             <motion.li
                                 key={item.name}
-                                {...fadeUp}
-                                transition={{ duration: 0.5, delay: index * 0.06 }}
+                                {...fadeUpDelayed(index, 0.06)}
                                 className="rounded-2xl border border-white/15 bg-white/[0.06] p-7"
                             >
                                 <item.Icon size={26} className="text-indigo-200" aria-hidden="true" />
@@ -312,199 +215,101 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Understand, Diagnose, Improve. THE THREE STAGES REPLACE THE FIVE SERVICE CARDS.
-                Same numbered process language the site already uses, because the order is the
-                argument: nothing gets built before the business is read. */}
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
+            {/* 5. The six blindspots. Icon left of the heading, one column on a phone, three on a
+                laptop; the fourth carries the Thailand note the spec gives it. Ends on the free
+                test, the "Learn" rung of the spec's three-level CTA architecture. */}
+            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
-                    <motion.h2
-                        {...fadeUp}
-                        className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
-                    >
-                        {t('homeStagesHeading')}
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('homeBlindHeading')}
                     </motion.h2>
-
-                    {/* The connector is drawn in the gap between the cards, so no percentage
-                        arithmetic is needed to make a line meet a badge: it runs from the edge of
-                        one card to the next, horizontally on desktop and vertically on a phone,
-                        and the opaque badge sits over it. The last stage draws none. */}
-                    <ol className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
-                        {stages.map((stage, index) => (
+                    <ul className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                        {blindspots.map((item, index) => (
                             <motion.li
-                                key={stage.name}
-                                {...fadeUp}
-                                transition={{ duration: 0.5, delay: index * 0.08 }}
-                                className="relative flex flex-col rounded-2xl border border-slate-200 bg-white p-7 card-glass"
+                                key={item.name}
+                                {...fadeUpDelayed(index, 0.05)}
+                                className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-stone-50 p-6 card-glass card-static"
                             >
-                                {index < stages.length - 1 ? (
-                                    <>
-                                        {/* The badge centre is the card's 1.75rem padding plus
-                                            half of its 4rem height, so both connectors meet it
-                                            at 3.75rem without any percentage maths. */}
-                                        <span
-                                            aria-hidden="true"
-                                            className="absolute left-[3.75rem] top-full h-8 w-px bg-slate-300 dark:bg-white/20 md:hidden"
-                                        />
-                                        <span
-                                            aria-hidden="true"
-                                            className="absolute left-full top-[3.75rem] hidden h-px w-6 bg-slate-300 dark:bg-white/20 md:block"
-                                        />
-                                    </>
-                                ) : null}
-
-                                <ProcessNumber label={`${stage.n}`} size="lg" decorative />
-
-                                <h3 className="mt-6 text-lg font-bold leading-7 text-slate-950 dark:text-white">
-                                    {stage.name}
-                                </h3>
-                                <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{stage.body}</p>
+                                <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white">
+                                    <item.Icon size={20} />
+                                </span>
+                                <div className="min-w-0">
+                                    <h3 className="text-lg font-bold leading-7 text-slate-950">{item.name}</h3>
+                                    <p className="mt-2 text-base leading-7 text-slate-600">{item.body}</p>
+                                    {item.note ? <p className="mt-3 text-sm leading-6 text-slate-500">{item.note}</p> : null}
+                                </div>
                             </motion.li>
                         ))}
-                    </ol>
-
-                    <motion.p
-                        {...fadeUp}
-                        className="mt-10 text-center text-base leading-8 text-slate-600 dark:text-slate-300"
-                    >
-                        {t('homeStagesClosing')}
-                    </motion.p>
-                    <motion.div {...fadeUp} className="mt-5 text-center">
-                        <Link
-                            to={ROUTE_HOW_IT_WORKS}
-                            className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 transition-colors hover:text-indigo-500 dark:text-indigo-300"
-                        >
-                            {t('homeStagesLinkLabel')}
+                    </ul>
+                    <motion.div {...fadeUp} className="mt-10 text-center">
+                        <Link to={lp(ROUTE_BUSINESS_BLINDSPOTS)} className={TEXT_LINK_CLASSES}>
+                            {t('homeBlindCtaLabel')}
                             <ArrowRight size={16} aria-hidden="true" />
                         </Link>
                     </motion.div>
                 </div>
             </section>
 
-            {/* The capabilities, a level down from the stages, as Ian ruled. Three cards and no
-                link on any of them: see this file's header and the copy module.
-                THE LAYOUT IS ICON-LEFT (18 September 2026, creative-director defect 5). This band
-                and the stages above it were two `md:grid-cols-3` rows of near-identical glass
-                cards, 630px and 618px, stacked directly on each other with the same radius, the
-                same padding and the same body length: one page reading as the same device twice.
-                The tile moves to the left of the heading and body, so the two rows are two
-                rhythms again. The tile itself is unchanged.
-                THEY CARRY `card-static` (added 18 September 2026, creative-director defect 6).
-                Ian's locked hover lights the indigo edge on every card, which on the live site is
-                always a promise of a destination. These three have none, so the promise is
-                withdrawn with it; the rule lives beneath .card-glass in src/index.css. */}
-            <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
+            {/* 6. How we work. Six commitments in one panel, indigo-ruled, the form the 18 September
+                proof block took. Commitments and mechanism, never a result. */}
+            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
-                    <motion.h2
-                        {...fadeUp}
-                        className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
-                    >
-                        {t('homeCapHeading')}
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('homeTrustHeading')}
                     </motion.h2>
-                    <motion.p
-                        {...fadeUp}
-                        className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 dark:text-slate-300"
-                    >
-                        {t('homeCapLead')}
-                    </motion.p>
-
-                    <ul className="mt-12 grid gap-6 md:grid-cols-3">
-                        {capabilities.map((capability, index) => (
-                            <motion.li
-                                key={capability.name}
-                                {...fadeUp}
-                                transition={{ duration: 0.5, delay: index * 0.06 }}
-                                className="flex items-start gap-5 rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass card-static"
-                            >
-                                <span
-                                    aria-hidden="true"
-                                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white"
-                                >
-                                    <capability.Icon size={20} />
-                                </span>
-                                <div className="min-w-0">
-                                    <h3 className="text-lg font-bold leading-7 text-slate-950 dark:text-white">
-                                        {capability.name}
-                                    </h3>
-                                    <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
-                                        {capability.body}
-                                    </p>
-                                </div>
-                            </motion.li>
-                        ))}
-                    </ul>
-
-                    {/* AI visible, and subordinate, in Ian's own order: the operating improvement
-                        first, AI second. */}
-                    <motion.p
-                        {...fadeUp}
-                        className="mx-auto mt-10 max-w-3xl text-center text-base leading-8 text-slate-600 dark:text-slate-300"
-                    >
-                        {t('homeAiLine')}
-                    </motion.p>
-                </div>
-            </section>
-
-            {/* Proof. Commitments and mechanism, never a result: no delivered HLT engagement
-                exists on file, so none is claimed. The pack's NOTE 4 records why. */}
-            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
-                {/* Same container and same axis as the band above, creative-director defect 3. */}
-                <div className="mx-auto max-w-6xl">
-                    <motion.h2
-                        {...fadeUp}
-                        className="text-center text-2xl font-bold leading-tight sm:text-3xl"
-                    >
-                        {t('homeProofHeading')}
-                    </motion.h2>
-                    {/* CARDED 18 September 2026, creative-director defect 1. The five commitments
-                        sit in ONE card-glass panel rather than on the flat ground, and the indigo
-                        left rules stay exactly as they were, inside it. No string changed.
-                        The panel keeps the band's text measure rather than the 1152px card column:
-                        it is a wrapper around five lines of running text, and a 1152px-wide box of
-                        one-line rules would trade one defect for another. */}
                     <div className="mx-auto max-w-3xl">
-                        <ul className="mt-8 space-y-4 rounded-2xl border border-slate-200 p-7 card-glass">
-                            {proof.map((line, index) => (
+                        <ul className="mt-8 space-y-4 rounded-2xl border border-slate-200 p-6 card-glass sm:p-7">
+                            {trust.map((line, index) => (
                                 <motion.li
                                     key={line}
-                                    {...fadeUp}
-                                    transition={{ duration: 0.5, delay: index * 0.04 }}
-                                    className="border-l-2 border-indigo-600 pl-5 text-base leading-8 text-slate-600 dark:border-indigo-400 dark:text-slate-300"
+                                    {...fadeUpDelayed(index)}
+                                    className="border-l-2 border-indigo-600 pl-5 text-base leading-7 text-slate-700"
                                 >
                                     {line}
                                 </motion.li>
                             ))}
                         </ul>
-                        <motion.p {...fadeUp} className="mt-8 text-base leading-8 text-slate-950 dark:text-white">
-                            {t('homeProofClosing')}
-                        </motion.p>
                     </div>
                 </div>
             </section>
 
-            {/* Closing CTA. The same label as the hero, on purpose: one commercial action, placed
-                twice on a page the reader scrolls. */}
+            {/* 7. Case study zero. The test HLT ran on itself, rendered because the report names what
+                was tested and when. Proof of method before there is a client library. */}
+            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass card-static sm:p-9">
+                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('homeCaseZeroHeading')}</h2>
+                    <div className="mt-5 space-y-3 text-base leading-8 text-slate-600">
+                        <p>{t('homeCaseZeroP1')}</p>
+                        <p>{t('homeCaseZeroP2')}</p>
+                        <p className="font-semibold text-slate-950">{t('homeCaseZeroP3')}</p>
+                    </div>
+                    <div className="mt-6">
+                        <Link to={lp(ROUTE_BUSINESS_BLINDSPOTS)} className={TEXT_LINK_CLASSES}>
+                            {t('homeCaseZeroCta')}
+                            <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
+                    </div>
+                </motion.div>
+            </section>
+
+            {/* 8. Closing. The same primary action as the hero, and Talk to us beside it. */}
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('homeClosingHeading')}</h2>
-                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
-                        {t('homeClosingBody')}
-                    </p>
-                    <div className="mt-8">
-                        <Link to={ROUTE_BUSINESS_READ} className={CTA_CLASSES}>
+                    <div className="mx-auto mt-5 max-w-2xl space-y-3 text-base leading-8 text-slate-200 sm:text-lg">
+                        <p>{t('homeClosingP1')}</p>
+                        <p>{t('homeClosingP2')}</p>
+                        <p>{t('homeClosingP3')}</p>
+                    </div>
+                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
+                        <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
                             {t('homeCtaLabel')}
                             <ArrowRight size={18} aria-hidden="true" />
                         </Link>
-                    </div>
-                    <p className="mt-4 text-sm text-slate-400">
-                        <a
-                            href={LINE_OFFICIAL_ACCOUNT}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline underline-offset-4 transition-colors hover:text-white"
-                        >
-                            {t('homeClosingNote')}
+                        <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className={SECONDARY_CTA_CLASSES}>
+                            {t('homeSecondaryCtaLabel')}
                         </a>
-                    </p>
+                    </div>
                 </motion.div>
             </section>
         </div>

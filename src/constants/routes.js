@@ -59,28 +59,73 @@ export const ROUTE_BUSINESS_BLINDSPOTS = '/business-blindspots';
 // invented for them.
 export const ROUTE_PDPA = '/pdpa';
 export const ROUTE_COOKIES = '/cookies';
+export const ROUTE_TERMS = '/terms';
+export const ROUTE_PRIVACY = '/privacy';
+// The owner-dependency page, from Ian's fuller spec of 30 September 2026 (sections 21 and 22),
+// which put it on the desktop header and in the footer.
+export const ROUTE_OWNER_DEPENDENCY = '/owner-dependency';
 
-// THE PUBLIC NAVIGATION. Ian's 17/18 September ruling, verbatim: "Home | Business Read | How It
-// Works | Examples | About | Contact, with Client Login on the right. No service names in the
-// main navigation." NOTHING BELOW REMOVES ANY OF THOSE SIX. Blindspots is ADDED, one entry,
-// because today's spec (row 4007) asks for it on the desktop header and the brief's rule is
-// additive, not a replacement of a locked list: "the conflict is listed in the report for Ian,
-// not resolved by the builder." The spec's own desktop header also drops Home, Examples and
-// Contact from the nav entirely; that narrower five-item set is NOT built here, because it would
-// delete locked items rather than add one, and is flagged in the report for Ian's ruling instead.
+// THE PUBLIC NAVIGATION, 30 September 2026, from Ian's fuller spec of that day (section 5), which
+// he pasted with "you build based on the following": desktop "How It Works | Business Read |
+// Blindspots | Owner Dependency | About | EN | ไทย", primary CTA "Start with the Business Read".
 //
-// Client Login is deliberately NOT in this array. It renders separately, on the right of the
-// divider, because his navigation line puts it there and because it is not part of the buying
-// journey. ROUTE_CLIENT_LOGIN above is what the header imports for it.
+// WHAT THIS SUPERSEDES. His 17/18 September line was "Home | Business Read | How It Works | Examples
+// | About | Contact, with Client Login on the right." Home is now the lockup, which links home on
+// every page; Examples and Contact move to the mobile menu and the footer; Blindspots and Owner
+// Dependency join. The report lists the change as the conflict it is. Client Login is off the
+// header since his 18 September ruling and its route stays live.
 export const PUBLIC_NAV = [
-    { labelKey: 'homeNavHome', to: ROUTE_HOME },
-    { labelKey: 'brNavLink', to: ROUTE_BUSINESS_READ },
     { labelKey: 'hiwNavLink', to: ROUTE_HOW_IT_WORKS },
+    { labelKey: 'brNavLink', to: ROUTE_BUSINESS_READ },
     { labelKey: 'blindNavLink', to: ROUTE_BUSINESS_BLINDSPOTS },
-    { labelKey: 'exNavLink', to: ROUTE_EXAMPLES },
+    { labelKey: 'odNavLink', to: ROUTE_OWNER_DEPENDENCY },
     { labelKey: 'aboutNavLink', to: ROUTE_ABOUT },
+];
+
+// The mobile menu: the five above, then the three the desktop bar leaves to the footer.
+export const MOBILE_NAV = [
+    ...PUBLIC_NAV,
+    { labelKey: 'huaHinNavLink', to: ROUTE_HUA_HIN },
+    { labelKey: 'exNavLink', to: ROUTE_EXAMPLES },
     { labelKey: 'contactNavLink', to: ROUTE_CONTACT },
 ];
+
+// The footer's quick links, the spec's seven in the spec's order (section 27), plus Examples so
+// one of Ian's six locked public pages stays reachable from every page on a desktop.
+export const FOOTER_QUICK_LINKS = [
+    { labelKey: 'homeNavHome', to: ROUTE_HOME },
+    { labelKey: 'brNavLink', to: ROUTE_BUSINESS_READ },
+    { labelKey: 'blindNavLink', to: ROUTE_BUSINESS_BLINDSPOTS },
+    { labelKey: 'odNavLink', to: ROUTE_OWNER_DEPENDENCY },
+    { labelKey: 'huaHinNavLink', to: ROUTE_HUA_HIN },
+    { labelKey: 'aboutNavLink', to: ROUTE_ABOUT },
+    { labelKey: 'contactNavLink', to: ROUTE_CONTACT },
+    { labelKey: 'exNavLink', to: ROUTE_EXAMPLES },
+];
+
+// The footer's legal links: four placeholders until Ian supplies or approves the text.
+export const LEGAL_LINKS = [
+    { labelKey: 'footerLegalTerms', to: ROUTE_TERMS },
+    { labelKey: 'footerLegalPrivacy', to: ROUTE_PRIVACY },
+    { labelKey: 'footerLegalPdpa', to: ROUTE_PDPA },
+    { labelKey: 'footerLegalCookies', to: ROUTE_COOKIES },
+];
+
+// Every public route in the language layout, for the prerender, the sitemap and the tests. The
+// login stub and the four legal placeholders are served but carry noindex, so they are listed
+// separately from the pages a crawler should index.
+export const INDEXABLE_ROUTES = [
+    ROUTE_HOME,
+    ROUTE_BUSINESS_READ,
+    ROUTE_HOW_IT_WORKS,
+    ROUTE_EXAMPLES,
+    ROUTE_ABOUT,
+    ROUTE_CONTACT,
+    ROUTE_HUA_HIN,
+    ROUTE_BUSINESS_BLINDSPOTS,
+    ROUTE_OWNER_DEPENDENCY,
+];
+export const NOINDEX_ROUTES = [ROUTE_CLIENT_LOGIN, ROUTE_TERMS, ROUTE_PRIVACY, ROUTE_PDPA, ROUTE_COOKIES];
 
 // THE LADDER. One order for the whole site: the header, the home page's stack and the "Step n of
 // 5" indicator on each service page all read this array, so a reorder is this array and nothing

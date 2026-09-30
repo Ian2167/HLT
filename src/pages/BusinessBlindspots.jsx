@@ -1,109 +1,85 @@
-// BusinessBlindspots.jsx — /business-blindspots. Built 30 September 2026 (bridge row 4007, the
-// visibility refresh brief).
+// BusinessBlindspots.jsx — /business-blindspots and /en/business-blindspots. Built 30 September
+// 2026, the visibility refresh (bridge row 4007 and Ian's fuller spec, sections 23 to 25). First
+// drafted by the 12:42 build session; rebuilt here on the URL-language routing.
 //
-// WHAT THIS PAGE IS. Bridge row 4007's blindspots_page_en, verbatim, via
-// src/copy/visibilityRefresh.js. A NEW public page: same "no eighth page" conflict as HuaHin.jsx,
-// named in src/constants/routes.js and the visibility-refresh report, not resolved here.
+// WHAT THIS PAGE IS. The free 15-minute outside-in test: six steps a visitor can run on their own
+// business today, the instruction to fix the biggest point of friction first, and then, only after
+// the whole test has been given, the one paragraph that says where the Business Read starts. The
+// spec's rule, verbatim: "Do not turn the free test into a disguised sales page."
 //
-// THAI. UNREVIEWED MACHINE DRAFT (see src/copy/visibilityRefresh.js). Not final copy.
-import { useEffect } from 'react';
+// COPY: src/copy/visibilityRefresh.js. Thai is a machine draft under review.
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { ROUTE_BUSINESS_READ } from '../constants/routes';
+import { ROUTE_BUSINESS_BLINDSPOTS, ROUTE_BUSINESS_READ, ROUTE_OWNER_DEPENDENCY } from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
-
-const CTA_CLASSES =
-    'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base';
-
-const fadeUp = {
-    initial: { opacity: 0, y: 24 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.15 },
-    transition: { duration: 0.5 },
-};
+import Seo from '../components/Seo';
+import { CTA_CLASSES } from './Home';
+import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
 const BusinessBlindspots = () => {
-    const { t } = useLanguage();
-
-    const metaDescription = t('blindMetaDescription');
-    useEffect(() => {
-        const tag = document.querySelector('meta[name="description"]');
-        if (!tag) return undefined;
-        const previous = tag.getAttribute('content');
-        tag.setAttribute('content', metaDescription);
-        return () => tag.setAttribute('content', previous);
-    }, [metaDescription]);
-
-    const steps = [
-        t('blindStep1'),
-        t('blindStep2'),
-        t('blindStep3'),
-        t('blindStep4'),
-        t('blindStep5'),
-        t('blindStep6'),
-    ];
+    const { t, lp } = useLanguage();
+    const steps = [1, 2, 3, 4, 5, 6].map((n) => ({ name: t(`blindStep${n}Name`), body: t(`blindStep${n}Body`) }));
 
     return (
-        <div className="min-h-screen bg-stone-50 pt-24 text-slate-950 dark:bg-hltNavy dark:text-white">
-            <title>{t('blindSeoTitle')}</title>
+        <div className="min-h-screen bg-stone-50 pt-20 text-slate-950 lg:pt-24">
+            <Seo title={t('blindSeoTitle')} description={t('blindMetaDescription')} route={ROUTE_BUSINESS_BLINDSPOTS} />
 
             <section className="px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="mx-auto max-w-3xl"
-                >
-                    <h1 className="text-3xl font-bold leading-tight sm:text-5xl sm:leading-[1.1]">
-                        {t('blindH1')}
-                    </h1>
-                    <p className="mt-6 text-base leading-8 text-slate-600 dark:text-slate-300 sm:text-lg sm:leading-9">
-                        {t('blindIntro')}
-                    </p>
+                <motion.div {...heroIn} className="mx-auto max-w-3xl">
+                    <h1 className="text-[2rem] font-bold leading-[1.15] sm:text-5xl sm:leading-[1.1]">{t('blindH1')}</h1>
+                    <div className="mt-6 space-y-3 text-base leading-8 text-slate-600 sm:text-lg sm:leading-9">
+                        <p>{t('blindIntro1')}</p>
+                        <p>{t('blindIntro2')}</p>
+                        <p className="font-semibold text-slate-950">{t('blindIntro3')}</p>
+                    </div>
                 </motion.div>
             </section>
 
-            <section className="bg-white px-5 py-16 dark:bg-slate-950 sm:px-6 sm:py-20 lg:px-8">
+            {/* The six steps, numbered, one column on a phone. */}
+            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
-                    <motion.h2
-                        {...fadeUp}
-                        className="text-center text-2xl font-bold leading-tight sm:text-3xl"
-                    >
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
                         {t('blindQuickTestHeading')}
                     </motion.h2>
                     <ol className="mt-8 grid gap-4 sm:grid-cols-2">
                         {steps.map((step, index) => (
                             <motion.li
-                                key={step}
-                                {...fadeUp}
-                                transition={{ duration: 0.5, delay: index * 0.04 }}
-                                className="flex items-start gap-4 rounded-2xl border border-slate-200 p-6 card-glass"
+                                key={step.name}
+                                {...fadeUpDelayed(index)}
+                                className="flex items-start gap-4 rounded-2xl border border-slate-200 p-5 card-glass card-static sm:p-6"
                             >
                                 <ProcessNumber label={`${index + 1}`} decorative />
-                                <span className="text-base leading-8 text-slate-600 dark:text-slate-300">{step}</span>
+                                <div className="min-w-0">
+                                    <h3 className="text-lg font-bold leading-7 text-slate-950">{step.name}</h3>
+                                    <p className="mt-1 text-base leading-7 text-slate-600">{step.body}</p>
+                                </div>
                             </motion.li>
                         ))}
                     </ol>
-                    <motion.p {...fadeUp} className="mx-auto mt-10 max-w-2xl text-center text-base leading-8 text-slate-600 dark:text-slate-300">
+                    <motion.p {...fadeUp} className="mx-auto mt-10 max-w-2xl text-center text-lg font-semibold leading-8 text-slate-950">
                         {t('blindInstruction')}
                     </motion.p>
                 </div>
             </section>
 
+            {/* After the whole test, and only then: where the read begins. */}
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('blindDeeperHeading')}</h2>
-                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
-                        {t('blindDeeperBody')}
-                    </p>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{t('blindDeeperBody')}</p>
                     <div className="mt-8">
-                        <Link to={ROUTE_BUSINESS_READ} className={CTA_CLASSES}>
+                        <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
                             {t('blindCta')}
                             <ArrowRight size={18} aria-hidden="true" />
                         </Link>
                     </div>
+                    <p className="mt-6 text-sm text-slate-300">
+                        <Link to={lp(ROUTE_OWNER_DEPENDENCY)} className="underline underline-offset-4 transition-colors hover:text-white">
+                            {t('blindOdLink')}
+                        </Link>
+                    </p>
                 </motion.div>
             </section>
         </div>

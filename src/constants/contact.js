@@ -44,5 +44,6 @@ export const LINE_OFFICIAL_ACCOUNT = LINE_BUSINESS_READ;
 export const CONTACT_EMAIL = 'ian@highlevelthai.com';
 export const CONTACT_PHONE_DISPLAY = '+66 96 839 8305';
 export const CONTACT_PHONE_TEL = 'tel:+66968398305';
+export const CONTACT_PHONE_E164 = '+66968398305'; // the same number, as the Organization schema wants it
 export const CONTACT_WHATSAPP_URL = 'https://wa.me/66968398305';
 export const CONTACT_LOCATION_LINE = 'Working with businesses in Hua Hin and across Thailand';

@@ -1,152 +1,141 @@
+// Footer.jsx — the site's five-block footer.
+// REBUILT 30 September 2026, the visibility refresh (bridge row 4007 and Ian's fuller spec of the
+// same day, sections 27 and 28). It replaces the one-row footer of 18 September and the first
+// five-block draft of the 12:42 build session on the same day, keeping that session's contact
+// constants and its no-badges rule.
+//
+// THE STRUCTURE IS THE SPEC'S, AND THE REFERENCE IS STRUCTURAL ONLY. Ian's guidance screenshots of
+// huahinworkspace.com show, top to bottom on a phone: the brand block and a one-line description,
+// a stacked quick-links list, a contact block with icons and tappable rows, the messaging channels
+// as full-width buttons, then the legal line. That order is used here. Nothing of theirs is copied:
+// not the green, the type, the buttons, the icon artwork, the logo treatment or the wording. The
+// ground is the card navy (#0A1F44, Ian's 14 September standard), the type is the site's own.
+//
+// QUICK LINKS are the spec's seven, in the spec's order, plus Examples, because the Examples page is
+// one of Ian's six locked public pages (17 September) and the spec's list would otherwise leave it
+// reachable from nowhere on a desktop. Listed in the report as the one addition.
+//
+// CONTACT is the ruled block and nothing else: ian@highlevelthai.com, +66 96 839 8305 as a phone
+// and as WhatsApp, LINE @535zlmbx through the one add-friend link. No street address anywhere: the
+// registered office is open on the record (Ian, 14 September 2026), so the location line is the
+// spec's own "Working with businesses in Hua Hin and across Thailand".
+//
+// NO TRUST BADGES. Spec: "Do not add Trustpilot, card/payment or association logos unless HLT
+// genuinely uses them and has the right to display them." It does not, so there are none.
+//
+// EVERY INTERNAL LINK GOES THROUGH lp(), so an English reader stays in English.
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MessageCircle } from 'lucide-react';
+import { Mail, MessageCircle, Phone } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import {
-    LINE_FOOTER,
     CONTACT_EMAIL,
     CONTACT_PHONE_DISPLAY,
     CONTACT_PHONE_TEL,
     CONTACT_WHATSAPP_URL,
+    LINE_FOOTER,
 } from '../constants/contact';
-// The header's own white lockup. Ian, 14 September 2026: the footer's name must match the
-// header, and the name is three words, "High Level Thai". The old footer rendered "HighLevel"
-// and "Thai" as two spans, which read closed up and did not match the mark above it. Using the
-// header's own asset means the two can never drift apart again.
 import hltLockupWhite from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-white.svg';
-import {
-    ROUTE_HOME,
-    ROUTE_BUSINESS_READ,
-    ROUTE_BUSINESS_BLINDSPOTS,
-    ROUTE_ABOUT,
-    ROUTE_CONTACT,
-    ROUTE_PDPA,
-    ROUTE_COOKIES,
-} from '../constants/routes';
+import { FOOTER_QUICK_LINKS, LEGAL_LINKS, ROUTE_HOME } from '../constants/routes';
 
-// FOOTER, REBUILT 30 September 2026 (bridge row 4007, the visibility refresh). Five blocks, per
-// the spec's footer_spec: brand/logo plus one-sentence proposition, Quick Links, Contact,
-// Channels, Legal links and copyright. Structural principles only, borrowed from the reference
-// screenshots the spec named (huahinworkspace.com); no artwork, colours, logos or component
-// styling copied from them, per the spec's own design_reference line and Ian's "Retain HLT brand
-// identity."
-//
-// QUICK LINKS. The spec's list is Home, The Business Read, Business Blindspots, Owner Dependency,
-// Hua Hin, About, Contact. Owner Dependency and Hua Hin are NOT linked here: Owner Dependency has
-// no page in this build (not in the visibility-refresh brief's DELIVERABLE list, so a link would
-// 404), and Hua Hin is reachable from its own page's CTA chain but was held out of the footer's
-// quick links to keep the list to pages this brief actually ships without inventing an order the
-// spec did not give for a partial list. Flagged in the visibility-refresh report for Ian's
-// ruling on whether to add Hua Hin once Owner Dependency exists or ship it now.
-//
-// CONTACT BLOCK. Email, phone/WhatsApp and the location line, all from
-// src/constants/contact.js, added in this same commit: no number or address is invented here.
-//
-// TRUST BADGES. None added, per the spec's trust_badges_rule and the brief's constraint (g).
+const HEADING_CLASSES = 'text-xs font-bold uppercase tracking-[0.18em] text-slate-300';
+const ROW_CLASSES = 'flex min-h-11 items-center gap-3 text-base text-slate-200 transition-colors hover:text-white';
+const BUTTON_CLASSES =
+    'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 text-base font-semibold text-white transition-colors hover:bg-white/20 sm:w-auto sm:min-w-[14rem]';
+
 const Footer = () => {
-    const { t } = useLanguage();
-
-    const quickLinks = [
-        { label: t('homeNavHome'), to: ROUTE_HOME },
-        { label: t('brNavLink'), to: ROUTE_BUSINESS_READ },
-        { label: t('blindNavLink'), to: ROUTE_BUSINESS_BLINDSPOTS },
-        { label: t('aboutNavLink'), to: ROUTE_ABOUT },
-        { label: t('contactNavLink'), to: ROUTE_CONTACT },
-    ];
-
-    const legalLinks = [
-        { label: t('footerLegalTerms'), to: '/terms' },
-        { label: t('footerLegalPrivacy'), to: '/privacy' },
-        { label: t('footerLegalPdpa'), to: ROUTE_PDPA },
-        { label: t('footerLegalCookies'), to: ROUTE_COOKIES },
-    ];
+    const { t, lp } = useLanguage();
+    const year = new Date().getFullYear();
 
     return (
-        <footer className="bg-slate-900 text-slate-400 border-t border-slate-800">
-            <div className="container mx-auto px-6 py-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-                {/* Block 1: brand/logo plus one-sentence proposition. */}
-                <div>
-                    <Link to={ROUTE_HOME} className="inline-flex" aria-label="High Level Thai">
-                        <img src={hltLockupWhite} alt="High Level Thai" className="h-9 w-auto" />
-                    </Link>
-                    <p className="mt-4 text-sm leading-7 max-w-xs">{t('footerBrandLine')}</p>
+        <footer className="border-t border-white/10 bg-hltNavy text-slate-300">
+            <div className="container mx-auto px-5 py-14 sm:px-6 lg:py-16">
+                <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+                    {/* Block 1: brand and the one-sentence proposition. */}
+                    <div className="lg:col-span-4">
+                        <Link to={lp(ROUTE_HOME)} className="inline-flex" aria-label="High Level Thai">
+                            <img src={hltLockupWhite} alt="High Level Thai" className="h-9 w-auto" />
+                        </Link>
+                        <p className="mt-5 max-w-sm text-base leading-7 text-slate-300">{t('footerBrandLine')}</p>
+                    </div>
+
+                    {/* Block 2: quick links, one per line, big enough to tap. */}
+                    <div className="lg:col-span-2">
+                        <h2 className={HEADING_CLASSES}>{t('footerQuickLinksHeading')}</h2>
+                        <ul className="mt-5 space-y-1">
+                            {FOOTER_QUICK_LINKS.map((item) => (
+                                <li key={item.to}>
+                                    <Link to={lp(item.to)} className="inline-flex min-h-10 items-center text-base text-slate-200 transition-colors hover:text-white">
+                                        {t(item.labelKey)}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Block 3: contact. Every row is a real link a thumb can hit. */}
+                    <div className="lg:col-span-3">
+                        <h2 className={HEADING_CLASSES}>{t('footerContactHeading')}</h2>
+                        <ul className="mt-5 space-y-1">
+                            <li>
+                                <a href={`mailto:${CONTACT_EMAIL}`} className={ROW_CLASSES}>
+                                    <Mail size={18} aria-hidden="true" className="shrink-0 text-indigo-200" />
+                                    <span className="break-all">{CONTACT_EMAIL}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href={CONTACT_PHONE_TEL} className={ROW_CLASSES}>
+                                    <Phone size={18} aria-hidden="true" className="shrink-0 text-indigo-200" />
+                                    <span>{CONTACT_PHONE_DISPLAY}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href={CONTACT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={ROW_CLASSES}>
+                                    <MessageCircle size={18} aria-hidden="true" className="shrink-0 text-indigo-200" />
+                                    <span>
+                                        {t('footerContactWhatsAppLabel')} {CONTACT_PHONE_DISPLAY}
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href={LINE_FOOTER} target="_blank" rel="noopener noreferrer" className={ROW_CLASSES}>
+                                    <span aria-hidden="true" className="inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] bg-indigo-200 text-[9px] font-black leading-none text-hltNavy">
+                                        L
+                                    </span>
+                                    <span>{t('footerContactLineLabel')} @535zlmbx</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <p className="mt-4 text-sm leading-6 text-slate-400">{t('footerContactLocation')}</p>
+                    </div>
+
+                    {/* Block 4: the messaging channels, as buttons. Two, because two are real. */}
+                    <div className="lg:col-span-3">
+                        <h2 className={HEADING_CLASSES}>{t('footerChannelsHeading')}</h2>
+                        <div className="mt-5 flex flex-col gap-3">
+                            <a href={CONTACT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={BUTTON_CLASSES}>
+                                <MessageCircle size={18} aria-hidden="true" />
+                                {t('footerWhatsAppButton')}
+                            </a>
+                            <a href={LINE_FOOTER} target="_blank" rel="noopener noreferrer" className={BUTTON_CLASSES}>
+                                {t('footerLineButton')}
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Block 2: Quick Links. */}
-                <div>
-                    <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">
-                        {t('footerQuickLinksHeading')}
-                    </h3>
-                    <ul className="mt-4 space-y-3 text-sm">
-                        {quickLinks.map((link) => (
-                            <li key={link.to}>
-                                <Link to={link.to} className="hover:text-white transition-colors">
-                                    {link.label}
+                {/* Block 5: legal links and the copyright line. */}
+                <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+                    <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                        {LEGAL_LINKS.map((item) => (
+                            <li key={item.to}>
+                                <Link to={lp(item.to)} className="inline-flex min-h-8 items-center transition-colors hover:text-white">
+                                    {t(item.labelKey)}
                                 </Link>
                             </li>
                         ))}
                     </ul>
-                </div>
-
-                {/* Block 3: Contact. Tap-friendly on a phone: each row is a real tel:/mailto: link,
-                    not text. */}
-                <div>
-                    <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">
-                        {t('footerContactHeading')}
-                    </h3>
-                    <ul className="mt-4 space-y-3 text-sm">
-                        <li>
-                            <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-2 hover:text-white transition-colors">
-                                <Mail size={16} aria-hidden="true" />
-                                {CONTACT_EMAIL}
-                            </a>
-                        </li>
-                        <li>
-                            <a href={CONTACT_PHONE_TEL} className="flex items-center gap-2 hover:text-white transition-colors">
-                                <Phone size={16} aria-hidden="true" />
-                                {CONTACT_PHONE_DISPLAY}
-                            </a>
-                        </li>
-                        <li className="text-xs leading-6 text-slate-500">{t('footerContactLocation')}</li>
-                    </ul>
-                </div>
-
-                {/* Block 4: Channels. LINE stays prominent for Thai-language users; English pages
-                    may prioritise WhatsApp/email above, with LINE also available here. */}
-                <div>
-                    <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">
-                        {t('footerChannelsHeading')}
-                    </h3>
-                    <ul className="mt-4 space-y-3 text-sm">
-                        <li>
-                            <a href={LINE_FOOTER} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
-                                <MessageCircle size={16} aria-hidden="true" />
-                                {t('footerLineLabel')}
-                            </a>
-                        </li>
-                        <li>
-                            <a href={CONTACT_WHATSAPP_URL} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
-                                <Phone size={16} aria-hidden="true" />
-                                WhatsApp
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            {/* Block 5: legal links and copyright. */}
-            <div className="border-t border-slate-800">
-                <div className="container mx-auto px-6 py-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <ul className="flex flex-wrap gap-x-6 gap-y-2 text-xs">
-                        {legalLinks.map((link) => (
-                            <li key={link.to}>
-                                <Link to={link.to} className="hover:text-white transition-colors">
-                                    {link.label}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                    <p className="text-xs text-slate-600">
-                        &copy; {new Date().getFullYear()} {t('footerCopyright')}
+                    <p>
+                        &copy; {year} {t('footerCompanyName')}
                     </p>
                 </div>
             </div>

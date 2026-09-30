@@ -1,35 +1,58 @@
+// LanguageToggle.jsx — the EN | ไทย control. REWRITTEN 30 September 2026, the visibility refresh.
+//
+// WHAT CHANGED. It used to be a button that flipped a value in localStorage; the page then re-read
+// its strings in place and the URL never moved. The language now lives in the URL (see
+// src/constants/lang.js), so this control is TWO LINKS: the current language, lit, and the other
+// one, which points at the same page in that language. A crawler following the second link finds
+// the twin page, which is what makes the two languages separately indexable.
+//
+// THE LABELS. The spec asks for "an obvious EN | ไทย language switch": the Thai label is written in
+// Thai script, as a Thai reader would look for it, not as a two-letter code.
+//
+// THE 15 September fix survives: both labels are always shown and the active one is lit, so the
+// control can never be misread as "click for the language you are already in".
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { motion } from 'framer-motion';
+import { localPath } from '../constants/lang';
 
 const LanguageToggle = () => {
-    const { language, toggleLanguage, t } = useLanguage();
+    const { language, route, t } = useLanguage();
+
+    const options = [
+        { code: 'en', label: t('langLabelEn'), title: t('switchToEnglish') },
+        { code: 'th', label: t('langLabelTh'), title: t('switchToThai') },
+    ];
+
+    const remember = (code) => {
+        try {
+            localStorage.setItem('language', code);
+        } catch {
+            // Storage blocked: the URL carries the language regardless.
+        }
+    };
 
     return (
-        // AMBIGUOUS BEFORE, FIXED 15 September 2026. This button showed ONE code, the language
-        // you were already in, so "TH" read to a user as "click here for Thai" when it meant
-        // "you are in Thai". Ian could not tell whether the Thai was broken or whether he was
-        // simply in English. Both codes are now shown with the active one lit, which is what a
-        // reader expects and cannot be misread.
-        <button
-            onClick={toggleLanguage}
-            className="h-10 rounded-lg flex items-center bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 transition-colors overflow-hidden p-1 gap-0.5"
-            title={language === 'en' ? t('switchToThai') : t('switchToEnglish')}
-        >
-            {['en', 'th'].map((code) => (
-                <motion.span
-                    key={code}
-                    animate={{ opacity: language === code ? 1 : 0.55 }}
-                    transition={{ duration: 0.2 }}
-                    className={`px-2 py-1 rounded-md text-xs font-bold leading-none ${
-                        language === code
-                            ? 'bg-indigo-600 text-white'
-                            : 'text-slate-600 dark:text-slate-300'
-                    }`}
-                >
-                    {code.toUpperCase()}
-                </motion.span>
-            ))}
-        </button>
+        <nav aria-label="Language" className="flex h-10 items-center gap-0.5 overflow-hidden rounded-lg bg-slate-100 p-1">
+            {options.map(({ code, label, title }) => {
+                const active = language === code;
+                return (
+                    <Link
+                        key={code}
+                        to={localPath(route, code)}
+                        hrefLang={code}
+                        lang={code}
+                        title={active ? undefined : title}
+                        aria-current={active ? 'true' : undefined}
+                        onClick={() => remember(code)}
+                        className={`rounded-md px-2.5 py-1 text-xs font-bold leading-none transition-colors ${
+                            active ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-200'
+                        }`}
+                    >
+                        {label}
+                    </Link>
+                );
+            })}
+        </nav>
     );
 };
 

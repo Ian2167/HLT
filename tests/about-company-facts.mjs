@@ -172,19 +172,27 @@ try {
     const host = await waitForPort(PORT, 60000);
     console.log(`  preview answered on ${host}:${PORT}`);
 
+    // 30 September 2026: the language lives in the URL now (src/constants/lang.js). The English
+    // lines are asserted on /en/about, where they render in English; the Thai page at /about is
+    // asserted to carry the company number and the Thai company name, which do not translate.
     const browser = await pw.chromium.launch();
     const page = await browser.newPage();
-    await page.goto(`http://${host}:${PORT}/about`, { waitUntil: 'networkidle' });
+    await page.goto(`http://${host}:${PORT}/en/about`, { waitUntil: 'networkidle' });
     const rendered = await page.evaluate(() => document.body.innerText);
+    await page.goto(`http://${host}:${PORT}/about`, { waitUntil: 'networkidle' });
+    const renderedTh = await page.evaluate(() => document.body.innerText);
     await browser.close();
 
-    console.log(`  rendered /about: ${rendered.length} chars of visible text`);
+    console.log(`  rendered /en/about: ${rendered.length} chars of visible text; /about: ${renderedTh.length}`);
 
     for (const text of MUST_RENDER) {
-        check(rendered.includes(text), `renders on /about: "${text}"`);
+        check(rendered.includes(text), `renders on /en/about: "${text}"`);
     }
+    check(renderedTh.includes('0835568013864'), 'renders on /about: the company number 0835568013864');
+    check(renderedTh.includes('บริษัท ไฮ เลเวล ไทย จำกัด'), 'renders on /about: the Thai company name');
     for (const { note, label, re } of MUST_NOT_RENDER_ON_ABOUT) {
-        check(!re.test(rendered), `NOTE ${note} absent from /about: ${label}`);
+        check(!re.test(rendered), `NOTE ${note} absent from /en/about: ${label}`);
+        check(!re.test(renderedTh), `NOTE ${note} absent from /about: ${label}`);
     }
 } catch (err) {
     failures.push(`FIXTURE ERROR: ${err.message}`);
