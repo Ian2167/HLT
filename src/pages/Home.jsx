@@ -72,7 +72,6 @@ const Home = () => {
     const blindspots = [1, 2, 3, 4, 5, 6].map((n) => ({
         name: t(`homeBlind${n}Name`),
         body: t(`homeBlind${n}Body`),
-        note: n === 4 ? t('homeBlind4Note') : null,
         Icon: BLIND_ICONS[n - 1],
     }));
     const trust = [1, 2, 3, 4, 5, 6].map((n) => t(`homeTrust${n}`));
@@ -216,8 +215,11 @@ const Home = () => {
             </section>
 
             {/* 5. The six blindspots. Icon left of the heading, one column on a phone, three on a
-                laptop; the fourth carries the Thailand note the spec gives it. Ends on the free
-                test, the "Learn" rung of the spec's three-level CTA architecture. */}
+                laptop, every card the same height. The Thailand examples the spec attaches to
+                system mismatch sit as one line under the six rather than inside the fourth card:
+                Ian, 30 September, on the frame where that card alone ran long: "the left hand
+                card is the only one of 6 that extends below". Ends on the free test, the "Learn"
+                rung of the spec's three-level CTA architecture. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
@@ -236,12 +238,14 @@ const Home = () => {
                                 <div className="min-w-0">
                                     <h3 className="text-lg font-bold leading-7 text-slate-950">{item.name}</h3>
                                     <p className="mt-2 text-base leading-7 text-slate-600">{item.body}</p>
-                                    {item.note ? <p className="mt-3 text-sm leading-6 text-slate-500">{item.note}</p> : null}
                                 </div>
                             </motion.li>
                         ))}
                     </ul>
-                    <motion.div {...fadeUp} className="mt-10 text-center">
+                    <motion.p {...fadeUp} className="mx-auto mt-8 max-w-3xl text-center text-sm leading-6 text-slate-500 sm:text-base sm:leading-7">
+                        {t('homeBlind4Note')}
+                    </motion.p>
+                    <motion.div {...fadeUp} className="mt-8 text-center">
                         <Link to={lp(ROUTE_BUSINESS_BLINDSPOTS)} className={TEXT_LINK_CLASSES}>
                             {t('homeBlindCtaLabel')}
                             <ArrowRight size={16} aria-hidden="true" />

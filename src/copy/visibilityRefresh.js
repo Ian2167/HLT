@@ -122,8 +122,9 @@ export const visibilityRefreshCopy = {
     homeBlind3Body: 'Where does work wait, repeat or fall between people?',
     homeBlind4Name: 'System mismatch',
     homeBlind4Body: 'Where does software fail to reflect how the business actually works?',
+    // Rendered under the six cards, not inside the fourth (Ian, 30 September), so it names its subject.
     homeBlind4Note:
-        'In Thailand that often means LINE rather than email, bilingual names and nicknames, local geography and development names, Google Maps pins, relationship history, and CRM assumptions imported from another market.',
+        'System mismatch in Thailand often means LINE rather than email, bilingual names and nicknames, local geography and development names, Google Maps pins, relationship history, and CRM assumptions imported from another market.',
     homeBlind5Name: 'Customer blindspots',
     homeBlind5Body: 'Where does finding, contacting, trusting or buying become harder than the owner realises?',
     homeBlind6Name: 'Control blindspots',
@@ -391,7 +392,7 @@ export const visibilityRefreshTh = {
     homeBlind4Name: 'ระบบไม่เข้ากับงานจริง',
     homeBlind4Body: 'ซอฟต์แวร์ไม่สะท้อนวิธีที่ธุรกิจทำงานจริงตรงไหน',
     homeBlind4Note:
-        'ในประเทศไทยมักหมายถึง LINE แทนอีเมล ชื่อสองภาษาและชื่อเล่น ภูมิศาสตร์ท้องถิ่นและชื่อโครงการ หมุดใน Google Maps ประวัติความสัมพันธ์ และสมมติฐานของ CRM ที่นำเข้ามาจากตลาดอื่น',
+        'ระบบไม่เข้ากับงานจริงในประเทศไทยมักหมายถึง LINE แทนอีเมล ชื่อสองภาษาและชื่อเล่น ภูมิศาสตร์ท้องถิ่นและชื่อโครงการ หมุดใน Google Maps ประวัติความสัมพันธ์ และสมมติฐานของ CRM ที่นำเข้ามาจากตลาดอื่น',
     homeBlind5Name: 'จุดบอดด้านลูกค้า',
     homeBlind5Body: 'การค้นหา ติดต่อ ไว้ใจ หรือซื้อ ยากกว่าที่เจ้าของคิดตรงไหน',
     homeBlind6Name: 'จุดบอดด้านการควบคุม',
