@@ -1,0 +1,7 @@
+# High Level Thai. Every public page in Thai and in English is open to crawlers; the ten retired
+# service and sector routes carry a noindex header from vercel.json instead of a rule here, and
+# the sign-in stub and the four legal placeholders carry noindex in their own head.
+User-agent: *
+Allow: /
+
+Sitemap: https://highlevelthai.com/sitemap.xml

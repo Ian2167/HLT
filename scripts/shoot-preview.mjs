@@ -13,10 +13,10 @@
 // dependencies and adds none. Playwright is resolved from a sibling checkout on the estate and the
 // path is printed. Override with HLT_PLAYWRIGHT. No silent fallback: if none resolves, this fails.
 import { spawn } from 'node:child_process';
-import { existsSync, mkdirSync } from 'node:fs';
-import { pathToFileURL } from 'node:url';
+import { mkdirSync } from 'node:fs';
 import net from 'node:net';
 import path from 'node:path';
+import { resolvePlaywright } from './lib/playwright.mjs';
 
 const REPO = process.cwd();
 const args = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -84,25 +84,6 @@ const waitForPort = (port, timeoutMs) => {
         attempt();
     });
 };
-
-export async function resolvePlaywright() {
-    const candidates = [
-        process.env.HLT_PLAYWRIGHT,
-        'C:/Projects/qo-linkedin-desk-v2/node_modules/playwright/index.js',
-        'C:/Projects/quote-optimiser-iwt-crm/node_modules/playwright/index.js',
-        'C:/Projects/qo-rls-fix/node_modules/playwright/index.js',
-    ].filter(Boolean);
-    for (const c of candidates) {
-        if (existsSync(c)) {
-            console.log(`  browser driver: ${c}`);
-            const mod = await import(pathToFileURL(c).href);
-            const api = mod.chromium ? mod : mod.default;
-            if (!api || !api.chromium) throw new Error(`Playwright at ${c} exposes no chromium export`);
-            return api;
-        }
-    }
-    throw new Error(`No Playwright install found. Set HLT_PLAYWRIGHT. Tried:\n  ${candidates.join('\n  ')}`);
-}
 
 // Scroll the whole page in steps so every whileInView reveal has fired, then return to the top.
 async function settle(page) {

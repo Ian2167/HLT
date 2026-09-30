@@ -5,10 +5,15 @@
     <!-- Logo v2, 14 Sept 2026: real HLT chevron, derived from Ian's Canva source vector.
          Set built in src/assets/brand/hlt-logo-v2/; public copies live in /public/brand/.
          The old /hlt.svg is left in place, unreferenced, not deleted. -->
+    <!-- 30 September 2026, bridge row 4018: a real /favicon.ico and a web manifest join the set,
+         both generated from the HLT logo v2 by scripts/make-icons.mjs, so no crawler asking for
+         /favicon.ico gets the app shell back and keeps whatever icon it last cached. -->
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon-180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0A1F44" />
     <!-- 30 September 2026: no site-wide description here any more. Every page renders its own
