@@ -40,9 +40,34 @@ export const ROUTE_ABOUT = '/about';
 export const ROUTE_CONTACT = '/contact';
 export const ROUTE_CLIENT_LOGIN = '/client-login';
 
-// THE PUBLIC NAVIGATION, exactly as Ian ruled it: "Home | Business Read | How It Works |
-// Examples | About | Contact, with Client Login on the right. No service names in the main
-// navigation."
+// ---------------------------------------------------------------------------------------
+// THE VISIBILITY REFRESH, 30 September 2026 (bridge row 4007, brief
+// C:\Projects\IWT\02-builds\executive-assistant\work\briefs\
+// 2026-09-30-site-dashboard-hlt-website-visibility-refresh.md). Two new public pages.
+//
+// CONFLICT NAMED, NOT RESOLVED HERE: the 18 September ruling in
+// C:\Projects\hlt\src\constants\routes.js (this file, above) says "there is no eighth page" and
+// HLT-SITE-DIRECTIVE-2026-09-17.md locks six public pages plus Client Login. Today's brief
+// explicitly commissions these two pages as in-scope deliverables (items 4 and 5), on Ian's own
+// word of 30 September routed through the EA Desk and ChatGPT's spec. The Desk's brief instructs
+// the builder to build them and list the doctrine conflict for Ian, not to resolve it by refusing
+// the work; see the visibility-refresh report for the flag.
+export const ROUTE_HUA_HIN = '/hua-hin';
+export const ROUTE_BUSINESS_BLINDSPOTS = '/business-blindspots';
+// Legal placeholders only (constraint 7 of the brief): PDPA / Data Handling and Cookie Policy did
+// not exist before this brief. Both pages say "coming soon" in plain words; no legal text is
+// invented for them.
+export const ROUTE_PDPA = '/pdpa';
+export const ROUTE_COOKIES = '/cookies';
+
+// THE PUBLIC NAVIGATION. Ian's 17/18 September ruling, verbatim: "Home | Business Read | How It
+// Works | Examples | About | Contact, with Client Login on the right. No service names in the
+// main navigation." NOTHING BELOW REMOVES ANY OF THOSE SIX. Blindspots is ADDED, one entry,
+// because today's spec (row 4007) asks for it on the desktop header and the brief's rule is
+// additive, not a replacement of a locked list: "the conflict is listed in the report for Ian,
+// not resolved by the builder." The spec's own desktop header also drops Home, Examples and
+// Contact from the nav entirely; that narrower five-item set is NOT built here, because it would
+// delete locked items rather than add one, and is flagged in the report for Ian's ruling instead.
 //
 // Client Login is deliberately NOT in this array. It renders separately, on the right of the
 // divider, because his navigation line puts it there and because it is not part of the buying
@@ -51,6 +76,7 @@ export const PUBLIC_NAV = [
     { labelKey: 'homeNavHome', to: ROUTE_HOME },
     { labelKey: 'brNavLink', to: ROUTE_BUSINESS_READ },
     { labelKey: 'hiwNavLink', to: ROUTE_HOW_IT_WORKS },
+    { labelKey: 'blindNavLink', to: ROUTE_BUSINESS_BLINDSPOTS },
     { labelKey: 'exNavLink', to: ROUTE_EXAMPLES },
     { labelKey: 'aboutNavLink', to: ROUTE_ABOUT },
     { labelKey: 'contactNavLink', to: ROUTE_CONTACT },

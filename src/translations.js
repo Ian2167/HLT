@@ -47,6 +47,10 @@ import { thaiDraftRestructure } from './copy/thaiDraftRestructure';
 // The keep, transfer, remove layer and the five fixes, 27 September 2026, on Ian's rulings of that
 // day. Spread LAST in each block so it wins. See the module's own header.
 import { newDirectionCopy, newDirectionTh } from './copy/newDirection';
+// The HLT website visibility and mobile UX refresh, 30 September 2026 (bridge row 4007). Spread
+// LAST in each block, same pattern as newDirectionCopy above, so it wins on any shared key. See
+// the module's own header for what it covers and what it deliberately holds.
+import { visibilityRefreshCopy, visibilityRefreshTh } from './copy/visibilityRefresh';
 
 export const translations = {
     en: {
@@ -470,7 +474,10 @@ export const translations = {
         ...businessReadRebuildCopy,
 
         // 27 September 2026: the new direction. LAST, so it wins.
-        ...newDirectionCopy
+        ...newDirectionCopy,
+
+        // 30 September 2026: the visibility refresh (bridge row 4007). LAST of all, so it wins.
+        ...visibilityRefreshCopy
     },
     th: {
         // TH PENDING: English values on purpose. See the note at the top of this file.
@@ -946,6 +953,10 @@ export const translations = {
         ...thaiDraftRestructure,
 
         // 27 September 2026: the new direction's machine Thai draft, for Ann's review. LAST.
-        ...newDirectionTh
+        ...newDirectionTh,
+
+        // 30 September 2026: the visibility refresh's machine Thai draft (bridge row 4007), for
+        // Ann's review. UNREVIEWED. LAST of all, so it wins.
+        ...visibilityRefreshTh
     }
 };

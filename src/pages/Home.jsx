@@ -36,7 +36,7 @@ import { ArrowRight, BookOpen, Eye, Library, MessageSquare, Scissors, ShieldChec
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
-import { ROUTE_BUSINESS_READ, ROUTE_HOW_IT_WORKS } from '../constants/routes';
+import { ROUTE_BUSINESS_READ, ROUTE_HOW_IT_WORKS, ROUTE_BUSINESS_BLINDSPOTS } from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
 
 const CTA_CLASSES =
@@ -106,6 +106,17 @@ const Home = () => {
     }));
 
     const proof = [t('homeProof1'), t('homeProof2'), t('homeProof3'), t('homeProof4'), t('homeProof5')];
+
+    // The six blindspot categories, 30 September 2026 (bridge row 4007, homepage_copy_en.
+    // blindspots). Additive: nothing existing on this page is removed or reordered.
+    const blindspots = [
+        t('homeBlind1'),
+        t('homeBlind2'),
+        t('homeBlind3'),
+        t('homeBlind4'),
+        t('homeBlind5'),
+        t('homeBlind6'),
+    ];
 
     return (
         <div className="min-h-screen bg-stone-50 pt-24 text-slate-950 dark:bg-hltNavy dark:text-white">
@@ -228,6 +239,42 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* THE SIX BLINDSPOT CATEGORIES. 30 September 2026 (bridge row 4007, the visibility
+                refresh). Additive section, placed between the owner's-week problem list and the
+                keep/transfer/remove answer, matching the spec's own order (symptoms, then
+                blindspots). It links to the new Business Blindspots page's free test, the one new
+                link this band carries. */}
+            <section className="bg-stone-100 px-5 py-16 dark:bg-white/[0.04] sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-6xl">
+                    <motion.h2
+                        {...fadeUp}
+                        className="text-center text-2xl font-bold leading-tight text-slate-950 dark:text-white sm:text-3xl"
+                    >
+                        {t('homeBlindHeading')}
+                    </motion.h2>
+                    <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {blindspots.map((item, index) => (
+                            <motion.li
+                                key={item}
+                                {...fadeUp}
+                                transition={{ duration: 0.5, delay: index * 0.04 }}
+                                className="rounded-2xl border border-slate-200 bg-white p-6 text-sm leading-7 text-slate-600 card-glass dark:bg-slate-950 dark:text-slate-300"
+                            >
+                                {item}
+                            </motion.li>
+                        ))}
+                    </ul>
+                    <motion.div {...fadeUp} className="mt-8 text-center">
+                        <Link
+                            to={ROUTE_BUSINESS_BLINDSPOTS}
+                            className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 transition-colors hover:text-indigo-500 dark:text-indigo-300"
+                        >
+                            {t('homeBlindCtaLabel')}
+                            <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
+                    </motion.div>
+                </div>
+            </section>
 
             {/* KEEP, TRANSFER, REMOVE. 27 September 2026, Ian's new direction: sort every way the
                 business depends on the owner into three and treat each differently. It answers the

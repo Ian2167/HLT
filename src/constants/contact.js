@@ -31,3 +31,18 @@ export const LINE_BUSINESS_READ = 'https://lin.ee/YQMkWI3';
 // not a second URL, so there is one string to change when he rules the split in flag 2 of the
 // Business Read deck. Nothing is appended to it, and no utm tag is added without his word.
 export const LINE_OFFICIAL_ACCOUNT = LINE_BUSINESS_READ;
+
+// The visibility refresh, 30 September 2026 (bridge row 4007, "HLT website visibility and mobile
+// UX refresh"). Verified contact block, carried verbatim from the brief's constraint (c):
+//   C:\Projects\IWT\02-builds\executive-assistant\work\briefs\
+//   2026-09-30-site-dashboard-hlt-website-visibility-refresh.md
+// Email ian@highlevelthai.com, phone and WhatsApp +66 96 839 8305, LINE @535zlmbx via the same
+// add-friend link every other LINE button on the site already uses. NEVER "@highlevelthai" — the
+// spec named that exact wrong handle as a trap. No street address anywhere: "Working with
+// businesses in Hua Hin and across Thailand" is the location line until a registered office is
+// confirmed (Ian, 14 September 2026, unchanged by this brief).
+export const CONTACT_EMAIL = 'ian@highlevelthai.com';
+export const CONTACT_PHONE_DISPLAY = '+66 96 839 8305';
+export const CONTACT_PHONE_TEL = 'tel:+66968398305';
+export const CONTACT_WHATSAPP_URL = 'https://wa.me/66968398305';
+export const CONTACT_LOCATION_LINE = 'Working with businesses in Hua Hin and across Thailand';

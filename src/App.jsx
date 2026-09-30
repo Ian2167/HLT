@@ -33,6 +33,12 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
 import Support from './pages/Support';
 import NotFound from './pages/NotFound';
+// The visibility refresh, 30 September 2026 (bridge row 4007). Two new public pages and two legal
+// placeholders. See src/constants/routes.js for the "no eighth page" conflict this names.
+import HuaHin from './pages/HuaHin';
+import BusinessBlindspots from './pages/BusinessBlindspots';
+import PdpaPolicy from './pages/PdpaPolicy';
+import CookiePolicy from './pages/CookiePolicy';
 import {
   ROUTE_AIOS_AUDIT,
   ROUTE_AIOS_AUDIT_ALIAS,
@@ -43,6 +49,10 @@ import {
   ROUTE_ABOUT,
   ROUTE_CONTACT,
   ROUTE_CLIENT_LOGIN,
+  ROUTE_HUA_HIN,
+  ROUTE_BUSINESS_BLINDSPOTS,
+  ROUTE_PDPA,
+  ROUTE_COOKIES,
 } from './constants/routes';
 import ScrollToTop from './components/ScrollToTop'; // We will need this to scroll top on nav
 
@@ -68,6 +78,11 @@ function App() {
             <Route path={ROUTE_ABOUT} element={<About />} />
             <Route path={ROUTE_CONTACT} element={<Contact />} />
             <Route path={ROUTE_CLIENT_LOGIN} element={<ClientLogin />} />
+            {/* The visibility refresh, 30 September 2026 (bridge row 4007). */}
+            <Route path={ROUTE_HUA_HIN} element={<HuaHin />} />
+            <Route path={ROUTE_BUSINESS_BLINDSPOTS} element={<BusinessBlindspots />} />
+            <Route path={ROUTE_PDPA} element={<PdpaPolicy />} />
+            <Route path={ROUTE_COOKIES} element={<CookiePolicy />} />
             {/* Renamed 14 September 2026 on Ian's correction at 17:50. The old path stays
                 live as an alias so nothing anybody has already opened 404s. */}
             <Route path={ROUTE_AIOS_AUDIT} element={<AiosAudit />} />
