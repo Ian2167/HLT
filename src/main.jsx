@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
@@ -15,18 +15,24 @@ try {
 }
 
 // PRERENDERED PAGES, 30 September 2026. Every public page is also shipped as static HTML (see
-// scripts/prerender.mjs), so a crawler reads the copy without JavaScript. That static page arrives
-// with the head elements React rendered at build time — title, description, canonical, hreflang,
-// Open Graph — each marked `data-seo`. React will render its own set on mount, so the shipped copies
-// are removed first; otherwise a page would carry two titles and two canonicals. The page body is
-// replaced by React's render in the same commit, and src/lib/motion.js keeps that first render
-// animation-free on a prerendered page so the swap is invisible.
-document.querySelectorAll('[data-seo]').forEach((el) => el.remove());
-
-// The language provider now lives inside the router (src/App.jsx), because the language is read
-// from the URL.
-createRoot(document.getElementById('root')).render(
+// scripts/prerender.mjs), so a crawler reads the copy without JavaScript. When that static page
+// loads, React HYDRATES the markup rather than replacing it: the page the visitor already sees is
+// the page React takes over, with no flash. The static page carries window.__PRERENDERED__, which
+// keeps that first render animation-free so it matches (src/lib/motion.js). The head tags the
+// prerender wrote carry `data-seo`; React renders its own on mount, so the shipped copies are
+// removed first and the page keeps one title and one canonical.
+//
+// A URL the prerender did not cover (the retired service routes, an unknown path) arrives as the
+// empty app shell and renders from scratch, exactly as the site always did.
+const app = (
   <StrictMode>
     <App />
-  </StrictMode>,
-)
+  </StrictMode>
+);
+const container = document.getElementById('root');
+if (container.hasChildNodes()) {
+  document.querySelectorAll('[data-seo]').forEach((el) => el.remove());
+  hydrateRoot(container, app);
+} else {
+  createRoot(container).render(app);
+}

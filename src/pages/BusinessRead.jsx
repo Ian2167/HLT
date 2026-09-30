@@ -114,6 +114,7 @@ const BusinessRead = () => {
                             </a>
                         </div>
                         <p className="mx-auto mt-5 max-w-xl text-sm text-slate-200 sm:text-base">{t('brHeroCtaNote')}</p>
+                        <p className="mx-auto mt-2 max-w-xl text-sm font-semibold text-white sm:text-base">{t('brPriceLine')}</p>
                     </motion.div>
                 </div>
             </section>

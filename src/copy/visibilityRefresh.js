@@ -166,6 +166,10 @@ export const visibilityRefreshCopy = {
     brHeroLead2: 'We look for the points where progress stops, information disappears or one particular person has to step in.',
     brCtaLabel: 'Book a Business Read',
     brHeroCtaNote: 'Around 60 minutes. No preparation-heavy workshop. We start with how the business actually works.',
+    // The price, the deliverable and the next step on the first screen (Ian, 30 September: "Make
+    // Business Read's price, deliverable and next step clear"). The figure is the ruled Starter
+    // price; the three tiers follow further down the page.
+    brPriceLine: 'From THB 15,000, excluding VAT at seven per cent. A written read in three working days.',
 
     brMethodHeading: 'How the read works',
     brMethod1Name: 'Outside-In Blindspot Scan',
@@ -294,6 +298,8 @@ export const visibilityRefreshCopy = {
     pdpaBody: "This page is coming soon. High Level Thai will publish its PDPA and data-handling policy here once it's ready.",
     cookiesTitle: 'Cookie Policy',
     cookiesBody: "This page is coming soon. High Level Thai will publish its cookie policy here once it's ready.",
+    // One true line while the text is missing: where a question about data goes today.
+    legalContactLine: 'Questions about your data in the meantime: ian@highlevelthai.com',
 
     // How It Works and Examples keep their pages; only their call to action label harmonises with
     // the spec's one primary CTA across the public site (section 37).
@@ -420,6 +426,7 @@ export const visibilityRefreshTh = {
     brHeroLead2: 'เรามองหาจุดที่ความคืบหน้าหยุดลง ข้อมูลหายไป หรือต้องมีคนคนหนึ่งเข้ามาจัดการเสมอ',
     brCtaLabel: 'จอง Business Read',
     brHeroCtaNote: 'ประมาณ 60 นาที ไม่ต้องเตรียมเวิร์กช็อปหนักๆ เราเริ่มจากวิธีที่ธุรกิจทำงานจริง',
+    brPriceLine: 'เริ่มต้นที่ 15,000 บาท ไม่รวมภาษีมูลค่าเพิ่ม 7% รายงานฉบับเขียนภายใน 3 วันทำการ',
 
     brMethodHeading: 'Business Read ทำงานอย่างไร',
     brMethod1Name: 'สแกนจุดบอดจากมุมมองภายนอก',
@@ -539,6 +546,7 @@ export const visibilityRefreshTh = {
     pdpaBody: 'หน้านี้กำลังจะมาเร็วๆ นี้ High Level Thai จะเผยแพร่นโยบาย PDPA และการจัดการข้อมูลที่นี่เมื่อพร้อม',
     cookiesTitle: 'นโยบายคุกกี้',
     cookiesBody: 'หน้านี้กำลังจะมาเร็วๆ นี้ High Level Thai จะเผยแพร่นโยบายคุกกี้ที่นี่เมื่อพร้อม',
+    legalContactLine: 'ระหว่างนี้ หากมีคำถามเกี่ยวกับข้อมูลของคุณ ติดต่อได้ที่ ian@highlevelthai.com',
 
     hiwCtaLabel: 'เริ่มต้นด้วย Business Read',
     exCtaLabel: 'เริ่มต้นด้วย Business Read',

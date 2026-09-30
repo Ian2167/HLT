@@ -20,8 +20,10 @@
 // HOW TO USE. Spread `fadeUp` on a scroll-revealed element and `heroIn` on a hero block, exactly
 // as the pages did with their own local copies of these objects. The getters mean the flag is read
 // at spread time, on every render, not once at import.
+// On the server (the static prerender) there is no window at all, and the markup must be the
+// finished page: every band visible, nothing waiting for a scroll.
 const noMotion = () =>
-    typeof window !== 'undefined' && (window.__PRERENDERING__ === true || window.__PRERENDERED__ === true);
+    typeof window === 'undefined' || window.__PRERENDERING__ === true || window.__PRERENDERED__ === true;
 
 // The scroll reveal every band on the site uses. Same values as the local `fadeUp` constants the
 // pages carried before this file existed: a 24px rise and a fade, once, at 15 per cent visible.

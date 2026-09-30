@@ -15,7 +15,8 @@
 // beside LINE: the email address, the phone number and WhatsApp, from src/constants/contact.js.
 // Nothing is invented: every value there is the ruled contact block. No address.
 import { motion } from 'framer-motion';
-import { ArrowRight, Mail, MessageCircle, Phone } from 'lucide-react';
+import { ArrowRight, Mail, Phone } from 'lucide-react';
+import { WHATSAPP_GREEN, WhatsAppMark } from '../components/ChannelIcons';
 import { useLanguage } from '../context/LanguageContext';
 import {
     CONTACT_EMAIL,
@@ -77,7 +78,9 @@ const Contact = () => {
                         </li>
                         <li>
                             <a href={CONTACT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={RAIL_CLASSES}>
-                                <MessageCircle size={18} aria-hidden="true" className="shrink-0 text-indigo-600" />
+                                <span className="shrink-0" style={{ color: WHATSAPP_GREEN }}>
+                                    <WhatsAppMark size={18} />
+                                </span>
                                 <span className="font-semibold">{t('ctWhatsAppLabel')}</span>
                                 <span className="text-slate-600">{CONTACT_PHONE_DISPLAY}</span>
                             </a>

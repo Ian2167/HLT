@@ -76,7 +76,7 @@ const HuaHin = () => {
 
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('huahinH1')}</h2>
+                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('homeClosingHeading')}</h2>
                     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
                         <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
                             {t('huahinCta')}

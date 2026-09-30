@@ -5,7 +5,8 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // dist-ssr is the server bundle the static prerender builds (vite.config.js), generated code.
+  globalIgnores(['dist', 'dist-ssr']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [

@@ -93,9 +93,10 @@ const ClearPrerenderFlag = () => {
 // A public path without its leading slash, for the child routes of the language layout.
 const child = (route) => route.replace(/^\//, '');
 
-function App() {
+// THE SHELL IS EVERYTHING INSIDE THE ROUTER, so the browser (BrowserRouter, below) and the static
+// prerender (StaticRouter, src/entry-server.jsx) render the same tree.
+export function AppShell() {
   return (
-    <Router>
       <LanguageProvider>
         <ScrollToTop />
         <ClearPrerenderFlag />
@@ -147,6 +148,13 @@ function App() {
           <Footer />
         </div>
       </LanguageProvider>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppShell />
     </Router>
   );
 }

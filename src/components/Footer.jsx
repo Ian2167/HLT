@@ -25,8 +25,9 @@
 //
 // EVERY INTERNAL LINK GOES THROUGH lp(), so an English reader stays in English.
 import { Link } from 'react-router-dom';
-import { Mail, MessageCircle, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { LINE_GREEN, LineMark, WHATSAPP_GREEN, WhatsAppMark } from './ChannelIcons';
 import {
     CONTACT_EMAIL,
     CONTACT_PHONE_DISPLAY,
@@ -38,9 +39,14 @@ import hltLockupWhite from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-white.svg
 import { FOOTER_QUICK_LINKS, LEGAL_LINKS, ROUTE_HOME } from '../constants/routes';
 
 const HEADING_CLASSES = 'text-xs font-bold uppercase tracking-[0.18em] text-slate-300';
-const ROW_CLASSES = 'flex min-h-11 items-center gap-3 text-base text-slate-200 transition-colors hover:text-white';
+const ROW_CLASSES = 'flex min-h-12 items-center gap-3 text-base text-slate-200 transition-colors hover:text-white';
+// Each contact row leads with its glyph on a small round badge, so the four rails read at a
+// glance on a phone (Ian, 30 September: "make email and phone icons clearer").
+const BADGE_CLASSES = 'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-white';
+// The two messaging buttons carry the service's own mark and colour, so a reader recognises them
+// before reading the label (Ian, 30 September: "recognisable WhatsApp and LINE logos").
 const BUTTON_CLASSES =
-    'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 text-base font-semibold text-white transition-colors hover:bg-white/20 sm:w-auto sm:min-w-[14rem]';
+    'inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full px-5 text-base font-bold text-white shadow-lg transition-opacity hover:opacity-90 sm:w-auto sm:min-w-[15rem]';
 
 const Footer = () => {
     const { t, lp } = useLanguage();
@@ -78,19 +84,25 @@ const Footer = () => {
                         <ul className="mt-5 space-y-1">
                             <li>
                                 <a href={`mailto:${CONTACT_EMAIL}`} className={ROW_CLASSES}>
-                                    <Mail size={18} aria-hidden="true" className="shrink-0 text-indigo-200" />
+                                    <span className={BADGE_CLASSES}>
+                                        <Mail size={18} aria-hidden="true" />
+                                    </span>
                                     <span className="break-all">{CONTACT_EMAIL}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href={CONTACT_PHONE_TEL} className={ROW_CLASSES}>
-                                    <Phone size={18} aria-hidden="true" className="shrink-0 text-indigo-200" />
+                                    <span className={BADGE_CLASSES}>
+                                        <Phone size={18} aria-hidden="true" />
+                                    </span>
                                     <span>{CONTACT_PHONE_DISPLAY}</span>
                                 </a>
                             </li>
                             <li>
                                 <a href={CONTACT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={ROW_CLASSES}>
-                                    <MessageCircle size={18} aria-hidden="true" className="shrink-0 text-indigo-200" />
+                                    <span className={BADGE_CLASSES} style={{ color: WHATSAPP_GREEN }}>
+                                        <WhatsAppMark size={20} />
+                                    </span>
                                     <span>
                                         {t('footerContactWhatsAppLabel')} {CONTACT_PHONE_DISPLAY}
                                     </span>
@@ -98,25 +110,43 @@ const Footer = () => {
                             </li>
                             <li>
                                 <a href={LINE_FOOTER} target="_blank" rel="noopener noreferrer" className={ROW_CLASSES}>
-                                    <span aria-hidden="true" className="inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] bg-indigo-200 text-[9px] font-black leading-none text-hltNavy">
-                                        L
+                                    <span className={BADGE_CLASSES} style={{ color: LINE_GREEN }}>
+                                        <LineMark size={20} />
                                     </span>
                                     <span>{t('footerContactLineLabel')} @535zlmbx</span>
                                 </a>
                             </li>
                         </ul>
-                        <p className="mt-4 text-sm leading-6 text-slate-400">{t('footerContactLocation')}</p>
+                        {/* The service area, with a pin: not an address, and no address exists to give. */}
+                        <p className="mt-4 flex items-start gap-2 text-sm leading-6 text-slate-400">
+                            <MapPin size={16} aria-hidden="true" className="mt-1 shrink-0 text-slate-400" />
+                            <span>{t('footerContactLocation')}</span>
+                        </p>
                     </div>
 
-                    {/* Block 4: the messaging channels, as buttons. Two, because two are real. */}
+                    {/* Block 4: the messaging channels, as buttons in their own colours. Two,
+                        because two are real. */}
                     <div className="lg:col-span-3">
                         <h2 className={HEADING_CLASSES}>{t('footerChannelsHeading')}</h2>
                         <div className="mt-5 flex flex-col gap-3">
-                            <a href={CONTACT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={BUTTON_CLASSES}>
-                                <MessageCircle size={18} aria-hidden="true" />
+                            <a
+                                href={CONTACT_WHATSAPP_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={BUTTON_CLASSES}
+                                style={{ backgroundColor: WHATSAPP_GREEN }}
+                            >
+                                <WhatsAppMark size={22} />
                                 {t('footerWhatsAppButton')}
                             </a>
-                            <a href={LINE_FOOTER} target="_blank" rel="noopener noreferrer" className={BUTTON_CLASSES}>
+                            <a
+                                href={LINE_FOOTER}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={BUTTON_CLASSES}
+                                style={{ backgroundColor: LINE_GREEN }}
+                            >
+                                <LineMark size={22} />
                                 {t('footerLineButton')}
                             </a>
                         </div>

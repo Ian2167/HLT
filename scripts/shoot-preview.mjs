@@ -14,9 +14,9 @@
 // path is printed. Override with HLT_PLAYWRIGHT. No silent fallback: if none resolves, this fails.
 import { spawn } from 'node:child_process';
 import { mkdirSync } from 'node:fs';
-import net from 'node:net';
 import path from 'node:path';
 import { resolvePlaywright } from './lib/playwright.mjs';
+import { serveDist } from './lib/serve-dist.mjs';
 
 const REPO = process.cwd();
 const args = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -53,38 +53,6 @@ const run = (cmd, cmdArgs) =>
         p.on('close', (code) => (code === 0 ? resolve(out) : reject(new Error(`${cmd} exited ${code}\n${out}`))));
     });
 
-const freePort = () =>
-    new Promise((resolve, reject) => {
-        const s = net.createServer();
-        s.on('error', reject);
-        s.listen(0, () => {
-            const { port } = s.address();
-            s.close(() => resolve(port));
-        });
-    });
-
-// vite preview binds IPv6 loopback on this machine; try both families.
-const waitForPort = (port, timeoutMs) => {
-    const hosts = ['127.0.0.1', '::1'];
-    const deadline = Date.now() + timeoutMs;
-    return new Promise((resolve, reject) => {
-        const attempt = (i = 0) => {
-            const host = hosts[i % hosts.length];
-            const s = net.connect(port, host);
-            s.on('connect', () => {
-                s.destroy();
-                resolve(host === '::1' ? '[::1]' : host);
-            });
-            s.on('error', () => {
-                s.destroy();
-                if (Date.now() > deadline) reject(new Error(`port ${port} never opened`));
-                else setTimeout(() => attempt(i + 1), 250);
-            });
-        };
-        attempt();
-    });
-};
-
 // Scroll the whole page in steps so every whileInView reveal has fired, then return to the top.
 async function settle(page) {
     const height = await page.evaluate(() => document.body.scrollHeight);
@@ -106,14 +74,9 @@ try {
         await run('npx', ['vite', 'build']);
     }
 
-    const port = await freePort();
-    preview = spawn('npx', ['vite', 'preview', '--port', String(port), '--strictPort'], {
-        cwd: REPO,
-        shell: true,
-        stdio: 'ignore',
-    });
-    const host = await waitForPort(port, 60000);
-    const base = `http://${host}:${port}`;
+    // Served the way Vercel serves it (scripts/lib/serve-dist.mjs): prerendered pages first.
+    preview = await serveDist(path.join(REPO, 'dist'));
+    const base = preview.url;
     console.log(`  preview: ${base}`);
 
     const browser = await pw.chromium.launch();
@@ -160,11 +123,5 @@ try {
     console.error(`FAIL ${err.message}`);
     process.exitCode = 1;
 } finally {
-    if (preview && !preview.killed) {
-        try {
-            spawn('taskkill', ['/PID', String(preview.pid), '/T', '/F'], { shell: true, stdio: 'ignore' });
-        } catch {
-            /* best effort */
-        }
-    }
+    if (preview) await preview.close();
 }
