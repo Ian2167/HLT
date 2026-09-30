@@ -64,15 +64,16 @@ export async function prerender({ root = process.cwd() } = {}) {
     const { INDEXABLE_ROUTES, NOINDEX_ROUTES } = routes;
     const { LANGS, localPath, absoluteUrl } = lang;
 
-    // Vercel sets VERCEL_ENV to "production" or "preview" (or "development") at build time.
-    const vercelEnv = process.env.VERCEL_ENV || '';
-    const previewNoindex = vercelEnv !== '' && vercelEnv !== 'production';
+    // NO PREVIEW NOINDEX META, on purpose (30 September 2026, learnt on the first pushed preview).
+    // Vercel already answers every preview request with X-Robots-Tag: noindex, decided per request
+    // by the deployment's target, so previews stay out of search on their own. A meta baked into
+    // the files at build time would travel with the build when a preview is PROMOTED to
+    // production, which never rebuilds, and the live site would then tell every crawler to stay
+    // away. So the files are the same whatever the target, and the header does the preview's job.
+    const previewNoindex = false;
 
     // The clean shell first, before index.html is overwritten by the Thai home.
-    const shell = previewNoindex
-        ? template.replace('</head>', '    <meta name="robots" content="noindex">\n  </head>')
-        : template;
-    writeFileSync(path.join(dist, 'app.html'), shell);
+    writeFileSync(path.join(dist, 'app.html'), template);
 
     let written = 0;
     const pages = [];
