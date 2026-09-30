@@ -19,8 +19,12 @@ export const LANGS = ['en', 'th'];
 export const DEFAULT_LANG = 'th';
 export const EN_PREFIX = '/en';
 
-// The canonical origin, used for canonical and hreflang links and the sitemap. No trailing slash.
-export const SITE_URL = 'https://highlevelthai.com';
+// The canonical origin, used for canonical and hreflang links, Open Graph URLs, the Organization
+// schema and the sitemap. No trailing slash. It is the www host because that is the host Vercel
+// serves: the apex highlevelthai.com answers every request with a redirect to www (read on the
+// live site and in the project's domain list, 30 September 2026), and a canonical that points at a
+// redirecting address is a canonical a crawler has to second-guess.
+export const SITE_URL = 'https://www.highlevelthai.com';
 
 // Split a pathname into its language and its language-free route.
 //   '/en/hua-hin' -> { lang: 'en', route: '/hua-hin' }

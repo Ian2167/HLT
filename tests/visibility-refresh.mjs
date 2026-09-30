@@ -32,7 +32,7 @@ import { serveDist } from '../scripts/lib/serve-dist.mjs';
 
 const REPO = process.cwd();
 const DIST = path.join(REPO, 'dist');
-const SITE = 'https://highlevelthai.com';
+const SITE = 'https://www.highlevelthai.com';
 const NO_BUILD = process.argv.includes('--no-build');
 
 const routes = await import(pathToFileURL(path.join(REPO, 'src', 'constants', 'routes.js')).href);
