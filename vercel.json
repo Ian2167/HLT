@@ -12,5 +12,7 @@
       ]
     }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/app.html" }]
+  "rewrites": [
+    { "source": "/((?!.*\\.(?:png|jpe?g|gif|svg|ico|webp|avif|txt|xml|json|webmanifest|css|js|map|woff2?|ttf|pdf|mp4)).*)", "destination": "/app.html" }
+  ]
 }

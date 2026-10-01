@@ -109,6 +109,14 @@ try {
 
     // ---------------------------------------------------------------- brand and hygiene
     check(existsSync(path.join(DIST, 'favicon.ico')) && statSync(path.join(DIST, 'favicon.ico')).size > 1000, 'brand: favicon.ico is served');
+    // 1 October 2026: the 48 px PNG Google's result favicon wants, at a fresh address, linked from
+    // every page's head (the shell is the head of every prerendered page).
+    check(existsSync(path.join(DIST, 'brand', 'favicon-48.png')) && readFileSync(path.join(DIST, 'en', 'index.html'), 'utf8').includes('sizes="48x48" href="/brand/favicon-48.png"'), 'brand: favicon-48.png is served and linked from the head');
+    // The SPA rewrite in vercel.json must not catch asset-looking paths, so a crawler asking for an
+    // icon that no longer exists gets a real 404 instead of the app shell.
+    const vercelJson = JSON.parse(readFileSync(path.join(REPO, 'vercel.json'), 'utf8'));
+    const spaRewrite = vercelJson.rewrites.find((r) => r.destination === '/app.html');
+    check(spaRewrite && /\(\?!\.\*\\\.\(\?:png\|/.test(spaRewrite.source), 'brand: the app-shell rewrite excludes asset extensions, so a missing icon path is a 404');
     check(existsSync(path.join(DIST, 'site.webmanifest')), 'brand: site.webmanifest is served');
     check(existsSync(path.join(DIST, 'brand', 'og-image.png')), 'brand: og-image.png is served');
     const distFiles = walk(DIST).filter((f) => /\.(html|js|css|json|xml|txt|webmanifest|svg)$/.test(f));

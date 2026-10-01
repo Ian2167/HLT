@@ -89,6 +89,7 @@ const manifest = {
     theme_color: '#0A1F44',
     icons: [
         { src: '/brand/favicon-32.png', sizes: '32x32', type: 'image/png' },
+        { src: '/brand/favicon-48.png', sizes: '48x48', type: 'image/png' }, // 1 October 2026, the size Google's result favicon wants
         { src: '/brand/apple-touch-icon-180.png', sizes: '180x180', type: 'image/png' },
         { src: `/brand/${bigName}`, sizes: `${bigDim.width}x${bigDim.height}`, type: 'image/png' },
     ],
