@@ -169,7 +169,10 @@ export const repositioningCopy = {
         "The aim isn't another dashboard shouting for attention all day. Routine work should remain in the background. The owner should see only what genuinely requires judgement.",
 
     // ---------------------------------------------------------------- the four modules (section 12)
-    modulesHeading: 'Common problems we can help fix',
+    // Ian, 1 October 2026, 10:1x Bangkok, "OK accepted": his own line from the morning's ladder
+    // heads the section where it is literally true. The brief's "Common problems we can help fix"
+    // stays as the Problems We Fix page's H1 (problemsPageHeading).
+    modulesHeading: "Fix what's slowing your business down.",
     modulesLead: 'Not software packages. The places where we most often put a control in, and what it tends to be made of.', // builder's
     m1Name: 'Revenue Capture',
     m1Headline: 'Stop enquiries and opportunities quietly disappearing.',
