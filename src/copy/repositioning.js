@@ -22,13 +22,14 @@
 // said hold pricing; Ian ruled on 1 October that THB 15,000 as the base is published, and the
 // tiers stay). Any result figure. Any name. Any address.
 
-// THE HERO IS IAN'S, 1 October 2026, pasted with "Please use this as the Hero section": the
-// headline, one paragraph, one button. His concern on the earlier "Build" line, in his words: "our
-// clients already have businesses so they are not building them". The house contraction is applied
-// to the headline (his standing rule: contractions always); the uncontracted form is one swap away.
-const HERO_HEADLINE = "Fix what's slowing your business down.";
-// const HERO_HEADLINE = 'Fix what is slowing your business down.'; // as pasted
-// const HERO_HEADLINE = 'Make your business need you less.'; // the alternative recommended in the same conversation
+// THE HERO IS IAN'S, 1 October 2026. His second paste of the morning, "OK your Hero section
+// alternative is accepted with a slight change to the paragraph beneath it": the headline, one
+// paragraph, one button. His concern on the earlier "Build" line, in his words: "our clients
+// already have businesses so they are not building them". The lines he passed over on the way are
+// kept beneath for the record.
+const HERO_HEADLINE = 'Make your business need you less.';
+// const HERO_HEADLINE = "Fix what's slowing your business down."; // his first paste of 1 October
+// const HERO_HEADLINE = 'Develop your business so it needs you less.'; // his first proposal of 1 October
 
 export const repositioningCopy = {
     // ---------------------------------------------------------------- navigation
@@ -61,7 +62,7 @@ export const repositioningCopy = {
         'High Level Thai helps owner-led businesses in Thailand find where money, time and decisions get stuck, then puts the controls in place that stop it happening again. Process first. Technology second.',
     homeHeroHeadline: HERO_HEADLINE,
     homeHeroLead:
-        'HLT finds where money, work and decisions get stuck, then puts simple controls in place so work keeps moving without everything coming back to you.',
+        'We find where money, work and decisions get stuck, then put simple controls in place so things keep moving without everything coming back to you.',
     homeCtaLabel: 'Start with The Business Read',
     // Not rendered since Ian's hero of 1 October; kept for the record of the brief's sub-header
     // and micro line, which his paragraph absorbs.

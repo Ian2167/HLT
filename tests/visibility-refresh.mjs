@@ -187,7 +187,7 @@ try {
     // nav and toggle, both languages, every public page. The repositioned pages (1 October 2026)
     // show their English H1 on the Thai URL too until Ann's pass, by Ian's "English first".
     const expectH1 = {
-        '/': /slowing your business down/,
+        '/': /need you less/,
         '/business-read': /getting stuck/,
         '/how-it-works': /How it works/i,
         '/problems-we-fix': /Common problems/,
