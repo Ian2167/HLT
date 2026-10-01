@@ -1,52 +1,43 @@
-// Home.jsx — the home page. REBUILT 30 September 2026, the visibility refresh (bridge row 4007 and
-// Ian's fuller spec of the same day, sections 6 to 14, "you build based on the following").
+// Home.jsx — the home page. REBUILT 1 October 2026, the repositioning (Ian's "HIGH LEVEL THAI
+// WEBSITE REPOSITIONING BRIEF" of that morning, reviewed with his minimal owner-friendly edits at
+// C:\Projects\hlt-estate\02-builds\hlt-site-kit\2026-10-01-HLT-REPOSITIONING-BRIEF-REVIEWED.md, and
+// his rulings in the same conversation: "Agreed to the Home and other page structuring").
 //
-// THE ORDER IS THE SPEC'S. Hero; the problem as the owner's week; how HLT works in three steps;
-// the human-judgement section; the six blindspots; how we work; case study zero; the closing call
-// to action. Every string comes from src/copy/visibilityRefresh.js except the three keep, transfer,
-// remove cards (src/copy/newDirection.js, Ian's "Agreed" of 27 September) and the AI line under the
-// three steps (src/copy/homeRebuild.js, Ian's own words of 17 September). Nothing on this page is
-// the builder's wording.
+// THE ORDER IS THE AGREED TEN. 1 hero; 2 small problems and the leak visual; 3 the three problems;
+// 4 the week-away question, which hands to the free Blindspot Test; 5 the method flow; 6 the
+// control flow; 7 the four problem modules, which hand to Problems We Fix; 8 where AI fits, short;
+// 9 who we help, one line, which hands to Who We Help; 10 the final call. Every string comes from
+// src/copy/repositioning.js except the free test's button (src/copy/visibilityRefresh.js, Ian's
+// 30 September wording) and the hero photograph's keys.
 //
-// WHAT WENT. The 18 September bands this replaces (the three capability cards, the five-line
-// "what you can hold us to" panel, the 30 September six-blindspot list of the 12:42 session) stop
-// rendering; their strings stay in their modules, on Ian's "do not delete". The capabilities now
-// live inside step three of the spec's copy, which names them. The 27 September line under the
-// hero headline, "Keep the judgement. Remove the dependency.", moved down the page to head the
-// section the spec gives it, with the three cards it belongs to.
+// THE HERO IS IAN'S OWN, pasted on 1 October: the headline, one paragraph, one button, "Start with
+// The Business Read". Nothing else sits in it: no sub-header, no micro line, no second button. The
+// Fit Call is one tap away in the header on every page.
 //
-// ONE PRIMARY ACTION, TWICE. "Start with the Business Read" in the hero and in the closing band, on
-// the spec's CTA architecture (section 37); "Talk to us" beside it opens LINE. On a phone both are
-// full width and there are never more than two above the fold.
+// WHAT WENT. The 30 September bands this replaces (the seven signs, the three stages, keep,
+// transfer, remove, the six blindspot cards, the six trust lines, case study zero, the closing
+// three lines) stop rendering; their strings stay in their modules, on Ian's "do not delete". The
+// six blindspots are the free test on /business-blindspots; case study zero moved to that page;
+// keep, transfer, remove lives on /owner-dependency as the five kinds.
+//
+// THE THREE FLOWS are components under src/components/flows/, drawn in HTML, no raster, and read in
+// order without the arrows. LeakVisual is the same idea for section 2.
 //
 // MOTION comes from src/lib/motion.js so the prerender can switch it off; see that file.
 //
 // THE HERO PHOTOGRAPH is unchanged, keys and all: Ian's own ruling of 15 September, wash at 55 per
 // cent, the crop anchored on the roofline.
 import { motion } from 'framer-motion';
-import {
-    ArrowRight,
-    BookOpen,
-    ClipboardCheck,
-    GitBranch,
-    Lightbulb,
-    Puzzle,
-    Scissors,
-    Search,
-    ShieldCheck,
-    Users,
-} from 'lucide-react';
+import { ArrowRight, BarChart3, Clock, Eye, Repeat, UserCog, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
-import {
-    ROUTE_BUSINESS_BLINDSPOTS,
-    ROUTE_BUSINESS_READ,
-    ROUTE_HOME,
-    ROUTE_HOW_IT_WORKS,
-} from '../constants/routes';
-import ProcessNumber from '../components/mocks/ProcessNumber';
+import { ROUTE_BUSINESS_BLINDSPOTS, ROUTE_BUSINESS_READ, ROUTE_HOME, ROUTE_PROBLEMS, ROUTE_WHO } from '../constants/routes';
 import Seo from '../components/Seo';
+import LeakVisual from '../components/LeakVisual';
+import ProcessFlow from '../components/flows/ProcessFlow';
+import ControlFlow from '../components/flows/ControlFlow';
+import FitCallButtons from '../components/FitCallButtons';
+import { EVENTS, logEvent } from '../lib/analytics';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
 export const CTA_CLASSES =
@@ -63,29 +54,32 @@ const TEXT_LINK_CLASSES =
 export const OUTLINE_CTA_CLASSES =
     'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border-2 border-indigo-600 px-7 py-4 text-base font-bold text-indigo-700 transition-colors hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
 
-// Marks, not copy: one glyph per card. The three keep, transfer, remove glyphs are the 27 September
-// ones; the six blindspot glyphs are new, chosen from the same lucide set the site already uses.
-const KTR_ICONS = [ShieldCheck, BookOpen, Scissors];
-const BLIND_ICONS = [Users, Lightbulb, GitBranch, Puzzle, Search, ClipboardCheck];
+// Marks, not copy: one glyph per problem and per module, from the lucide set the site already uses.
+const PROBLEM_ICONS = [Wallet, UserCog, Eye];
+const MODULE_ICONS = [Wallet, Repeat, UserCog, BarChart3];
 
 const Home = () => {
     const { t, lp } = useLanguage();
 
-    const signs = [1, 2, 3, 4, 5, 6, 7].map((n) => t(`homeSign${n}`));
-    const stages = [1, 2, 3].map((n) => ({ n, name: t(`homeStage${n}Name`), body: t(`homeStage${n}Body`) }));
-    const ktr = [1, 2, 3].map((n) => ({ name: t(`homeKtr${n}Name`), body: t(`homeKtr${n}Body`), Icon: KTR_ICONS[n - 1] }));
-    const blindspots = [1, 2, 3, 4, 5, 6].map((n) => ({
-        name: t(`homeBlind${n}Name`),
-        body: t(`homeBlind${n}Body`),
-        Icon: BLIND_ICONS[n - 1],
+    const problems = [1, 2, 3].map((n) => ({
+        name: t(`p${n}Name`),
+        headline: t(`p${n}Headline`),
+        examples: [1, 2, 3, 4, 5, 6].map((i) => t(`p${n}Ex${i}`)).filter((s) => !/^p\dEx\d$/.test(s)),
+        outcome: t(`p${n}Outcome`),
+        Icon: PROBLEM_ICONS[n - 1],
     }));
-    const trust = [1, 2, 3, 4, 5, 6].map((n) => t(`homeTrust${n}`));
+    const modules = [1, 2, 3, 4].map((n) => ({
+        slug: ['revenue-capture', 'commercial-follow-through', 'owner-decision-control', 'daily-business-pulse'][n - 1],
+        name: t(`m${n}Name`),
+        headline: t(`m${n}Headline`),
+        Icon: MODULE_ICONS[n - 1],
+    }));
 
     return (
         <div className="min-h-screen bg-stone-50 pt-20 text-slate-950 lg:pt-24">
             <Seo title={t('homeMetaTitle')} description={t('homeMetaDescription')} route={ROUTE_HOME} organization />
 
-            {/* 1. Hero. One outcome, one supporting sentence, two actions, one line of microcopy. */}
+            {/* 1. Hero: Ian's headline, his paragraph, his button. */}
             <section className="relative flex min-h-[32rem] items-center overflow-hidden lg:min-h-[36rem]">
                 <img
                     src={t('homeHeroImage')}
@@ -103,221 +97,200 @@ const Home = () => {
                         <h1 className="text-[2.125rem] font-bold leading-[1.15] text-white sm:text-5xl sm:leading-[1.1]">
                             {t('homeHeroHeadline')}
                         </h1>
-                        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-100 sm:text-xl sm:leading-9">
-                            {t('homeHeroLead')}
-                        </p>
-                        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                            <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
+                        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-100 sm:text-xl sm:leading-9">{t('homeHeroLead')}</p>
+                        <div className="mt-8">
+                            <Link
+                                to={lp(ROUTE_BUSINESS_READ)}
+                                onClick={() => logEvent(EVENTS.businessReadCtaClick, { place: 'hero' })}
+                                className={CTA_CLASSES}
+                            >
                                 {t('homeCtaLabel')}
                                 <ArrowRight size={18} aria-hidden="true" />
                             </Link>
-                            <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className={SECONDARY_CTA_CLASSES}>
-                                {t('homeSecondaryCtaLabel')}
-                            </a>
                         </div>
-                        <p className="mt-5 text-sm leading-6 text-slate-200 sm:text-base">{t('homeHeroCtaNote')}</p>
                     </motion.div>
                 </div>
             </section>
 
-            {/* 2. The problem, in the owner's own week. Seven signs, one card each, one column on a
-                phone so nothing reads as a dense grid, then the line that names the cause. */}
+            {/* 2. Small problems become expensive when nobody owns them. The seven leaks feeding
+                the three losses, drawn as text. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('homeProblemHeading')}
+                        {t('leakHeading')}
                     </motion.h2>
                     <motion.p {...fadeUp} className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 sm:text-lg">
-                        {t('homeProblemLead')}
+                        {t('leakLead')}
                     </motion.p>
-                    <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-                        {signs.map((sign, index) => (
-                            <motion.li
-                                key={sign}
-                                {...fadeUpDelayed(index)}
-                                className="flex items-start gap-4 rounded-2xl border border-slate-200 p-5 card-glass sm:p-6"
-                            >
-                                <ProcessNumber label={`${index + 1}`} decorative />
-                                <span className="text-base leading-7 text-slate-700">{sign}</span>
-                            </motion.li>
-                        ))}
-                    </ul>
-                    <motion.p {...fadeUp} className="mx-auto mt-10 max-w-3xl text-center text-lg font-semibold leading-8 text-slate-950">
-                        {t('homeConsequenceP1')}
-                    </motion.p>
+                    <motion.div {...fadeUp} className="mx-auto mt-8 max-w-4xl">
+                        <LeakVisual />
+                    </motion.div>
+                    <motion.div {...fadeUp} className="mx-auto mt-8 max-w-3xl text-center">
+                        <p className="text-base leading-7 text-slate-600 sm:text-lg">{t('leakClose1')}</p>
+                        <p className="mt-1 text-lg font-semibold leading-8 text-slate-950">{t('leakClose2')}</p>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* 3. How HLT works: understand, diagnose, improve. The connector between the cards is
-                drawn in the gap, as on 18 September. AI's one line sits under the steps, in Ian's
-                own words, visible and subordinate. */}
+            {/* 3. The three problems. Name, headline, what it looks like, what we put in place. One
+                column on a phone, three on a laptop, every card the same height. */}
             <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('homeStagesHeading')}
+                        {t('problemsHeading')}
                     </motion.h2>
-                    <ol className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
-                        {stages.map((stage, index) => (
+                    <ul className="mt-10 grid gap-5 lg:grid-cols-3">
+                        {problems.map((problem, index) => (
                             <motion.li
-                                key={stage.name}
-                                {...fadeUpDelayed(index, 0.08)}
-                                className="relative flex flex-col rounded-2xl border border-slate-200 bg-white p-7 card-glass"
-                            >
-                                {index < stages.length - 1 ? (
-                                    <>
-                                        <span aria-hidden="true" className="absolute left-[3.75rem] top-full h-8 w-px bg-slate-300 md:hidden" />
-                                        <span aria-hidden="true" className="absolute left-full top-[3.75rem] hidden h-px w-6 bg-slate-300 md:block" />
-                                    </>
-                                ) : null}
-                                <ProcessNumber label={`${stage.n}`} size="lg" decorative />
-                                <h3 className="mt-6 text-xl font-bold leading-7 text-slate-950">{stage.name}</h3>
-                                <p className="mt-3 text-base leading-7 text-slate-600">{stage.body}</p>
-                            </motion.li>
-                        ))}
-                    </ol>
-                    <motion.p {...fadeUp} className="mx-auto mt-10 max-w-3xl text-center text-base leading-8 text-slate-600">
-                        {t('homeAiLine')}
-                    </motion.p>
-                    <motion.div {...fadeUp} className="mt-5 text-center">
-                        <Link to={lp(ROUTE_HOW_IT_WORKS)} className={TEXT_LINK_CLASSES}>
-                            {t('homeStagesLinkLabel')}
-                            <ArrowRight size={16} aria-hidden="true" />
-                        </Link>
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* 4. Keep the judgement. Remove the dependency. The spec's three lines, then Ian's three
-                cards of 27 September, which are how the sorting is done. Navy, the turn from problem
-                to answer. */}
-            <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-6xl">
-                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('homeHumanHeading')}
-                    </motion.h2>
-                    <motion.div {...fadeUp} className="mx-auto mt-6 max-w-2xl space-y-3 text-center text-base leading-8 text-slate-200 sm:text-lg">
-                        <p>{t('homeHumanP1')}</p>
-                        <p>{t('homeHumanP2')}</p>
-                        <p className="font-semibold text-white">{t('homeHumanP3')}</p>
-                    </motion.div>
-                    <ul className="mt-10 grid gap-5 md:grid-cols-3">
-                        {ktr.map((item, index) => (
-                            <motion.li
-                                key={item.name}
+                                key={problem.name}
                                 {...fadeUpDelayed(index, 0.06)}
-                                className="rounded-2xl border border-white/15 bg-white/[0.06] p-7"
+                                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 card-glass card-static sm:p-7"
                             >
-                                <item.Icon size={26} className="text-indigo-200" aria-hidden="true" />
-                                <h3 className="mt-4 text-xl font-bold">{item.name}</h3>
-                                <p className="mt-3 text-base leading-7 text-slate-200">{item.body}</p>
+                                <div className="flex items-center gap-3">
+                                    <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white">
+                                        <problem.Icon size={20} />
+                                    </span>
+                                    <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-indigo-700">{problem.name}</h3>
+                                </div>
+                                <p className="mt-4 text-xl font-bold leading-7 text-slate-950">{problem.headline}</p>
+                                <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{t('problemsExamplesLabel')}</p>
+                                <ul className="mt-2 space-y-1 text-base leading-7 text-slate-600">
+                                    {problem.examples.map((example) => (
+                                        <li key={example} className="flex gap-2">
+                                            <span aria-hidden="true" className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
+                                            <span>{example}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{t('problemsOutcomeLabel')}</p>
+                                <p className="mt-2 flex-1 text-base font-semibold leading-7 text-slate-950">{problem.outcome}</p>
                             </motion.li>
                         ))}
                     </ul>
-                    <motion.p {...fadeUp} className="mx-auto mt-10 max-w-2xl text-center text-lg font-semibold leading-8">
-                        {t('homeKtrClosing')}
-                    </motion.p>
                 </div>
             </section>
 
-            {/* 5. The six blindspots. Icon left of the heading, one column on a phone, three on a
-                laptop, every card the same height. The Thailand examples the spec attaches to
-                system mismatch sit as one line under the six rather than inside the fourth card:
-                Ian, 30 September, on the frame where that card alone ran long: "the left hand
-                card is the only one of 6 that extends below". Ends on the free test, the "Learn"
-                rung of the spec's three-level CTA architecture. */}
-            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-6xl">
-                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('homeBlindHeading')}
-                    </motion.h2>
-                    <ul className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                        {blindspots.map((item, index) => (
-                            <motion.li
-                                key={item.name}
-                                {...fadeUpDelayed(index, 0.05)}
-                                className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-stone-50 p-6 card-glass card-static"
-                            >
-                                <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white">
-                                    <item.Icon size={20} />
-                                </span>
-                                <div className="min-w-0">
-                                    <h3 className="text-lg font-bold leading-7 text-slate-950">{item.name}</h3>
-                                    <p className="mt-2 text-base leading-7 text-slate-600">{item.body}</p>
-                                </div>
-                            </motion.li>
-                        ))}
-                    </ul>
-                    <motion.p {...fadeUp} className="mx-auto mt-8 max-w-3xl text-center text-sm leading-6 text-slate-500 sm:text-base sm:leading-7">
-                        {t('homeBlind4Note')}
-                    </motion.p>
-                    <motion.div {...fadeUp} className="mt-8 text-center">
-                        <Link to={lp(ROUTE_BUSINESS_BLINDSPOTS)} className={OUTLINE_CTA_CLASSES}>
+            {/* 4. The week away. One question, one line, and the free test. */}
+            <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
+                <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
+                    <Clock size={32} aria-hidden="true" className="mx-auto text-indigo-200" />
+                    <h2 className="mt-5 text-2xl font-bold leading-tight sm:text-3xl">{t('weekHeading')}</h2>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{t('weekLead')}</p>
+                    <div className="mt-8">
+                        <Link
+                            to={lp(ROUTE_BUSINESS_BLINDSPOTS)}
+                            onClick={() => logEvent(EVENTS.blindspotCtaClick, { place: 'home-week' })}
+                            className={`${SECONDARY_CTA_CLASSES} border-white/70`}
+                        >
                             {t('homeBlindCtaLabel')}
                             <ArrowRight size={18} aria-hidden="true" />
                         </Link>
+                    </div>
+                </motion.div>
+            </section>
+
+            {/* 5. We don't start with software. The method, as a flow. */}
+            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-6xl">
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('methodHeading')}
+                    </motion.h2>
+                    <motion.p {...fadeUp} className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 sm:text-lg">
+                        {t('methodLead')}
+                    </motion.p>
+                    <motion.div {...fadeUp} className="mt-10">
+                        <ProcessFlow />
                     </motion.div>
                 </div>
             </section>
 
-            {/* 6. How we work. Six commitments in one panel, indigo-ruled, the form the 18 September
-                proof block took. Commitments and mechanism, never a result. */}
+            {/* 6. A process works when nothing can quietly disappear. The control, as a flow. */}
             <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('homeTrustHeading')}
+                        {t('controlHeading')}
                     </motion.h2>
-                    <div className="mx-auto max-w-3xl">
-                        <ul className="mt-8 space-y-4 rounded-2xl border border-slate-200 p-6 card-glass sm:p-7">
-                            {trust.map((line, index) => (
-                                <motion.li
-                                    key={line}
-                                    {...fadeUpDelayed(index)}
-                                    className="border-l-2 border-indigo-600 pl-5 text-base leading-7 text-slate-700"
-                                >
-                                    {line}
-                                </motion.li>
-                            ))}
-                        </ul>
-                    </div>
+                    <motion.div {...fadeUp} className="mt-10">
+                        <ControlFlow />
+                    </motion.div>
                 </div>
             </section>
 
-            {/* 7. Case study zero. The test HLT ran on itself, rendered because the report names what
-                was tested and when. Proof of method before there is a client library. */}
+            {/* 7. Common problems we can help fix. The four modules as cards that hand to the
+                Problems We Fix page, where each has its headline and possible controls. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass card-static sm:p-9">
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('homeCaseZeroHeading')}</h2>
+                <div className="mx-auto max-w-6xl">
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('modulesHeading')}
+                    </motion.h2>
+                    <motion.p {...fadeUp} className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 sm:text-lg">
+                        {t('modulesLead')}
+                    </motion.p>
+                    <ul className="mt-10 grid gap-5 md:grid-cols-2">
+                        {modules.map((module, index) => (
+                            <motion.li key={module.name} {...fadeUpDelayed(index, 0.05)}>
+                                <Link
+                                    to={`${lp(ROUTE_PROBLEMS)}#${module.slug}`}
+                                    className="flex h-full items-start gap-4 rounded-2xl border border-slate-200 bg-stone-50 p-6 card-glass transition-colors hover:border-indigo-400"
+                                >
+                                    <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white">
+                                        <module.Icon size={20} />
+                                    </span>
+                                    <span className="min-w-0">
+                                        <span className="block text-lg font-bold leading-7 text-slate-950">{module.name}</span>
+                                        <span className="mt-1 block text-base leading-7 text-slate-600">{module.headline}</span>
+                                        <span className={`${TEXT_LINK_CLASSES} mt-3 text-sm`}>
+                                            {t('ctaExplore')}
+                                            <ArrowRight size={16} aria-hidden="true" />
+                                        </span>
+                                    </span>
+                                </Link>
+                            </motion.li>
+                        ))}
+                    </ul>
+                </div>
+            </section>
+
+            {/* 8. Where AI fits, in four lines. The full list lives on Problems We Fix. */}
+            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-7 card-glass card-static sm:p-9">
+                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('aiHeading')}</h2>
                     <div className="mt-5 space-y-3 text-base leading-8 text-slate-600">
-                        <p>{t('homeCaseZeroP1')}</p>
-                        <p>{t('homeCaseZeroP2')}</p>
-                        <p className="font-semibold text-slate-950">{t('homeCaseZeroP3')}</p>
+                        <p>{t('aiLead')}</p>
+                        <p className="font-semibold text-slate-950">{t('aiWarning')}</p>
+                        <p>{t('aiLine')}</p>
                     </div>
                     <div className="mt-6">
-                        <Link to={lp(ROUTE_BUSINESS_BLINDSPOTS)} className={TEXT_LINK_CLASSES}>
-                            {t('homeCaseZeroCta')}
+                        <Link to={`${lp(ROUTE_PROBLEMS)}#where-ai-fits`} className={TEXT_LINK_CLASSES}>
+                            {t('ctaExplore')}
                             <ArrowRight size={16} aria-hidden="true" />
                         </Link>
                     </div>
                 </motion.div>
             </section>
 
-            {/* 8. Closing. The same primary action as the hero, and Talk to us beside it. */}
+            {/* 9. Who we help, one line, and the page. */}
+            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
+                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('whoHeading')}</h2>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">{t('whoHomeTeaser')}</p>
+                    <div className="mt-6">
+                        <Link to={lp(ROUTE_WHO)} className={TEXT_LINK_CLASSES}>
+                            {t('whoNavLink')}
+                            <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
+                    </div>
+                </motion.div>
+            </section>
+
+            {/* 10. The final call. The Fit Call, the Business Read beside it, LINE and WhatsApp
+                beneath. */}
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('homeClosingHeading')}</h2>
-                    <div className="mx-auto mt-5 max-w-2xl space-y-3 text-base leading-8 text-slate-200 sm:text-lg">
-                        <p>{t('homeClosingP1')}</p>
-                        <p>{t('homeClosingP2')}</p>
-                        <p>{t('homeClosingP3')}</p>
-                    </div>
-                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
-                        <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
-                            {t('homeCtaLabel')}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
-                        <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className={SECONDARY_CTA_CLASSES}>
-                            {t('homeSecondaryCtaLabel')}
-                        </a>
+                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('finalHeading')}</h2>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{t('finalBody')}</p>
+                    <div className="mt-8 flex justify-center">
+                        <FitCallButtons place="home-final" />
                     </div>
                 </motion.div>
             </section>

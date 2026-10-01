@@ -51,6 +51,11 @@ import { newDirectionCopy, newDirectionTh } from './copy/newDirection';
 // LAST in each block, same pattern as newDirectionCopy above, so it wins on any shared key. See
 // the module's own header for what it covers and what it deliberately holds.
 import { visibilityRefreshCopy, visibilityRefreshTh } from './copy/visibilityRefresh';
+// The repositioning, 1 October 2026 (Ian's brief of that morning, reviewed, and his rulings). LAST
+// of all in BOTH blocks: English wins on every repositioned key, and the Thai pages show the
+// repositioned sections in English until Ann's pass, except the handful of chrome labels in
+// repositioningTh. See the module's own header.
+import { repositioningCopy, repositioningTh } from './copy/repositioning';
 
 export const translations = {
     en: {
@@ -476,8 +481,11 @@ export const translations = {
         // 27 September 2026: the new direction. LAST, so it wins.
         ...newDirectionCopy,
 
-        // 30 September 2026: the visibility refresh (bridge row 4007). LAST of all, so it wins.
-        ...visibilityRefreshCopy
+        // 30 September 2026: the visibility refresh (bridge row 4007).
+        ...visibilityRefreshCopy,
+
+        // 1 October 2026: the repositioning. LAST of all, so it wins.
+        ...repositioningCopy
     },
     th: {
         // TH PENDING: English values on purpose. See the note at the top of this file.
@@ -956,7 +964,12 @@ export const translations = {
         ...newDirectionTh,
 
         // 30 September 2026: the visibility refresh's machine Thai draft (bridge row 4007), for
-        // Ann's review. UNREVIEWED. LAST of all, so it wins.
-        ...visibilityRefreshTh
+        // Ann's review. UNREVIEWED.
+        ...visibilityRefreshTh,
+
+        // 1 October 2026: the repositioning, English first (Ian's word of that day), then the
+        // machine Thai for the chrome labels only, UNREVIEWED. LAST of all, so it wins.
+        ...repositioningCopy,
+        ...repositioningTh
     }
 };

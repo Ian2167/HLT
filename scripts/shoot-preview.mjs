@@ -27,6 +27,8 @@ const ROUTES = [
     { route: '/', name: 'home' },
     { route: '/business-read', name: 'business-read' },
     { route: '/how-it-works', name: 'how-it-works' },
+    { route: '/problems-we-fix', name: 'problems-we-fix' },
+    { route: '/who-we-help', name: 'who-we-help' },
     { route: '/examples', name: 'examples' },
     { route: '/about', name: 'about' },
     { route: '/contact', name: 'contact' },

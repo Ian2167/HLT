@@ -36,7 +36,8 @@ import {
     LINE_FOOTER,
 } from '../constants/contact';
 import hltLockupWhite from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-white.svg';
-import { FOOTER_QUICK_LINKS, LEGAL_LINKS, ROUTE_HOME } from '../constants/routes';
+import { FOOTER_CAPABILITY_LINKS, FOOTER_QUICK_LINKS, LEGAL_LINKS, ROUTE_HOME } from '../constants/routes';
+import { EVENTS, logEvent } from '../lib/analytics';
 
 const HEADING_CLASSES = 'text-xs font-bold uppercase tracking-[0.18em] text-slate-300';
 const ROW_CLASSES = 'flex min-h-12 items-center gap-3 text-base text-slate-200 transition-colors hover:text-white';
@@ -64,10 +65,13 @@ const Footer = () => {
                         <p className="mt-5 max-w-sm text-base leading-7 text-slate-300">{t('footerBrandLine')}</p>
                     </div>
 
-                    {/* Block 2: quick links, one per line, big enough to tap. */}
-                    <div className="lg:col-span-2">
+                    {/* Block 2: quick links, every public page, in two columns from sm, each big
+                        enough to tap. 1 October 2026: the brief's seven pages first, then the four
+                        it does not name; the capabilities column beside them only once a
+                        capability switch is on (brief, section 29). */}
+                    <div className="lg:col-span-3">
                         <h2 className={HEADING_CLASSES}>{t('footerQuickLinksHeading')}</h2>
-                        <ul className="mt-5 space-y-1">
+                        <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-1">
                             {FOOTER_QUICK_LINKS.map((item) => (
                                 <li key={item.to}>
                                     <Link to={lp(item.to)} className="inline-flex min-h-10 items-center text-base text-slate-200 transition-colors hover:text-white">
@@ -76,10 +80,24 @@ const Footer = () => {
                                 </li>
                             ))}
                         </ul>
+                        {FOOTER_CAPABILITY_LINKS.length > 0 ? (
+                            <>
+                                <h2 className={`${HEADING_CLASSES} mt-8`}>{t('footerCapabilitiesHeading')}</h2>
+                                <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-1">
+                                    {FOOTER_CAPABILITY_LINKS.map((item) => (
+                                        <li key={item.to}>
+                                            <Link to={lp(item.to)} className="inline-flex min-h-10 items-center text-base text-slate-200 transition-colors hover:text-white">
+                                                {item.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        ) : null}
                     </div>
 
                     {/* Block 3: contact. Every row is a real link a thumb can hit. */}
-                    <div className="lg:col-span-3">
+                    <div className="lg:col-span-2">
                         <h2 className={HEADING_CLASSES}>{t('footerContactHeading')}</h2>
                         <ul className="mt-5 space-y-1">
                             <li>
@@ -133,6 +151,7 @@ const Footer = () => {
                                 href={CONTACT_WHATSAPP_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                onClick={() => logEvent(EVENTS.whatsAppClick, { place: 'footer' })}
                                 className={BUTTON_CLASSES}
                                 style={{ backgroundColor: WHATSAPP_GREEN }}
                             >
@@ -143,6 +162,7 @@ const Footer = () => {
                                 href={LINE_FOOTER}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                onClick={() => logEvent(EVENTS.lineClick, { place: 'footer' })}
                                 className={BUTTON_CLASSES}
                                 style={{ backgroundColor: LINE_GREEN }}
                             >

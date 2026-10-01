@@ -1,37 +1,36 @@
-// About.jsx — /about and /en/about. Built 18 September 2026; the H1 and lead REPLACED 30 September
-// 2026 on the visibility refresh (Ian's fuller spec of the same day, section 26).
+// About.jsx — /about and /en/about. Built 18 September 2026; the top REPLACED 30 September; REBUILT
+// 1 October 2026, the repositioning (Ian's brief of that morning, section 17, and his rulings).
 //
 // WHAT THIS PAGE IS, IN IAN'S WORDS
 // Its one job, from his locked page-hierarchy table of 17 September 2026: "Why HLT is credible."
+// Still thin, by his rule.
 //
-// WHAT THE SPEC CHANGED, AND WHAT IT DID NOT
-// The spec's H1 ("Business systems before technology.") and its three-line core copy now open the
-// page. They make no claim about any person. The spec then asks for "clear profiles for Ian, Ann,
-// HLT". THOSE ARE NOT HERE, and must not be typed in: Ian's ruling of 18 September 2026 (gate 128,
-// "Do not include either founder paragraph, named or unnamed, at this stage") and his hard rule of
-// 27 September (no name, face, bio or career line on anything HLT publishes until his visa is
-// resolved) stand until he lifts them himself. The report lists the profiles as the spec item held.
+// THE PARAGRAPH ABOUT IAN IS BEHIND A SWITCH. The brief (section 17) gives one paragraph on his
+// background. His ruling of 1 October: "I want you to have this prepared so it can be switched on
+// or off." It is prepared, in src/copy/repositioning.js, and SHOW_ABOUT_IAN in
+// src/config/features.js is false: his hard rule of 27 September (no name, face, bio or career line
+// on anything HLT publishes until his visa is resolved) stands until he lifts it himself.
+// tests/visibility-refresh.mjs holds the built site to that while the switch is off.
 //
-// The rest of the page is the thin form he ruled: what we do, how we work, what we won't do, the
-// three-line company facts block, and the one action. No address, no photograph, no team section.
-// tests/about-company-facts.mjs still holds this page to both halves of gate 128.
+// THE REST: the brief's H1 and three lines, how we work (the brief's six lines), Ian's own "what we
+// won't do" of 18 September, the three-line company facts block (gate 128), and the Fit Call. The
+// 18 September "what we do" band stops rendering: the new opening says it. No address, no
+// photograph, no team section.
 //
-// COPY: src/copy/about.js, with the H1, lead, meta title and CTA label overridden by
-// src/copy/visibilityRefresh.js, which is spread last.
+// COPY: src/copy/about.js, with the opening, how we work, the meta and the CTA overridden by
+// src/copy/repositioning.js, which is spread last.
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
-import { ROUTE_ABOUT, ROUTE_BUSINESS_READ } from '../constants/routes';
+import { SHOW_ABOUT_IAN } from '../config/features';
+import { ROUTE_ABOUT } from '../constants/routes';
 import Seo from '../components/Seo';
-import { CTA_CLASSES } from './Home';
+import FitCallButtons from '../components/FitCallButtons';
 import { fadeUp, heroIn } from '../lib/motion';
 
 const About = () => {
-    const { t, lp } = useLanguage();
+    const { t } = useLanguage();
 
-    const howRules = [t('abHow1'), t('abHow2'), t('abHow3'), t('abHow4'), t('abHow5')];
+    const howRules = [1, 2, 3, 4, 5, 6].map((n) => t(`abHow${n}`));
     const wontRules = [t('abWont1'), t('abWont2'), t('abWont3'), t('abWont4')];
 
     return (
@@ -49,16 +48,14 @@ const About = () => {
                 </motion.div>
             </section>
 
-            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl">
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('abWhatHeading')}</h2>
-                    <div className="mt-5 space-y-4 text-base leading-8 text-slate-600">
-                        <p>{t('abWhatP1')}</p>
-                        <p>{t('abWhatP2')}</p>
-                        <p>{t('abWhatP3')}</p>
-                    </div>
-                </motion.div>
-            </section>
+            {SHOW_ABOUT_IAN ? (
+                <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                    <motion.div {...fadeUp} className="mx-auto max-w-3xl">
+                        <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('abIanHeading')}</h2>
+                        <p className="mt-5 text-base leading-8 text-slate-600">{t('abIanBody')}</p>
+                    </motion.div>
+                </section>
+            ) : null}
 
             <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl">
@@ -104,17 +101,9 @@ const About = () => {
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('abClosingHeading')}</h2>
                     <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">{t('abClosingBody')}</p>
-                    <div className="mt-8">
-                        <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
-                            {t('abCtaLabel')}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
+                    <div className="mt-8 flex justify-center">
+                        <FitCallButtons place="about-final" />
                     </div>
-                    <p className="mt-4 text-sm text-slate-400">
-                        <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 transition-colors hover:text-white">
-                            {t('abLineNote')}
-                        </a>
-                    </p>
                 </motion.div>
             </section>
         </div>

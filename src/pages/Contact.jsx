@@ -1,9 +1,11 @@
 // Contact.jsx — /contact and /en/contact. Built 18 September 2026; the other rails ADDED
-// 30 September 2026 on the visibility refresh.
+// 30 September; REBUILT 1 October 2026, the repositioning (Ian's brief of that morning, section 22,
+// and his ruling: "use Google Calendar and Google Meet with Line and WhatsApp backups").
 //
-// WHAT THIS PAGE IS, IN IAN'S WORDS
-// Its one job, from his locked page-hierarchy table of 17 September 2026: "LINE and simple
-// enquiry."
+// WHAT THIS PAGE IS NOW. The Fit Call page. With the Google Calendar booking link in
+// src/config/features.js the button opens it; until the link is there, the page says to pick a time
+// by message and offers LINE and WhatsApp as the way to do it, so the one action never dead-ends.
+// Beneath, the email and phone rails and the location line. Then what happens next, as before.
 //
 // THERE IS NO FORM ON THIS PAGE, AND IT IS NOT AN OVERSIGHT
 // Ian's GO of 18 September 2026, verbatim: "Do not activate the Contact form without a working
@@ -11,23 +13,16 @@
 // NO handler in this file. The form's every string is held in `contactFormCopyHeld` in
 // src/copy/contact.js, which is NOT spread into src/translations.js.
 //
-// WHAT THE 30 SEPTEMBER REFRESH ADDED. The rails the spec's contact rules name for English readers
-// beside LINE: the email address, the phone number and WhatsApp, from src/constants/contact.js.
-// Nothing is invented: every value there is the ruled contact block. No address.
+// Every value is the ruled contact block in src/constants/contact.js. No address.
 import { motion } from 'framer-motion';
-import { ArrowRight, Mail, Phone } from 'lucide-react';
-import { WHATSAPP_GREEN, WhatsAppMark } from '../components/ChannelIcons';
+import { Mail, Phone } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import {
-    CONTACT_EMAIL,
-    CONTACT_PHONE_DISPLAY,
-    CONTACT_PHONE_TEL,
-    CONTACT_WHATSAPP_URL,
-    LINE_OFFICIAL_ACCOUNT,
-} from '../constants/contact';
+import { FIT_CALL_BOOKING_URL } from '../config/features';
+import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL } from '../constants/contact';
 import { ROUTE_CONTACT } from '../constants/routes';
 import Seo from '../components/Seo';
-import { CTA_CLASSES } from './Home';
+import { FitCallButton, MessageBackups } from '../components/FitCallButtons';
+import { EVENTS, logEvent } from '../lib/analytics';
 import { fadeUp, heroIn } from '../lib/motion';
 
 const RAIL_CLASSES =
@@ -48,40 +43,46 @@ const Contact = () => {
                 </motion.div>
             </section>
 
-            {/* The LINE rail, first, as Ian ruled. Then the other three, each a real link. */}
+            {/* The booking, then the backups, then the other rails. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass card-static sm:p-9">
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('ctLineHeading')}</h2>
-                    <p className="mt-5 text-base leading-8 text-slate-600">{t('ctLineBody')}</p>
-                    <div className="mt-8">
-                        <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className={CTA_CLASSES}>
-                            {t('ctLineLabel')}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </a>
-                    </div>
+                    {FIT_CALL_BOOKING_URL ? (
+                        <>
+                            <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('ctBookHeading')}</h2>
+                            <div className="mt-6">
+                                <FitCallButton place="contact" />
+                            </div>
+                            <p className="mt-4 text-sm leading-6 text-slate-500">{t('ctaFitCallNote')}</p>
+                            <h3 className="mt-10 text-lg font-bold text-slate-950">{t('ctBackupHeading')}</h3>
+                            <p className="mt-2 text-base leading-7 text-slate-600">{t('ctBackupLead')}</p>
+                            <div className="mt-4">
+                                <MessageBackups place="contact" lead={false} />
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('ctBookHeading')}</h2>
+                            <p className="mt-4 text-base leading-7 text-slate-600">{t('ctBookByMessage')}</p>
+                            <div className="mt-6">
+                                <MessageBackups place="contact" lead={false} />
+                            </div>
+                            <p className="mt-4 text-sm leading-6 text-slate-500">{t('ctaFitCallNote')}</p>
+                        </>
+                    )}
 
-                    <h3 className="mt-10 text-lg font-bold text-slate-950">{t('ctRailsHeading')}</h3>
-                    <ul className="mt-4 grid gap-3 sm:grid-cols-1">
+                    <h3 className="mt-10 text-lg font-bold text-slate-950">{t('ctOtherHeading')}</h3>
+                    <ul className="mt-4 grid gap-3">
                         <li>
-                            <a href={`mailto:${CONTACT_EMAIL}`} className={RAIL_CLASSES}>
+                            <a href={`mailto:${CONTACT_EMAIL}`} onClick={() => logEvent(EVENTS.emailClick, { place: 'contact' })} className={RAIL_CLASSES}>
                                 <Mail size={18} aria-hidden="true" className="shrink-0 text-indigo-600" />
                                 <span className="font-semibold">{t('ctEmailLabel')}</span>
                                 <span className="break-all text-slate-600">{CONTACT_EMAIL}</span>
                             </a>
                         </li>
                         <li>
-                            <a href={CONTACT_PHONE_TEL} className={RAIL_CLASSES}>
+                            <a href={CONTACT_PHONE_TEL} onClick={() => logEvent(EVENTS.phoneClick, { place: 'contact' })} className={RAIL_CLASSES}>
                                 <Phone size={18} aria-hidden="true" className="shrink-0 text-indigo-600" />
                                 <span className="font-semibold">{t('ctPhoneLabel')}</span>
-                                <span className="text-slate-600">{CONTACT_PHONE_DISPLAY}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href={CONTACT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={RAIL_CLASSES}>
-                                <span className="shrink-0" style={{ color: WHATSAPP_GREEN }}>
-                                    <WhatsAppMark size={18} />
-                                </span>
-                                <span className="font-semibold">{t('ctWhatsAppLabel')}</span>
                                 <span className="text-slate-600">{CONTACT_PHONE_DISPLAY}</span>
                             </a>
                         </li>

@@ -36,8 +36,14 @@ const SITE = 'https://www.highlevelthai.com';
 const NO_BUILD = process.argv.includes('--no-build');
 
 const routes = await import(pathToFileURL(path.join(REPO, 'src', 'constants', 'routes.js')).href);
-const { INDEXABLE_ROUTES, NOINDEX_ROUTES, PUBLIC_NAV, MOBILE_NAV, FOOTER_QUICK_LINKS, LEGAL_LINKS } = routes;
+const { INDEXABLE_ROUTES, NOINDEX_ROUTES, PUBLIC_NAV, MOBILE_NAV, FOOTER_QUICK_LINKS, LEGAL_LINKS, CAPABILITY_ROUTES } = routes;
 const { localPath } = await import(pathToFileURL(path.join(REPO, 'src', 'constants', 'lang.js')).href);
+// The repositioning's switches (1 October 2026): the Fit Call button's destination and whether the
+// About page may name Ian. The harness reads them so a switch flipped on purpose does not fail it.
+const { FIT_CALL_BOOKING_URL, SHOW_ABOUT_IAN, CAPABILITIES } = await import(pathToFileURL(path.join(REPO, 'src', 'config', 'features.js')).href);
+// Where the Fit Call button goes while the booking link is empty: the Contact page, in the
+// language of the page. With a link it is an external href and sits outside the internal lists.
+const fitCallInternal = (code) => (FIT_CALL_BOOKING_URL ? [] : [localPath('/contact', code)]);
 
 const passes = [];
 const failures = [];
@@ -114,8 +120,27 @@ try {
     // The retired proposition, in the words the spec quotes and the words the old head carried.
     const legacyHits = htmlFiles.filter((f) => /customers are being lost|missed-call recovery|Operational Systems for Premium|find where customers are/i.test(readFileSync(f, 'utf8')));
     check(legacyHits.length === 0, `legacy: the retired proposition appears on no prerendered page (${legacyHits.length} hits)`);
-    const personHits = htmlFiles.filter((f) => /Ian W Turton|Turton/i.test(readFileSync(f, 'utf8')));
-    check(personHits.length === 0, `rule: no page names Ian (${personHits.length} hits)`);
+    const personHits = htmlFiles.filter((f) => /Ian W\.? Turton|Turton/i.test(readFileSync(f, 'utf8')));
+    if (SHOW_ABOUT_IAN) {
+        const offAbout = personHits.filter((f) => !/[\\/]about[\\/]index\.html$/.test(f));
+        check(offAbout.length === 0, `rule: with SHOW_ABOUT_IAN on, only the About pages name Ian (${offAbout.length} other hits)`);
+    } else {
+        check(personHits.length === 0, `rule: no page names Ian while SHOW_ABOUT_IAN is off (${personHits.length} hits)`);
+    }
+    // 1 October 2026, Ian: "I do not want to reintroduce Full Chairs into this site or the Voice AI".
+    const heldHits = htmlFiles.filter((f) => /Full Chairs|Voice AI/i.test(readFileSync(f, 'utf8')));
+    check(heldHits.length === 0, `rule: Full Chairs and Voice AI appear on no page (${heldHits.length} hits)`);
+    // The repositioning's one action and its published base price.
+    for (const route of INDEXABLE_ROUTES) {
+        const html = readFileSync(staticFile(localPath(route, 'en')), 'utf8');
+        check(/Book a Fit Call/.test(html), `fit call: ${localPath(route, 'en')} carries a Book a Fit Call button`);
+    }
+    check(/From THB 15,000, excluding VAT/.test(readFileSync(staticFile('/en/business-read'), 'utf8')), 'price: /en/business-read publishes the base price, THB only');
+    // A capability whose switch is off is not prerendered and not in the sitemap.
+    const offSlugs = Object.keys(CAPABILITIES).filter((slug) => !CAPABILITIES[slug]);
+    const offBuilt = offSlugs.filter((slug) => existsSync(staticFile(`/en/capabilities/${slug}`)) || sitemap.includes(`/capabilities/${slug}`));
+    check(offBuilt.length === 0, `capabilities: ${offSlugs.length} switched-off capabilities are neither prerendered nor in the sitemap (${offBuilt.length} leaked)`);
+    check(CAPABILITY_ROUTES.every((r) => existsSync(staticFile(localPath(r, 'en')))), `capabilities: ${CAPABILITY_ROUTES.length} switched-on capabilities are prerendered`);
 
     // ---------------------------------------------------------------- the browser
     // Served the way Vercel serves it (scripts/lib/serve-dist.mjs), not by vite preview, which
@@ -155,18 +180,21 @@ try {
             h1: document.querySelector('h1')?.textContent,
         }));
         check(after.canonicals === 1 && after.canonical === `${SITE}/en/business-read`, `hydrate: after a client navigation the canonical is ${SITE}/en/business-read and there is one`);
-        check(/depends on you/.test(after.h1 || ''), 'nav: the Business Read page renders its H1 after a client navigation');
+        check(/getting stuck/.test(after.h1 || ''), 'nav: the Business Read page renders its H1 after a client navigation');
         await page.close();
     }
 
-    // nav and toggle, both languages, every public page.
+    // nav and toggle, both languages, every public page. The repositioned pages (1 October 2026)
+    // show their English H1 on the Thai URL too until Ann's pass, by Ian's "English first".
     const expectH1 = {
-        '/': /needs you less|น้อยลง/,
-        '/business-read': /depends on you|พึ่งพาคุณ/,
-        '/how-it-works': /Understand it first|เข้าใจ/,
+        '/': /slowing your business down/,
+        '/business-read': /getting stuck/,
+        '/how-it-works': /How it works/i,
+        '/problems-we-fix': /Common problems/,
+        '/who-we-help': /Owner-led/,
         '/examples': /./,
-        '/about': /before technology|ก่อนเทคโนโลยี/,
-        '/contact': /./,
+        '/about': /not the software/,
+        '/contact': /Book a Fit Call|นัดคุย/,
         '/hua-hin': /Hua Hin|หัวหิน/,
         '/business-blindspots': /own customer|ลูกค้าของตัวเอง/,
         '/owner-dependency': /replace yourself|แทนตัวเอง/,
@@ -178,7 +206,7 @@ try {
             const res = await page.goto(`${base}${url}`, { waitUntil: 'networkidle' });
             check(res.status() === 200, `nav: ${url} answers 200`);
             const h1 = await page.evaluate(() => document.querySelector('h1')?.textContent || '');
-            check(expectH1[route].test(h1), `nav: ${url} renders its H1 ("${h1.slice(0, 40)}")`);
+            check((expectH1[route] || /./).test(h1), `nav: ${url} renders its H1 ("${h1.slice(0, 40)}")`);
             const htmlLang = await page.evaluate(() => document.documentElement.lang);
             check(htmlLang === code, `nav: ${url} runs with lang=${code}`);
             // The toggle leads to the twin.
@@ -202,7 +230,7 @@ try {
         const desk = await page.evaluate(() =>
             [...document.querySelectorAll('nav .xl\\:flex a[href^="/"]')].filter((a) => !a.closest('nav[aria-label="Language"]')).map((a) => a.getAttribute('href')),
         );
-        check(JSON.stringify(desk) === JSON.stringify([...PUBLIC_NAV.map((i) => localPath(i.to, 'en')), '/en/business-read']), `nav: desktop bar is the spec's five plus the one button (${desk.join(' ')})`);
+        check(JSON.stringify(desk) === JSON.stringify([...PUBLIC_NAV.map((i) => localPath(i.to, 'en')), ...fitCallInternal('en')]), `nav: desktop bar is the brief's pages plus the Fit Call button (${desk.join(' ')})`);
         // Both halves of the header hold a language control; only the desktop one is visible here.
         const toggle = await page.evaluate(() => [...document.querySelectorAll('nav[aria-label="Language"] a')].filter((a) => a.offsetParent !== null).map((a) => a.getAttribute('href')));
         check(JSON.stringify(toggle) === JSON.stringify(['/en', '/']), `nav: the desktop language control offers EN and ไทย (${toggle.join(' ')})`);
@@ -216,7 +244,17 @@ try {
         const badLine = await page.evaluate(() => [...document.querySelectorAll('a[href*="@highlevelthai"]')].filter((a) => /line\.me/.test(a.href)).length);
         check(badLine === 0, 'contact: the dead @highlevelthai LINE handle is linked nowhere');
         const heroCtas = await page.evaluate(() => [...document.querySelectorAll('main section:first-of-type a')].map((a) => a.getAttribute('href')));
-        check(heroCtas[0] === '/en/business-read' && heroCtas.some((h) => h.startsWith('https://lin.ee/')), 'contact: the hero offers the Business Read first and LINE second');
+        check(heroCtas.length === 1 && heroCtas[0] === '/en/business-read', `contact: the hero offers one action, Start with The Business Read (${heroCtas.join(' ')})`);
+        // The final band offers the Fit Call, the Business Read, LINE and WhatsApp.
+        const finalCtas = await page.evaluate(() => [...document.querySelectorAll('main section:last-of-type a')].map((a) => a.getAttribute('href')));
+        check(finalCtas.includes('/en/business-read') && finalCtas.some((h) => h.startsWith('https://lin.ee/')) && finalCtas.includes('https://wa.me/66968398305'), `contact: the final band offers the Business Read, LINE and WhatsApp (${finalCtas.length} links)`);
+        check(FIT_CALL_BOOKING_URL ? finalCtas.includes(FIT_CALL_BOOKING_URL) : finalCtas.includes('/en/contact'), 'contact: the final band offers the Fit Call');
+        // The three flows are ordered lists, readable without the arrows.
+        const flows = await page.evaluate(() => document.querySelectorAll('main ol').length);
+        check(flows >= 2, `flows: the home page draws its method and control flows as ordered lists (${flows})`);
+        await page.goto(`${base}/en/how-it-works`, { waitUntil: 'networkidle' });
+        const decision = await page.evaluate(() => document.body.innerText.includes('Within agreed rules?') && document.querySelectorAll('main ol').length >= 2);
+        check(decision, 'flows: how it works draws the six steps and the owner-by-exception flow as ordered lists');
         await page.close();
 
         const phone = await browser.newPage({ viewport: { width: 390, height: 844 } });
@@ -226,7 +264,7 @@ try {
         await phone.click('button[aria-controls="mobile-menu"]');
         await phone.waitForTimeout(300);
         const menu = await phone.evaluate(() => [...document.querySelectorAll('#mobile-menu a[href^="/"]')].map((a) => a.getAttribute('href')));
-        check(JSON.stringify(menu) === JSON.stringify([...MOBILE_NAV.map((i) => localPath(i.to, 'en')), '/en/business-read']), `mobile: the menu lists the eight pages and the button (${menu.length} links)`);
+        check(JSON.stringify(menu) === JSON.stringify([...MOBILE_NAV.map((i) => localPath(i.to, 'en')), ...fitCallInternal('en')]), `mobile: the menu lists the pages and the Fit Call button (${menu.length} links)`);
         const overflow = await phone.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
         check(!overflow, 'mobile: no horizontal overflow at 390px with the menu open');
         await phone.click('#mobile-menu a[href="/en/hua-hin"]');

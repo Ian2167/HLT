@@ -7,15 +7,16 @@
 // and the local-systems message ("local problems aren't always software problems"). No address:
 // the location line is the spec's own, and the registered office is open on the record.
 //
+// 1 OCTOBER 2026, the repositioning: the page's action is the Fit Call (Ian's brief, section 22).
+// Nothing else on the page moved.
+//
 // COPY: src/copy/visibilityRefresh.js. Thai is a machine draft under review.
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
-import { ROUTE_BUSINESS_READ, ROUTE_HUA_HIN, ROUTE_OWNER_DEPENDENCY } from '../constants/routes';
+import { ROUTE_HUA_HIN, ROUTE_OWNER_DEPENDENCY } from '../constants/routes';
 import Seo from '../components/Seo';
-import { CTA_CLASSES, SECONDARY_CTA_CLASSES } from './Home';
+import FitCallButtons, { FitCallButton } from '../components/FitCallButtons';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
 const HuaHin = () => {
@@ -36,10 +37,7 @@ const HuaHin = () => {
                     </div>
                     <p className="mt-4 text-sm leading-7 text-slate-500">{t('huahinLocationLine')}</p>
                     <div className="mt-8">
-                        <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
-                            {t('huahinCta')}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
+                        <FitCallButton place="huahin-hero" label={t('huahinCta')} />
                     </div>
                 </motion.div>
             </section>
@@ -76,15 +74,10 @@ const HuaHin = () => {
 
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('homeClosingHeading')}</h2>
-                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
-                        <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
-                            {t('huahinCta')}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
-                        <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className={SECONDARY_CTA_CLASSES}>
-                            {t('navTalkLabel')}
-                        </a>
+                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('finalHeading')}</h2>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{t('finalBody')}</p>
+                    <div className="mt-8 flex justify-center">
+                        <FitCallButtons place="huahin-final" />
                     </div>
                     <p className="mt-6 text-sm text-slate-300">
                         <Link to={lp(ROUTE_OWNER_DEPENDENCY)} className="underline underline-offset-4 transition-colors hover:text-white">

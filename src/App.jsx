@@ -41,6 +41,12 @@ import BusinessBlindspots from './pages/BusinessBlindspots';
 import OwnerDependency from './pages/OwnerDependency';
 import PdpaPolicy from './pages/PdpaPolicy';
 import CookiePolicy from './pages/CookiePolicy';
+// The repositioning, 1 October 2026 (Ian's brief of that morning and his rulings). Two public
+// pages, the capability pages behind their switches, and Vercel Web Analytics on his "Yes".
+import ProblemsWeFix from './pages/ProblemsWeFix';
+import WhoWeHelp from './pages/WhoWeHelp';
+import Capability from './pages/Capability';
+import { Analytics } from '@vercel/analytics/react';
 import {
   ROUTE_AIOS_AUDIT,
   ROUTE_AIOS_AUDIT_ALIAS,
@@ -59,6 +65,9 @@ import {
   ROUTE_PRIVACY,
   ROUTE_PDPA,
   ROUTE_COOKIES,
+  ROUTE_PROBLEMS,
+  ROUTE_WHO,
+  ROUTE_CAPABILITIES,
 } from './constants/routes';
 import { LANGS } from './constants/lang';
 import ScrollToTop from './components/ScrollToTop';
@@ -109,6 +118,10 @@ export function AppShell() {
                 <Route index element={<Home />} />
                 <Route path={child(ROUTE_BUSINESS_READ)} element={<BusinessRead />} />
                 <Route path={child(ROUTE_HOW_IT_WORKS)} element={<HowItWorks />} />
+                <Route path={child(ROUTE_PROBLEMS)} element={<ProblemsWeFix />} />
+                <Route path={child(ROUTE_WHO)} element={<WhoWeHelp />} />
+                {/* A capability page answers only while its switch is on; off, it is a 404. */}
+                <Route path={`${child(ROUTE_CAPABILITIES)}/:slug`} element={<Capability />} />
                 <Route path={child(ROUTE_EXAMPLES)} element={<Examples />} />
                 <Route path={child(ROUTE_ABOUT)} element={<About />} />
                 <Route path={child(ROUTE_CONTACT)} element={<Contact />} />
@@ -146,6 +159,11 @@ export function AppShell() {
             </Routes>
           </main>
           <Footer />
+          {/* Vercel Web Analytics (Ian, 1 October 2026: "Yes to Vercel Analytics"). Page views
+              from here, the named conversion events from src/lib/analytics.js. Renders nothing
+              on the server and sends nothing until Analytics is enabled on the Vercel project.
+              No cookie, so no banner. */}
+          <Analytics />
         </div>
       </LanguageProvider>
   );

@@ -6,6 +6,12 @@
 // route is changed once. The old service routes (MCTB, Quotes, RAG, Websites, HomeServices,
 // Clinics, Salons, the diagnostic) are deliberately NOT in this file: they stay live, they are
 // off the header, and nothing in the rebuild links to them.
+//
+// THE IMPORTS CARRY THEIR .js EXTENSION because scripts/prerender.mjs and the tests load this file
+// straight into Node, which resolves nothing for them. Vite reads the same paths without complaint.
+import { SHOW_INSIGHTS, enabledCapabilities } from '../config/features.js';
+import { capabilities } from '../copy/capabilities.js';
+
 export const ROUTE_HOME = '/';
 // Renamed 14 September 2026, 17:50 Bangkok, on Ian's correction: the service is the AIOS Audit,
 // and it interviews the functions of the business rather than reviewing the week in one call.
@@ -65,43 +71,70 @@ export const ROUTE_PRIVACY = '/privacy';
 // which put it on the desktop header and in the footer.
 export const ROUTE_OWNER_DEPENDENCY = '/owner-dependency';
 
-// THE PUBLIC NAVIGATION, 30 September 2026, from Ian's fuller spec of that day (section 5), which
-// he pasted with "you build based on the following": desktop "How It Works | Business Read |
-// Blindspots | Owner Dependency | About | EN | ไทย", primary CTA "Start with the Business Read".
+// ---------------------------------------------------------------------------------------
+// THE REPOSITIONING, 1 October 2026 (Ian's "HIGH LEVEL THAI WEBSITE REPOSITIONING BRIEF" of that
+// morning, reviewed at C:\Projects\hlt-estate\02-builds\hlt-site-kit\
+// 2026-10-01-HLT-REPOSITIONING-BRIEF-REVIEWED.md, and his rulings in the same conversation:
+// "Agreed to the Home and other page structuring"). Two new public pages, the capability pages
+// behind switches, and Insights held behind a switch.
 //
-// WHAT THIS SUPERSEDES. His 17/18 September line was "Home | Business Read | How It Works | Examples
-// | About | Contact, with Client Login on the right." Home is now the lockup, which links home on
-// every page; Examples and Contact move to the mobile menu and the footer; Blindspots and Owner
-// Dependency join. The report lists the change as the conflict it is. Client Login is off the
-// header since his 18 September ruling and its route stays live.
-export const PUBLIC_NAV = [
-    { labelKey: 'hiwNavLink', to: ROUTE_HOW_IT_WORKS },
-    { labelKey: 'brNavLink', to: ROUTE_BUSINESS_READ },
-    { labelKey: 'blindNavLink', to: ROUTE_BUSINESS_BLINDSPOTS },
-    { labelKey: 'odNavLink', to: ROUTE_OWNER_DEPENDENCY },
-    { labelKey: 'aboutNavLink', to: ROUTE_ABOUT },
-];
+// WHAT IS NOT HERE, on his word of the same day: no Full Chairs page and no Voice AI page.
+// ---------------------------------------------------------------------------------------
+export const ROUTE_PROBLEMS = '/problems-we-fix';
+export const ROUTE_WHO = '/who-we-help';
+export const ROUTE_INSIGHTS = '/insights';
+// One route per capability, under one prefix; the slugs and the switches live in
+// src/config/features.js and the copy in src/copy/capabilities.js. Only an enabled capability is
+// routed, listed, prerendered or put in the sitemap.
+export const ROUTE_CAPABILITIES = '/capabilities';
+export const capabilityRoute = (slug) => `${ROUTE_CAPABILITIES}/${slug}`;
+export const CAPABILITY_ROUTES = enabledCapabilities().map(capabilityRoute);
 
-// The mobile menu: the five above, then the three the desktop bar leaves to the footer.
-export const MOBILE_NAV = [
-    ...PUBLIC_NAV,
-    { labelKey: 'huaHinNavLink', to: ROUTE_HUA_HIN },
-    { labelKey: 'exNavLink', to: ROUTE_EXAMPLES },
+// THE PUBLIC NAVIGATION, 1 October 2026, from the repositioning brief (section 20): "Home,
+// Business Read, How It Works, Problems We Fix, Who We Help, About, Contact", with Insights only
+// when it exists. Home is the lockup on the desktop bar (as since 30 September) and a line in the
+// mobile menu. Blindspots, Owner Dependency, Hua Hin and Examples stay live and move to the
+// footer and the mobile menu, because the brief's header has seven places and these are the
+// pages the brief does not list.
+//
+// WHAT THIS SUPERSEDES. The 30 September bar "How It Works | Business Read | Blindspots | Owner
+// Dependency | About", and its primary action "Start with the Business Read", which the brief
+// replaces with "Book a Fit Call" (section 22; Ian, 1 October: Google Calendar and Meet, LINE and
+// WhatsApp as backups).
+export const PUBLIC_NAV = [
+    { labelKey: 'brNavLink', to: ROUTE_BUSINESS_READ },
+    { labelKey: 'hiwNavLink', to: ROUTE_HOW_IT_WORKS },
+    { labelKey: 'problemsNavLink', to: ROUTE_PROBLEMS },
+    { labelKey: 'whoNavLink', to: ROUTE_WHO },
+    { labelKey: 'aboutNavLink', to: ROUTE_ABOUT },
+    ...(SHOW_INSIGHTS ? [{ labelKey: 'insightsNavLink', to: ROUTE_INSIGHTS }] : []),
     { labelKey: 'contactNavLink', to: ROUTE_CONTACT },
 ];
 
-// The footer's quick links, the spec's seven in the spec's order (section 27), plus Examples so
-// one of Ian's six locked public pages stays reachable from every page on a desktop.
+// The mobile menu: Home, the bar's pages, then the four the bar leaves to the footer.
+export const MOBILE_NAV = [
+    { labelKey: 'homeNavHome', to: ROUTE_HOME },
+    ...PUBLIC_NAV,
+    { labelKey: 'blindNavLink', to: ROUTE_BUSINESS_BLINDSPOTS },
+    { labelKey: 'odNavLink', to: ROUTE_OWNER_DEPENDENCY },
+    { labelKey: 'huaHinNavLink', to: ROUTE_HUA_HIN },
+    { labelKey: 'exNavLink', to: ROUTE_EXAMPLES },
+];
+
+// The footer's quick links: every public page, in the brief's order, then the four it does not
+// name. The footer lays them in two columns.
 export const FOOTER_QUICK_LINKS = [
     { labelKey: 'homeNavHome', to: ROUTE_HOME },
-    { labelKey: 'brNavLink', to: ROUTE_BUSINESS_READ },
+    ...PUBLIC_NAV,
     { labelKey: 'blindNavLink', to: ROUTE_BUSINESS_BLINDSPOTS },
     { labelKey: 'odNavLink', to: ROUTE_OWNER_DEPENDENCY },
     { labelKey: 'huaHinNavLink', to: ROUTE_HUA_HIN },
-    { labelKey: 'aboutNavLink', to: ROUTE_ABOUT },
-    { labelKey: 'contactNavLink', to: ROUTE_CONTACT },
     { labelKey: 'exNavLink', to: ROUTE_EXAMPLES },
 ];
+
+// The footer's capabilities column (brief, section 29): only the enabled ones, so the column is
+// absent until Ian turns the first switch on.
+export const FOOTER_CAPABILITY_LINKS = enabledCapabilities().map((slug) => ({ label: capabilities[slug].name, to: capabilityRoute(slug) }));
 
 // The footer's legal links: four placeholders until Ian supplies or approves the text.
 export const LEGAL_LINKS = [
@@ -118,12 +151,16 @@ export const INDEXABLE_ROUTES = [
     ROUTE_HOME,
     ROUTE_BUSINESS_READ,
     ROUTE_HOW_IT_WORKS,
+    ROUTE_PROBLEMS,
+    ROUTE_WHO,
     ROUTE_EXAMPLES,
     ROUTE_ABOUT,
     ROUTE_CONTACT,
     ROUTE_HUA_HIN,
     ROUTE_BUSINESS_BLINDSPOTS,
     ROUTE_OWNER_DEPENDENCY,
+    ...(SHOW_INSIGHTS ? [ROUTE_INSIGHTS] : []),
+    ...CAPABILITY_ROUTES,
 ];
 export const NOINDEX_ROUTES = [ROUTE_CLIENT_LOGIN, ROUTE_TERMS, ROUTE_PRIVACY, ROUTE_PDPA, ROUTE_COOKIES];
 

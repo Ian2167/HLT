@@ -11,15 +11,17 @@
 // it; Ian's paste of the fuller spec on 30 September put it in scope; a navigation link to a page
 // that does not exist is the one thing a header must never do. Listed in the report.
 //
+// 1 OCTOBER 2026, the repositioning: the page's action is the Fit Call (Ian's brief, section 22).
+// Nothing else on the page moved.
+//
 // COPY: src/copy/visibilityRefresh.js, English from the spec, Thai a machine draft under review.
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, BookOpen, Compass, Scissors, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Compass, Scissors, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
-import { ROUTE_BUSINESS_BLINDSPOTS, ROUTE_BUSINESS_READ, ROUTE_OWNER_DEPENDENCY } from '../constants/routes';
+import { ROUTE_BUSINESS_BLINDSPOTS, ROUTE_OWNER_DEPENDENCY } from '../constants/routes';
 import Seo from '../components/Seo';
-import { CTA_CLASSES, SECONDARY_CTA_CLASSES } from './Home';
+import FitCallButtons, { FitCallButton } from '../components/FitCallButtons';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
 // Marks, not copy. Preserve, support, transfer and remove reuse the keep, transfer, remove glyphs
@@ -42,10 +44,7 @@ const OwnerDependency = () => {
                         <p className="font-semibold text-slate-950">{t('odIntro2')}</p>
                     </div>
                     <div className="mt-8">
-                        <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
-                            {t('odCta')}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
+                        <FitCallButton place="od-hero" label={t('odCta')} />
                     </div>
                 </motion.div>
             </section>
@@ -83,14 +82,8 @@ const OwnerDependency = () => {
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('odClosing')}</h2>
-                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
-                        <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
-                            {t('odCta')}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
-                        <a href={LINE_OFFICIAL_ACCOUNT} target="_blank" rel="noopener noreferrer" className={SECONDARY_CTA_CLASSES}>
-                            {t('navTalkLabel')}
-                        </a>
+                    <div className="mt-8 flex justify-center">
+                        <FitCallButtons place="od-final" />
                     </div>
                     <p className="mt-6 text-sm text-slate-300">
                         <Link to={lp(ROUTE_BUSINESS_BLINDSPOTS)} className="underline underline-offset-4 transition-colors hover:text-white">

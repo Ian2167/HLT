@@ -7,15 +7,19 @@
 // the whole test has been given, the one paragraph that says where the Business Read starts. The
 // spec's rule, verbatim: "Do not turn the free test into a disguised sales page."
 //
-// COPY: src/copy/visibilityRefresh.js. Thai is a machine draft under review.
+// 1 OCTOBER 2026, the repositioning: case study zero moved here from the home page (it is the test
+// HLT ran on itself, so it belongs with the test), and the closing action became the Fit Call with
+// the Business Read beside it (Ian's brief, section 22). The test itself is unchanged.
+//
+// COPY: src/copy/visibilityRefresh.js, with case zero and the closing from src/copy/repositioning.js.
+// Thai is a machine draft under review.
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { ROUTE_BUSINESS_BLINDSPOTS, ROUTE_BUSINESS_READ, ROUTE_OWNER_DEPENDENCY } from '../constants/routes';
+import { ROUTE_BUSINESS_BLINDSPOTS, ROUTE_OWNER_DEPENDENCY } from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
 import Seo from '../components/Seo';
-import { CTA_CLASSES } from './Home';
+import FitCallButtons from '../components/FitCallButtons';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
 const BusinessBlindspots = () => {
@@ -64,16 +68,21 @@ const BusinessBlindspots = () => {
                 </div>
             </section>
 
+            {/* Case study zero: the test HLT ran on itself. */}
+            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-7 card-glass card-static sm:p-9">
+                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('blindCaseHeading')}</h2>
+                    <p className="mt-5 text-base leading-8 text-slate-600">{t('blindCaseBody')}</p>
+                </motion.div>
+            </section>
+
             {/* After the whole test, and only then: where the read begins. */}
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('blindDeeperHeading')}</h2>
                     <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{t('blindDeeperBody')}</p>
-                    <div className="mt-8">
-                        <Link to={lp(ROUTE_BUSINESS_READ)} className={CTA_CLASSES}>
-                            {t('blindCta')}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
+                    <div className="mt-8 flex justify-center">
+                        <FitCallButtons place="blindspots-final" />
                     </div>
                     <p className="mt-6 text-sm text-slate-300">
                         <Link to={lp(ROUTE_OWNER_DEPENDENCY)} className="underline underline-offset-4 transition-colors hover:text-white">
