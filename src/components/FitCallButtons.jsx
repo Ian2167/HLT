@@ -59,12 +59,12 @@ export const BusinessReadLink = ({ place, className = SECONDARY_DARK_CLASSES }) 
     );
 };
 
-export const MessageBackups = ({ place, lead = true, dark = false }) => {
+export const MessageBackups = ({ place, lead = true, dark = false, center = true }) => {
     const { t } = useLanguage();
     return (
         <div>
             {lead ? <p className={`text-sm leading-6 ${dark ? 'text-slate-200' : 'text-slate-500'}`}>{t('fitCallBackupLead')}</p> : null}
-            <div className={`${lead ? 'mt-3' : ''} flex flex-col gap-3 sm:flex-row sm:justify-center`}>
+            <div className={`${lead ? 'mt-3' : ''} flex flex-col gap-3 sm:flex-row ${center ? 'sm:justify-center' : ''}`}>
                 <a
                     href={LINE_OFFICIAL_ACCOUNT}
                     target="_blank"

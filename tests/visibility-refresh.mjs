@@ -112,6 +112,10 @@ try {
     // 1 October 2026: the 48 px PNG Google's result favicon wants, at a fresh address, linked from
     // every page's head (the shell is the head of every prerendered page).
     check(existsSync(path.join(DIST, 'brand', 'favicon-48.png')) && readFileSync(path.join(DIST, 'en', 'index.html'), 'utf8').includes('sizes="48x48" href="/brand/favicon-48.png"'), 'brand: favicon-48.png is served and linked from the head');
+    // 1 October 2026, Ian: the raw LINE ID "looks particularly poor". The two QR codes are served and
+    // the footer of every page carries them; the ID text appears on no page.
+    check(existsSync(path.join(DIST, 'brand', 'qr-line.svg')) && existsSync(path.join(DIST, 'brand', 'qr-whatsapp.svg')), 'contact: the LINE and WhatsApp QR codes are served');
+    check(readFileSync(staticFile('/en'), 'utf8').includes('src="/brand/qr-line.svg"') && readFileSync(staticFile('/en'), 'utf8').includes('src="/brand/qr-whatsapp.svg"'), 'contact: the footer carries both QR codes');
     // The SPA rewrite in vercel.json must not catch asset-looking paths, so a crawler asking for an
     // icon that no longer exists gets a real 404 instead of the app shell.
     const vercelJson = JSON.parse(readFileSync(path.join(REPO, 'vercel.json'), 'utf8'));
@@ -138,6 +142,9 @@ try {
     // 1 October 2026, Ian: "I do not want to reintroduce Full Chairs into this site or the Voice AI".
     const heldHits = htmlFiles.filter((f) => /Full Chairs|Voice AI/i.test(readFileSync(f, 'utf8')));
     check(heldHits.length === 0, `rule: Full Chairs and Voice AI appear on no page (${heldHits.length} hits)`);
+    // 1 October 2026, Ian: the raw LINE ID "looks particularly poor". It appears as text on no page.
+    const handleHits = htmlFiles.filter((f) => /@535zlmbx/.test(readFileSync(f, 'utf8')));
+    check(handleHits.length === 0, `contact: the LINE ID appears as text on no page (${handleHits.length} hits)`);
     // The repositioning's one action and its published base price.
     for (const route of INDEXABLE_ROUTES) {
         const html = readFileSync(staticFile(localPath(route, 'en')), 'utf8');

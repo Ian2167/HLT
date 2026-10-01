@@ -15,8 +15,10 @@
 // one of Ian's six locked public pages (17 September) and the spec's list would otherwise leave it
 // reachable from nowhere on a desktop. Listed in the report as the one addition.
 //
-// CONTACT is the ruled block and nothing else: ian@highlevelthai.com, +66 96 839 8305 as a phone
-// and as WhatsApp, LINE @535zlmbx through the one add-friend link. No street address anywhere: the
+// CONTACT is the ruled block and nothing else: ian@highlevelthai.com and +66 96 839 8305 as rows,
+// WhatsApp and LINE as buttons and, from md up, as QR codes (1 October 2026, Ian: the raw LINE ID
+// "looks particularly poor, can we not use the QR code for that and WhatsApp throughout?"). The ID
+// and the number as WhatsApp text no longer appear anywhere. No street address anywhere: the
 // registered office is open on the record (Ian, 14 September 2026), so the location line is the
 // spec's own "Working with businesses in Hua Hin and across Thailand".
 //
@@ -28,6 +30,7 @@ import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_GREEN, LineMark, WHATSAPP_GREEN, WhatsAppMark } from './ChannelIcons';
+import ChannelQr from './ChannelQr';
 import {
     CONTACT_EMAIL,
     CONTACT_PHONE_DISPLAY,
@@ -116,24 +119,6 @@ const Footer = () => {
                                     <span>{CONTACT_PHONE_DISPLAY}</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href={CONTACT_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={ROW_CLASSES}>
-                                    <span className={BADGE_CLASSES} style={{ color: WHATSAPP_GREEN }}>
-                                        <WhatsAppMark size={20} />
-                                    </span>
-                                    <span>
-                                        {t('footerContactWhatsAppLabel')} {CONTACT_PHONE_DISPLAY}
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href={LINE_FOOTER} target="_blank" rel="noopener noreferrer" className={ROW_CLASSES}>
-                                    <span className={BADGE_CLASSES} style={{ color: LINE_GREEN }}>
-                                        <LineMark size={20} />
-                                    </span>
-                                    <span>{t('footerContactLineLabel')} @535zlmbx</span>
-                                </a>
-                            </li>
                         </ul>
                         {/* The service area, with a pin: not an address, and no address exists to give. */}
                         <p className="mt-4 flex items-start gap-2 text-sm leading-6 text-slate-400">
@@ -142,10 +127,11 @@ const Footer = () => {
                         </p>
                     </div>
 
-                    {/* Block 4: the messaging channels, as buttons in their own colours. Two,
-                        because two are real. */}
+                    {/* Block 4: the messaging channels, as buttons in their own colours and, from
+                        md up, as QR codes a phone can be pointed at. Two, because two are real. */}
                     <div className="lg:col-span-3">
                         <h2 className={HEADING_CLASSES}>{t('footerChannelsHeading')}</h2>
+                        <ChannelQr className="mt-5 max-w-xs" />
                         <div className="mt-5 flex flex-col gap-3">
                             <a
                                 href={CONTACT_WHATSAPP_URL}

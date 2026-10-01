@@ -369,6 +369,12 @@ export const repositioningCopy = {
     odCta: 'Book a Fit Call',
     huahinCta: 'Book a Fit Call',
 
+    // ---------------------------------------------------------------- the QR codes (Ian, 1 October 2026: the raw LINE ID "looks particularly poor")
+    qrLineLabel: 'Scan to add us on LINE', // builder's
+    qrWhatsAppLabel: 'Scan to chat on WhatsApp', // builder's
+    qrLineAlt: 'QR code that adds High Level Thai on LINE', // builder's
+    qrWhatsAppAlt: 'QR code that opens a WhatsApp chat with High Level Thai', // builder's
+
     // ---------------------------------------------------------------- the capability pages (section 19, behind switches)
     capFitsLabel: 'Where it fits', // builder's
     capDoesLabel: 'What it does', // builder's
@@ -400,4 +406,6 @@ export const repositioningTh = {
     brCtaLabel: 'นัดคุยเบื้องต้นก่อน',
     abCtaLabel: 'นัดคุยเบื้องต้น',
     footerCapabilitiesHeading: 'ความสามารถ',
+    qrLineLabel: 'สแกนเพื่อเพิ่มเพื่อนใน LINE',
+    qrWhatsAppLabel: 'สแกนเพื่อแชททาง WhatsApp',
 };

@@ -21,6 +21,7 @@ import { FIT_CALL_BOOKING_URL } from '../config/features';
 import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL } from '../constants/contact';
 import { ROUTE_CONTACT } from '../constants/routes';
 import Seo from '../components/Seo';
+import ChannelQr from '../components/ChannelQr';
 import { FitCallButton, MessageBackups } from '../components/FitCallButtons';
 import { EVENTS, logEvent } from '../lib/analytics';
 import { fadeUp, heroIn } from '../lib/motion';
@@ -56,16 +57,18 @@ const Contact = () => {
                             <h3 className="mt-10 text-lg font-bold text-slate-950">{t('ctBackupHeading')}</h3>
                             <p className="mt-2 text-base leading-7 text-slate-600">{t('ctBackupLead')}</p>
                             <div className="mt-4">
-                                <MessageBackups place="contact" lead={false} />
+                                <MessageBackups place="contact" lead={false} center={false} />
                             </div>
+                            <ChannelQr className="mt-5 max-w-xs" />
                         </>
                     ) : (
                         <>
                             <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('ctBookHeading')}</h2>
                             <p className="mt-4 text-base leading-7 text-slate-600">{t('ctBookByMessage')}</p>
                             <div className="mt-6">
-                                <MessageBackups place="contact" lead={false} />
+                                <MessageBackups place="contact" lead={false} center={false} />
                             </div>
+                            <ChannelQr className="mt-5 max-w-xs" />
                             <p className="mt-4 text-sm leading-6 text-slate-500">{t('ctaFitCallNote')}</p>
                         </>
                     )}
