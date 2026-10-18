@@ -53,11 +53,16 @@ const BUTTON_CLASSES =
     'inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full px-5 text-base font-bold text-white shadow-lg transition-opacity hover:opacity-90 sm:w-auto sm:min-w-[15rem]';
 
 const Footer = () => {
-    const { t, lp } = useLanguage();
+    const { t, lp, thaiPending } = useLanguage();
     const year = new Date().getFullYear();
 
     return (
         <footer className="border-t border-white/10 bg-hltNavy text-slate-300">
+            {/* 18 October 2026: on a Thai address whose Thai copy isn't written yet, the page is
+                English throughout and says so here, once, in plain words. No machine Thai. */}
+            {thaiPending ? (
+                <p className="border-b border-white/10 bg-white/5 px-5 py-3 text-center text-sm text-slate-200">{t('thaiPendingNotice')}</p>
+            ) : null}
             <div className="container mx-auto px-5 py-14 sm:px-6 lg:py-16">
                 <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
                     {/* Block 1: brand and the one-sentence proposition. */}

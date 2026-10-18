@@ -11,17 +11,76 @@
 // capability is one tool the control method may choose. No result figures, no guarantees, no price.
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { localPath } from '../constants/lang';
 import { Link, useParams } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { CAPABILITIES } from '../config/features';
 import { capabilities } from '../copy/capabilities';
-import { ROUTE_PROBLEMS, capabilityRoute } from '../constants/routes';
+import { ROUTE_EXAMPLES, ROUTE_HOW_IT_WORKS, ROUTE_PROBLEMS, capabilityRoute } from '../constants/routes';
 import Seo from '../components/Seo';
 import FitCallButtons from '../components/FitCallButtons';
 import NotFound from './NotFound';
 import { EVENTS, logEvent } from '../lib/analytics';
 import { fadeUp, heroIn } from '../lib/motion';
+
+// The Websites page's extra sections, 18 October 2026 (Ian's change 2). New site or improving one,
+// the four things planned together, the advertising line, what the client owns, and the two links:
+// to how delivery works and to the website demonstration (the English examples page, where it
+// lives until its Thai exists).
+const WebsitesExtra = ({ extra }) => {
+    const { lp } = useLanguage();
+    return (
+        <>
+            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
+                    {[
+                        [extra.newHeading, extra.newBody],
+                        [extra.improveHeading, extra.improveBody],
+                    ].map(([heading, body]) => (
+                        <motion.div key={heading} {...fadeUp} className="rounded-2xl border border-slate-200 bg-stone-50 p-6 card-glass card-static sm:p-7">
+                            <h2 className="text-xl font-bold leading-7 text-slate-950">{heading}</h2>
+                            <p className="mt-3 text-base leading-7 text-slate-600">{body}</p>
+                        </motion.div>
+                    ))}
+                </div>
+            </section>
+            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-5xl">
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {extra.connectHeading}
+                    </motion.h2>
+                    <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        {extra.connect.map((item, index) => (
+                            <motion.li key={item.name} {...fadeUp} className="rounded-2xl border border-slate-200 bg-white p-5 card-glass card-static">
+                                <p className="text-sm font-bold text-indigo-600">{index + 1}</p>
+                                <h3 className="mt-1 text-lg font-bold text-slate-950">{item.name}</h3>
+                                <p className="mt-2 text-base leading-7 text-slate-600">{item.body}</p>
+                            </motion.li>
+                        ))}
+                    </ol>
+                </div>
+            </section>
+            <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
+                <motion.div {...fadeUp} className="mx-auto max-w-3xl">
+                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{extra.adHeading}</h2>
+                    <p className="mt-5 text-lg leading-8 text-slate-200">{extra.adBody}</p>
+                    <p className="mt-6 rounded-2xl border border-white/15 bg-white/5 p-5 text-base leading-7 text-white">{extra.ownBody}</p>
+                    <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+                        <Link to={`${lp(ROUTE_HOW_IT_WORKS)}#delivery`} className="inline-flex items-center gap-2 font-bold text-indigo-200 hover:text-white">
+                            {extra.deliveryLink}
+                            <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
+                        <Link to={`${localPath(ROUTE_EXAMPLES, 'en')}#website-demonstration`} className="inline-flex items-center gap-2 font-bold text-indigo-200 hover:text-white">
+                            {extra.demoLink}
+                            <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
+                    </div>
+                </motion.div>
+            </section>
+        </>
+    );
+};
 
 const Capability = () => {
     const { slug } = useParams();
@@ -46,6 +105,9 @@ const Capability = () => {
                     <p className="mt-6 text-base leading-8 text-slate-600 sm:text-lg sm:leading-9">{cap.description}</p>
                 </motion.div>
             </section>
+
+            {/* 18 October 2026: the Websites page's own sections (src/copy/offerRefresh1018.js). */}
+            {cap.extra ? <WebsitesExtra extra={cap.extra} /> : null}
 
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl space-y-8">

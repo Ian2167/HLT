@@ -17,6 +17,79 @@
   }
 }
 
+/* 18 October 2026: the website demonstration's screen change (motion-safe only), and one rule
+   that honours a visitor's "reduce motion" setting site-wide for CSS transitions and animations.
+   framer-motion's own animations follow the same setting through MotionConfig in src/App.jsx. */
+@keyframes fadeIn {
+  from { opacity: 0; filter: blur(2px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+/* The wow pass, 18 October 2026. Every effect explains something (an enquiry moving through, a
+   step being reached) and runs on transform and opacity only, in CSS, off the main thread. Easing
+   is the strong ease-out the design standard uses; nothing starts from scale(0). */
+:root {
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* The hero card: one enquiry followed through, row by row, once, then it holds. */
+@keyframes flowRowIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes flowTick {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+.hero-flow-row {
+  animation: flowRowIn 480ms var(--ease-out-strong) both;
+  animation-delay: calc(var(--i) * 650ms + 400ms);
+}
+.hero-flow-tick {
+  animation: flowTick 260ms var(--ease-out-strong) both;
+  animation-delay: calc(var(--i) * 650ms + 760ms);
+}
+
+/* The demonstration's autoplay progress: constant motion, so linear. */
+@keyframes demoProgress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* A soft light on the navy bands, so the dark grounds read as depth rather than a flat block. */
+.navy-glow {
+  background-image: radial-gradient(60rem 30rem at 85% -10%, rgba(129, 140, 248, 0.22), transparent 60%),
+    radial-gradient(40rem 24rem at 0% 110%, rgba(45, 212, 191, 0.12), transparent 60%);
+}
+
+/* Press feedback on every button-like control: it moves a little when pressed. */
+.press {
+  transition-property: transform, background-color, border-color, color, box-shadow;
+  transition-duration: 160ms;
+  transition-timing-function: var(--ease-out-strong);
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+/* Reduced motion means gentler, not nothing (the design standard): movement goes, the end state
+   shows at once, and short opacity changes stay. framer-motion follows the same setting through
+   MotionConfig in src/App.jsx. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .press:active {
+    transform: none;
+  }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

@@ -8,6 +8,9 @@
 //
 // WHAT THE PROVIDER GIVES A COMPONENT.
 //   language        'en' | 'th', from the URL
+//   contentLang     'en' | 'th', the language the page's words are in (18 October 2026: English on
+//                   a Thai address still waiting for its Thai copy; see THAI_PENDING_ROUTES)
+//   thaiPending     true on such an address, so the page can say it is in English for now
 //   t(key)          the string for that key in that language, as before
 //   lp(route)       the same route in the current language: lp('/about') is '/about' in Thai and
 //                   '/en/about' in English. Every internal link on the public site goes through it,
@@ -23,7 +26,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { translations } from '../translations';
-import { localPath, splitLang } from '../constants/lang';
+import { contentLangFor, localPath, splitLang } from '../constants/lang';
 
 const LanguageContext = createContext();
 
@@ -49,12 +52,17 @@ export const LanguageProvider = ({ children }) => {
     const { pathname, search, hash } = useLocation();
     const navigate = useNavigate();
     const { lang: language, route } = useMemo(() => splitLang(pathname), [pathname]);
+    // 18 October 2026: the words' language, which differs from the URL's only on a Thai address
+    // still waiting for its Thai copy (src/constants/lang.js, THAI_PENDING_ROUTES). There the whole
+    // page, chrome included, reads English, so no page mixes the two.
+    const contentLang = contentLangFor(route, language);
+    const thaiPending = language === 'th' && contentLang === 'en';
 
-    // The document's own language attribute follows the URL, so the prerendered HTML and the live
-    // page both tell a crawler and a screen reader which language they are reading.
+    // The document's own language attribute follows the words, so the prerendered HTML and the
+    // live page both tell a crawler and a screen reader which language they are reading.
     useEffect(() => {
-        document.documentElement.lang = language;
-    }, [language]);
+        document.documentElement.lang = contentLang;
+    }, [contentLang]);
 
     // The one redirect: a stored English preference, on the root URL only, on arrival only.
     useEffect(() => {
@@ -75,11 +83,11 @@ export const LanguageProvider = ({ children }) => {
         navigate(twinPath);
     }, [navigate, twinLang, twinPath]);
 
-    const t = useCallback((key) => translations[language][key] || key, [language]);
+    const t = useCallback((key) => translations[contentLang][key] || key, [contentLang]);
 
     const value = useMemo(
-        () => ({ language, route, t, lp, twinPath, twinLang, toggleLanguage }),
-        [language, route, t, lp, twinPath, twinLang, toggleLanguage],
+        () => ({ language, contentLang, thaiPending, route, t, lp, twinPath, twinLang, toggleLanguage }),
+        [language, contentLang, thaiPending, route, t, lp, twinPath, twinLang, toggleLanguage],
     );
 
     return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

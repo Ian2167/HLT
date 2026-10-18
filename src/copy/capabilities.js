@@ -7,7 +7,9 @@
 // src/config/features.js. Nothing here is public until Ian turns a switch on, and the copy gate
 // runs on each page before it does. Each capability is one of the tools the control method may
 // choose, which is how the pages say it.
-export const CAPABILITY_ORDER = ['crm', 'automation', 'ai-assistance', 'websites', 'booking', 'reviews', 'customer-reactivation', 'reporting'];
+import { websitesCapability } from './offerRefresh1018.js';
+
+export const CAPABILITY_ORDER =['crm', 'automation', 'ai-assistance', 'websites', 'booking', 'reviews', 'customer-reactivation', 'reporting'];
 
 export const capabilities = {
     crm: {
@@ -91,3 +93,9 @@ export const capabilities = {
         controls: 'exceptions first, a daily summary, overdue and unowned items, selected indicators, the routine kept out of sight',
     },
 };
+
+// 18 October 2026 (A-044, Ian's change 2: "Include new websites and website improvement clearly"):
+// the Websites page is switched on, with its title, description and headline rewritten and an
+// `extra` block (new site, improving one, the four things planned together, advertising, ownership)
+// that only this page renders. The fits / does / not / controls lines above stay as drafted.
+capabilities.websites = { ...capabilities.websites, ...websitesCapability };

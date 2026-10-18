@@ -23,6 +23,9 @@ export function render(url) {
         </StrictMode>,
     );
     const head = stopHeadCapture();
-    const { lang } = splitLang(url);
-    return { html, head: head[head.length - 1] || null, lang };
+    const last = head[head.length - 1] || null;
+    // The page's words decide <html lang> (18 October 2026): a Thai address still waiting for its
+    // Thai copy renders English and says so. The head carries that language; the URL is the fallback.
+    const lang = last?.lang || splitLang(url).lang;
+    return { html, head: last, lang };
 }

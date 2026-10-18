@@ -56,6 +56,7 @@ import { visibilityRefreshCopy, visibilityRefreshTh } from './copy/visibilityRef
 // repositioned sections in English until Ann's pass, except the handful of chrome labels in
 // repositioningTh. See the module's own header.
 import { repositioningCopy, repositioningTh } from './copy/repositioning';
+import { offerRefreshCopy } from './copy/offerRefresh1018';
 
 export const translations = {
     en: {
@@ -484,8 +485,14 @@ export const translations = {
         // 30 September 2026: the visibility refresh (bridge row 4007).
         ...visibilityRefreshCopy,
 
-        // 1 October 2026: the repositioning. LAST of all, so it wins.
-        ...repositioningCopy
+        // 1 October 2026: the repositioning.
+        ...repositioningCopy,
+
+        // 18 October 2026: the offer refresh (A-044), Ian's six changes. LAST of all, so it wins.
+        // English only. It is not spread into `th`: a page carrying these lines renders English
+        // on its Thai address (THAI_PENDING_ROUTES, src/constants/lang.js), or shows the new
+        // sections on its English page only (Examples), so nothing reaches a Thai page as English.
+        ...offerRefreshCopy
     },
     th: {
         // TH PENDING: English values on purpose. See the note at the top of this file.

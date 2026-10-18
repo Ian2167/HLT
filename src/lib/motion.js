@@ -55,6 +55,24 @@ export const heroIn = {
     },
 };
 
+// 18 October 2026 (A-044): a line that draws itself left to right once it is in view, for the
+// three stages on the home page. Transform only; the prerender and its first paint get the drawn
+// line, and a visitor who has asked for reduced motion gets it drawn (MotionConfig in App.jsx).
+export const drawX = {
+    get initial() {
+        return noMotion() ? false : { scaleX: 0 };
+    },
+    get whileInView() {
+        return noMotion() ? undefined : { scaleX: 1 };
+    },
+    get viewport() {
+        return noMotion() ? undefined : { once: true, amount: 0.6 };
+    },
+    get transition() {
+        return noMotion() ? { duration: 0 } : { duration: 0.9, ease: [0.77, 0, 0.175, 1] };
+    },
+};
+
 // A staggered reveal for lists: the same fadeUp with a per-item delay.
 export const fadeUpDelayed = (index, step = 0.04) => ({
     ...fadeUp,

@@ -5,6 +5,9 @@ import { useLanguage } from '../context/LanguageContext';
 import cardClinic from '../assets/card-clinic.png';
 import DiagnosticBridge from '../components/DiagnosticBridge';
 
+// Off since 18 October 2026: no compliance claim on any HLT page.
+const SHOW_PDPA_CARD = false;
+
 const Clinics = () => {
     const { t, language } = useLanguage();
     const isEn = language === 'en';
@@ -123,6 +126,10 @@ const Clinics = () => {
                             </p>
                         </div>
 
+                        {/* 18 October 2026 (A-044): the "PDPA Compliant" card stops rendering. HLT
+                            asserts no PDPA or GDPR compliance anywhere (bridge row 4822). The strings
+                            stay in src/translations.js, on Ian's "do not delete". */}
+                        {SHOW_PDPA_CARD ? (
                         <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
                             <div className="w-12 h-12 bg-teal-100 dark:bg-teal-900/30 rounded-lg flex items-center justify-center mb-6">
                                 <Shield className="text-teal-600 dark:text-teal-400" />
@@ -132,6 +139,7 @@ const Clinics = () => {
                                 {t('pdpaCompliantDesc')}
                             </p>
                         </div>
+                        ) : null}
 
                         <div className="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
                             <div className="w-12 h-12 bg-teal-100 dark:bg-teal-900/30 rounded-lg flex items-center justify-center mb-6">

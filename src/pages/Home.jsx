@@ -37,14 +37,15 @@ import LeakVisual from '../components/LeakVisual';
 import ProcessFlow from '../components/flows/ProcessFlow';
 import ControlFlow from '../components/flows/ControlFlow';
 import FitCallButtons from '../components/FitCallButtons';
+import { HeroFlowCard, ReceiveBand, StagesBand, WebsitesBand } from '../components/offer/OfferBands';
 import { EVENTS, logEvent } from '../lib/analytics';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
 export const CTA_CLASSES =
-    'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-base font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
+    'press inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-4 text-base font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
 
 export const SECONDARY_CTA_CLASSES =
-    'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/50 px-7 py-4 text-base font-bold text-white transition-colors hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
+    'press inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/50 px-7 py-4 text-base font-bold text-white transition-colors hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
 
 const TEXT_LINK_CLASSES =
     'inline-flex items-center gap-2 text-base font-bold text-indigo-600 transition-colors hover:text-indigo-500';
@@ -52,7 +53,7 @@ const TEXT_LINK_CLASSES =
 // The free test's button: outlined in the site's indigo on the light ground, full width on a phone.
 // Ian, 30 September: the Blindspot Test call "should include FREE and be more obvious".
 export const OUTLINE_CTA_CLASSES =
-    'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border-2 border-indigo-600 px-7 py-4 text-base font-bold text-indigo-700 transition-colors hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
+    'press inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border-2 border-indigo-600 px-7 py-4 text-base font-bold text-indigo-700 transition-colors hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
 
 // Marks, not copy: one glyph per problem and per module, from the lucide set the site already uses.
 const PROBLEM_ICONS = [Wallet, UserCog, Eye];
@@ -92,7 +93,7 @@ const Home = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-hltNavy/70 via-hltNavy/20 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-b from-hltNavy/30 via-transparent to-hltNavy/60" />
 
-                <div className="relative mx-auto w-full max-w-6xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+                <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-5 py-16 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1fr)_22rem] lg:px-8 lg:py-24">
                     <motion.div {...heroIn} className="max-w-3xl">
                         <h1 className="text-[2.125rem] font-bold leading-[1.15] text-white sm:text-5xl sm:leading-[1.1]">
                             {t('homeHeroHeadline')}
@@ -109,8 +110,19 @@ const Home = () => {
                             </Link>
                         </div>
                     </motion.div>
+                    {/* The wow pass, 18 October 2026: one enquiry followed through, beside the
+                        headline on a laptop and under the button on a phone. */}
+                    <div className="lg:justify-self-end">
+                        <HeroFlowCard />
+                    </div>
                 </div>
             </section>
+
+            {/* 18 October 2026, Ian's change 1: how we start, goals first, Understand / Diagnose /
+                Improve. The hero above now leads with the owner's objectives too (its words are in
+                src/copy/offerRefresh1018.js; his 1 October hero is kept in repositioning.js). The
+                sections below stay: owner dependence is one possible issue, not the starting one. */}
+            <StagesBand />
 
             {/* 2. Small problems become expensive when nobody owns them. The seven leaks feeding
                 the three losses, drawn as text. */}
@@ -171,7 +183,7 @@ const Home = () => {
             </section>
 
             {/* 4. The week away. One question, one line, and the free test. */}
-            <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
+            <section className="navy-glow bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <Clock size={32} aria-hidden="true" className="mx-auto text-indigo-200" />
                     <h2 className="mt-5 text-2xl font-bold leading-tight sm:text-3xl">{t('weekHeading')}</h2>
@@ -251,6 +263,9 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* 18 October 2026, Ian's change 2: new websites and website improvement. */}
+            <WebsitesBand />
+
             {/* 8. Where AI fits, in four lines. The full list lives on Problems We Fix. */}
             <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-7 card-glass card-static sm:p-9">
@@ -283,9 +298,13 @@ const Home = () => {
                 </motion.div>
             </section>
 
+            {/* 18 October 2026, Ian's change 3: what a client receives, each labelled Example or
+                Concept, handing to the full examples on /examples. */}
+            <ReceiveBand />
+
             {/* 10. The final call. The Fit Call, the Business Read beside it, LINE and WhatsApp
                 beneath. */}
-            <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
+            <section className="navy-glow bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('finalHeading')}</h2>
                     <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{t('finalBody')}</p>

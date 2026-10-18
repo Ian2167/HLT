@@ -30,11 +30,19 @@ export const CAPABILITIES = {
     crm: false,
     automation: false,
     'ai-assistance': false,
-    websites: false,
+    // On, 18 October 2026: Ian's change 2, "Include new websites and website improvement clearly".
+    // The page's words are in src/copy/offerRefresh1018.js (websitesCapability).
+    websites: true,
     booking: false,
     reviews: false,
     'customer-reactivation': false,
     reporting: false,
 };
 
-export const enabledCapabilities = () => Object.keys(CAPABILITIES).filter((slug) => CAPABILITIES[slug]);
+// ---------------------------------------------------------------- the Business Read fee (18 October 2026)
+// 'single' : one package, the reconciled scope, at Ian's usual price ("Business Read usual price
+//            THB 22500", Ian, 18 October 2026). The preview's setting, for his approval.
+// 'tiers'  : the three tiers and the "From THB 15,000" lines exactly as live since 1 October.
+export const BR_PRICING = 'single';
+
+export const enabledCapabilities =() => Object.keys(CAPABILITIES).filter((slug) => CAPABILITIES[slug]);

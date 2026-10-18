@@ -18,21 +18,68 @@
 // beside a static one rather than replacing it. With the static tag gone, the one rendered here is
 // the only one.
 import { useLanguage } from '../context/LanguageContext';
-import { OG_LOCALE, SITE_URL, absoluteUrl } from '../constants/lang';
+import { OG_LOCALE, SITE_URL, absoluteUrl, isThaiPending } from '../constants/lang';
 import { CONTACT_EMAIL, CONTACT_PHONE_E164, LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 import { captureHead } from '../lib/head';
 
 const SITE_NAME = 'High Level Thai';
 const DEFAULT_IMAGE = `${SITE_URL}/brand/og-image.png`;
 
-const Seo = ({ title, description, route, image = DEFAULT_IMAGE, organization = false, noindex = false }) => {
-    const { language } = useLanguage();
+// 18 October 2026 (A-044, the website status report's fix 4): breadcrumbs on every page but the
+// home, and a Service entry on the Business Read. The crumb's name is the page's own nav label.
+const CRUMB_KEYS = {
+    '/business-read': 'brNavLink',
+    '/how-it-works': 'hiwNavLink',
+    '/problems-we-fix': 'problemsNavLink',
+    '/who-we-help': 'whoNavLink',
+    '/examples': 'exNavLink',
+    '/about': 'aboutNavLink',
+    '/contact': 'contactNavLink',
+    '/hua-hin': 'huaHinNavLink',
+    '/business-blindspots': 'blindNavLink',
+    '/owner-dependency': 'odNavLink',
+};
+
+const Seo = ({ title, description, route, image = DEFAULT_IMAGE, organization = false, noindex = false, service = null }) => {
+    const { contentLang, t } = useLanguage();
+    // A Thai address still waiting for its Thai copy is the English page in all but address
+    // (src/constants/lang.js, THAI_PENDING_ROUTES), so both addresses name the English page as
+    // canonical and offer no Thai alternate until the Thai exists.
+    const language = contentLang;
     const url = absoluteUrl(route, language);
-    const alternates = {
-        th: absoluteUrl(route, 'th'),
-        en: absoluteUrl(route, 'en'),
-        'x-default': absoluteUrl(route, 'th'),
-    };
+    const alternates = isThaiPending(route)
+        ?{ en: absoluteUrl(route, 'en'), 'x-default': absoluteUrl(route, 'en') }
+        : {
+              th: absoluteUrl(route, 'th'),
+              en: absoluteUrl(route, 'en'),
+              'x-default': absoluteUrl(route, 'th'),
+          };
+
+    const crumbName = CRUMB_KEYS[route] ? t(CRUMB_KEYS[route]) : String(title).split('|')[0].trim();
+    const breadcrumbs =
+        route === '/' || noindex
+            ? null
+            : {
+                  '@context': 'https://schema.org',
+                  '@type': 'BreadcrumbList',
+                  itemListElement: [
+                      { '@type': 'ListItem', position: 1, name: 'High Level Thai', item: absoluteUrl('/', language) },
+                      { '@type': 'ListItem', position: 2, name: crumbName, item: url },
+                  ],
+              };
+
+    // No price, no offer and no person, by the status report's own wording.
+    const serviceLd = service
+        ? {
+              '@context': 'https://schema.org',
+              '@type': 'Service',
+              name: service.name,
+              description: service.description,
+              url,
+              areaServed: ['Hua Hin', 'Thailand'],
+              provider: { '@type': 'Organization', name: 'High Level Thai Ltd.', url: SITE_URL },
+          }
+        : null;
 
     const org = organization
         ? {
@@ -61,7 +108,7 @@ const Seo = ({ title, description, route, image = DEFAULT_IMAGE, organization = 
                     <title data-seo="">{title}</title>
                     <meta data-seo="" name="description" content={description} />
                     <link data-seo="" rel="canonical" href={url} />
-                    <link data-seo="" rel="alternate" hrefLang="th" href={alternates.th} />
+                    {alternates.th ? <link data-seo="" rel="alternate" hrefLang="th" href={alternates.th} /> : null}
                     <link data-seo="" rel="alternate" hrefLang="en" href={alternates.en} />
                     <link data-seo="" rel="alternate" hrefLang="x-default" href={alternates['x-default']} />
                     <meta data-seo="" property="og:type" content="website" />
@@ -76,6 +123,8 @@ const Seo = ({ title, description, route, image = DEFAULT_IMAGE, organization = 
                 </>
             )}
             {org ? <script type="application/ld+json">{JSON.stringify(org)}</script> : null}
+            {breadcrumbs ? <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script> : null}
+            {serviceLd ? <script type="application/ld+json">{JSON.stringify(serviceLd)}</script> : null}
         </>
     );
 };

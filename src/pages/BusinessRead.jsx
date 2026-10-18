@@ -1,4 +1,16 @@
 // BusinessRead.jsx — /business-read and /en/business-read, "The Business Read".
+//
+// RECONCILED 18 October 2026 (A-044, Ian's change 6): the page now matches the scope confirmed on the bridge
+// (row 4822): goals-first research, a 60-minute owner conversation, a manager conversation of up
+// to 30 minutes where it helps, and a practical plan for one priority. What it does not include is
+// said plainly (implementation, support, hosting, licences, marketing). The fee follows BR_PRICING
+// in src/config/features.js: 'single' shows one package at Ian's usual price ("Business Read usual
+// price THB 22500", 18 October); 'tiers' shows the three tiers exactly as live since 1 October.
+// The workflow cards, the eight questions, the drawn sample read and "How it runs" (whose sixty to
+// ninety minutes contradicted the scope) stop rendering; every string stays in its module.
+// Copy for the reconciled sections: src/copy/offerRefresh1018.js.
+//
+// THE HISTORY BELOW is the page before 18 October.
 // Built 14 September 2026, restructured 18 September, rebuilt at the top 30 September, REBUILT AT
 // THE TOP AGAIN 1 October 2026 on the repositioning (Ian's brief of that morning, section 10, and
 // his ruling of the same day: "the THB 15k as the base should now be published").
@@ -22,11 +34,13 @@
 //
 // COPY: src/copy/repositioning.js for the new sections, src/copy/businessReadRebuild.js for the rest.
 import { motion } from 'framer-motion';
-import { Check, FileText, Layers, Users, X } from 'lucide-react';
+import { ArrowRight, Check, FileText, Layers, Users, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { BR_PRICING } from '../config/features';
+import { localPath } from '../constants/lang';
 import { useLanguage } from '../context/LanguageContext';
-import { ROUTE_BUSINESS_READ } from '../constants/routes';
+import { ROUTE_BUSINESS_READ, ROUTE_EXAMPLES } from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
-import BusinessReadMock from '../components/mocks/BusinessReadMock';
 import { CellValue, DepthLadder } from '../components/mocks/TierVisuals';
 import Seo from '../components/Seo';
 import { FitCallButton } from '../components/FitCallButtons';
@@ -37,7 +51,11 @@ import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 const TIER_ICONS = [FileText, Users, Layers];
 
 const BusinessRead = () => {
-    const { t } = useLanguage();
+    const { t, contentLang } = useLanguage();
+    const single = BR_PRICING === 'single';
+    const priceLine = single ? t('brSinglePriceLine') : t('brPriceLine');
+    const how = [1, 2, 3, 4].map((n) => ({ n, name: t(`brHow${n}Name`), body: t(`brHow${n}Body`) }));
+    const receive = [1, 2, 3, 4, 5].map((n) => t(`brGet${n}`));
 
     const rows = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({
         label: t(`brRow${n}Label`),
@@ -54,22 +72,18 @@ const BusinessRead = () => {
         depth: n,
     }));
 
-    const steps = [1, 2, 3, 4, 5].map((n) => ({
-        number: `${n}.`,
-        lead: t(`brStep${n}Lead`),
-        body: t(`brStep${n}Body`),
-    }));
+    const faqs = [1, 2, 3, 4, 5, 6].map((n) => ({ q: t(`brFaq${n}Q`), a: t(`brFaq${n}A`) }));
 
-    const faqs = [1, 2, 3, 4, 5].map((n) => ({ q: t(`brFaq${n}Q`), a: t(`brFaq${n}A`) }));
-
-    const workflows = [1, 2, 3, 4, 5].map((n) => t(`brWf${n}`));
-    const questions = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => t(`brQ${n}`));
-    const outputs = [1, 2, 3, 4, 5, 6, 7].map((n) => t(`brOut${n}`));
     const notThis = [1, 2, 3].map((n) => t(`brNot${n}`));
 
     return (
         <div className="min-h-screen pt-20 lg:pt-24">
-            <Seo title={t('brMetaTitle')} description={t('brMetaDescription')} route={ROUTE_BUSINESS_READ} />
+            <Seo
+                title={t('brMetaTitle')}
+                description={t('brMetaDescription')}
+                route={ROUTE_BUSINESS_READ}
+                service={{ name: t('brSingleName'), description: t('brMetaDescription') }}
+            />
 
             {/* Hero. Ian, 15 Sept 2026 08:1x Bangkok: "the Business Read needs an Image, maybe a person
                 with a magnifying glass". The same photograph under the same navy wash. */}
@@ -94,65 +108,37 @@ const BusinessRead = () => {
                             <FitCallButton place="br-hero" label={t('brCtaLabel')} />
                         </div>
                         <p className="mx-auto mt-5 max-w-xl text-sm text-slate-200 sm:text-base">{t('brCtaNote')}</p>
-                        <p className="mx-auto mt-2 max-w-xl text-sm font-semibold text-white sm:text-base">{t('brPriceLine')}</p>
+                        <p className="mx-auto mt-2 max-w-xl text-sm font-semibold text-white sm:text-base">{priceLine}</p>
                     </motion.div>
                 </div>
             </section>
 
-            {/* We map one real workflow. Five examples, as cards. */}
-            <section className="bg-white py-16 sm:py-20">
+            {/* How the Read works: research first, the owner hour, the manager half hour, one plan. */}
+            <section id="how-the-read-works" className="bg-white py-16 sm:py-20">
                 <div className="mx-auto max-w-6xl px-5 sm:px-6">
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">
-                        {t('brWorkflowHeading')}
+                        {t('brHowHeading')}
                     </motion.h2>
-                    <motion.p {...fadeUp} className="mx-auto mt-4 max-w-2xl text-center text-base leading-8 text-slate-600 sm:text-lg">
-                        {t('brWorkflowLead')}
-                    </motion.p>
-                    <ul className="mx-auto mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
-                        {workflows.map((workflow, index) => (
-                            <motion.li
-                                key={workflow}
-                                {...fadeUpDelayed(index)}
-                                className="rounded-xl border border-slate-200 bg-stone-50 px-5 py-4 text-base font-semibold leading-7 text-slate-900 card-glass card-static"
-                            >
-                                {workflow}
-                            </motion.li>
-                        ))}
-                    </ul>
-                </div>
-            </section>
-
-            {/* What we examine: eight questions at each stage. */}
-            <section className="bg-slate-50 py-16 sm:py-20">
-                <div className="mx-auto max-w-6xl px-5 sm:px-6">
-                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">
-                        {t('brExamineHeading')}
-                    </motion.h2>
-                    <motion.p {...fadeUp} className="mt-4 text-center text-base leading-8 text-slate-600 sm:text-lg">
-                        {t('brExamineLead')}
-                    </motion.p>
-                    <ol className="mx-auto mt-8 grid max-w-4xl gap-4 sm:grid-cols-2">
-                        {questions.map((question, index) => (
-                            <motion.li key={question} {...fadeUpDelayed(index)} className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 card-glass card-static">
-                                <ProcessNumber label={`${index + 1}`} decorative />
-                                <span className="text-base font-semibold leading-7 text-slate-900">{question}</span>
+                    <ol className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        {how.map((step, index) => (
+                            <motion.li key={step.n} {...fadeUpDelayed(index)} className="rounded-2xl border border-slate-200 bg-stone-50 p-5 card-glass card-static">
+                                <ProcessNumber label={`${step.n}`} decorative />
+                                <h3 className="mt-4 text-lg font-bold leading-7 text-slate-900">{step.name}</h3>
+                                <p className="mt-2 text-base leading-7 text-slate-600">{step.body}</p>
                             </motion.li>
                         ))}
                     </ol>
                 </div>
             </section>
 
-            {/* Your Business Control Map: what the read identifies, then the read drawn. */}
-            <section className="bg-white py-16 sm:py-20">
-                <div className="container mx-auto px-5 sm:px-6">
+            {/* What you receive, and where to see a sample of it. */}
+            <section className="bg-slate-50 py-16 sm:py-20">
+                <div className="mx-auto max-w-6xl px-5 sm:px-6">
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">
-                        {t('brOutputHeading')}
+                        {t('brGetHeading')}
                     </motion.h2>
-                    <motion.p {...fadeUp} className="mt-4 text-center text-base leading-8 text-slate-600 sm:text-lg">
-                        {t('brOutputLead')}
-                    </motion.p>
                     <ul className="mx-auto mt-8 grid max-w-4xl gap-4 sm:grid-cols-2">
-                        {outputs.map((item, index) => (
+                        {receive.map((item, index) => (
                             <motion.li key={item} {...fadeUpDelayed(index)} className="flex gap-3 text-base leading-7 text-slate-700">
                                 <span className="mt-1 shrink-0 text-indigo-600">
                                     <Check size={20} aria-hidden="true" />
@@ -161,9 +147,28 @@ const BusinessRead = () => {
                             </motion.li>
                         ))}
                     </ul>
-                    <div className="mx-auto mt-12 max-w-3xl">
-                        <BusinessReadMock />
+                    <motion.p {...fadeUp} className="mx-auto mt-8 max-w-3xl text-center text-sm leading-7 text-slate-500">
+                        {t('brReceiveNote')}
+                    </motion.p>
+                    <div className="mt-6 text-center">
+                        <Link
+                            to={`${localPath(ROUTE_EXAMPLES, contentLang)}#sample-business-map`}
+                            className="inline-flex items-center gap-2 text-base font-bold text-indigo-600 transition-colors hover:text-indigo-500"
+                        >
+                            {t('brSeeExamples')}
+                            <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
                     </div>
+                </div>
+            </section>
+
+            {/* What the Read doesn't include: the claim limit, said plainly. */}
+            <section className="bg-white py-16">
+                <div className="mx-auto max-w-6xl px-5 sm:px-6">
+                    <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border-l-4 border-indigo-600 bg-indigo-50 p-6 sm:p-8">
+                        <h2 className="text-2xl font-bold text-slate-900">{t('brExcludedHeading')}</h2>
+                        <p className="mt-4 text-lg leading-8 text-slate-700">{t('brExcludedBody')}</p>
+                    </motion.div>
                 </div>
             </section>
 
@@ -186,6 +191,28 @@ const BusinessRead = () => {
                 </div>
             </section>
 
+            {single ? (
+                <>
+            {/* The fee: one package, at Ian's usual price (18 October 2026). */}
+            <section id="br-fee" className="bg-white py-20">
+                <div className="mx-auto max-w-6xl px-5 sm:px-6">
+                    <h2 className="mb-10 text-center text-2xl font-bold text-slate-900 sm:text-3xl">{t('brPriceHeading')}</h2>
+                    <div className="mx-auto max-w-xl rounded-2xl border border-slate-200 bg-white p-8 shadow-sm card-glass card-static">
+                        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700">
+                            <FileText size={22} aria-hidden="true" />
+                        </span>
+                        <h3 className="mt-5 text-xl font-bold text-slate-900">{t('brSingleName')}</h3>
+                        <p className="mt-3 text-base leading-7 text-slate-600">{t('brSingleIncludes')}</p>
+                        <p className="mt-6">
+                            <span className="text-3xl font-bold text-slate-900">{t('brSinglePrice')}</span>
+                            <span className="ml-1 text-sm text-slate-500">{t('brSingleVat')}</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+                </>
+            ) : (
+                <>
             {/* The three tiers. Prices as ruled, THB only, ex VAT. */}
             <section className="bg-white py-20">
                 <div className="container mx-auto px-5 sm:px-6">
@@ -265,25 +292,10 @@ const BusinessRead = () => {
                 </div>
             </section>
 
-            {/* How it runs. */}
-            <section className="bg-slate-50 py-20">
-                <div className="container mx-auto px-5 sm:px-6">
-                    <h2 className="mb-12 text-center text-2xl font-bold text-slate-900 sm:text-3xl">{t('brStepsHeading')}</h2>
-                    <ol className="relative mx-auto max-w-3xl">
-                        <span aria-hidden="true" className="absolute bottom-7 left-7 top-7 w-px bg-slate-300" />
-                        {steps.map((step) => (
-                            <li key={step.number} className="relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
-                                <ProcessNumber label={step.number} />
-                                <p className="pt-3 text-slate-600">
-                                    <span className="font-bold text-slate-900">{step.lead}</span> <span>{step.body}</span>
-                                </p>
-                            </li>
-                        ))}
-                    </ol>
-                </div>
-            </section>
+                </>
+            )}
 
-            {/* The five questions. */}
+            {/* The questions owners ask first: six since 18 October 2026. */}
             <section className="bg-white py-20">
                 <div className="container mx-auto px-5 sm:px-6">
                     <h2 className="mb-12 text-center text-2xl font-bold text-slate-900 sm:text-3xl">{t('brFaqHeading')}</h2>
@@ -303,7 +315,7 @@ const BusinessRead = () => {
                 <div className="container mx-auto px-5 text-center sm:px-6">
                     <h2 className="mb-5 text-2xl font-bold sm:text-3xl">{t('brHonest')}</h2>
                     <p className="mx-auto mb-3 max-w-2xl text-lg text-slate-200">{t('brNoProject')}</p>
-                    <p className="mx-auto mb-10 max-w-2xl text-base font-semibold text-white">{t('brPriceLine')}</p>
+                    <p className="mx-auto mb-10 max-w-2xl text-base font-semibold text-white">{priceLine}</p>
                     <div className="flex justify-center">
                         <FitCallButton place="br-final" label={t('brCtaLabel')} />
                     </div>

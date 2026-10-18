@@ -23,6 +23,7 @@ import ProcessNumber from '../components/mocks/ProcessNumber';
 import DecisionFlow from '../components/flows/DecisionFlow';
 import FitCallButtons, { FitCallButton } from '../components/FitCallButtons';
 import Seo from '../components/Seo';
+import DeliverySection from '../components/offer/DeliverySection';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
 const HowItWorks = () => {
@@ -79,6 +80,9 @@ const HowItWorks = () => {
                     </motion.p>
                 </div>
             </section>
+
+            {/* 18 October 2026, Ian's change 5: how a build is delivered and what stays yours. */}
+            <DeliverySection />
 
             {/* Owner by exception, as a flow. */}
             <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">

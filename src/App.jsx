@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { MotionConfig } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useLocation, useParams } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
@@ -106,6 +107,9 @@ const child = (route) => route.replace(/^\//, '');
 // prerender (StaticRouter, src/entry-server.jsx) render the same tree.
 export function AppShell() {
   return (
+      // 18 October 2026 (A-044): every framer-motion animation on the site follows the visitor's
+      // "reduce motion" setting. Reduced, an element appears in place with no rise or fade.
+      <MotionConfig reducedMotion="user">
       <LanguageProvider>
         <ScrollToTop />
         <ClearPrerenderFlag />
@@ -166,6 +170,7 @@ export function AppShell() {
           <Analytics />
         </div>
       </LanguageProvider>
+      </MotionConfig>
   );
 }
 

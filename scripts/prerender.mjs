@@ -34,7 +34,8 @@ const headTags = (h, previewNoindex) => {
         `<title data-seo="">${escapeText(h.title)}</title>`,
         `<meta data-seo="" name="description" content="${escapeAttr(h.description)}">`,
         `<link data-seo="" rel="canonical" href="${escapeAttr(h.url)}">`,
-        `<link data-seo="" rel="alternate" hreflang="th" href="${escapeAttr(h.alternates.th)}">`,
+        // No Thai alternate on a page still waiting for its Thai copy (18 October 2026).
+        ...(h.alternates.th ? [`<link data-seo="" rel="alternate" hreflang="th" href="${escapeAttr(h.alternates.th)}">`] : []),
         `<link data-seo="" rel="alternate" hreflang="en" href="${escapeAttr(h.alternates.en)}">`,
         `<link data-seo="" rel="alternate" hreflang="x-default" href="${escapeAttr(h.alternates['x-default'])}">`,
         `<meta data-seo="" property="og:type" content="website">`,
@@ -103,10 +104,14 @@ export async function prerender({ root = process.cwd() } = {}) {
 
     // The sitemap: indexable pages only, each with its alternates.
     const today = new Date().toISOString().slice(0, 10);
+    // 18 October 2026: a route still waiting for its Thai copy is listed once, in English, with no
+    // Thai alternate (src/constants/lang.js, THAI_PENDING_ROUTES). Its Thai address still serves.
+    const { isThaiPending } = lang;
     const entries = INDEXABLE_ROUTES.flatMap((route) =>
-        LANGS.map((code) => {
-            const alts = LANGS.map((c) => `    <xhtml:link rel="alternate" hreflang="${c}" href="${absoluteUrl(route, c)}"/>`);
-            alts.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${absoluteUrl(route, 'th')}"/>`);
+        (isThaiPending(route) ? ['en'] : LANGS).map((code) => {
+            const codes = isThaiPending(route) ? ['en'] : LANGS;
+            const alts = codes.map((c) => `    <xhtml:link rel="alternate" hreflang="${c}" href="${absoluteUrl(route, c)}"/>`);
+            alts.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${absoluteUrl(route, isThaiPending(route) ? 'en' : 'th')}"/>`);
             return `  <url>\n    <loc>${absoluteUrl(route, code)}</loc>\n    <lastmod>${today}</lastmod>\n${alts.join('\n')}\n  </url>`;
         }),
     );

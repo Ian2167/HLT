@@ -24,9 +24,12 @@ import { ROUTE_BUSINESS_READ, ROUTE_EXAMPLES } from '../constants/routes';
 import Seo from '../components/Seo';
 import { CTA_CLASSES } from './Home';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
+import { ImprovementPlanExtract, SampleBusinessMap } from '../components/offer/SampleArtefacts';
+import WebsiteDemo from '../components/offer/WebsiteDemo';
+import SalesPathExplorer from '../components/offer/SalesPathExplorer';
 
 const Examples = () => {
-    const { t, lp } = useLanguage();
+    const { t, lp, contentLang } = useLanguage();
 
     const examples = [1, 2, 3, 4].map((n) => ({
         title: t(`ex${n}Title`),
@@ -46,6 +49,25 @@ const Examples = () => {
                     <p className="mt-6 text-base leading-8 text-slate-600 sm:text-lg sm:leading-9">{t('exHeroLead')}</p>
                 </motion.div>
             </section>
+
+            {/* 18 October 2026, Ian's changes 3 and 4: what a client receives (a sample business map,
+                a plan extract, a website demonstration) and the commercial path step by step, all
+                on an invented clinic and labelled Example or Concept. ENGLISH PAGE ONLY until their
+                Thai exists, so the Thai page keeps its own Thai and never mixes in English. */}
+            {contentLang === 'en' ? (
+                <section id="what-a-client-receives" className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                    <div className="mx-auto max-w-6xl space-y-8">
+                        <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
+                            <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('exArtefactsHeading')}</h2>
+                            <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">{t('exArtefactsLead')}</p>
+                        </motion.div>
+                        <SampleBusinessMap />
+                        <ImprovementPlanExtract />
+                        <WebsiteDemo />
+                        <SalesPathExplorer />
+                    </div>
+                </section>
+            ) : null}
 
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-4xl space-y-8">

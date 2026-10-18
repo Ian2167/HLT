@@ -51,5 +51,26 @@ export function absoluteUrl(route, lang) {
     return `${SITE_URL}${localPath(route, lang)}`;
 }
 
+// THAI ADDRESSES WAITING FOR THAI COPY, 18 October 2026 (A-044, and the website status report of
+// that day: "7 of 11 Thai addresses carry the English title, H1 and description").
+//
+// These pages' bodies are English on their Thai address, under Ian's "English first" of 1 October,
+// while the header, buttons and footer carried machine Thai. That mixed two languages on one page
+// and gave Google an English page posing as Thai, a near-duplicate of its /en twin. Ian, 18 October:
+// "fix the English and Thai mixing on the default home page and the Business Read page"; the brief:
+// "don't publish machine Thai".
+//
+// So while a route is listed here its Thai address renders in English throughout (header and
+// footer included), says so in a one-line notice, declares lang="en", points its canonical at the
+// /en twin, and is left out of the sitemap's Thai entries. The Thai address itself keeps working.
+// When Ann's native Thai for a page lands, delete its line here and it is a Thai page again.
+export const THAI_PENDING_ROUTES = ['/', '/business-read', '/how-it-works', '/problems-we-fix', '/who-we-help', '/about', '/contact'];
+
+// The capability pages have never had Thai; they are pending by definition.
+export const isThaiPending = (route) => THAI_PENDING_ROUTES.includes(route) || route.startsWith('/capabilities/');
+
+// The language a page's words are in: English for a pending route on its Thai address.
+export const contentLangFor = (route, lang) => (lang === 'th' && isThaiPending(route) ? 'en' : lang);
+
 // The Open Graph locale for each language.
 export const OG_LOCALE = { en: 'en_GB', th: 'th_TH' };

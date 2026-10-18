@@ -44,9 +44,10 @@ const MOBILE_CTA_CLASSES =
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const { language, t, lp } = useLanguage();
-    // Only the menu button's aria labels still come from the old copy file.
-    const copy = hltWebsiteCopy[language]?.nav || hltWebsiteCopy.th.nav;
+    const { contentLang, t, lp } = useLanguage();
+    // Only the menu button's aria labels still come from the old copy file. They follow the page's
+    // words (18 October 2026), so an English page on a Thai address is English throughout.
+    const copy = hltWebsiteCopy[contentLang]?.nav || hltWebsiteCopy.th.nav;
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
