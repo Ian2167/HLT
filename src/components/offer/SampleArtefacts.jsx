@@ -34,7 +34,7 @@ const STATUS_STYLE = {
 };
 
 export const ArtefactTag = ({ children }) => (
-    <span className="inline-block rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-amber-800">
+    <span className="inline-block whitespace-nowrap rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-amber-800">
         {children}
     </span>
 );

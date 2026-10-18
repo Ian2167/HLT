@@ -44,7 +44,7 @@ export const HeroFlowCard = () => {
         <div className="w-full max-w-sm rounded-2xl border border-white/20 bg-white/10 p-5 text-white shadow-2xl shadow-black/20 backdrop-blur-md">
             <div className="flex items-center justify-between gap-3">
                 <p className="text-sm font-bold">{t('heroFlowTitle')}</p>
-                <span className="rounded-full border border-white/30 px-2.5 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-indigo-100">
+                <span className="shrink-0 whitespace-nowrap rounded-full border border-white/30 px-2.5 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-indigo-100">
                     {t('heroFlowTag')}
                 </span>
             </div>
@@ -169,7 +169,7 @@ export const ReceiveBand = () => {
                                     <span aria-hidden="true" className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700">
                                         <item.Icon size={20} />
                                     </span>
-                                    <span className="rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-amber-800">
+                                    <span className="whitespace-nowrap rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-amber-800">
                                         {item.tag}
                                     </span>
                                 </span>
