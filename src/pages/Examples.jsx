@@ -28,8 +28,11 @@ import { ImprovementPlanExtract, SampleBusinessMap } from '../components/offer/S
 import WebsiteDemo from '../components/offer/WebsiteDemo';
 import SalesPathExplorer from '../components/offer/SalesPathExplorer';
 
+// Shown in both languages since Ian's "A" of 18 October 2026 (the Thai is src/copy/offerRefreshTh1018.js).
+const SHOW_NEW_SECTIONS = true;
+
 const Examples = () => {
-    const { t, lp, contentLang } = useLanguage();
+    const { t, lp } = useLanguage();
 
     const examples = [1, 2, 3, 4].map((n) => ({
         title: t(`ex${n}Title`),
@@ -54,7 +57,7 @@ const Examples = () => {
                 a plan extract, a website demonstration) and the commercial path step by step, all
                 on an invented clinic and labelled Example or Concept. ENGLISH PAGE ONLY until their
                 Thai exists, so the Thai page keeps its own Thai and never mixes in English. */}
-            {contentLang === 'en' ? (
+            {SHOW_NEW_SECTIONS ? (
                 <section id="what-a-client-receives" className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                     <div className="mx-auto max-w-6xl space-y-8">
                         <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">

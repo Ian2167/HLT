@@ -141,8 +141,6 @@ export const WebsitesBand = () => {
 };
 
 export const ReceiveBand = () => {
-    // The examples live on the English page until their Thai exists, so the links name the page in
-    // the language these words are in, not the address's.
     const { t, contentLang } = useLanguage();
     const lp = (route) => localPath(route, contentLang);
     const items = [

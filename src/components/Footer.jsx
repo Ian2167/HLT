@@ -40,6 +40,7 @@ import {
 } from '../constants/contact';
 import hltLockupWhite from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-white.svg';
 import { FOOTER_CAPABILITY_LINKS, FOOTER_QUICK_LINKS, LEGAL_LINKS, ROUTE_HOME } from '../constants/routes';
+import { capabilities } from '../copy/capabilities';
 import { EVENTS, logEvent } from '../lib/analytics';
 
 const HEADING_CLASSES = 'text-xs font-bold uppercase tracking-[0.18em] text-slate-300';
@@ -53,7 +54,7 @@ const BUTTON_CLASSES =
     'inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full px-5 text-base font-bold text-white shadow-lg transition-opacity hover:opacity-90 sm:w-auto sm:min-w-[15rem]';
 
 const Footer = () => {
-    const { t, lp, thaiPending } = useLanguage();
+    const { t, lp, thaiPending, contentLang } = useLanguage();
     const year = new Date().getFullYear();
 
     return (
@@ -95,7 +96,8 @@ const Footer = () => {
                                     {FOOTER_CAPABILITY_LINKS.map((item) => (
                                         <li key={item.to}>
                                             <Link to={lp(item.to)} className="inline-flex min-h-10 items-center text-base text-slate-200 transition-colors hover:text-white">
-                                                {item.label}
+                                                {/* A capability with Thai copy shows its Thai name on Thai pages (18 October 2026). */}
+                                                {(contentLang === 'th' && capabilities[item.to.split('/').pop()]?.th?.name) || item.label}
                                             </Link>
                                         </li>
                                     ))}

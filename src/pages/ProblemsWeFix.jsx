@@ -18,6 +18,8 @@ import { ArrowRight, BarChart3, Repeat, UserCog, Wallet } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { FOOTER_CAPABILITY_LINKS, ROUTE_PROBLEMS } from '../constants/routes';
+// 18 October 2026: a capability with Thai copy (Websites) shows its Thai name on the Thai page.
+import { capabilities } from '../copy/capabilities';
 import Seo from '../components/Seo';
 import FitCallButtons from '../components/FitCallButtons';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
@@ -37,7 +39,7 @@ const Chips = ({ items }) => (
 );
 
 const ProblemsWeFix = () => {
-    const { t, lp } = useLanguage();
+    const { t, lp, contentLang } = useLanguage();
     const { hash } = useLocation();
 
     useEffect(() => {
@@ -126,7 +128,7 @@ const ProblemsWeFix = () => {
                                         to={lp(item.to)}
                                         className="flex min-h-12 items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-5 py-3 text-base font-semibold text-slate-900 transition-colors hover:border-indigo-500 hover:text-indigo-600"
                                     >
-                                        {item.label}
+                                        {(contentLang === 'th' && capabilities[item.to.split('/').pop()]?.th?.name) || item.label}
                                         <ArrowRight size={16} aria-hidden="true" />
                                     </Link>
                                 </li>

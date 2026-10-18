@@ -57,6 +57,7 @@ import { visibilityRefreshCopy, visibilityRefreshTh } from './copy/visibilityRef
 // repositioningTh. See the module's own header.
 import { repositioningCopy, repositioningTh } from './copy/repositioning';
 import { offerRefreshCopy } from './copy/offerRefresh1018';
+import { offerRefreshTh } from './copy/offerRefreshTh1018';
 
 export const translations = {
     en: {
@@ -977,6 +978,11 @@ export const translations = {
         // 1 October 2026: the repositioning, English first (Ian's word of that day), then the
         // machine Thai for the chrome labels only, UNREVIEWED. LAST of all, so it wins.
         ...repositioningCopy,
-        ...repositioningTh
+        ...repositioningTh,
+
+        // 18 October 2026: the machine Thai for the seven repositioned pages, the Websites page and
+        // the new Examples sections, on Ian's "A" (translate now, Ann checks after). UNREVIEWED.
+        // LAST of all, so it wins over the English spread above.
+        ...offerRefreshTh
     }
 };

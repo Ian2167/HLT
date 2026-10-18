@@ -12,7 +12,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { localPath } from '../constants/lang';
 import { Link, useParams } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { CAPABILITIES } from '../config/features';
@@ -71,7 +70,7 @@ const WebsitesExtra = ({ extra }) => {
                             {extra.deliveryLink}
                             <ArrowRight size={16} aria-hidden="true" />
                         </Link>
-                        <Link to={`${localPath(ROUTE_EXAMPLES, 'en')}#website-demonstration`} className="inline-flex items-center gap-2 font-bold text-indigo-200 hover:text-white">
+                        <Link to={`${lp(ROUTE_EXAMPLES)}#website-demonstration`} className="inline-flex items-center gap-2 font-bold text-indigo-200 hover:text-white">
                             {extra.demoLink}
                             <ArrowRight size={16} aria-hidden="true" />
                         </Link>
@@ -84,9 +83,12 @@ const WebsitesExtra = ({ extra }) => {
 
 const Capability = () => {
     const { slug } = useParams();
-    const { t, lp } = useLanguage();
+    const { t, lp, contentLang } = useLanguage();
     const on = Boolean(CAPABILITIES[slug]);
-    const cap = on ? capabilities[slug] : null;
+    // The page's words follow the page's language: a capability with a `th` block (Websites, 18
+    // October 2026) reads Thai on its Thai address.
+    const base = on ? capabilities[slug] : null;
+    const cap = base && contentLang === 'th' && base.th ? { ...base, ...base.th } : base;
 
     useEffect(() => {
         if (on) logEvent(EVENTS.capabilityView, { capability: slug });

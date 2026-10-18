@@ -61,8 +61,12 @@ try {
             if (SHOTS) await page.screenshot({ path: path.join(SHOTS, 'phone-en-home-hero.png') });
         }
         if (url === '/') {
-            check((await page.getAttribute('html', 'lang')) === 'en', 'thai / reads English and says lang="en" after hydration');
-            check(await page.isVisible('text=This page is in English for now'), 'thai / shows its "English for now" notice');
+            // Ian's "A", 18 October 2026: the Thai home reads Thai after hydration too.
+            check((await page.getAttribute('html', 'lang')) === 'th', 'thai / says lang="th" after hydration');
+            check(await page.isVisible('text=เริ่มจากสิ่งที่คุณอยากให้ธุรกิจไปถึง'), 'thai / shows the Thai headline after hydration');
+            await page.click('a[hreflang="en"]:visible');
+            await page.waitForURL(/\/en$/);
+            check(await page.isVisible('text=Start with what you want the business to achieve.'), 'thai the EN button switches the home to English');
         }
         if (url === '/en/examples') {
             await page.click('text=Play the walkthrough');

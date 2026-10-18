@@ -64,10 +64,17 @@ export function absoluteUrl(route, lang) {
 // footer included), says so in a one-line notice, declares lang="en", points its canonical at the
 // /en twin, and is left out of the sitemap's Thai entries. The Thai address itself keeps working.
 // When Ann's native Thai for a page lands, delete its line here and it is a Thai page again.
-export const THAI_PENDING_ROUTES = ['/', '/business-read', '/how-it-works', '/problems-we-fix', '/who-we-help', '/about', '/contact'];
+//
+// EMPTIED THE SAME DAY. Ian, shown the result, chose "A. Machine Thai now, Ann checks after"
+// (18 October 2026), so the seven pages carry an unreviewed machine Thai draft
+// (src/copy/offerRefreshTh1018.js) and are Thai pages again. The mechanism stays for any page
+// that loses its Thai later.
+export const THAI_PENDING_ROUTES = [];
 
-// The capability pages have never had Thai; they are pending by definition.
-export const isThaiPending = (route) => THAI_PENDING_ROUTES.includes(route) || route.startsWith('/capabilities/');
+// Capability pages have no Thai unless their copy carries a `th` block; Websites does.
+const THAI_READY_CAPABILITIES = ['/capabilities/websites'];
+export const isThaiPending = (route) =>
+    THAI_PENDING_ROUTES.includes(route) || (route.startsWith('/capabilities/') && !THAI_READY_CAPABILITIES.includes(route));
 
 // The language a page's words are in: English for a pending route on its Thai address.
 export const contentLangFor = (route, lang) => (lang === 'th' && isThaiPending(route) ? 'en' : lang);

@@ -151,26 +151,33 @@ check(/aren't part of the Business Read/.test(br), 'change6 implementation, supp
 check(!/(implementation|ongoing support|hosting|licen[cs]es?|marketing)[^.]{0,40}\b(is|are) included/i.test(br), 'change6 nothing claims implementation or support is included');
 
 // ------------------------------------------------------------------ thai: one language per page
-for (const route of ['/', '/business-read']) {
+// Ian, 18 October 2026, on the live Thai home showing English: "Th translation toggle is not
+// working"; then "A" (machine Thai now, Ann checks after). Every Thai address of a changed page
+// must read Thai: lang="th", its own canonical with a Thai alternate, listed in the sitemap, and
+// no English sentence left in the body. Product names and contact rails may stay in Latin script.
+const LATIN_OK = new Set(
+    'LINE WhatsApp Facebook Business Read High Level Thai HLT AI CRM Google Meet EN THB AIOS Audit Ltd PDPA'.split(' '),
+);
+const latinLeft = (t) =>
+    // "The Business Read" is the product's name inside older Thai lines; Ian's slots are his to fill.
+    (t.replace(/The Business Read|\[IAN:[^\]]*\]|[\w.+-]+@[\w.-]+|https?:\S+|\+?\d[\d ,.:/%-]*/g, ' ').match(/[A-Za-z][A-Za-z'’-]+/g) || []).filter((w) => !LATIN_OK.has(w));
+const THAI_PAGES = ['/', '/business-read', '/how-it-works', '/problems-we-fix', '/who-we-help', '/about', '/contact', '/examples', '/capabilities/websites'];
+for (const route of THAI_PAGES) {
     const html = page(route);
+    const t = text(html);
     const lang = (html.match(/<html lang="([a-z-]+)"/) || [])[1];
-    // The registered Thai company name and the ไทย toggle (in the desktop and the phone menu) are
-    // the only Thai allowed; every occurrence of each is removed before the check.
-    const t = text(html).replaceAll('บริษัท ไฮ เลเวล ไทย จำกัด', '').replaceAll('ไทย', '');
-    check(lang === 'en', `thai ${route} declares lang="en" while its Thai copy is pending (got ${lang})`);
-    check(!THAI.test(t), `thai ${route} carries no Thai words mixed into English (the ไทย toggle aside)`);
     const canon = (html.match(/rel="canonical" href="([^"]+)"/) || [])[1];
-    const twin = `https://www.highlevelthai.com${route === '/' ? '/en' : `/en${route}`}`;
-    check(canon === twin, `thai ${route} canonical names the English twin (${canon})`);
-    check(!/hreflang="th"/.test(html), `thai ${route} offers no Thai alternate yet`);
-    check(!sitemap.includes(`<loc>https://www.highlevelthai.com${route === '/' ? '/' : route}</loc>`), `thai ${route} is out of the sitemap's Thai entries`);
-    check(/This page is in English for now/.test(text(html)), `thai ${route} says it is in English for now`);
+    const self = `https://www.highlevelthai.com${route}`;
+    const left = latinLeft(t);
+    check(lang === 'th' && THAI.test(t), `thai ${route} is a Thai page (lang="${lang}")`);
+    check(left.length === 0, `thai ${route} has no English left in its words (${left.length} Latin words: ${left.slice(0, 12).join(' ')})`);
+    check(canon === self && /hreflang="th"/.test(html), `thai ${route} names itself as canonical and offers its Thai alternate`);
+    check(sitemap.includes(`<loc>${self}</loc>`), `thai ${route} is listed in the sitemap`);
 }
-for (const route of ['/examples', '/hua-hin']) {
-    const html = page(route);
-    check(THAI.test(text(html)) && /<html lang="th"/.test(html), `thai ${route} keeps its Thai`);
-    check(!/What a client receives|Sample business map/.test(text(html)), `thai ${route} gets no English sections mixed in`);
-}
+check(text(page('/examples')).includes('ตัวอย่างแผนผังธุรกิจ'), 'thai /examples carries the new sections in Thai');
+check(text(page('/')).includes('เริ่มจากสิ่งที่คุณอยากให้ธุรกิจไปถึง'), 'thai / leads with the owner\'s goals in Thai');
+check(text(page('/business-read')).includes('22,500 บาท'), 'thai /business-read shows the fee in Thai');
+check(/UNREVIEWED MACHINE THAI/.test(readFileSync(path.join(DIST, '..', 'src', 'copy', 'offerRefreshTh1018.js'), 'utf8')), 'thai the Thai module is marked unreviewed for Ann');
 
 // ------------------------------------------------------------------ privacy
 check(!/Us, and nobody else/.test(br), 'privacy the "us, and nobody else" answer is gone');

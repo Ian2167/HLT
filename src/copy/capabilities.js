@@ -8,6 +8,7 @@
 // runs on each page before it does. Each capability is one of the tools the control method may
 // choose, which is how the pages say it.
 import { websitesCapability } from './offerRefresh1018.js';
+import { websitesCapabilityTh } from './offerRefreshTh1018.js';
 
 export const CAPABILITY_ORDER =['crm', 'automation', 'ai-assistance', 'websites', 'booking', 'reviews', 'customer-reactivation', 'reporting'];
 
@@ -98,4 +99,4 @@ export const capabilities = {
 // the Websites page is switched on, with its title, description and headline rewritten and an
 // `extra` block (new site, improving one, the four things planned together, advertising, ownership)
 // that only this page renders. The fits / does / not / controls lines above stay as drafted.
-capabilities.websites = { ...capabilities.websites, ...websitesCapability };
+capabilities.websites = { ...capabilities.websites, ...websitesCapability, th: websitesCapabilityTh };
