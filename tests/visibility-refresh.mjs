@@ -150,7 +150,8 @@ try {
         const html = readFileSync(staticFile(localPath(route, 'en')), 'utf8');
         check(/Book a Fit Call/.test(html), `fit call: ${localPath(route, 'en')} carries a Book a Fit Call button`);
     }
-    check(/From THB 15,000, excluding VAT/.test(readFileSync(staticFile('/en/business-read'), 'utf8')), 'price: /en/business-read publishes the base price, THB only');
+    // 18 October 2026: one fee at Ian's usual price ("Business Read usual price THB 22500").
+    check(/THB 22,500, excluding VAT/.test(readFileSync(staticFile('/en/business-read'), 'utf8')), 'price: /en/business-read publishes the fee, THB only');
     // A capability whose switch is off is not prerendered and not in the sitemap.
     const offSlugs = Object.keys(CAPABILITIES).filter((slug) => !CAPABILITIES[slug]);
     const offBuilt = offSlugs.filter((slug) => existsSync(staticFile(`/en/capabilities/${slug}`)) || sitemap.includes(`/capabilities/${slug}`));
@@ -162,7 +163,7 @@ try {
     // answers /en with the root page and manufactures a hydration error that does not exist.
     preview = await serveDist(DIST);
     const base = preview.url;
-    const browser = await pw.chromium.launch();
+    const browser = await pw.chromium.launch({ channel: 'chrome' }).catch(() => pw.chromium.launch()); // installed Chrome first (18 Oct 2026: no bundled browser on this laptop)
 
     // hydrate: the English home, prerendered, hydrates cleanly and keeps one head.
     {
@@ -195,20 +196,21 @@ try {
             h1: document.querySelector('h1')?.textContent,
         }));
         check(after.canonicals === 1 && after.canonical === `${SITE}/en/business-read`, `hydrate: after a client navigation the canonical is ${SITE}/en/business-read and there is one`);
-        check(/getting stuck/.test(after.h1 || ''), 'nav: the Business Read page renders its H1 after a client navigation');
+        check(/one thing that matters most/.test(after.h1 || ''), 'nav: the Business Read page renders its H1 after a client navigation');
         await page.close();
     }
 
-    // nav and toggle, both languages, every public page. The repositioned pages (1 October 2026)
-    // show their English H1 on the Thai URL too until Ann's pass, by Ian's "English first".
+    // nav and toggle, both languages, every public page. 18 October 2026: the repositioned pages
+    // carry Thai on their Thai URL (Ian's "A", machine Thai, Ann checks after) and the offer
+    // refresh's headlines, so each pattern accepts the English or the Thai H1.
     const expectH1 = {
-        '/': /need you less/,
-        '/business-read': /getting stuck/,
-        '/how-it-works': /How it works/i,
-        '/problems-we-fix': /Common problems/,
-        '/who-we-help': /Owner-led/,
+        '/': /what you want the business to achieve|สิ่งที่คุณอยากให้ธุรกิจไปถึง/,
+        '/business-read': /one thing that matters most|เรื่องที่สำคัญที่สุด/,
+        '/how-it-works': /How it works|วิธีการทำงาน/i,
+        '/problems-we-fix': /Common problems|ปัญหาที่พบบ่อย/,
+        '/who-we-help': /Owner-led|เจ้าของบริหารเอง/,
         '/examples': /./,
-        '/about': /not the software/,
+        '/about': /not the software|ไม่ใช่ซอฟต์แวร์/,
         '/contact': /Book a Fit Call|นัดคุย/,
         '/hua-hin': /Hua Hin|หัวหิน/,
         '/business-blindspots': /own customer|ลูกค้าของตัวเอง/,

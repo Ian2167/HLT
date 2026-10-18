@@ -175,7 +175,7 @@ try {
     // 30 September 2026: the language lives in the URL now (src/constants/lang.js). The English
     // lines are asserted on /en/about, where they render in English; the Thai page at /about is
     // asserted to carry the company number and the Thai company name, which do not translate.
-    const browser = await pw.chromium.launch();
+    const browser = await pw.chromium.launch({ channel: 'chrome' }).catch(() => pw.chromium.launch()); // installed Chrome first (18 Oct 2026: no bundled browser on this laptop)
     const page = await browser.newPage();
     await page.goto(`http://${host}:${PORT}/en/about`, { waitUntil: 'networkidle' });
     const rendered = await page.evaluate(() => document.body.innerText);
