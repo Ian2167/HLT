@@ -54,7 +54,7 @@ const ProcessFlow = () => {
                         <li key={step} className="flex flex-col items-center lg:flex-1 lg:flex-row">
                             <div className="w-full">
                                 <div
-                                    className={`w-full border bg-white p-5 text-center shadow-sm lg:flex lg:min-h-[9rem] lg:flex-col lg:items-center lg:justify-center ${
+                                    className={`w-full border bg-white p-5 text-center shadow-sm lg:flex lg:h-40 lg:flex-col lg:items-center lg:justify-center ${
                                         choice
                                             ? 'rounded-2xl border-2 border-saffron-500 max-lg:rounded-b-none'
                                             : 'rounded-2xl border-sand-300'
