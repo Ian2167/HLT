@@ -250,6 +250,7 @@ check(/animation-delay:\s*0ms\s*!important/.test(css), 'wow reduced motion shows
 check(/\.press:active\{transform:scale\(\.97\)\}/.test(css.replace(/\s+/g, '')), 'wow buttons give press feedback');
 check((homeBody.match(/navy-glow/g) || []).length >= 2, 'wow the navy bands carry the soft glow');
 check(/Play the walkthrough/.test(ex), 'wow the website demonstration can play itself');
+check(/html\[lang=th\] \[class\*="tracking-\["\]\{letter-spacing:normal\}/.test(css), 'thai spaced labels keep normal letter-spacing on Thai pages');
 check(/to fix first/.test(ex) && /animate-ping/.test(exHtml), 'wow the business map shows its summary and pulses the fix-first dots');
 check(/origin-left rounded-full bg-gradient-to-r from-indigo-600 to-rose-500/.test(exHtml), 'wow the sales path has a progress rail');
 

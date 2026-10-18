@@ -62,6 +62,12 @@
     radial-gradient(40rem 24rem at 0% 110%, rgba(45, 212, 191, 0.12), transparent 60%);
 }
 
+/* Thai has no capitals, and wide letter-spacing pulls its vowel and tone marks away from their
+   consonants ("ภ า พ"). On Thai pages the small spaced labels keep normal spacing. */
+html[lang='th'] [class*='tracking-['] {
+  letter-spacing: normal;
+}
+
 /* Press feedback on every button-like control: it moves a little when pressed. */
 .press {
   transition-property: transform, background-color, border-color, color, box-shadow;
