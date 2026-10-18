@@ -86,13 +86,17 @@ const About = () => {
             {/* 18 October 2026, Ian's change 5: "Add accurate company and team experience within the
                 identity rule". The team line is Ian's to write (visa rule: no name or career), so
                 the preview shows his slot; tests/offer-refresh-1018.mjs --release fails while it
-                is still a slot. The company facts stay in Ian's own block beneath, unchanged. */}
-            <section className="bg-white px-5 pb-10 sm:px-6 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50 p-6">
-                    <h2 className="text-xl font-bold leading-tight text-slate-950">{t('abTeamHeading')}</h2>
-                    <p className="mt-3 text-base leading-7 text-slate-700">{t('abTeamBody')}</p>
-                </motion.div>
-            </section>
+                is still a slot. The company facts stay in Ian's own block beneath, unchanged.
+                GOING LIVE, 18 October 2026 (Ian: "Can you please make it live?"): a placeholder is
+                never published, so the section shows only once Ian's words replace the slot. */}
+            {t('abTeamBody').startsWith('[IAN:') ? null : (
+                <section className="bg-white px-5 pb-10 sm:px-6 lg:px-8">
+                    <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-sand-300 bg-sand-50 p-6">
+                        <h2 className="text-xl font-bold leading-tight text-slate-950">{t('abTeamHeading')}</h2>
+                        <p className="mt-3 text-base leading-7 text-slate-700">{t('abTeamBody')}</p>
+                    </motion.div>
+                </section>
+            )}
 
             {/* The company facts block, Ian's own three-line layout, gate 128, 18 September 2026.
                 The company number is public record. No address, by his standing rule. */}

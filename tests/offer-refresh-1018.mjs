@@ -138,7 +138,9 @@ for (const w of ['What stays yours', 'You own it', 'Training', 'Support, if you 
 check(/agree what it covers and what it costs, separately/.test(hiw), 'change5 ongoing support is agreed separately');
 const about = text(page('/en/about'));
 check(about.includes('High Level Thai Ltd.') && about.includes('0835568013864'), 'change5 About keeps the company facts');
-check(about.includes('The team'), 'change5 About has the team slot');
+// Going live (18 Oct): the team section shows only once Ian's words fill the slot; a placeholder is
+// never published. The slot itself stays in the copy for him.
+check(!/\[IAN:/.test(about), 'change5 About publishes no placeholder (the team section waits for Ian\'s words)');
 
 // ------------------------------------------------------------------ change 6: the Business Read
 const br = text(page('/en/business-read'));
