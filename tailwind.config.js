@@ -39,6 +39,24 @@ export default {
           DEFAULT: '#0A1F44',
           lift: '#1B4384', // Ian, 15 Sept 2026: cards must pop on the navy; lifted from #17356B
         },
+        // DIRECTION A, 18 October 2026 (Ian: "this still feels very flat and the color selection
+        // apart from the first Hero section above the fold is very poor and bland"; he asked to
+        // see direction A: navy, sand and saffron). Sand replaces the cool greys as the light
+        // ground; saffron marks what matters (numbers, the fix-first points, the price, tags);
+        // indigo stays for buttons only. The navy above is unchanged.
+        sand: {
+          50: '#FCFAF6',
+          100: '#F6F0E6',
+          200: '#ECE1CE',
+          300: '#DCCAA9',
+        },
+        saffron: {
+          300: '#F6CD7E',
+          400: '#EFB54E',
+          500: '#E09B2D',
+          600: '#C47F1C',
+          700: '#9A6116',
+        },
         slate: {
           ...colors.slate,
           800: '#1B4384',

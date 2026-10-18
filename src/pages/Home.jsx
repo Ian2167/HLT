@@ -37,7 +37,7 @@ import LeakVisual from '../components/LeakVisual';
 import ProcessFlow from '../components/flows/ProcessFlow';
 import ControlFlow from '../components/flows/ControlFlow';
 import FitCallButtons from '../components/FitCallButtons';
-import { HeroFlowCard, ReceiveBand, StagesBand, WebsitesBand } from '../components/offer/OfferBands';
+import { AccentRule, HeroFlowCard, ReceiveBand, StagesBand, WebsitesBand } from '../components/offer/OfferBands';
 import { EVENTS, logEvent } from '../lib/analytics';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
@@ -57,6 +57,13 @@ export const OUTLINE_CTA_CLASSES =
 
 // Marks, not copy: one glyph per problem and per module, from the lucide set the site already uses.
 const PROBLEM_ICONS = [Wallet, UserCog, Eye];
+
+// Direction A: the kinds of business, each with a free-licence photograph (CC0).
+const WHO_PHOTOS = [
+    { key: 'whoEx2', src: '/images/offer/clinic-room.webp' },
+    { key: 'whoEx3', src: '/images/offer/reception.webp' },
+    { key: 'whoEx5', src: '/images/offer/team-table.jpg' },
+];
 const MODULE_ICONS = [Wallet, Repeat, UserCog, BarChart3];
 
 const Home = () => {
@@ -77,7 +84,7 @@ const Home = () => {
     }));
 
     return (
-        <div className="min-h-screen bg-stone-50 pt-20 text-slate-950 lg:pt-24">
+        <div className="min-h-screen bg-sand-50 pt-20 text-slate-950 lg:pt-24">
             <Seo title={t('homeMetaTitle')} description={t('homeMetaDescription')} route={ROUTE_HOME} organization />
 
             {/* 1. Hero: Ian's headline, his paragraph, his button. */}
@@ -128,6 +135,7 @@ const Home = () => {
                 the three losses, drawn as text. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
+                    <AccentRule />
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
                         {t('leakHeading')}
                     </motion.h2>
@@ -146,8 +154,9 @@ const Home = () => {
 
             {/* 3. The three problems. Name, headline, what it looks like, what we put in place. One
                 column on a phone, three on a laptop, every card the same height. */}
-            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-sand-200 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
+                    <AccentRule />
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
                         {t('problemsHeading')}
                     </motion.h2>
@@ -156,20 +165,20 @@ const Home = () => {
                             <motion.li
                                 key={problem.name}
                                 {...fadeUpDelayed(index, 0.06)}
-                                className="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 card-glass card-static sm:p-7"
+                                className="flex flex-col rounded-2xl border border-sand-300 bg-white p-6 shadow-sm sm:p-7"
                             >
                                 <div className="flex items-center gap-3">
-                                    <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white">
+                                    <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-saffron-500 text-hltNavy">
                                         <problem.Icon size={20} />
                                     </span>
-                                    <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-indigo-700">{problem.name}</h3>
+                                    <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-saffron-700">{problem.name}</h3>
                                 </div>
                                 <p className="mt-4 text-xl font-bold leading-7 text-slate-950">{problem.headline}</p>
                                 <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{t('problemsExamplesLabel')}</p>
                                 <ul className="mt-2 space-y-1 text-base leading-7 text-slate-600">
                                     {problem.examples.map((example) => (
                                         <li key={example} className="flex gap-2">
-                                            <span aria-hidden="true" className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
+                                            <span aria-hidden="true" className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-saffron-500" />
                                             <span>{example}</span>
                                         </li>
                                     ))}
@@ -183,9 +192,13 @@ const Home = () => {
             </section>
 
             {/* 4. The week away. One question, one line, and the free test. */}
-            <section className="navy-glow bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
-                    <Clock size={32} aria-hidden="true" className="mx-auto text-indigo-200" />
+            <section className="relative overflow-hidden bg-hltNavy px-5 py-20 text-white sm:px-6 sm:py-28 lg:px-8">
+                {/* Direction A, 18 October 2026: a Thai street food stall (CC0, rawpixel) behind the
+                    navy wash, so the question lands on a real small business. */}
+                <img src="/images/offer/thai-food-stall.webp" alt="" aria-hidden="true" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                <div className="absolute inset-0 bg-hltNavy/70" />
+                <motion.div {...fadeUp} className="relative mx-auto max-w-3xl text-center">
+                    <Clock size={32} aria-hidden="true" className="mx-auto text-saffron-400" />
                     <h2 className="mt-5 text-2xl font-bold leading-tight sm:text-3xl">{t('weekHeading')}</h2>
                     <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{t('weekLead')}</p>
                     <div className="mt-8">
@@ -204,6 +217,7 @@ const Home = () => {
             {/* 5. We don't start with software. The method, as a flow. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
+                    <AccentRule />
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
                         {t('methodHeading')}
                     </motion.h2>
@@ -217,8 +231,9 @@ const Home = () => {
             </section>
 
             {/* 6. A process works when nothing can quietly disappear. The control, as a flow. */}
-            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <section className="bg-sand-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
+                    <AccentRule />
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
                         {t('controlHeading')}
                     </motion.h2>
@@ -232,6 +247,7 @@ const Home = () => {
                 Problems We Fix page, where each has its headline and possible controls. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
+                    <AccentRule />
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
                         {t('modulesHeading')}
                     </motion.h2>
@@ -243,9 +259,9 @@ const Home = () => {
                             <motion.li key={module.name} {...fadeUpDelayed(index, 0.05)}>
                                 <Link
                                     to={`${lp(ROUTE_PROBLEMS)}#${module.slug}`}
-                                    className="flex h-full items-start gap-4 rounded-2xl border border-slate-200 bg-stone-50 p-6 card-glass transition-colors hover:border-indigo-400"
+                                    className="press flex h-full items-start gap-4 rounded-2xl border border-sand-300 bg-sand-50 p-6 shadow-sm transition-colors hover:border-saffron-500"
                                 >
-                                    <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white">
+                                    <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-saffron-400">
                                         <module.Icon size={20} />
                                     </span>
                                     <span className="min-w-0">
@@ -267,8 +283,8 @@ const Home = () => {
             <WebsitesBand />
 
             {/* 8. Where AI fits, in four lines. The full list lives on Problems We Fix. */}
-            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-7 card-glass card-static sm:p-9">
+            <section className="bg-sand-200 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border-l-4 border-saffron-500 bg-white p-7 shadow-sm sm:p-9">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('aiHeading')}</h2>
                     <div className="mt-5 space-y-3 text-base leading-8 text-slate-600">
                         <p>{t('aiLead')}</p>
@@ -287,8 +303,18 @@ const Home = () => {
             {/* 9. Who we help, one line, and the page. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
+                    <AccentRule />
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('whoHeading')}</h2>
                     <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">{t('whoHomeTeaser')}</p>
+                    {/* Direction A, 18 October 2026: three kinds of business, free-licence photos (CC0). */}
+                    <ul className="mt-8 grid grid-cols-3 gap-3 text-left sm:gap-4">
+                        {WHO_PHOTOS.map((photo) => (
+                            <li key={photo.key} className="overflow-hidden rounded-2xl border border-sand-300 bg-white shadow-sm">
+                                <img src={photo.src} alt="" aria-hidden="true" loading="lazy" className="h-24 w-full object-cover sm:h-36" />
+                                <p className="px-3 py-2 text-sm font-semibold text-slate-800 first-letter:uppercase">{t(photo.key)}</p>
+                            </li>
+                        ))}
+                    </ul>
                     <div className="mt-6">
                         <Link to={lp(ROUTE_WHO)} className={TEXT_LINK_CLASSES}>
                             {t('whoNavLink')}

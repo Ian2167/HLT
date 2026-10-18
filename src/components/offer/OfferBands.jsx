@@ -30,6 +30,18 @@ import { ROUTE_EXAMPLES, capabilityRoute } from '../../constants/routes';
 import { localPath } from '../../constants/lang';
 import { drawX, fadeUp, fadeUpDelayed } from '../../lib/motion';
 
+// Direction A (18 October 2026): a short saffron rule above each section heading.
+export const AccentRule = ({ light = false }) => (
+    <span aria-hidden="true" className={`mx-auto mb-5 block h-1 w-12 rounded-full ${light ? 'bg-saffron-400' : 'bg-saffron-500'}`} />
+);
+
+// One photograph per stage (free licence: CC0 from StockSnap, and the site's own Unsplash photos).
+const STAGE_PHOTOS = [
+    { src: '/images/offer/owner-conversation.jpg', alt: 'An owner talking through goals at a table' },
+    { src: 'https://images.unsplash.com/photo-1590402494587-44b71d7772f6?auto=format&fit=crop&w=800&q=70', alt: 'Two people mapping a process on a wall of notes' },
+    { src: 'https://images.unsplash.com/photo-1556155092-490a1ba16284?auto=format&fit=crop&w=800&q=70', alt: 'A laptop showing a simple dashboard' },
+];
+
 const LINK_CLASSES = 'inline-flex items-center gap-2 text-base font-bold text-indigo-600 transition-colors hover:text-indigo-500';
 
 // The hero card (the wow pass, 18 October 2026): one enquiry followed through, four rows that
@@ -78,8 +90,9 @@ export const StagesBand = () => {
     ].map(({ n, Icon }) => ({ n, Icon, name: t(`stage${n}Name`), body: t(`stage${n}Body`) }));
 
     return (
-        <section id="how-we-start" className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <section id="how-we-start" className="bg-sand-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
             <div className="mx-auto max-w-6xl">
+                <AccentRule />
                 <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
                     {t('stagesHeading')}
                 </motion.h2>
@@ -88,25 +101,26 @@ export const StagesBand = () => {
                 </motion.p>
                 {/* The line that joins the three stages draws itself once, on a laptop. */}
                 <div aria-hidden="true" className="relative mx-auto mt-10 hidden h-1 max-w-4xl overflow-hidden rounded-full bg-slate-200 lg:block">
-                    <motion.div {...drawX} className="absolute inset-0 origin-left rounded-full bg-gradient-to-r from-indigo-600 via-indigo-500 to-teal-500" />
+                    <motion.div {...drawX} className="absolute inset-0 origin-left rounded-full bg-gradient-to-r from-hltNavy via-saffron-500 to-saffron-400" />
                 </div>
                 <ol className="mt-6 grid gap-5 lg:grid-cols-3">
                     {stages.map((stage, index) => (
                         <motion.li
                             key={stage.name}
                             {...fadeUpDelayed(index, 0.06)}
-                            className="flex flex-col rounded-2xl border border-slate-200 bg-stone-50 p-6 card-glass card-static sm:p-7"
+                            className="flex flex-col overflow-hidden rounded-2xl border border-sand-300 bg-white shadow-sm"
                         >
-                            <div className="flex items-center gap-3">
-                                <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white">
+                            <img src={STAGE_PHOTOS[index].src} alt={STAGE_PHOTOS[index].alt} loading="lazy" className="h-44 w-full object-cover" />
+                            <div className="flex items-center gap-3 px-6 pt-6 sm:px-7">
+                                <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-saffron-500 text-hltNavy">
                                     <stage.Icon size={20} />
                                 </span>
                                 <h3 className="text-lg font-bold text-slate-950">
-                                    <span className="mr-2 text-indigo-600">{stage.n}.</span>
+                                    <span className="mr-2 text-saffron-600">{stage.n}.</span>
                                     {stage.name}
                                 </h3>
                             </div>
-                            <p className="mt-4 text-base leading-7 text-slate-600">{stage.body}</p>
+                            <p className="mt-4 px-6 pb-7 text-base leading-7 text-slate-600 sm:px-7">{stage.body}</p>
                         </motion.li>
                     ))}
                 </ol>
@@ -121,19 +135,22 @@ export const WebsitesBand = () => {
         <section id="websites" className="navy-glow bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
             <motion.div {...fadeUp} className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
                 <div>
-                    <MonitorSmartphone size={32} aria-hidden="true" className="text-indigo-200" />
+                    <MonitorSmartphone size={32} aria-hidden="true" className="text-saffron-400" />
                     <h2 className="mt-5 text-2xl font-bold leading-tight sm:text-3xl">{t('websitesBandHeading')}</h2>
                     <p className="mt-5 text-base leading-8 text-slate-200 sm:text-lg">{t('websitesBandBody')}</p>
                 </div>
-                <div className="rounded-2xl border border-white/15 bg-white/5 p-6 sm:p-7">
+                <div className="overflow-hidden rounded-2xl border border-white/15 bg-white/5">
+                    <img src="/images/offer/phone-in-hand.jpg" alt="A hand holding a phone" loading="lazy" className="h-48 w-full object-cover sm:h-56" />
+                    <div className="p-6 sm:p-7">
                     <p className="text-base font-semibold leading-8 text-white sm:text-lg">{t('websitesBandLine')}</p>
                     <Link
                         to={lp(capabilityRoute('websites'))}
-                        className="mt-6 inline-flex items-center gap-2 text-base font-bold text-indigo-200 transition-colors hover:text-white"
+                        className="mt-6 inline-flex items-center gap-2 text-base font-bold text-saffron-300 transition-colors hover:text-white"
                     >
                         {t('websitesBandCta')}
                         <ArrowRight size={16} aria-hidden="true" />
                     </Link>
+                    </div>
                 </div>
             </motion.div>
         </section>
@@ -150,8 +167,9 @@ export const ReceiveBand = () => {
     ].map((item) => ({ ...item, name: t(`receive${item.n}Name`), body: t(`receive${item.n}Body`) }));
 
     return (
-        <section id="what-you-receive" className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <section id="what-you-receive" className="bg-sand-200 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
             <div className="mx-auto max-w-6xl">
+                <AccentRule />
                 <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
                     {t('receiveHeading')}
                 </motion.h2>
@@ -163,10 +181,10 @@ export const ReceiveBand = () => {
                         <motion.li key={item.name} {...fadeUpDelayed(index, 0.06)}>
                             <Link
                                 to={`${lp(ROUTE_EXAMPLES)}#${item.anchor}`}
-                                className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 card-glass transition-colors hover:border-indigo-400 sm:p-7"
+                                className="press flex h-full flex-col rounded-2xl border border-sand-300 bg-white p-6 shadow-sm transition-colors hover:border-saffron-500 sm:p-7"
                             >
                                 <span className="flex items-center justify-between gap-3">
-                                    <span aria-hidden="true" className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700">
+                                    <span aria-hidden="true" className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-hltNavy text-saffron-400">
                                         <item.Icon size={20} />
                                     </span>
                                     <span className="whitespace-nowrap rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-amber-800">
