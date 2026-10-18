@@ -78,6 +78,38 @@ html[lang='th'] [class*='tracking-['] {
   transform: scale(0.97);
 }
 
+/* The method flow's steps and option chips (Ian, 18 October 2026: "all buttons ... should be
+   consistent and probably have a change when they are in Hover state"). One change for all of
+   them: a small lift, a saffron edge and, on a step, its number badge turning saffron. Only on
+   devices that can hover, so a tap on a phone never leaves a card stuck in its hover state. */
+.flow-card,
+.flow-chip {
+  transition-property: transform, border-color, box-shadow, background-color;
+  transition-duration: 200ms;
+  transition-timing-function: var(--ease-out-strong);
+}
+.flow-badge {
+  transition-property: background-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .flow-card:hover {
+    transform: translateY(-3px);
+    border-color: #e09b2d;
+    box-shadow: 0 10px 24px -12px rgba(10, 31, 68, 0.35);
+  }
+  .flow-card:hover .flow-badge {
+    background-color: #e09b2d;
+    color: #0a1f44;
+  }
+  .flow-chip:hover {
+    transform: translateY(-2px);
+    border-color: #e09b2d;
+    background-color: #fcfaf6;
+  }
+}
+
 /* Reduced motion means gentler, not nothing (the design standard): movement goes, the end state
    shows at once, and short opacity changes stay. framer-motion follows the same setting through
    MotionConfig in src/App.jsx. */
