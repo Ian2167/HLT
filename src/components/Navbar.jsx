@@ -29,7 +29,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import hltLockupColour from '../assets/brand/hlt-logo-v2/svg/hlt-lockup-colour.svg';
 import { hltWebsiteCopy } from '../config/hltWebsite';
-import { MOBILE_NAV, PUBLIC_NAV, ROUTE_HOME } from '../constants/routes';
+import { MOBILE_NAV, PUBLIC_NAV, ROUTE_CONTACT, ROUTE_HOME } from '../constants/routes';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 import { splitLang } from '../constants/lang';
 import { FitCallButton } from './FitCallButtons';
@@ -37,6 +37,16 @@ import { EVENTS, logEvent } from '../lib/analytics';
 
 const CTA_CLASSES =
     'inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-2 text-sm font-semibold text-white whitespace-nowrap shadow-lg transition-all hover:bg-indigo-500 hover:shadow-xl';
+
+// THE CONTACT ACTION, 19 October 2026 evening (Rich's finish list item 3, bridge row 4882): Contact
+// was a plain link on a laptop and hidden in the menu below 1280px. On a laptop it is now an outlined
+// button beside the Fit Call; below 1280px a compact "Contact" sits on the bar itself, before EN | ไทย,
+// so it is one tap on a phone. Both go to the Contact page.
+const CONTACT_DESK_CLASSES =
+    'inline-flex min-h-10 items-center justify-center rounded-lg border-2 border-indigo-600 px-4 py-1.5 text-sm font-semibold text-indigo-700 whitespace-nowrap transition-colors hover:bg-indigo-50';
+
+const CONTACT_MOBILE_CLASSES =
+    'inline-flex h-10 items-center justify-center rounded-lg border-2 border-indigo-600 px-3 text-sm font-bold text-indigo-700 whitespace-nowrap hover:bg-indigo-50';
 
 const MOBILE_CTA_CLASSES =
     'inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-4 text-center text-base font-bold text-white hover:bg-indigo-500';
@@ -69,7 +79,8 @@ const Navbar = () => {
             isHere(href) ? 'text-indigo-600' : 'text-slate-600'
         }`;
 
-    const desktopLinks = PUBLIC_NAV.map((item) => ({ name: t(item.labelKey), href: item.to }));
+    // Contact leaves the desktop text links: it is the outlined button now.
+    const desktopLinks = PUBLIC_NAV.filter((item) => item.to !== ROUTE_CONTACT).map((item) => ({ name: t(item.labelKey), href: item.to }));
     const mobileLinks = MOBILE_NAV.map((item) => ({ name: t(item.labelKey), href: item.to }));
 
     return (
@@ -99,11 +110,29 @@ const Navbar = () => {
                     ))}
                     <div className="mx-1 h-6 w-px bg-slate-200" />
                     <LanguageToggle />
+                    <Link
+                        to={lp(ROUTE_CONTACT)}
+                        onClick={() => logEvent(EVENTS.contactNavClick, { place: 'header' })}
+                        className={CONTACT_DESK_CLASSES}
+                        aria-current={isHere(ROUTE_CONTACT) ? 'page' : undefined}
+                    >
+                        {t('navContactCta')}
+                    </Link>
                     <FitCallButton place="header" className={CTA_CLASSES} label={t('navCtaLabel')} />
                 </div>
 
-                {/* Mobile bar: EN | ไทย, then the menu button. */}
-                <div className="flex items-center gap-3 xl:hidden">
+                {/* Mobile bar: Contact, EN | ไทย, then the menu button. */}
+                <div className="flex items-center gap-2 sm:gap-3 xl:hidden">
+                    <Link
+                        to={lp(ROUTE_CONTACT)}
+                        onClick={() => {
+                            closeMenu();
+                            logEvent(EVENTS.contactNavClick, { place: 'mobile-bar' });
+                        }}
+                        className={CONTACT_MOBILE_CLASSES}
+                    >
+                        {t('navContactShort')}
+                    </Link>
                     <LanguageToggle />
                     <button
                         type="button"

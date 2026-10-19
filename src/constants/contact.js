@@ -1,6 +1,16 @@
 // Ian, 17 September 2026, 07:0x Bangkok, supplied the High Level Thai Official Account add-friend
 // link (lin.ee → line.me/R/ti/p/@535zlmbx). One target for every LINE button on the site.
-const LINE_BASE = 'https://lin.ee/YQMkWI3';
+//
+// THE ONE LINE SWITCH, 19 October 2026 evening (bridge row 4882, Rich's item 4; brief constraint (a)).
+// Rich gives https://line.me/ti/p/5_UWYMe4nU as Ian's confirmed destination. That is a PERSONAL
+// profile link; the site's standing rail is the Official Account above. HELD FOR IAN'S RULING: the
+// site keeps the Official Account until he rules. To swap, set LINE_DESTINATION = LINE_PROFILE_LINK
+// below, regenerate public/brand/qr-line.svg with scripts/make-qr.mjs, and rebuild. Every LINE
+// button, the utm-tagged links and the Business Read link follow this one constant.
+const LINE_OFFICIAL_ACCOUNT_LINK = 'https://lin.ee/YQMkWI3';
+export const LINE_PROFILE_LINK = 'https://line.me/ti/p/5_UWYMe4nU';
+export const LINE_DESTINATION = LINE_OFFICIAL_ACCOUNT_LINK;
+const LINE_BASE = LINE_DESTINATION;
 const utm = (content) =>
     `${LINE_BASE}?utm_source=hlt_website&utm_medium=line_cta&utm_campaign=contact&utm_content=${content}`;
 
@@ -24,7 +34,7 @@ export const LINE_SUPPORT = utm('support');
 // 17 September 2026: https://line.me/R/ti/p/@highlevelthai answered HTTP 404 (no Official Account
 // under that ID; node fetch 16 Sept 17:02 Bangkok). Ian supplied the Official Account's own
 // add-friend link on 17 September; it is the one LINE target for the whole site.
-export const LINE_BUSINESS_READ = 'https://lin.ee/YQMkWI3';
+export const LINE_BUSINESS_READ = LINE_DESTINATION;
 
 // The six rebuilt pages (14 September 2026: the five catalogue services, OpenBrain and the
 // summary home page) all point at the SAME Official Account Ian ruled above. This is an alias,

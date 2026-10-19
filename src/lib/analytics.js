@@ -16,6 +16,8 @@ export const EVENTS = {
     blindspotCtaClick: 'blindspot_cta_click',
     businessReadCtaClick: 'business_read_cta_click',
     capabilityView: 'capability_view',
+    // 19 October 2026 evening: the header's Contact action (bridge row 4882, item 3).
+    contactNavClick: 'contact_nav_click',
 };
 
 export const logEvent = (name, props = {}) => {
