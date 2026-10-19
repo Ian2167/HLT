@@ -259,9 +259,6 @@ export const repositioningCopy = {
     abHeroLead: 'High Level Thai helps owner-led businesses find where money, time and decisions are getting stuck, then puts the controls in place that stop it happening again.',
     abHeroLead2: 'We first understand the business. Then we identify the failure point. Then we design the required control. Only after that do we decide whether process, clearer responsibility, a CRM, automation, AI, alerts, a dashboard, knowledge capture or another technology is needed.',
     abHeroLead3: 'Process first. Technology second.',
-    abIanHeading: 'Why HLT', // builder's; the paragraph is the brief's, shown only when SHOW_ABOUT_IAN is true
-    abIanBody:
-        "Ian W. Turton's background is in commercial and project control on large, complex projects. Much of that work involved making sure responsibilities were clear, decisions were made, risks were visible and important work did not quietly fall between people. High Level Thai applies the same control thinking to owner-led businesses, using modern automation and AI where they genuinely improve the process.",
     abHowHeading: 'How we work',
     abHow1: "We don't start by selling software.",
     abHow2: 'We separate verified facts from assumptions.',

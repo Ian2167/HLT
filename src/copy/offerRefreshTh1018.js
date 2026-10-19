@@ -14,7 +14,6 @@
 // 1 October repositioning and the 18 October refresh spread there. Product names stay in English
 // as the earlier Thai drafts did (Business Read, LINE, WhatsApp, High Level Thai); "Fit Call" is
 // นัดคุยเบื้องต้น, as on the live buttons since 1 October.
-import { IAN_SLOT_TEAM } from './offerRefresh1018.js';
 
 export const offerRefreshTh = {
     // ------------------------------------------------------------ navigation and calls to action
@@ -256,9 +255,6 @@ export const offerRefreshTh = {
     abHow5: 'รายงานของเราบอกว่าอะไรควรเปลี่ยนก่อน HLT ช่วยอะไรได้บ้าง และส่วนไหนลูกค้าอาจทำเองได้ดีกว่า',
     abHow6: 'ไม่มีข้อผูกมัดใดๆ ที่ต้องทำต่อหลังจาก Business Read',
     abCtaLabel: 'นัดคุยเบื้องต้น',
-    abTeamHeading: 'ทีมงาน',
-    // Ian's slot, the same as the English page's: his words first, then their Thai.
-    abTeamBody: IAN_SLOT_TEAM,
     abClosingHeading: 'ตัดสินเราจากการคุยครั้งแรก',
     abClosingBody: 'การนัดคุยเบื้องต้นเป็นวิธีที่ประหยัดที่สุดในการดูว่าสิ่งที่เขียนไว้ข้างบนเป็นจริงหรือไม่ ยี่สิบนาที คำตอบที่ตรงไปตรงมา และไม่มีข้อผูกมัดหลังจากนั้น',
 

@@ -5,12 +5,10 @@
 // Its one job, from his locked page-hierarchy table of 17 September 2026: "Why HLT is credible."
 // Still thin, by his rule.
 //
-// THE PARAGRAPH ABOUT IAN IS BEHIND A SWITCH. The brief (section 17) gives one paragraph on his
-// background. His ruling of 1 October: "I want you to have this prepared so it can be switched on
-// or off." It is prepared, in src/copy/repositioning.js, and SHOW_ABOUT_IAN in
-// src/config/features.js is false: his hard rule of 27 September (no name, face, bio or career line
-// on anything HLT publishes until his visa is resolved) stands until he lifts it himself.
-// tests/visibility-refresh.mjs holds the built site to that while the switch is off.
+// NO PERSON ON THIS PAGE, 20 October 2026 (bridge row 4898, the visa rule of 27 September). The
+// founder paragraph and the team slot that sat behind switches were deleted from the source, not
+// just hidden, because a withheld string still ships in the JavaScript bundle. Neither was visible,
+// so no visitor sees a change. The page carries the company's identity and registration only.
 //
 // THE REST: the brief's H1 and three lines, how we work (the brief's six lines), Ian's own "what we
 // won't do" of 18 September, the three-line company facts block (gate 128), and the Fit Call. The
@@ -21,7 +19,6 @@
 // src/copy/repositioning.js, which is spread last.
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { SHOW_ABOUT_IAN } from '../config/features';
 import { ROUTE_ABOUT } from '../constants/routes';
 import Seo from '../components/Seo';
 import FitCallButtons from '../components/FitCallButtons';
@@ -48,15 +45,6 @@ const About = () => {
                 </motion.div>
             </section>
 
-            {SHOW_ABOUT_IAN ? (
-                <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                    <motion.div {...fadeUp} className="mx-auto max-w-3xl">
-                        <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('abIanHeading')}</h2>
-                        <p className="mt-5 text-base leading-8 text-slate-600">{t('abIanBody')}</p>
-                    </motion.div>
-                </section>
-            ) : null}
-
             <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('abHowHeading')}</h2>
@@ -82,21 +70,6 @@ const About = () => {
                     </ul>
                 </motion.div>
             </section>
-
-            {/* 18 October 2026, Ian's change 5: "Add accurate company and team experience within the
-                identity rule". The team line is Ian's to write (visa rule: no name or career), so
-                the preview shows his slot; tests/offer-refresh-1018.mjs --release fails while it
-                is still a slot. The company facts stay in Ian's own block beneath, unchanged.
-                GOING LIVE, 18 October 2026 (Ian: "Can you please make it live?"): a placeholder is
-                never published, so the section shows only once Ian's words replace the slot. */}
-            {t('abTeamBody').startsWith('[IAN:') ? null : (
-                <section className="bg-white px-5 pb-10 sm:px-6 lg:px-8">
-                    <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-sand-300 bg-sand-50 p-6">
-                        <h2 className="text-xl font-bold leading-tight text-slate-950">{t('abTeamHeading')}</h2>
-                        <p className="mt-3 text-base leading-7 text-slate-700">{t('abTeamBody')}</p>
-                    </motion.div>
-                </section>
-            )}
 
             {/* The company facts block, Ian's own three-line layout, gate 128, 18 September 2026.
                 The company number is public record. No address, by his standing rule. */}

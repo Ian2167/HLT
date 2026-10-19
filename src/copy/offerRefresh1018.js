@@ -30,8 +30,6 @@
 // "[IAN: ...]" marks a slot only Ian can fill. tests/offer-refresh-1018.mjs --release fails while
 // any slot is still in the built site.
 
-export const IAN_SLOT_TEAM =
-    "[IAN: who works on HLT engagements and the experience they bring, in your words, with no name or career that the visa rule holds back]";
 // THE PRICE IS IAN'S OWN WORD. Ian, in the build session, Sunday 18 October 2026, about 16:0x
 // Bangkok, verbatim: "Business Read usual price THB 22500". It is the figure his 14 September
 // tiers gave the read with a second voice from the team, which is the scope confirmed on the bridge (row
@@ -270,10 +268,6 @@ export const offerRefreshCopy = {
     dlOwn3Body: "Ongoing support isn't included by default. If you want it, we agree what it covers and what it costs, separately.",
     dlOwn4Name: 'Third-party costs, shown first',
     dlOwn4Body: 'Domains, hosting, software licences and similar costs are listed separately before you agree, so you can see what you pay and who you pay.',
-
-    // ---------------------------------------------------------------- About: the company and the team (change 5)
-    abTeamHeading: 'The team',
-    abTeamBody: IAN_SLOT_TEAM,
 
     // ---------------------------------------------------------------- the Business Read, reconciled (change 6)
     // The scope is the one confirmed on bridge row 4822: goals-first research, a 60-minute owner conversation, a
