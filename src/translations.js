@@ -60,6 +60,8 @@ import { offerRefreshCopy } from './copy/offerRefresh1018';
 import { offerRefreshTh } from './copy/offerRefreshTh1018';
 // The site review of 19 October 2026: LAST in both blocks, so it wins. See the module's header.
 import { improvementsEn, improvementsTh } from './copy/improvements1019';
+// 19 October 2026: Rich's finish list (bridge row 4882), spread after the site review in both blocks.
+import { finishEn, finishTh } from './copy/finish1019';
 
 export const translations = {
     en: {
@@ -497,8 +499,11 @@ export const translations = {
         // sections on its English page only (Examples), so nothing reaches a Thai page as English.
         ...offerRefreshCopy,
 
-        // 19 October 2026: the site review. LAST of all, so it wins.
-        ...improvementsEn
+        // 19 October 2026: the site review.
+        ...improvementsEn,
+
+        // 19 October 2026, evening: Rich's finish list (row 4882). LAST of all, so it wins.
+        ...finishEn
     },
     th: {
         // TH PENDING: English values on purpose. See the note at the top of this file.
@@ -990,7 +995,11 @@ export const translations = {
         // LAST of all, so it wins over the English spread above.
         ...offerRefreshTh,
 
-        // 19 October 2026: the site review's machine Thai, UNREVIEWED. LAST of all, so it wins.
-        ...improvementsTh
+        // 19 October 2026: the site review's machine Thai, UNREVIEWED.
+        ...improvementsTh,
+
+        // 19 October 2026, evening: the finish list's machine Thai (row 4882), UNREVIEWED. LAST of
+        // all, so it wins.
+        ...finishTh
     }
 };

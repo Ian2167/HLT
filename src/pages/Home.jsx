@@ -1,6 +1,12 @@
-// Home.jsx — the home page. REORDERED 19 October 2026 (the site review, round 2).
+// Home.jsx — the home page. REORDERED 19 October 2026 (the site review, round 2), and again the same
+// evening for Rich's finish list (bridge row 4882): the visitor recognises a problem, sees how HLT
+// helps, and knows the next step before any teaching. The order is now
+//   hero (shorter) · three problems with their losses · how we help, four steps, then the next step
+//   in one line · the sample (with why its priority was chosen) · Understand / Diagnose / Improve ·
+//   which goal is closest · what can follow · short answers · the final call.
+// The four-card enquiry example went: the hero card already tells that one enquiry's story.
 //
-// THE ORDER, each section answering a new question:
+// THE 19 OCTOBER (round 2) ORDER, kept for the record:
 //   1 hero        who it's for, their goal, what the Business Read gives them (Ian's goals-first
 //                 headline of 18 October and his one button), beside the illustrated enquiry
 //   2 example     one small, concrete change: today, what we'd change, if it's late, what you'd notice
@@ -26,6 +32,8 @@
 // honoured app-wide by MotionConfig in src/App.jsx).
 import { motion } from 'framer-motion';
 import { ArrowRight, BarChart3, ClipboardCheck, Inbox, LayoutGrid, MessageCircle, MonitorSmartphone, Repeat, Route, Search, UserCog, Users } from 'lucide-react';
+// Inbox, Repeat, Search, Users, BarChart3 stay for the goal cards; MessageCircle, ClipboardCheck and
+// UserCog now serve the three problems.
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import {
@@ -58,12 +66,13 @@ const TEXT_LINK_CLASSES =
 export const OUTLINE_CTA_CLASSES =
     'press inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border-2 border-indigo-600 px-7 py-4 text-base font-bold text-indigo-700 transition-colors hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
 
-// The small example: four beats, read in order.
-const EXAMPLE_BEATS = [
-    { label: 'hxTodayLabel', body: 'hxToday', Icon: MessageCircle },
-    { label: 'hxChangeLabel', body: 'hxChange', Icon: Inbox },
-    { label: 'hxLateLabel', body: 'hxLate', Icon: UserCog },
-    { label: 'hxNoticeLabel', body: 'hxNotice', Icon: ClipboardCheck },
+// The three problems (19 October, evening; Rich's finish list item 1). `loss` names the leakOutcome
+// label it causes: 1 Money lost, 2 Time lost, 3 Control lost. The same pairing is used on
+// /problems-we-fix, so a loss always sits beside the same kind of problem.
+const PROBLEMS = [
+    { n: 1, loss: 1, Icon: MessageCircle, to: `${ROUTE_PROBLEMS}#finding-you` },
+    { n: 2, loss: 2, Icon: ClipboardCheck, to: `${ROUTE_PROBLEMS}#daily-business-pulse` },
+    { n: 3, loss: 3, Icon: UserCog, to: ROUTE_OWNER_DEPENDENCY },
 ];
 
 // The goal cards: each one to the page that explains it.
@@ -127,38 +136,87 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* 2. One small, concrete example. */}
-            <section id="example" className="bg-white px-5 py-14 sm:px-6 sm:py-16 lg:px-8">
+            {/* 2. Are any of these happening? Three problems a visitor recognises, each with the loss
+                it causes (Money lost, Time lost, Control lost: the leakOutcome labels). */}
+            <section id="problems" className="bg-white px-5 py-14 sm:px-6 sm:py-16 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <AccentRule />
-                    <motion.div {...fadeUp} className="text-center">
-                        <span className="inline-block rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-amber-800">
-                            {t('hxTag')}
-                        </span>
-                        <h2 className="mt-4 text-2xl font-bold leading-tight sm:text-3xl">{t('hxHeading')}</h2>
-                    </motion.div>
-                    <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                        {EXAMPLE_BEATS.map((beat, index) => (
-                            <motion.li
-                                key={beat.label}
-                                {...fadeUpDelayed(index, 0.05)}
-                                className="flex flex-col rounded-2xl border border-sand-300 bg-sand-50 p-5"
-                            >
-                                <span className="flex items-center gap-3">
-                                    <span aria-hidden="true" className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-hltNavy text-saffron-400">
-                                        <beat.Icon size={18} />
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('probHeading')}
+                    </motion.h2>
+                    <ul className="mt-8 grid gap-4 md:grid-cols-3">
+                        {PROBLEMS.map((problem, index) => (
+                            <motion.li key={problem.n} {...fadeUpDelayed(index, 0.05)}>
+                                <Link
+                                    to={lp(problem.to)}
+                                    className="press flex h-full flex-col rounded-2xl border border-sand-300 bg-sand-50 p-5 transition-colors hover:border-saffron-500 sm:p-6"
+                                >
+                                    <span className="flex items-center gap-3">
+                                        <span aria-hidden="true" className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-saffron-400">
+                                            <problem.Icon size={18} />
+                                        </span>
+                                        <span className="text-lg font-bold leading-6 text-slate-950">{t(`prob${problem.n}Name`)}</span>
                                     </span>
-                                    <span className="text-sm font-bold uppercase tracking-[0.14em] text-saffron-700">{t(beat.label)}</span>
-                                </span>
-                                <p className="mt-3 text-base leading-7 text-slate-800">{t(beat.body)}</p>
+                                    <span className="mt-3 block flex-1 text-base leading-7 text-slate-700">{t(`prob${problem.n}Body`)}</span>
+                                    <span className="mt-4 block rounded-xl border-l-4 border-rose-500 bg-rose-50 px-4 py-3">
+                                        <span className="block text-xs font-bold uppercase tracking-[0.14em] text-rose-700">{t(`leakOutcome${problem.loss}`)}</span>
+                                        <span className="mt-1 block text-sm leading-6 text-slate-800">{t(`prob${problem.n}Loss`)}</span>
+                                    </span>
+                                    <span className={`${TEXT_LINK_CLASSES} mt-4 text-sm`}>
+                                        {t('probLink')}
+                                        <ArrowRight size={16} aria-hidden="true" />
+                                    </span>
+                                </Link>
                             </motion.li>
                         ))}
-                    </ol>
+                    </ul>
                 </div>
             </section>
 
-            {/* 3. Understand, Diagnose, Improve. */}
-            <StagesBand />
+            {/* 3. How we help: the connected flow, then the one plain next step (the old "What happens
+                next" section's job, moved up). */}
+            <section id="how-we-help" className="bg-sand-100 px-5 py-14 sm:px-6 sm:py-16 lg:px-8">
+                <div className="mx-auto max-w-6xl">
+                    <AccentRule />
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('flowHeading')}
+                    </motion.h2>
+                    <ol className="mt-8 grid gap-3 md:grid-cols-4">
+                        {[1, 2, 3, 4].map((n, index) => (
+                            <motion.li key={n} {...fadeUpDelayed(index, 0.06)} className="relative flex flex-col rounded-2xl border border-sand-300 bg-white p-5 shadow-sm">
+                                <span aria-hidden="true" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-saffron-500 text-sm font-bold text-hltNavy">
+                                    {n}
+                                </span>
+                                <span className="mt-3 block text-lg font-bold leading-6 text-slate-950">{t(`flow${n}Name`)}</span>
+                                <span className="mt-2 block text-base leading-7 text-slate-600">{t(`flow${n}Body`)}</span>
+                                {n < 4 ? (
+                                    <span aria-hidden="true" className="absolute -bottom-3 left-1/2 z-10 inline-flex h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full bg-hltNavy text-white md:-right-3 md:bottom-auto md:left-auto md:top-1/2 md:-translate-y-1/2 md:translate-x-0">
+                                        <ArrowRight size={14} className="rotate-90 md:rotate-0" />
+                                    </span>
+                                ) : null}
+                            </motion.li>
+                        ))}
+                    </ol>
+                    <motion.div {...fadeUp} className="mx-auto mt-8 max-w-3xl rounded-2xl border-l-4 border-indigo-600 bg-white px-5 py-4 sm:px-6">
+                        <p className="text-xs font-bold uppercase tracking-[0.18em] text-indigo-700">{t('flowNextLabel')}</p>
+                        <p className="mt-1 text-base leading-7 text-slate-800">{t('flowNextBody')}</p>
+                        <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-8">
+                            <Link to={lp(capabilityRoute('websites'))} className={`${TEXT_LINK_CLASSES} text-sm`}>
+                                {t('flowWebsiteLine')}
+                                <ArrowRight size={16} aria-hidden="true" />
+                            </Link>
+                            <Link
+                                to={lp(ROUTE_BUSINESS_BLINDSPOTS)}
+                                onClick={() => logEvent(EVENTS.blindspotCtaClick, { place: 'home-flow' })}
+                                className={`${TEXT_LINK_CLASSES} text-sm`}
+                            >
+                                {t('nextSelfCheck')}
+                                <ArrowRight size={16} aria-hidden="true" />
+                            </Link>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
 
             {/* 4. The sample map and the one-priority plan, shown. */}
             <section id="sample" className="bg-sand-200 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
@@ -175,6 +233,9 @@ const Home = () => {
                     </motion.div>
                 </div>
             </section>
+
+            {/* 5a. Understand, Diagnose, Improve (Ian's three stages, 17 September), after the sample. */}
+            <StagesBand />
 
             {/* 5. Which is closest to what you want? */}
             <section id="goals" className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
@@ -253,34 +314,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* 7. What happens next, and the self-check for anyone not ready to talk. */}
-            <section id="next" className="bg-sand-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-5xl">
-                    <AccentRule />
-                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('nextHeading')}
-                    </motion.h2>
-                    <ol className="mt-10 grid gap-5 md:grid-cols-3">
-                        {[1, 2, 3].map((n, index) => (
-                            <motion.li key={n} {...fadeUpDelayed(index, 0.06)} className="rounded-2xl border border-sand-300 bg-white p-6 shadow-sm">
-                                <span className="text-sm font-bold text-saffron-700">{n}</span>
-                                <h3 className="mt-1 text-lg font-bold leading-7 text-slate-950">{t(`next${n}Name`)}</h3>
-                                <p className="mt-2 text-base leading-7 text-slate-600">{t(`next${n}Body`)}</p>
-                            </motion.li>
-                        ))}
-                    </ol>
-                    <motion.p {...fadeUp} className="mt-8 text-center">
-                        <Link
-                            to={lp(ROUTE_BUSINESS_BLINDSPOTS)}
-                            onClick={() => logEvent(EVENTS.blindspotCtaClick, { place: 'home-next' })}
-                            className={TEXT_LINK_CLASSES}
-                        >
-                            {t('nextSelfCheck')}
-                            <ArrowRight size={16} aria-hidden="true" />
-                        </Link>
-                    </motion.p>
-                </div>
-            </section>
+            {/* 7. (19 October, evening) "What happens next" moved up into section 3 as one line. */}
 
             {/* 8. Short answers. */}
             <section id="faq" className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
