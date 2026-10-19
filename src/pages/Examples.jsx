@@ -16,7 +16,7 @@
 // three, never a client story. The first real, consented client story gets its own slot when it
 // exists.
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
@@ -75,24 +75,32 @@ const Examples = () => {
             {/* 19 October 2026: the deeper scenarios come after the artefacts and the walkthrough,
                 labelled as illustrations of what could change, never promised results. */}
             <section id="more-situations" className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-4xl space-y-8">
+                <div className="mx-auto max-w-4xl space-y-4">
                     <motion.div {...fadeUp} className="text-center">
                         <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('exScenariosHeading')}</h2>
                         <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600">{t('exScenariosNote')}</p>
                     </motion.div>
+                    {/* 19 October 2026 evening (Rich's finish list, bridge row 4882): the four stories open
+                        one at a time, so a visitor reads only the one closest to their business. The
+                        words and the "illustrations, not client stories" label are unchanged. */}
                     {examples.map((example, index) => (
-                        <motion.article
+                        <motion.details
                             key={example.title}
                             {...fadeUpDelayed(index, 0.08)}
-                            className="rounded-2xl border border-slate-200 bg-stone-50 p-7 card-glass sm:p-9"
+                            className="group rounded-2xl border border-slate-200 bg-stone-50 card-glass card-static"
                         >
-                            <h2 className="text-2xl font-bold leading-8 text-slate-950">{example.title}</h2>
-                            <div className="mt-6 grid gap-6 md:grid-cols-2">
-                                <p className="text-base leading-8 text-slate-600">{example.now}</p>
-                                <p className="text-base leading-8 text-slate-600">{example.after}</p>
+                            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 sm:p-7">
+                                <h3 className="text-xl font-bold leading-7 text-slate-950 sm:text-2xl sm:leading-8">{example.title}</h3>
+                                <ChevronDown size={22} aria-hidden="true" className="shrink-0 text-indigo-600 transition-transform group-open:rotate-180 motion-reduce:transition-none" />
+                            </summary>
+                            <div className="px-6 pb-7 sm:px-9 sm:pb-9">
+                                <div className="grid gap-6 md:grid-cols-2">
+                                    <p className="text-base leading-8 text-slate-600">{example.now}</p>
+                                    <p className="text-base leading-8 text-slate-600">{example.after}</p>
+                                </div>
+                                <p className="mt-6 border-t border-slate-200 pt-6 text-base leading-8 text-slate-950">{example.mechanism}</p>
                             </div>
-                            <p className="mt-6 border-t border-slate-200 pt-6 text-base leading-8 text-slate-950">{example.mechanism}</p>
-                        </motion.article>
+                        </motion.details>
                     ))}
 
                     <motion.p {...fadeUp} className="mx-auto max-w-3xl pt-4 text-center text-base leading-8 text-slate-600">

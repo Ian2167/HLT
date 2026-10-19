@@ -10,13 +10,16 @@ import { fadeUp, fadeUpDelayed } from '../../lib/motion';
 
 const OWN_ICONS = [KeyRound, GraduationCap, LifeBuoy, ReceiptText];
 
-const DeliverySection = () => {
+// 19 October 2026 evening (bridge row 4882): How It Works puts the six build steps behind its "See how
+// we build it" disclosure and keeps "what stays yours" in view, so each half can render on its own.
+const DeliverySection = ({ showSteps = true, showOwn = true }) => {
     const { t } = useLanguage();
     const steps = [1, 2, 3, 4, 5, 6].map((n) => ({ n, name: t(`dl${n}Name`), body: t(`dl${n}Body`) }));
     const own = [1, 2, 3, 4].map((n) => ({ n, name: t(`dlOwn${n}Name`), body: t(`dlOwn${n}Body`), Icon: OWN_ICONS[n - 1] }));
 
     return (
         <>
+            {showSteps ? (
             <section id="delivery" className="scroll-mt-28 bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
@@ -42,7 +45,9 @@ const DeliverySection = () => {
                     </ol>
                 </div>
             </section>
+            ) : null}
 
+            {showOwn ? (
             <section id="what-stays-yours" className="navy-glow bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
@@ -63,6 +68,7 @@ const DeliverySection = () => {
                     </ul>
                 </div>
             </section>
+            ) : null}
         </>
     );
 };

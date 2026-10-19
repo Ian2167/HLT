@@ -11,7 +11,7 @@
 // capability is one tool the control method may choose. No result figures, no guarantees, no price.
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { CAPABILITIES } from '../config/features';
@@ -96,6 +96,20 @@ const WebsitesExtra = ({ extra }) => {
     );
 };
 
+// Folded: one closed disclosure around the generic detail. Not folded: the children as they were.
+const CapabilityDetail = ({ folded, summary, children }) =>
+    folded ? (
+        <details className="group mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-stone-50">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-lg font-bold text-slate-950 sm:px-6">
+                {summary}
+                <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-indigo-600 transition-transform group-open:rotate-180 motion-reduce:transition-none" />
+            </summary>
+            <div className="border-t border-slate-200 px-5 py-8 sm:px-6">{children}</div>
+        </details>
+    ) : (
+        children
+    );
+
 const Capability = () => {
     const { slug } = useParams();
     const { t, lp, contentLang } = useLanguage();
@@ -126,7 +140,11 @@ const Capability = () => {
             {/* 18 October 2026: the Websites page's own sections (src/copy/offerRefresh1018.js). */}
             {cap.extra ? <WebsitesExtra extra={cap.extra} /> : null}
 
+            {/* 19 October 2026 evening (Rich's finish list, bridge row 4882): on the Websites page
+                these generic lines repeat its stronger opening, so they fold into one "More detail"
+                disclosure there. Other capability pages show them as before. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <CapabilityDetail folded={Boolean(cap.extra)} summary={t('capMoreDetail')}>
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl space-y-8">
                     <div>
                         <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{t('capFitsLabel')}</h2>
@@ -156,6 +174,7 @@ const Capability = () => {
                         {t('capBackLink')}
                     </Link>
                 </motion.div>
+                </CapabilityDetail>
             </section>
 
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
@@ -164,7 +183,7 @@ const Capability = () => {
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{cap.extra?.closeHeading || t('finalHeading')}</h2>
                     <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{cap.extra?.closeBody || t('finalBody')}</p>
                     <div className="mt-8 flex justify-center">
-                        <FitCallButtons place={`capability-${slug}`} />
+                        <FitCallButtons place={`capability-${slug}`} label={slug === 'websites' ? t('capWebsitesCta') : undefined} />
                     </div>
                 </motion.div>
             </section>

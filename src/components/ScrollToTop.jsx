@@ -44,6 +44,11 @@ export default function ScrollToTop() {
         const align = () => {
             const el = document.getElementById(id);
             if (!el) return false;
+            // 19 October 2026 evening: a target inside a closed <details> (How It Works' "See how we
+            // build it") can't be scrolled to while hidden, so every closed <details> around it opens.
+            for (let node = el; node; node = node.parentElement) {
+                if (node.tagName === 'DETAILS' && !node.open) node.open = true;
+            }
             el.scrollIntoView({ block: 'start' });
             return true;
         };

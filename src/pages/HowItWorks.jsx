@@ -17,6 +17,7 @@
 //
 // COPY: src/copy/repositioning.js for the steps and the flow, src/copy/howItWorks.js for the rest.
 import { motion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { ROUTE_HOW_IT_WORKS } from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
@@ -81,24 +82,33 @@ const HowItWorks = () => {
                 </div>
             </section>
 
-            {/* Owner by exception, as a flow. */}
-            <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-6xl">
-                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('exceptionHeading')}
-                    </motion.h2>
-                    <motion.div {...fadeUp} className="mt-10">
-                        <DecisionFlow />
-                    </motion.div>
-                    <motion.p {...fadeUp} className="mx-auto mt-10 max-w-3xl text-center text-base leading-8 text-slate-600 sm:text-lg">
-                        {t('exceptionLead')}
-                    </motion.p>
-                </div>
+            {/* 19 October 2026 evening (Rich's finish list, bridge row 4882): the build detail, the
+                owner-by-exception flow and the six delivery steps, sits behind one clear disclosure,
+                closed by default. A link to /how-it-works#delivery opens it (ScrollToTop opens any
+                closed <details> around its target). What stays yours stays in view below. */}
+            <section id="how-we-build" className="scroll-mt-28 bg-stone-100 px-5 py-10 sm:px-6 sm:py-12 lg:px-8">
+                <details className="group mx-auto max-w-6xl rounded-2xl border border-slate-200 bg-white">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 sm:px-7">
+                        <span>
+                            <span className="block text-xl font-bold leading-7 text-slate-950">{t('hiwBuildSummary')}</span>
+                            <span className="mt-1 block text-base leading-7 text-slate-600">{t('hiwBuildNote')}</span>
+                        </span>
+                        <ChevronDown size={22} aria-hidden="true" className="shrink-0 text-indigo-600 transition-transform group-open:rotate-180 motion-reduce:transition-none" />
+                    </summary>
+                    <div className="border-t border-slate-200">
+                        <div className="px-5 py-12 sm:px-6 lg:px-8">
+                            <h2 className="text-center text-2xl font-bold leading-tight sm:text-3xl">{t('exceptionHeading')}</h2>
+                            <div className="mt-10">
+                                <DecisionFlow />
+                            </div>
+                            <p className="mx-auto mt-10 max-w-3xl text-center text-base leading-8 text-slate-600 sm:text-lg">{t('exceptionLead')}</p>
+                        </div>
+                        <DeliverySection showOwn={false} />
+                    </div>
+                </details>
             </section>
 
-            {/* 19 October 2026: how a build is delivered and what stays yours, LOWER on the page, after
-                the decision path and the hold-us-to lines, for anyone who gets that far. */}
-            <DeliverySection />
+            <DeliverySection showSteps={false} />
 
             {/* What you can hold us to: Ian's own four lines of 18 September. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">

@@ -271,6 +271,11 @@ try {
         const flows = await page.evaluate(() => document.querySelectorAll('main ol').length);
         check(flows >= 2, `flows: the home page draws its method and control flows as ordered lists (${flows})`);
         await page.goto(`${base}/en/how-it-works`, { waitUntil: 'networkidle' });
+        // 19 October 2026 evening (bridge row 4882): the owner-by-exception flow now sits behind the
+        // "See how we build it" disclosure, closed by default, so the visitor's click opens it first.
+        const foldedFirst = await page.evaluate(() => !document.body.innerText.includes('Within agreed rules?'));
+        check(foldedFirst, 'flows: how it works keeps the build detail folded until asked for');
+        await page.click('#how-we-build summary');
         const decision = await page.evaluate(() => document.body.innerText.includes('Within agreed rules?') && document.querySelectorAll('main ol').length >= 2);
         check(decision, 'flows: how it works draws the six steps and the owner-by-exception flow as ordered lists');
         await page.close();

@@ -26,13 +26,17 @@ import ControlFlow from '../components/flows/ControlFlow';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
 // The six entry points. `prefix` names the copy keys; `controls` is set for the four modules.
+// 19 October 2026 evening (Rich's finish list, bridge row 4882): the HEADING is what the owner would
+// notice (`nameKey`); the technical name of the four modules drops to a small "We call this" line
+// (`categoryKey`), so nobody needs the glossary to read the headings. `loss` is the same pairing as
+// the home page's three problems: 1 Money lost, 2 Time lost, 3 Control lost (leakOutcome labels).
 const ENTRIES = [
-    { id: 'finding-you', prefix: 'pwfE1', nameKey: 'pwfE1Name', Icon: Search, to: capabilityRoute('websites') },
-    { id: 'marketing-to-customers', prefix: 'pwfE2', nameKey: 'pwfE2Name', Icon: Megaphone, to: `${ROUTE_EXAMPLES}#sales-path` },
-    { id: 'revenue-capture', prefix: 'm1', nameKey: 'm1Name', Icon: Wallet, to: `${ROUTE_EXAMPLES}#improvement-plan-extract`, controls: 'm1Controls' },
-    { id: 'commercial-follow-through', prefix: 'm2', nameKey: 'm2Name', Icon: Repeat, to: `${ROUTE_EXAMPLES}#sales-path`, controls: 'm2Controls' },
-    { id: 'owner-decision-control', prefix: 'm3', nameKey: 'm3Name', Icon: UserCog, to: ROUTE_OWNER_DEPENDENCY, controls: 'm3Controls' },
-    { id: 'daily-business-pulse', prefix: 'm4', nameKey: 'm4Name', Icon: BarChart3, to: ROUTE_BUSINESS_READ, controls: 'm4Controls' },
+    { id: 'finding-you', prefix: 'pwfE1', nameKey: 'pwfE1Name', loss: 1, Icon: Search, to: capabilityRoute('websites') },
+    { id: 'marketing-to-customers', prefix: 'pwfE2', nameKey: 'pwfE2Name', loss: 1, Icon: Megaphone, to: `${ROUTE_EXAMPLES}#sales-path` },
+    { id: 'revenue-capture', prefix: 'm1', nameKey: 'm1Symptom', categoryKey: 'm1Name', loss: 1, Icon: Wallet, to: `${ROUTE_EXAMPLES}#improvement-plan-extract`, controls: 'm1Controls' },
+    { id: 'commercial-follow-through', prefix: 'm2', nameKey: 'm2Symptom', categoryKey: 'm2Name', loss: 1, Icon: Repeat, to: `${ROUTE_EXAMPLES}#sales-path`, controls: 'm2Controls' },
+    { id: 'owner-decision-control', prefix: 'm3', nameKey: 'm3Symptom', categoryKey: 'm3Name', loss: 3, Icon: UserCog, to: ROUTE_OWNER_DEPENDENCY, controls: 'm3Controls' },
+    { id: 'daily-business-pulse', prefix: 'm4', nameKey: 'm4Symptom', categoryKey: 'm4Name', loss: 2, Icon: BarChart3, to: ROUTE_BUSINESS_READ, controls: 'm4Controls' },
 ];
 
 const Chips = ({ items }) => (
@@ -83,7 +87,19 @@ const ProblemsWeFix = () => {
                                 <span aria-hidden="true" className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white">
                                     <entry.Icon size={22} />
                                 </span>
-                                <h2 className="text-xl font-bold leading-7 sm:text-2xl">{t(entry.nameKey)}</h2>
+                                <div className="min-w-0">
+                                    <h2 className="text-xl font-bold leading-7 sm:text-2xl">{t(entry.nameKey)}</h2>
+                                    <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500">
+                                        <span className="rounded-full border border-rose-200 bg-rose-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-[0.12em] text-rose-700">
+                                            {t(`leakOutcome${entry.loss}`)}
+                                        </span>
+                                        {entry.categoryKey ? (
+                                            <span>
+                                                {t('pwfCategoryLabel')} {t(entry.categoryKey)}
+                                            </span>
+                                        ) : null}
+                                    </p>
+                                </div>
                             </div>
                             <div className="mt-5 grid gap-4 md:grid-cols-3">
                                 <Field label={t('pwfNoticeLabel')}>{t(`${entry.prefix}Notice`)}</Field>

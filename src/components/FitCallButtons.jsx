@@ -94,12 +94,14 @@ export const MessageBackups = ({ place, lead = true, dark = false, center = true
 
 // The final band's set: the Fit Call, the Business Read link beside it, the 20-minute line
 // beneath, then LINE and WhatsApp as the backups (Ian, 1 October 2026).
-const FitCallButtons = ({ place, dark = true, note = true, secondary = true, backups = true }) => {
+// 19 October 2026 evening: `label` lets a page name the button for its own subject (the Websites
+// page's "Talk to us about a website", bridge row 4882). It still goes to the same place.
+const FitCallButtons = ({ place, dark = true, note = true, secondary = true, backups = true, label }) => {
     const { t } = useLanguage();
     return (
         <div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
-                <FitCallButton place={place} />
+                <FitCallButton place={place} label={label} />
                 {secondary ? <BusinessReadLink place={place} className={dark ? SECONDARY_DARK_CLASSES : SECONDARY_LIGHT_CLASSES} /> : null}
             </div>
             {note ? <p className={`mt-4 text-sm leading-6 ${dark ? 'text-slate-200' : 'text-slate-500'} sm:text-base`}>{t('ctaFitCallNote')}</p> : null}
