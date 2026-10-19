@@ -44,6 +44,21 @@ const WebsitesExtra = ({ extra }) => {
                     ))}
                 </div>
             </section>
+            {/* 19 October 2026: the working example comes before any method detail. */}
+            {extra.seeHeading ? (
+                <section className="bg-white px-5 pb-16 sm:px-6 sm:pb-20 lg:px-8">
+                    <motion.div {...fadeUp} className="mx-auto flex max-w-5xl flex-col gap-4 rounded-2xl border-l-4 border-saffron-500 bg-sand-50 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+                        <div>
+                            <h2 className="text-xl font-bold leading-7 text-slate-950">{extra.seeHeading}</h2>
+                            <p className="mt-2 text-base leading-7 text-slate-600">{extra.seeBody}</p>
+                        </div>
+                        <Link to={`${lp(ROUTE_EXAMPLES)}#website-demonstration`} className="inline-flex shrink-0 items-center gap-2 font-bold text-indigo-600 hover:text-indigo-500">
+                            {extra.demoLink}
+                            <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
+                    </motion.div>
+                </section>
+            ) : null}
             <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-5xl">
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
@@ -145,8 +160,9 @@ const Capability = () => {
 
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('finalHeading')}</h2>
-                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{t('finalBody')}</p>
+                    {/* 19 October 2026: a page with its own next step (Websites) says it here. */}
+                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{cap.extra?.closeHeading || t('finalHeading')}</h2>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{cap.extra?.closeBody || t('finalBody')}</p>
                     <div className="mt-8 flex justify-center">
                         <FitCallButtons place={`capability-${slug}`} />
                     </div>

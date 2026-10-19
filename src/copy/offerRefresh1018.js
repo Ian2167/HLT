@@ -329,7 +329,17 @@ export const websitesCapability = {
     description:
         'We build new websites and improve existing ones, planning design, clear messaging, enquiries and follow-up together. Before anyone recommends more advertising, we look at how customers find you and get in touch.',
     headline: 'New websites, and better ones, planned around the enquiry.',
+    // 19 October 2026, the site review: plain words for where it fits and what it checks, and no
+    // more "the site was never the problem". Both the site and what happens after it can need work.
+    fits: 'Where enquiries start: the first place a customer finds you and decides whether to get in touch.',
+    not: "A website on its own isn't the whole answer. If enquiries arrive and then go quiet, both the site and what happens after it may need work, and we look at both.",
+    controls: 'one clear next step on every page, every contact button tested, enquiries landing where the team works, pages that search engines can read',
     extra: {
+        seeHeading: 'See it working',
+        seeBody: "Tap through a mock-up of how a clinic's website could turn a visitor's question into a request reception can act on.",
+        closeHeading: 'Talk to us about a new or better website',
+        closeBody:
+            "Tell us what you have now, or that you're starting from scratch, and what you want the site to do. If your brief is clear, we can talk about the website on its own, without a Business Read.",
         newHeading: "If you don't have a website yet",
         newBody: 'We start with who your customers are, what they need to know before they get in touch, and how you want enquiries to reach you. The site is built around that.',
         improveHeading: "If you have one that isn't working",

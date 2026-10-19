@@ -110,7 +110,7 @@ export const StagesBand = () => {
                             {...fadeUpDelayed(index, 0.06)}
                             className="flex flex-col overflow-hidden rounded-2xl border border-sand-300 bg-white shadow-sm"
                         >
-                            <img src={STAGE_PHOTOS[index].src} alt={STAGE_PHOTOS[index].alt} loading="lazy" className="h-44 w-full object-cover" />
+                            <img src={STAGE_PHOTOS[index].src} alt={STAGE_PHOTOS[index].alt} loading="lazy" className="hidden h-44 w-full object-cover sm:block" />
                             <div className="flex items-center gap-3 px-6 pt-6 sm:px-7">
                                 <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-saffron-500 text-hltNavy">
                                     <stage.Icon size={20} />

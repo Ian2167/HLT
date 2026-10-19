@@ -95,8 +95,9 @@ check(inOrder(enHome, ['How we start', 'Understand', 'Diagnose', 'Improve']), 'c
 check(/one thing we check for/i.test(enHome), 'change1 work coming back to the owner is "one thing we check for", not the starting assumption');
 
 // ------------------------------------------------------------------ change 2: websites
-check(/New websites, and websites that bring in work/.test(enHome), 'change2 home carries the websites band');
-check(/Before anyone recommends more advertising/.test(enHome), 'change2 home says the customer path comes before more advertising');
+// 19 October 2026: the websites band became the first, largest card of "What can follow" (src/pages/Home.jsx).
+check(/A new or improved website/.test(enHome), 'change2 home carries the websites offer');
+check(/Before anyone spends more on advertising/.test(enHome), 'change2 home says the customer path comes before more advertising');
 check(body(page('/en')).includes('href="/en/capabilities/websites"'), 'change2 home links to the Websites page');
 const web = text(page('/en/capabilities/websites'));
 check(web.length > 500, 'change2 /en/capabilities/websites is built');
@@ -117,7 +118,8 @@ for (const [id, label, tag] of [
 }
 check(/None of it comes from a client/.test(ex), 'change3 the examples say none of it comes from a client');
 check(/nothing is booked and no message is sent/.test(ex), 'change3 the demonstration says nothing is booked or sent');
-check(inOrder(enHome, ["What you'd actually receive", 'A business map', 'An improvement plan extract', 'A website demonstration']), 'change3 home lists the three things a client receives');
+// 19 October 2026: the home SHOWS the map and the plan (SamplePreview) and links all three.
+check(inOrder(enHome, ["A look at what you'd receive", 'Sample business map', 'The priority', 'Try the website demonstration']), 'change3 home shows the map and plan and links the three things a client receives');
 check(!/cutting[- ]edge/i.test(enHome + ex), 'change3 no "cutting edge" claim');
 
 // ------------------------------------------------------------------ change 4: the commercial path

@@ -1,31 +1,39 @@
 // ProblemsWeFix.jsx — /problems-we-fix and /en/problems-we-fix. Built 1 October 2026, the
-// repositioning (Ian's brief of that morning, sections 12 to 14, and his "Agreed to the Home and
-// other page structuring").
+// repositioning; RESTRUCTURED 19 October 2026 (the site review, round 2).
 //
-// WHAT THIS PAGE IS. The four places HLT most often puts a control in, each with its headline and
-// the controls it tends to be made of, in full (the home page carries only the cards); then the
-// brief's two technology sections, where AI fits and what automation should do, in full; then the
-// enabled capability pages, if any; then the Fit Call. "Explore the problem, not a package" is the
-// brief's own instruction, which is why these are not priced and not called products.
+// WHAT THIS PAGE IS NOW. Six entry points, each in the same pattern: what you'd notice, the goal, one
+// example change, and a link to the page that explains it. The first two are the marketing and
+// website entry points (customers can't find you; marketing brings people but few become customers);
+// the other four are the modules the home page used to list. Each module's "possible controls" sit
+// behind a details toggle, as optional detail. Then the six-part control flow, moved here from the
+// home page, with the plain-language glossary; then AI and automation, second to the owner's
+// decision; then the capability pages and the Fit Call.
 //
-// EACH MODULE HAS AN ANCHOR the home page's cards link to. Since 19 October 2026 the scroll to it is
-// src/components/ScrollToTop.jsx, which handles every fragment link on the site.
+// EACH ENTRY HAS AN ANCHOR the home page's goal cards link to. The scroll is src/components/ScrollToTop.jsx.
 //
-// COPY: src/copy/repositioning.js and, for the capability names, src/copy/capabilities.js.
+// COPY: src/copy/improvements1019.js for the new lines; src/copy/repositioning.js for the module
+// names, controls, AI and automation; src/copy/capabilities.js for the capability names.
 import { motion } from 'framer-motion';
-import { ArrowRight, BarChart3, Repeat, UserCog, Wallet } from 'lucide-react';
+import { ArrowRight, BarChart3, Megaphone, Repeat, Search, UserCog, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { FOOTER_CAPABILITY_LINKS, ROUTE_PROBLEMS } from '../constants/routes';
+import { FOOTER_CAPABILITY_LINKS, ROUTE_BUSINESS_READ, ROUTE_EXAMPLES, ROUTE_OWNER_DEPENDENCY, ROUTE_PROBLEMS, capabilityRoute } from '../constants/routes';
 // 18 October 2026: a capability with Thai copy (Websites) shows its Thai name on the Thai page.
 import { capabilities } from '../copy/capabilities';
 import Seo from '../components/Seo';
 import FitCallButtons from '../components/FitCallButtons';
+import ControlFlow from '../components/flows/ControlFlow';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
-const MODULE_ICONS = [Wallet, Repeat, UserCog, BarChart3];
-// The anchors the home page's four cards link to; Home.jsx carries the same four strings.
-const MODULE_SLUGS = ['revenue-capture', 'commercial-follow-through', 'owner-decision-control', 'daily-business-pulse'];
+// The six entry points. `prefix` names the copy keys; `controls` is set for the four modules.
+const ENTRIES = [
+    { id: 'finding-you', prefix: 'pwfE1', nameKey: 'pwfE1Name', Icon: Search, to: capabilityRoute('websites') },
+    { id: 'marketing-to-customers', prefix: 'pwfE2', nameKey: 'pwfE2Name', Icon: Megaphone, to: `${ROUTE_EXAMPLES}#sales-path` },
+    { id: 'revenue-capture', prefix: 'm1', nameKey: 'm1Name', Icon: Wallet, to: `${ROUTE_EXAMPLES}#improvement-plan-extract`, controls: 'm1Controls' },
+    { id: 'commercial-follow-through', prefix: 'm2', nameKey: 'm2Name', Icon: Repeat, to: `${ROUTE_EXAMPLES}#sales-path`, controls: 'm2Controls' },
+    { id: 'owner-decision-control', prefix: 'm3', nameKey: 'm3Name', Icon: UserCog, to: ROUTE_OWNER_DEPENDENCY, controls: 'm3Controls' },
+    { id: 'daily-business-pulse', prefix: 'm4', nameKey: 'm4Name', Icon: BarChart3, to: ROUTE_BUSINESS_READ, controls: 'm4Controls' },
+];
 
 const Chips = ({ items }) => (
     <ul className="mt-3 flex flex-wrap gap-2">
@@ -37,18 +45,18 @@ const Chips = ({ items }) => (
     </ul>
 );
 
+const Field = ({ label, children }) => (
+    <div>
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{label}</p>
+        <p className="mt-1 text-base leading-7 text-slate-800">{children}</p>
+    </div>
+);
+
 const ProblemsWeFix = () => {
     const { t, lp, contentLang } = useLanguage();
-
-    const modules = [1, 2, 3, 4].map((n) => ({
-        slug: MODULE_SLUGS[n - 1],
-        name: t(`m${n}Name`),
-        headline: t(`m${n}Headline`),
-        controls: t(`m${n}Controls`).split(', '),
-        Icon: MODULE_ICONS[n - 1],
-    }));
     const aiHelps = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => t(`aiHelp${n}`));
     const autoExamples = [1, 2, 3, 4, 5, 6].map((n) => t(`autoEx${n}`));
+    const glossary = [1, 2, 3, 4, 5, 6, 7].map((n) => ({ term: t(`gloss${n}Term`), body: t(`gloss${n}Body`) }));
 
     return (
         <div className="min-h-screen bg-stone-50 pt-20 text-slate-950 lg:pt-24">
@@ -57,35 +65,75 @@ const ProblemsWeFix = () => {
             <section className="px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...heroIn} className="mx-auto max-w-3xl">
                     <h1 className="text-[2rem] font-bold leading-[1.15] sm:text-5xl sm:leading-[1.1]">{t('problemsPageHeading')}</h1>
-                    <p className="mt-6 text-base leading-8 text-slate-600 sm:text-lg sm:leading-9">{t('modulesLead')}</p>
+                    <p className="mt-6 text-base leading-8 text-slate-600 sm:text-lg sm:leading-9">{t('pwfLead')}</p>
                 </motion.div>
             </section>
 
-            {/* The four modules, in full. */}
+            {/* The six entry points: notice, goal, example, link. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <ol className="mx-auto max-w-4xl space-y-6">
-                    {modules.map((module, index) => (
+                    {ENTRIES.map((entry, index) => (
                         <motion.li
-                            key={module.slug}
-                            id={module.slug}
+                            key={entry.id}
+                            id={entry.id}
                             {...fadeUpDelayed(index, 0.05)}
                             className="scroll-mt-28 rounded-2xl border border-slate-200 bg-stone-50 p-6 card-glass card-static sm:p-8"
                         >
                             <div className="flex items-center gap-4">
                                 <span aria-hidden="true" className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-white">
-                                    <module.Icon size={22} />
+                                    <entry.Icon size={22} />
                                 </span>
-                                <h2 className="text-xl font-bold leading-7 sm:text-2xl">{module.name}</h2>
+                                <h2 className="text-xl font-bold leading-7 sm:text-2xl">{t(entry.nameKey)}</h2>
                             </div>
-                            <p className="mt-4 text-lg font-semibold leading-8 text-slate-950">{module.headline}</p>
-                            <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{t('modulesControlsLabel')}</p>
-                            <Chips items={module.controls} />
+                            <div className="mt-5 grid gap-4 md:grid-cols-3">
+                                <Field label={t('pwfNoticeLabel')}>{t(`${entry.prefix}Notice`)}</Field>
+                                <Field label={t('pwfGoalLabel')}>{t(`${entry.prefix}Goal`)}</Field>
+                                <Field label={t('pwfExampleLabel')}>{t(`${entry.prefix}Example`)}</Field>
+                            </div>
+                            <div className="mt-5">
+                                <Link to={lp(entry.to)} className="inline-flex items-center gap-2 text-base font-bold text-indigo-600 transition-colors hover:text-indigo-500">
+                                    {t(`${entry.prefix}Link`)}
+                                    <ArrowRight size={16} aria-hidden="true" />
+                                </Link>
+                            </div>
+                            {entry.controls ? (
+                                <details className="mt-4 rounded-xl border border-slate-200 bg-white px-4 py-3">
+                                    <summary className="cursor-pointer text-sm font-bold text-slate-700">{t('pwfDetailLabel')}</summary>
+                                    <Chips items={t(entry.controls).split(', ')} />
+                                </details>
+                            ) : null}
                         </motion.li>
                     ))}
                 </ol>
             </section>
 
-            {/* Where AI fits, in full. */}
+            {/* The control flow, moved from the home page, with the glossary. */}
+            <section id="how-a-rule-works" className="bg-sand-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-6xl">
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('controlHeading')}
+                    </motion.h2>
+                    <motion.p {...fadeUp} className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 sm:text-lg">
+                        {t('pwfControlLead')}
+                    </motion.p>
+                    <motion.div {...fadeUp} className="mt-10">
+                        <ControlFlow />
+                    </motion.div>
+                    <motion.div {...fadeUp} className="mx-auto mt-12 max-w-4xl rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+                        <h3 className="text-xl font-bold text-slate-950">{t('glossHeading')}</h3>
+                        <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+                            {glossary.map((item) => (
+                                <div key={item.term}>
+                                    <dt className="text-base font-bold text-slate-950">{item.term}</dt>
+                                    <dd className="mt-1 text-base leading-7 text-slate-600">{item.body}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Where AI fits: second to the owner's decision. */}
             <section id="where-ai-fits" className="scroll-mt-28 bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-4xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('aiHeading')}</h2>
@@ -97,7 +145,7 @@ const ProblemsWeFix = () => {
                 </motion.div>
             </section>
 
-            {/* Automation should enforce good work, in full. */}
+            {/* Automation should enforce good work. */}
             <section id="automation" className="scroll-mt-28 bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-4xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('autoHeading')}</h2>

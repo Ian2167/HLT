@@ -19,7 +19,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { ROUTE_BUSINESS_BLINDSPOTS, ROUTE_OWNER_DEPENDENCY } from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
 import Seo from '../components/Seo';
-import FitCallButtons from '../components/FitCallButtons';
+import FitCallButtons, { MessageBackups } from '../components/FitCallButtons';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
 const BusinessBlindspots = () => {
@@ -68,7 +68,19 @@ const BusinessBlindspots = () => {
                 </div>
             </section>
 
-            {/* Case study zero: the test HLT ran on itself. */}
+            {/* 19 October 2026: an optional next step that isn't a call: send the one point where
+                you hesitated, by LINE or WhatsApp. No form, no email capture. */}
+            <section id="send-us-one-point" className="bg-white px-5 pb-16 sm:px-6 sm:pb-20 lg:px-8">
+                <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border-l-4 border-saffron-500 bg-sand-50 p-6 sm:p-8">
+                    <h2 className="text-2xl font-bold leading-tight">{t('blindSendHeading')}</h2>
+                    <p className="mt-3 text-base leading-8 text-slate-600 sm:text-lg">{t('blindSendBody')}</p>
+                    <div className="mt-5">
+                        <MessageBackups place="blindspots-send" lead={false} center={false} />
+                    </div>
+                </motion.div>
+            </section>
+
+            {/* Case study zero: the check HLT ran on itself, without a claim it can't date. */}
             <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-7 card-glass card-static sm:p-9">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('blindCaseHeading')}</h2>

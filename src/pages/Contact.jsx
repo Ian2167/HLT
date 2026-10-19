@@ -65,6 +65,16 @@ const Contact = () => {
                         <>
                             <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('ctBookHeading')}</h2>
                             <p className="mt-4 text-base leading-7 text-slate-600">{t('ctBookByMessage')}</p>
+                            {/* 19 October 2026: what a visitor may put in the message, all optional. */}
+                            <h3 className="mt-6 text-base font-bold text-slate-950">{t('ctIncludeHeading')}</h3>
+                            <ul className="mt-2 space-y-2">
+                                {[1, 2, 3].map((n) => (
+                                    <li key={n} className="flex gap-3 text-base leading-7 text-slate-600">
+                                        <span aria-hidden="true" className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-600" />
+                                        <span>{t(`ctInclude${n}`)}</span>
+                                    </li>
+                                ))}
+                            </ul>
                             <div className="mt-6">
                                 <MessageBackups place="contact" lead={false} center={false} />
                             </div>

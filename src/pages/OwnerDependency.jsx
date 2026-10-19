@@ -78,10 +78,36 @@ const OwnerDependency = () => {
                 </div>
             </section>
 
-            {/* The closing line is the heading: it is the page's one sentence. */}
+            {/* 19 October 2026: one labelled illustration, a routine decision beside an owner's one. */}
+            <section id="routine-or-yours" className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-5xl">
+                    <motion.div {...fadeUp} className="text-center">
+                        <span className="inline-block rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-amber-800">
+                            {t('odIllTag')}
+                        </span>
+                        <h2 className="mt-4 text-2xl font-bold leading-tight sm:text-3xl">{t('odIllHeading')}</h2>
+                    </motion.div>
+                    <div className="mt-8 grid gap-5 md:grid-cols-2">
+                        <motion.div {...fadeUp} className="rounded-2xl border border-emerald-200 bg-white p-6 sm:p-7">
+                            <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">{t('odRoutineLabel')}</p>
+                            <p className="mt-3 text-base leading-7 text-slate-700">{t('odRoutineBody')}</p>
+                        </motion.div>
+                        <motion.div {...fadeUp} className="rounded-2xl border border-indigo-200 bg-white p-6 sm:p-7">
+                            <p className="text-sm font-bold uppercase tracking-[0.14em] text-indigo-700">{t('odOwnerLabel')}</p>
+                            <p className="mt-3 text-base leading-7 text-slate-700">{t('odOwnerBody')}</p>
+                        </motion.div>
+                    </div>
+                    <motion.p {...fadeUp} className="mx-auto mt-8 max-w-3xl text-center text-lg font-semibold leading-8 text-slate-950">
+                        {t('odClosing')}
+                    </motion.p>
+                </div>
+            </section>
+
+            {/* The goal-specific call. */}
             <section className="bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('odClosing')}</h2>
+                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('odGoalHeading')}</h2>
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{t('odGoalBody')}</p>
                     <div className="mt-8 flex justify-center">
                         <FitCallButtons place="od-final" />
                     </div>

@@ -11,7 +11,10 @@
 // Every string is in src/copy/offerRefresh1018.js; the status of each cell is data here, because it
 // is the example's content, not copy.
 import { motion } from 'framer-motion';
+import { ArrowDown, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
+import { ROUTE_EXAMPLES } from '../../constants/routes';
 import { fadeUp, fadeUpDelayed } from '../../lib/motion';
 
 // The invented clinic's scores: one row per lens, one cell per step. ok / watch / fix.
@@ -163,6 +166,10 @@ export const ImprovementPlanExtract = () => {
             <h3 className="mt-4 text-2xl font-bold leading-8 text-slate-950">{t('planTitle')}</h3>
             <p className="mt-3 max-w-3xl text-base leading-8 text-slate-600">{t('planLead')}</p>
 
+            {/* 19 October 2026: the map flags four "fix first" notes and the plan picks one priority;
+                this line says how the two connect. */}
+            <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-slate-800">{t('planFromMap')}</p>
+
             <div className="mt-6 rounded-xl border-l-4 border-indigo-600 bg-indigo-50 px-5 py-4">
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-indigo-700">{t('planPriorityLabel')}</p>
                 <p className="mt-1 text-lg font-semibold leading-7 text-slate-950">{t('planPriority')}</p>
@@ -214,5 +221,131 @@ export const ImprovementPlanExtract = () => {
 
             <p className="mt-6 border-t border-slate-200 pt-5 text-sm leading-7 text-slate-600">{t('planNote')}</p>
         </motion.article>
+    );
+};
+
+// THE SAMPLE PREVIEW, 19 October 2026. A small, real extract of the two artefacts above, so the
+// home page, the Business Read and About can SHOW the sample rather than describe it: the map as
+// dots (the same data as the full map, so the two can't drift), the four "fix first" notes, the one
+// priority they point to, and the plan's first three actions. Links open the full versions on
+// /examples. Labelled as an example on an invented business, like the full ones.
+const FIX_FIRST = ROWS.flatMap((row) =>
+    STEPS.filter((step, i) => MAP_STATUS[row.code][i] === 'fix').map((step) => ({ step, code: row.code })),
+);
+
+const PREVIEW_LINK = 'inline-flex items-center gap-2 text-base font-bold text-indigo-600 transition-colors hover:text-indigo-500';
+
+export const SamplePreview = ({ links = true }) => {
+    const { t, lp } = useLanguage();
+    return (
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+            <ArtefactTag>{t('spTag')}</ArtefactTag>
+            <div className="mt-5 grid gap-8 lg:grid-cols-2">
+                <div>
+                    <h3 className="text-lg font-bold text-slate-950">{t('spMapTitle')}</h3>
+                    <div className="mt-3 rounded-xl bg-hltNavy px-4 py-3 text-white">
+                        <p className="text-xs font-bold uppercase tracking-[0.18em] text-indigo-200">{t('mapGoalLabel')}</p>
+                        <p className="mt-1 text-base font-semibold leading-6">{t('mapGoal')}</p>
+                    </div>
+                    <p className="mt-3 text-sm leading-6 text-slate-600">{t('spMapLead')}</p>
+                    <table className="mt-3 w-full table-fixed border-separate border-spacing-1 text-left text-xs">
+                        <thead>
+                            <tr>
+                                <th className="w-20" />
+                                {STEPS.map((step) => (
+                                    <th key={step} scope="col" className="text-center font-bold text-slate-500">
+                                        {step}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {ROWS.map((row) => (
+                                <tr key={row.code}>
+                                    <th scope="row" className="pr-1 font-bold text-slate-800">
+                                        {t(row.key)}
+                                    </th>
+                                    {STEPS.map((step, i) => {
+                                        const status = MAP_STATUS[row.code][i];
+                                        return (
+                                            <td key={step} className={`rounded-md border py-2 text-center ${STATUS_STYLE[status].ring}`}>
+                                                <span aria-hidden="true" className={`inline-block h-2.5 w-2.5 rounded-full ${STATUS_STYLE[status].dot}`} />
+                                                <span className="sr-only">{`${t(`mapStep${step}`)}: ${t(STATUS_STYLE[status].key)}`}</span>
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <ol className="mt-2 grid grid-cols-1 gap-x-4 text-xs leading-5 text-slate-500 sm:grid-cols-2">
+                        {STEPS.map((step) => (
+                            <li key={step}>
+                                <span className="font-bold text-slate-700">{step}</span> {t(`mapStep${step}`)}
+                            </li>
+                        ))}
+                    </ol>
+                    <ul className="mt-3 flex flex-wrap gap-2 text-xs font-semibold">
+                        {[
+                            ['fix', 'mapSummaryFix'],
+                            ['watch', 'mapSummaryWatch'],
+                            ['ok', 'mapSummaryOk'],
+                        ].map(([status, key]) => (
+                            <li key={status} className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-slate-800 ${STATUS_STYLE[status].ring}`}>
+                                <span aria-hidden="true" className={`h-2 w-2 rounded-full ${STATUS_STYLE[status].dot}`} />
+                                <span className="tabular-nums">{countStatus(status)}</span> {t(key)}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div>
+                    <p className="text-sm font-bold text-slate-950">{t('spFixLabel')}</p>
+                    <ul className="mt-2 space-y-1.5">
+                        {FIX_FIRST.map(({ step, code }) => (
+                            <li key={`${step}${code}`} className="flex gap-2 text-sm leading-6 text-slate-700">
+                                <span aria-hidden="true" className="mt-2 h-2 w-2 shrink-0 rounded-full bg-rose-500" />
+                                <span>{t(`map${step}${code}`)}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <p className="mt-3 flex items-center gap-2 text-sm font-semibold text-indigo-700">
+                        <ArrowDown size={16} aria-hidden="true" />
+                        {t('spArrow')}
+                    </p>
+                    <div className="mt-3 rounded-xl border-l-4 border-indigo-600 bg-indigo-50 px-4 py-3">
+                        <p className="text-xs font-bold uppercase tracking-[0.18em] text-indigo-700">{t('planPriorityLabel')}</p>
+                        <p className="mt-1 text-base font-semibold leading-6 text-slate-950">{t('planPriority')}</p>
+                    </div>
+                    <p className="mt-4 text-sm font-bold text-slate-950">{t('spPlanTitle')}</p>
+                    <ol className="mt-2 space-y-2">
+                        {[1, 2, 3].map((n) => (
+                            <li key={n} className="rounded-lg border border-slate-200 bg-stone-50 px-3 py-2 text-sm leading-6 text-slate-800">
+                                <span className="mr-1 font-bold text-indigo-600">{n}.</span>
+                                {t(`plan${n}Action`)}
+                                <span className="block text-xs text-slate-500">
+                                    {t(`plan${n}Who`)} · {t(`plan${n}When`)}
+                                </span>
+                            </li>
+                        ))}
+                    </ol>
+                </div>
+            </div>
+            {links ? (
+                <div className="mt-6 flex flex-col gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:flex-wrap sm:gap-x-8">
+                    <Link to={`${lp(ROUTE_EXAMPLES)}#sample-business-map`} className={PREVIEW_LINK}>
+                        {t('spSeeMap')}
+                        <ArrowRight size={16} aria-hidden="true" />
+                    </Link>
+                    <Link to={`${lp(ROUTE_EXAMPLES)}#improvement-plan-extract`} className={PREVIEW_LINK}>
+                        {t('spSeePlan')}
+                        <ArrowRight size={16} aria-hidden="true" />
+                    </Link>
+                    <Link to={`${lp(ROUTE_EXAMPLES)}#website-demonstration`} className={PREVIEW_LINK}>
+                        {t('spSeeDemo')}
+                        <ArrowRight size={16} aria-hidden="true" />
+                    </Link>
+                </div>
+            ) : null}
+        </div>
     );
 };

@@ -65,6 +65,39 @@ const HuaHin = () => {
                 </div>
             </section>
 
+            {/* 19 October 2026: one plausible local journey, invented and labelled as such. */}
+            <section id="weekend-enquiry" className="bg-sand-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-5xl">
+                    <motion.div {...fadeUp} className="text-center">
+                        <span className="inline-block rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-amber-800">
+                            {t('hhJourneyTag')}
+                        </span>
+                        <h2 className="mt-4 text-2xl font-bold leading-tight sm:text-3xl">{t('hhJourneyHeading')}</h2>
+                        <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-slate-600">{t('hhJourneyLead')}</p>
+                    </motion.div>
+                    <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        {[1, 2, 3, 4].map((n, index) => (
+                            <motion.li key={n} {...fadeUpDelayed(index, 0.05)} className="rounded-2xl border border-sand-300 bg-white p-5">
+                                <p className="text-sm font-bold text-saffron-700">
+                                    {n}. {t(`hhStep${n}Name`)}
+                                </p>
+                                <p className="mt-2 text-base leading-7 text-slate-700">{t(`hhStep${n}Body`)}</p>
+                            </motion.li>
+                        ))}
+                    </ol>
+                    <div className="mt-6 grid gap-4 md:grid-cols-2">
+                        <motion.div {...fadeUp} className="rounded-2xl border-l-4 border-indigo-600 bg-white p-5">
+                            <p className="text-xs font-bold uppercase tracking-[0.18em] text-indigo-700">{t('hhChangeLabel')}</p>
+                            <p className="mt-2 text-base leading-7 text-slate-800">{t('hhChangeBody')}</p>
+                        </motion.div>
+                        <motion.div {...fadeUp} className="rounded-2xl border-l-4 border-emerald-500 bg-white p-5">
+                            <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">{t('hhNoticeLabel')}</p>
+                            <p className="mt-2 text-base leading-7 text-slate-800">{t('hhNoticeBody')}</p>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
             <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('huahinLocalHeading')}</h2>

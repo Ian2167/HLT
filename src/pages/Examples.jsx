@@ -72,8 +72,14 @@ const Examples = () => {
                 </section>
             ) : null}
 
-            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+            {/* 19 October 2026: the deeper scenarios come after the artefacts and the walkthrough,
+                labelled as illustrations of what could change, never promised results. */}
+            <section id="more-situations" className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-4xl space-y-8">
+                    <motion.div {...fadeUp} className="text-center">
+                        <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('exScenariosHeading')}</h2>
+                        <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-600">{t('exScenariosNote')}</p>
+                    </motion.div>
                     {examples.map((example, index) => (
                         <motion.article
                             key={example.title}

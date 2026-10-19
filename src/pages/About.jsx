@@ -21,13 +21,13 @@ import { useLanguage } from '../context/LanguageContext';
 import { ROUTE_ABOUT } from '../constants/routes';
 import Seo from '../components/Seo';
 import FitCallButtons from '../components/FitCallButtons';
+import { SamplePreview } from '../components/offer/SampleArtefacts';
 import { fadeUp, heroIn } from '../lib/motion';
 
 const About = () => {
     const { t } = useLanguage();
 
     const howRules = [1, 2, 3, 4, 5, 6].map((n) => t(`abHow${n}`));
-    const wontRules = [t('abWont1'), t('abWont2'), t('abWont3'), t('abWont4')];
 
     return (
         <div className="min-h-screen bg-stone-50 pt-20 text-slate-950 lg:pt-24">
@@ -58,17 +58,17 @@ const About = () => {
                 </motion.div>
             </section>
 
-            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl">
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('abWontHeading')}</h2>
-                    <ul className="mt-6 space-y-5">
-                        {wontRules.map((rule) => (
-                            <li key={rule} className="rounded-xl border border-slate-200 bg-stone-50 p-5 text-base leading-8 text-slate-600 card-glass card-static">
-                                {rule}
-                            </li>
-                        ))}
-                    </ul>
-                </motion.div>
+            {/* 19 October 2026: a sample artefact in place of the "won't" lines. */}
+            <section id="sample" className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-6xl">
+                    <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
+                        <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('abSampleHeading')}</h2>
+                        <p className="mt-4 text-base leading-8 text-slate-600">{t('abSampleLead')}</p>
+                    </motion.div>
+                    <motion.div {...fadeUp} className="mt-8">
+                        <SamplePreview />
+                    </motion.div>
+                </div>
             </section>
 
 

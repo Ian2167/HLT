@@ -34,7 +34,7 @@
 //
 // COPY: src/copy/repositioning.js for the new sections, src/copy/businessReadRebuild.js for the rest.
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, FileText, Layers, Users, X } from 'lucide-react';
+import { ArrowRight, Check, FileText, Layers, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { BR_PRICING } from '../config/features';
 import { localPath } from '../constants/lang';
@@ -42,6 +42,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { ROUTE_BUSINESS_READ, ROUTE_EXAMPLES } from '../constants/routes';
 import ProcessNumber from '../components/mocks/ProcessNumber';
 import { CellValue, DepthLadder } from '../components/mocks/TierVisuals';
+import { SamplePreview } from '../components/offer/SampleArtefacts';
 import Seo from '../components/Seo';
 import { FitCallButton } from '../components/FitCallButtons';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
@@ -72,9 +73,7 @@ const BusinessRead = () => {
         depth: n,
     }));
 
-    const faqs = [1, 2, 3, 4, 5, 6].map((n) => ({ q: t(`brFaq${n}Q`), a: t(`brFaq${n}A`) }));
-
-    const notThis = [1, 2, 3].map((n) => t(`brNot${n}`));
+    const faqs = [1, 2, 3, 7, 4, 5, 6].map((n) => ({ q: t(`brFaq${n}Q`), a: t(`brFaq${n}A`) }));
 
     return (
         <div className="min-h-screen pt-20 lg:pt-24">
@@ -109,6 +108,21 @@ const BusinessRead = () => {
                         </div>
                         <p className="mx-auto mt-5 max-w-xl text-sm text-slate-200 sm:text-base">{t('brCtaNote')}</p>
                         <p className="mx-auto mt-2 max-w-xl text-sm font-semibold text-white sm:text-base">{priceLine}</p>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* 19 October 2026: the value, plainly, and the sample SHOWN straight after the hero. */}
+            <section id="what-the-read-gives-you" className="bg-stone-100 py-16 sm:py-20">
+                <div className="mx-auto max-w-6xl px-5 sm:px-6">
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">
+                        {t('brPreviewHeading')}
+                    </motion.h2>
+                    <motion.p {...fadeUp} className="mx-auto mt-5 max-w-2xl text-center text-lg leading-8 text-slate-700">
+                        {t('brValueBody')}
+                    </motion.p>
+                    <motion.div {...fadeUp} className="mt-8">
+                        <SamplePreview />
                     </motion.div>
                 </div>
             </section>
@@ -150,6 +164,9 @@ const BusinessRead = () => {
                     <motion.p {...fadeUp} className="mx-auto mt-8 max-w-3xl text-center text-sm leading-7 text-slate-500">
                         {t('brReceiveNote')}
                     </motion.p>
+                    <motion.p {...fadeUp} className="mx-auto mt-3 max-w-3xl text-center text-base font-semibold leading-7 text-slate-800">
+                        {t('brTimingLabel')} {t('brTimingValue')}
+                    </motion.p>
                     <div className="mt-6 text-center">
                         <Link
                             to={`${localPath(ROUTE_EXAMPLES, contentLang)}#sample-business-map`}
@@ -168,28 +185,11 @@ const BusinessRead = () => {
                     <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border-l-4 border-indigo-600 bg-indigo-50 p-6 sm:p-8">
                         <h2 className="text-2xl font-bold text-slate-900">{t('brExcludedHeading')}</h2>
                         <p className="mt-4 text-lg leading-8 text-slate-700">{t('brExcludedBody')}</p>
+                        <p className="mt-3 text-lg leading-8 text-slate-700">{t('brExcludedBody2')}</p>
                     </motion.div>
                 </div>
             </section>
 
-            {/* What it is not. Ian's own three, verbatim. */}
-            <section className="bg-slate-50 py-16">
-                <div className="mx-auto max-w-6xl px-5 sm:px-6">
-                    <motion.div {...fadeUp} className="mx-auto max-w-3xl">
-                        <h2 className="mb-8 text-2xl font-bold text-slate-900 sm:text-3xl">{t('brNotHeading')}</h2>
-                        <ul className="space-y-5">
-                            {notThis.map((item) => (
-                                <li key={item} className="flex gap-4 text-lg text-slate-600">
-                                    <span className="mt-1.5 shrink-0 text-slate-400">
-                                        <X size={18} aria-hidden="true" />
-                                    </span>
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-                </div>
-            </section>
 
             {single ? (
                 <>

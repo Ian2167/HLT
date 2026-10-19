@@ -81,9 +81,6 @@ const HowItWorks = () => {
                 </div>
             </section>
 
-            {/* 18 October 2026, Ian's change 5: how a build is delivered and what stays yours. */}
-            <DeliverySection />
-
             {/* Owner by exception, as a flow. */}
             <section className="bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
@@ -98,6 +95,10 @@ const HowItWorks = () => {
                     </motion.p>
                 </div>
             </section>
+
+            {/* 19 October 2026: how a build is delivered and what stays yours, LOWER on the page, after
+                the decision path and the hold-us-to lines, for anyone who gets that far. */}
+            <DeliverySection />
 
             {/* What you can hold us to: Ian's own four lines of 18 September. */}
             <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">

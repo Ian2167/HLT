@@ -1,43 +1,47 @@
-// Home.jsx — the home page. REBUILT 1 October 2026, the repositioning (Ian's "HIGH LEVEL THAI
-// WEBSITE REPOSITIONING BRIEF" of that morning, reviewed with his minimal owner-friendly edits at
-// C:\Projects\hlt-estate\02-builds\hlt-site-kit\2026-10-01-HLT-REPOSITIONING-BRIEF-REVIEWED.md, and
-// his rulings in the same conversation: "Agreed to the Home and other page structuring").
+// Home.jsx — the home page. REORDERED 19 October 2026 (the site review, round 2).
 //
-// THE ORDER IS THE AGREED TEN. 1 hero; 2 small problems and the leak visual; 3 the three problems;
-// 4 the week-away question, which hands to the free Blindspot Test; 5 the method flow; 6 the
-// control flow; 7 the four problem modules, which hand to Problems We Fix; 8 where AI fits, short;
-// 9 who we help, one line, which hands to Who We Help; 10 the final call. Every string comes from
-// src/copy/repositioning.js except the free test's button (src/copy/visibilityRefresh.js, Ian's
-// 30 September wording) and the hero photograph's keys.
+// THE ORDER, each section answering a new question:
+//   1 hero        who it's for, their goal, what the Business Read gives them (Ian's goals-first
+//                 headline of 18 October and his one button), beside the illustrated enquiry
+//   2 example     one small, concrete change: today, what we'd change, if it's late, what you'd notice
+//   3 stages      Understand / Diagnose / Improve
+//   4 sample      the sample map and the one-priority plan SHOWN, not described (SamplePreview), with
+//                 links to the full map, the plan and the website demonstration. This is the proof,
+//                 now the fourth section rather than about nine screens down.
+//   5 goals       "Which is closest to what you want?" six goal cards, each to the page that explains it
+//   6 follow      what can follow, each scoped separately: a website (first and largest, the website
+//                 capability), the enquiry journey, marketing, processes
+//   7 next        what happens next, in three steps, and the free self-check for anyone not ready
+//   8 faq         short answers
+//   9 final       the Fit Call, the Business Read beside it, LINE and WhatsApp
 //
-// THE HERO IS IAN'S OWN, pasted on 1 October: the headline, one paragraph, one button, "Start with
-// The Business Read". Nothing else sits in it: no sub-header, no micro line, no second button. The
-// Fit Call is one tap away in the header on every page.
-//
-// WHAT WENT. The 30 September bands this replaces (the seven signs, the three stages, keep,
-// transfer, remove, the six blindspot cards, the six trust lines, case study zero, the closing
-// three lines) stop rendering; their strings stay in their modules, on Ian's "do not delete". The
-// six blindspots are the free test on /business-blindspots; case study zero moved to that page;
-// keep, transfer, remove lives on /owner-dependency as the five kinds.
-//
-// THE THREE FLOWS are components under src/components/flows/, drawn in HTML, no raster, and read in
-// order without the arrows. LeakVisual is the same idea for section 2.
-//
-// MOTION comes from src/lib/motion.js so the prerender can switch it off; see that file.
+// WHAT MOVED OFF THE HOME PAGE. The leak list, the three problems, the week-away question, the method
+// flow, the six-part control flow, the four modules and "where AI fits". Their strings stay in their
+// modules on Ian's "do not delete"; the control flow and a plain-language glossary now sit on
+// /problems-we-fix, and the week-away question's job (sending people to the self-check) is a link in
+// section 7. Copy for the new sections: src/copy/improvements1019.js.
 //
 // THE HERO PHOTOGRAPH is unchanged, keys and all: Ian's own ruling of 15 September, wash at 55 per
-// cent, the crop anchored on the roofline.
+// cent, the crop anchored on the roofline. MOTION comes from src/lib/motion.js (reduced motion is
+// honoured app-wide by MotionConfig in src/App.jsx).
 import { motion } from 'framer-motion';
-import { ArrowRight, BarChart3, Clock, Eye, Repeat, UserCog, Wallet } from 'lucide-react';
+import { ArrowRight, BarChart3, ClipboardCheck, Inbox, LayoutGrid, MessageCircle, MonitorSmartphone, Repeat, Route, Search, UserCog, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { ROUTE_BUSINESS_BLINDSPOTS, ROUTE_BUSINESS_READ, ROUTE_HOME, ROUTE_PROBLEMS, ROUTE_WHO } from '../constants/routes';
+import {
+    ROUTE_BUSINESS_BLINDSPOTS,
+    ROUTE_BUSINESS_READ,
+    ROUTE_EXAMPLES,
+    ROUTE_HOME,
+    ROUTE_HOW_IT_WORKS,
+    ROUTE_OWNER_DEPENDENCY,
+    ROUTE_PROBLEMS,
+    capabilityRoute,
+} from '../constants/routes';
 import Seo from '../components/Seo';
-import LeakVisual from '../components/LeakVisual';
-import ProcessFlow from '../components/flows/ProcessFlow';
-import ControlFlow from '../components/flows/ControlFlow';
 import FitCallButtons from '../components/FitCallButtons';
-import { AccentRule, HeroFlowCard, ReceiveBand, StagesBand, WebsitesBand } from '../components/offer/OfferBands';
+import { AccentRule, HeroFlowCard, StagesBand } from '../components/offer/OfferBands';
+import { SamplePreview } from '../components/offer/SampleArtefacts';
 import { EVENTS, logEvent } from '../lib/analytics';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
 
@@ -51,43 +55,43 @@ const TEXT_LINK_CLASSES =
     'inline-flex items-center gap-2 text-base font-bold text-indigo-600 transition-colors hover:text-indigo-500';
 
 // The free test's button: outlined in the site's indigo on the light ground, full width on a phone.
-// Ian, 30 September: the Blindspot Test call "should include FREE and be more obvious".
 export const OUTLINE_CTA_CLASSES =
     'press inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border-2 border-indigo-600 px-7 py-4 text-base font-bold text-indigo-700 transition-colors hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto';
 
-// Marks, not copy: one glyph per problem and per module, from the lucide set the site already uses.
-const PROBLEM_ICONS = [Wallet, UserCog, Eye];
-
-// Direction A: the kinds of business, each with a free-licence photograph (CC0).
-const WHO_PHOTOS = [
-    { key: 'whoEx2', src: '/images/offer/clinic-room.webp' },
-    { key: 'whoEx3', src: '/images/offer/reception.webp' },
-    { key: 'whoEx5', src: '/images/offer/team-table.jpg' },
+// The small example: four beats, read in order.
+const EXAMPLE_BEATS = [
+    { label: 'hxTodayLabel', body: 'hxToday', Icon: MessageCircle },
+    { label: 'hxChangeLabel', body: 'hxChange', Icon: Inbox },
+    { label: 'hxLateLabel', body: 'hxLate', Icon: UserCog },
+    { label: 'hxNoticeLabel', body: 'hxNotice', Icon: ClipboardCheck },
 ];
-const MODULE_ICONS = [Wallet, Repeat, UserCog, BarChart3];
+
+// The goal cards: each one to the page that explains it.
+const GOALS = [
+    { n: 1, Icon: Search, to: `${ROUTE_PROBLEMS}#finding-you` },
+    { n: 2, Icon: MonitorSmartphone, to: capabilityRoute('websites') },
+    { n: 3, Icon: Inbox, to: `${ROUTE_PROBLEMS}#revenue-capture` },
+    { n: 4, Icon: Repeat, to: `${ROUTE_PROBLEMS}#commercial-follow-through` },
+    { n: 5, Icon: Users, to: ROUTE_OWNER_DEPENDENCY },
+    { n: 6, Icon: BarChart3, to: `${ROUTE_PROBLEMS}#daily-business-pulse` },
+];
+
+// What can follow. The website first and largest; the others beside it.
+const FOLLOW = [
+    { n: 2, Icon: Route, to: `${ROUTE_EXAMPLES}#sales-path` },
+    { n: 3, Icon: Search, to: ROUTE_BUSINESS_BLINDSPOTS },
+    { n: 4, Icon: LayoutGrid, to: `${ROUTE_HOW_IT_WORKS}#delivery` },
+];
 
 const Home = () => {
     const { t, lp } = useLanguage();
-
-    const problems = [1, 2, 3].map((n) => ({
-        name: t(`p${n}Name`),
-        headline: t(`p${n}Headline`),
-        examples: [1, 2, 3, 4, 5, 6].map((i) => t(`p${n}Ex${i}`)).filter((s) => !/^p\dEx\d$/.test(s)),
-        outcome: t(`p${n}Outcome`),
-        Icon: PROBLEM_ICONS[n - 1],
-    }));
-    const modules = [1, 2, 3, 4].map((n) => ({
-        slug: ['revenue-capture', 'commercial-follow-through', 'owner-decision-control', 'daily-business-pulse'][n - 1],
-        name: t(`m${n}Name`),
-        headline: t(`m${n}Headline`),
-        Icon: MODULE_ICONS[n - 1],
-    }));
+    const faqs = [1, 2, 3, 4, 5].map((n) => ({ q: t(`homeFaq${n}Q`), a: t(`homeFaq${n}A`) }));
 
     return (
         <div className="min-h-screen bg-sand-50 pt-20 text-slate-950 lg:pt-24">
             <Seo title={t('homeMetaTitle')} description={t('homeMetaDescription')} route={ROUTE_HOME} organization />
 
-            {/* 1. Hero: Ian's headline, his paragraph, his button. */}
+            {/* 1. Hero: the goals-first headline, who it's for and what the Read gives, one button. */}
             <section className="relative flex min-h-[32rem] items-center overflow-hidden lg:min-h-[36rem]">
                 <img
                     src={t('homeHeroImage')}
@@ -117,158 +121,86 @@ const Home = () => {
                             </Link>
                         </div>
                     </motion.div>
-                    {/* The wow pass, 18 October 2026: one enquiry followed through, beside the
-                        headline on a laptop and under the button on a phone. */}
                     <div className="lg:justify-self-end">
                         <HeroFlowCard />
                     </div>
                 </div>
             </section>
 
-            {/* 18 October 2026, Ian's change 1: how we start, goals first, Understand / Diagnose /
-                Improve. The hero above now leads with the owner's objectives too (its words are in
-                src/copy/offerRefresh1018.js; his 1 October hero is kept in repositioning.js). The
-                sections below stay: owner dependence is one possible issue, not the starting one. */}
-            <StagesBand />
-
-            {/* 2. Small problems become expensive when nobody owns them. The seven leaks feeding
-                the three losses, drawn as text. */}
-            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+            {/* 2. One small, concrete example. */}
+            <section id="example" className="bg-white px-5 py-14 sm:px-6 sm:py-16 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <AccentRule />
-                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('leakHeading')}
-                    </motion.h2>
-                    <motion.p {...fadeUp} className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 sm:text-lg">
-                        {t('leakLead')}
-                    </motion.p>
-                    <motion.div {...fadeUp} className="mx-auto mt-8 max-w-4xl">
-                        <LeakVisual />
+                    <motion.div {...fadeUp} className="text-center">
+                        <span className="inline-block rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-amber-800">
+                            {t('hxTag')}
+                        </span>
+                        <h2 className="mt-4 text-2xl font-bold leading-tight sm:text-3xl">{t('hxHeading')}</h2>
                     </motion.div>
-                    <motion.div {...fadeUp} className="mx-auto mt-8 max-w-3xl text-center">
-                        <p className="text-base leading-7 text-slate-600 sm:text-lg">{t('leakClose1')}</p>
-                        <p className="mt-1 text-lg font-semibold leading-8 text-slate-950">{t('leakClose2')}</p>
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* 3. The three problems. Name, headline, what it looks like, what we put in place. One
-                column on a phone, three on a laptop, every card the same height. */}
-            <section className="bg-sand-200 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-6xl">
-                    <AccentRule />
-                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('problemsHeading')}
-                    </motion.h2>
-                    <ul className="mt-10 grid gap-5 lg:grid-cols-3">
-                        {problems.map((problem, index) => (
+                    <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        {EXAMPLE_BEATS.map((beat, index) => (
                             <motion.li
-                                key={problem.name}
-                                {...fadeUpDelayed(index, 0.06)}
-                                className="flex flex-col rounded-2xl border border-sand-300 bg-white p-6 shadow-sm sm:p-7"
+                                key={beat.label}
+                                {...fadeUpDelayed(index, 0.05)}
+                                className="flex flex-col rounded-2xl border border-sand-300 bg-sand-50 p-5"
                             >
-                                <div className="flex items-center gap-3">
-                                    <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-saffron-500 text-hltNavy">
-                                        <problem.Icon size={20} />
+                                <span className="flex items-center gap-3">
+                                    <span aria-hidden="true" className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-hltNavy text-saffron-400">
+                                        <beat.Icon size={18} />
                                     </span>
-                                    <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-saffron-700">{problem.name}</h3>
-                                </div>
-                                <p className="mt-4 text-xl font-bold leading-7 text-slate-950">{problem.headline}</p>
-                                <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{t('problemsExamplesLabel')}</p>
-                                <ul className="mt-2 space-y-1 text-base leading-7 text-slate-600">
-                                    {problem.examples.map((example) => (
-                                        <li key={example} className="flex gap-2">
-                                            <span aria-hidden="true" className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-saffron-500" />
-                                            <span>{example}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                                <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{t('problemsOutcomeLabel')}</p>
-                                <p className="mt-2 flex-1 text-base font-semibold leading-7 text-slate-950">{problem.outcome}</p>
+                                    <span className="text-sm font-bold uppercase tracking-[0.14em] text-saffron-700">{t(beat.label)}</span>
+                                </span>
+                                <p className="mt-3 text-base leading-7 text-slate-800">{t(beat.body)}</p>
                             </motion.li>
                         ))}
-                    </ul>
+                    </ol>
                 </div>
             </section>
 
-            {/* 4. The week away. One question, one line, and the free test. */}
-            <section className="relative overflow-hidden bg-hltNavy px-5 py-20 text-white sm:px-6 sm:py-28 lg:px-8">
-                {/* Direction A, 18 October 2026: a Thai street food stall (CC0, rawpixel) behind the
-                    navy wash, so the question lands on a real small business. */}
-                <img src="/images/offer/thai-food-stall.webp" alt="" aria-hidden="true" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-                <div className="absolute inset-0 bg-hltNavy/70" />
-                <motion.div {...fadeUp} className="relative mx-auto max-w-3xl text-center">
-                    <Clock size={32} aria-hidden="true" className="mx-auto text-saffron-400" />
-                    <h2 className="mt-5 text-2xl font-bold leading-tight sm:text-3xl">{t('weekHeading')}</h2>
-                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{t('weekLead')}</p>
-                    <div className="mt-8">
-                        <Link
-                            to={lp(ROUTE_BUSINESS_BLINDSPOTS)}
-                            onClick={() => logEvent(EVENTS.blindspotCtaClick, { place: 'home-week' })}
-                            className={`${SECONDARY_CTA_CLASSES} border-white/70`}
-                        >
-                            {t('homeBlindCtaLabel')}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
-                    </div>
-                </motion.div>
-            </section>
+            {/* 3. Understand, Diagnose, Improve. */}
+            <StagesBand />
 
-            {/* 5. We don't start with software. The method, as a flow. */}
-            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+            {/* 4. The sample map and the one-priority plan, shown. */}
+            <section id="sample" className="bg-sand-200 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <AccentRule />
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('methodHeading')}
+                        {t('hpHeading')}
                     </motion.h2>
                     <motion.p {...fadeUp} className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 sm:text-lg">
-                        {t('methodLead')}
+                        {t('hpLead')}
                     </motion.p>
-                    <motion.div {...fadeUp} className="mt-10">
-                        <ProcessFlow />
+                    <motion.div {...fadeUp} className="mt-8">
+                        <SamplePreview />
                     </motion.div>
                 </div>
             </section>
 
-            {/* 6. A process works when nothing can quietly disappear. The control, as a flow. */}
-            <section className="bg-sand-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+            {/* 5. Which is closest to what you want? */}
+            <section id="goals" className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <AccentRule />
                     <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('controlHeading')}
-                    </motion.h2>
-                    <motion.div {...fadeUp} className="mt-10">
-                        <ControlFlow />
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* 7. Common problems we can help fix. The four modules as cards that hand to the
-                Problems We Fix page, where each has its headline and possible controls. */}
-            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <div className="mx-auto max-w-6xl">
-                    <AccentRule />
-                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
-                        {t('modulesHeading')}
+                        {t('goalsHeading')}
                     </motion.h2>
                     <motion.p {...fadeUp} className="mx-auto mt-5 max-w-2xl text-center text-base leading-8 text-slate-600 sm:text-lg">
-                        {t('modulesLead')}
+                        {t('goalsLead')}
                     </motion.p>
-                    <ul className="mt-10 grid gap-5 md:grid-cols-2">
-                        {modules.map((module, index) => (
-                            <motion.li key={module.name} {...fadeUpDelayed(index, 0.05)}>
+                    <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {GOALS.map((goal, index) => (
+                            <motion.li key={goal.n} {...fadeUpDelayed(index, 0.05)}>
                                 <Link
-                                    to={`${lp(ROUTE_PROBLEMS)}#${module.slug}`}
-                                    className="press flex h-full items-start gap-4 rounded-2xl border border-sand-300 bg-sand-50 p-6 shadow-sm transition-colors hover:border-saffron-500"
+                                    to={lp(goal.to)}
+                                    className="press flex h-full items-start gap-4 rounded-2xl border border-sand-300 bg-sand-50 p-5 shadow-sm transition-colors hover:border-saffron-500 sm:p-6"
                                 >
-                                    <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hltNavy text-saffron-400">
-                                        <module.Icon size={20} />
+                                    <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-saffron-500 text-hltNavy">
+                                        <goal.Icon size={20} />
                                     </span>
                                     <span className="min-w-0">
-                                        <span className="block text-lg font-bold leading-7 text-slate-950">{module.name}</span>
-                                        <span className="mt-1 block text-base leading-7 text-slate-600">{module.headline}</span>
+                                        <span className="block text-lg font-bold leading-7 text-slate-950">{t(`goal${goal.n}Name`)}</span>
+                                        <span className="mt-1 block text-base leading-7 text-slate-600">{t(`goal${goal.n}Body`)}</span>
                                         <span className={`${TEXT_LINK_CLASSES} mt-3 text-sm`}>
-                                            {t('ctaExplore')}
+                                            {t('goalsCta')}
                                             <ArrowRight size={16} aria-hidden="true" />
                                         </span>
                                     </span>
@@ -279,57 +211,99 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* 18 October 2026, Ian's change 2: new websites and website improvement. */}
-            <WebsitesBand />
-
-            {/* 8. Where AI fits, in four lines. The full list lives on Problems We Fix. */}
-            <section className="bg-sand-200 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl rounded-2xl border-l-4 border-saffron-500 bg-white p-7 shadow-sm sm:p-9">
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('aiHeading')}</h2>
-                    <div className="mt-5 space-y-3 text-base leading-8 text-slate-600">
-                        <p>{t('aiLead')}</p>
-                        <p className="font-semibold text-slate-950">{t('aiWarning')}</p>
-                        <p>{t('aiLine')}</p>
+            {/* 6. What can follow, each scoped separately. The website first. */}
+            <section id="websites" className="navy-glow bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-6xl">
+                    <motion.div {...fadeUp} className="max-w-3xl">
+                        <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('followHeading')}</h2>
+                        <p className="mt-5 text-base leading-8 text-slate-200 sm:text-lg">{t('followLead')}</p>
+                    </motion.div>
+                    <div className="mt-10 grid gap-5 lg:grid-cols-[1.2fr_1fr]">
+                        <motion.div {...fadeUp} className="overflow-hidden rounded-2xl border border-white/15 bg-white/5">
+                            <img src="/images/offer/phone-in-hand.jpg" alt="A hand holding a phone" loading="lazy" className="h-48 w-full object-cover sm:h-56" />
+                            <div className="p-6 sm:p-7">
+                                <MonitorSmartphone size={28} aria-hidden="true" className="text-saffron-400" />
+                                <h3 className="mt-3 text-xl font-bold">{t('follow1Name')}</h3>
+                                <p className="mt-2 text-base leading-7 text-slate-200">{t('follow1Body')}</p>
+                                <Link
+                                    to={lp(capabilityRoute('websites'))}
+                                    className="mt-5 inline-flex items-center gap-2 text-base font-bold text-saffron-300 transition-colors hover:text-white"
+                                >
+                                    {t('websitesBandCta')}
+                                    <ArrowRight size={16} aria-hidden="true" />
+                                </Link>
+                            </div>
+                        </motion.div>
+                        <ul className="grid gap-4">
+                            {FOLLOW.map((item, index) => (
+                                <motion.li key={item.n} {...fadeUpDelayed(index, 0.05)}>
+                                    <Link to={lp(item.to)} className="press flex h-full items-start gap-4 rounded-2xl border border-white/15 bg-white/5 p-5 transition-colors hover:border-saffron-400">
+                                        <span aria-hidden="true" className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-saffron-400">
+                                            <item.Icon size={18} />
+                                        </span>
+                                        <span className="min-w-0">
+                                            <span className="block text-lg font-bold leading-7">{t(`follow${item.n}Name`)}</span>
+                                            <span className="mt-1 block text-base leading-7 text-slate-200">{t(`follow${item.n}Body`)}</span>
+                                        </span>
+                                    </Link>
+                                </motion.li>
+                            ))}
+                        </ul>
                     </div>
-                    <div className="mt-6">
-                        <Link to={`${lp(ROUTE_PROBLEMS)}#where-ai-fits`} className={TEXT_LINK_CLASSES}>
-                            {t('ctaExplore')}
-                            <ArrowRight size={16} aria-hidden="true" />
-                        </Link>
-                    </div>
-                </motion.div>
+                </div>
             </section>
 
-            {/* 9. Who we help, one line, and the page. */}
-            <section className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
-                <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
+            {/* 7. What happens next, and the self-check for anyone not ready to talk. */}
+            <section id="next" className="bg-sand-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-5xl">
                     <AccentRule />
-                    <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('whoHeading')}</h2>
-                    <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">{t('whoHomeTeaser')}</p>
-                    {/* Direction A, 18 October 2026: three kinds of business, free-licence photos (CC0). */}
-                    <ul className="mt-8 grid grid-cols-3 gap-3 text-left sm:gap-4">
-                        {WHO_PHOTOS.map((photo) => (
-                            <li key={photo.key} className="overflow-hidden rounded-2xl border border-sand-300 bg-white shadow-sm">
-                                <img src={photo.src} alt="" aria-hidden="true" loading="lazy" className="h-24 w-full object-cover sm:h-36" />
-                                <p className="px-3 py-2 text-sm font-semibold text-slate-800 first-letter:uppercase">{t(photo.key)}</p>
-                            </li>
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('nextHeading')}
+                    </motion.h2>
+                    <ol className="mt-10 grid gap-5 md:grid-cols-3">
+                        {[1, 2, 3].map((n, index) => (
+                            <motion.li key={n} {...fadeUpDelayed(index, 0.06)} className="rounded-2xl border border-sand-300 bg-white p-6 shadow-sm">
+                                <span className="text-sm font-bold text-saffron-700">{n}</span>
+                                <h3 className="mt-1 text-lg font-bold leading-7 text-slate-950">{t(`next${n}Name`)}</h3>
+                                <p className="mt-2 text-base leading-7 text-slate-600">{t(`next${n}Body`)}</p>
+                            </motion.li>
                         ))}
-                    </ul>
-                    <div className="mt-6">
-                        <Link to={lp(ROUTE_WHO)} className={TEXT_LINK_CLASSES}>
-                            {t('whoNavLink')}
+                    </ol>
+                    <motion.p {...fadeUp} className="mt-8 text-center">
+                        <Link
+                            to={lp(ROUTE_BUSINESS_BLINDSPOTS)}
+                            onClick={() => logEvent(EVENTS.blindspotCtaClick, { place: 'home-next' })}
+                            className={TEXT_LINK_CLASSES}
+                        >
+                            {t('nextSelfCheck')}
                             <ArrowRight size={16} aria-hidden="true" />
                         </Link>
-                    </div>
-                </motion.div>
+                    </motion.p>
+                </div>
             </section>
 
-            {/* 18 October 2026, Ian's change 3: what a client receives, each labelled Example or
-                Concept, handing to the full examples on /examples. */}
-            <ReceiveBand />
+            {/* 8. Short answers. */}
+            <section id="faq" className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+                <div className="mx-auto max-w-3xl">
+                    <AccentRule />
+                    <motion.h2 {...fadeUp} className="text-center text-2xl font-bold leading-tight sm:text-3xl">
+                        {t('homeFaqHeading')}
+                    </motion.h2>
+                    <div className="mt-8 divide-y divide-sand-300 rounded-2xl border border-sand-300 bg-sand-50">
+                        {faqs.map((faq) => (
+                            <details key={faq.q} className="group px-5 py-4 sm:px-6">
+                                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-bold leading-7 text-slate-950">
+                                    {faq.q}
+                                    <ArrowRight size={16} aria-hidden="true" className="shrink-0 text-indigo-600 transition-transform group-open:rotate-90 motion-reduce:transition-none" />
+                                </summary>
+                                <p className="mt-2 text-base leading-7 text-slate-600">{faq.a}</p>
+                            </details>
+                        ))}
+                    </div>
+                </div>
+            </section>
 
-            {/* 10. The final call. The Fit Call, the Business Read beside it, LINE and WhatsApp
-                beneath. */}
+            {/* 9. The final call. */}
             <section className="navy-glow bg-hltNavy px-5 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('finalHeading')}</h2>

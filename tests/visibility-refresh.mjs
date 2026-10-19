@@ -211,7 +211,7 @@ try {
         '/problems-we-fix': /Common problems|ปัญหาที่พบบ่อย/,
         '/who-we-help': /Owner-led|เจ้าของบริหารเอง/,
         '/examples': /./,
-        '/about': /not the software|ไม่ใช่ซอฟต์แวร์/,
+        '/about': /starts with your goals|เริ่มจากเป้าหมาย/, // 19 October 2026: About's new H1
         '/contact': /Ask for a Fit Call|นัดคุย/,
         '/hua-hin': /Hua Hin|หัวหิน/,
         '/business-blindspots': /own customer|ลูกค้าของตัวเอง/,
