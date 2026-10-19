@@ -36,7 +36,7 @@ export const brandOsCopy = {
     bosTier1Name: 'Core Guide',
     bosTier1Desc: 'The HTML guide with core tokens, the markdown master and one image-brief template.',
     bosTier2Name: 'Brand OS',
-    bosTier2Desc: 'The full token set with a usage rule each, two named asset templates and your Canva Brand Kit.',
+    bosTier2Desc: 'The full token set with a usage rule each, two named asset templates and your brand kit in your design tool.',
     bosTier3Name: 'Brand OS and Asset System',
     bosTier3Desc: 'Everything above, plus a stakeholder session, four asset templates and three image briefs.',
 
@@ -76,7 +76,7 @@ export const brandOsCopy = {
     bosRow9A: 'Basic',
     bosRow9B: 'Yes',
     bosRow9C: 'Yes',
-    bosRow10Label: 'Canva Brand Kit populated',
+    bosRow10Label: 'Design-tool brand kit populated',
     bosRow10A: 'No',
     bosRow10B: 'Yes',
     bosRow10C: 'Yes',
@@ -99,7 +99,7 @@ export const brandOsCopy = {
     bosStep4Lead: 'Templates.',
     bosStep4Body: 'The copy-paste brief templates in the four-part shape, and the named asset templates for the pieces you make most often.',
     bosStep5Lead: 'Handover.',
-    bosStep5Body: 'The HTML guide, the markdown master, the logo notes, and your Canva Brand Kit populated, with one named approver signing it off.',
+    bosStep5Body: 'The HTML guide, the markdown master, the logo notes, and your brand kit in your design tool populated, with one named approver signing it off.',
 
     bosFaqHeading: 'Questions owners ask first',
     bosFaq1Q: 'Is this a logo design service?',

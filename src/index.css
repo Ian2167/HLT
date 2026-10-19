@@ -5,6 +5,11 @@
 @tailwind utilities;
 
 @layer base {
+  /* 19 October 2026: a fragment link (/en/examples#website-demonstration) stops below the fixed
+     header, which is up to 84 px tall on a laptop. src/components/ScrollToTop.jsx does the jump. */
+  [id] {
+    scroll-margin-top: 7rem;
+  }
   body {
     @apply transition-colors duration-300 ease-in-out font-sans;
     @apply bg-slate-50 text-slate-900;

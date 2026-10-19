@@ -148,7 +148,8 @@ try {
     // The repositioning's one action and its published base price.
     for (const route of INDEXABLE_ROUTES) {
         const html = readFileSync(staticFile(localPath(route, 'en')), 'utf8');
-        check(/Book a Fit Call/.test(html), `fit call: ${localPath(route, 'en')} carries a Book a Fit Call button`);
+        // 19 October 2026: the label says what the button does, ask for a time (src/copy/improvements1019.js).
+        check(/Ask for a Fit Call/.test(html), `fit call: ${localPath(route, 'en')} carries an Ask for a Fit Call button`);
     }
     // 18 October 2026: one fee at Ian's usual price ("Business Read usual price THB 22500").
     check(/THB 22,500, excluding VAT/.test(readFileSync(staticFile('/en/business-read'), 'utf8')), 'price: /en/business-read publishes the fee, THB only');
@@ -211,7 +212,7 @@ try {
         '/who-we-help': /Owner-led|เจ้าของบริหารเอง/,
         '/examples': /./,
         '/about': /not the software|ไม่ใช่ซอฟต์แวร์/,
-        '/contact': /Book a Fit Call|นัดคุย/,
+        '/contact': /Ask for a Fit Call|นัดคุย/,
         '/hua-hin': /Hua Hin|หัวหิน/,
         '/business-blindspots': /own customer|ลูกค้าของตัวเอง/,
         '/owner-dependency': /replace yourself|แทนตัวเอง/,

@@ -8,14 +8,13 @@
 // enabled capability pages, if any; then the Fit Call. "Explore the problem, not a package" is the
 // brief's own instruction, which is why these are not priced and not called products.
 //
-// EACH MODULE HAS AN ANCHOR the home page's cards link to; a hash in the URL scrolls to it after
-// the page mounts, because ScrollToTop otherwise lands every navigation at the top.
+// EACH MODULE HAS AN ANCHOR the home page's cards link to. Since 19 October 2026 the scroll to it is
+// src/components/ScrollToTop.jsx, which handles every fragment link on the site.
 //
 // COPY: src/copy/repositioning.js and, for the capability names, src/copy/capabilities.js.
-import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, BarChart3, Repeat, UserCog, Wallet } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { FOOTER_CAPABILITY_LINKS, ROUTE_PROBLEMS } from '../constants/routes';
 // 18 October 2026: a capability with Thai copy (Websites) shows its Thai name on the Thai page.
@@ -40,13 +39,6 @@ const Chips = ({ items }) => (
 
 const ProblemsWeFix = () => {
     const { t, lp, contentLang } = useLanguage();
-    const { hash } = useLocation();
-
-    useEffect(() => {
-        if (!hash) return;
-        const el = document.getElementById(hash.slice(1));
-        if (el) window.setTimeout(() => el.scrollIntoView({ block: 'start' }), 50);
-    }, [hash]);
 
     const modules = [1, 2, 3, 4].map((n) => ({
         slug: MODULE_SLUGS[n - 1],
@@ -94,7 +86,7 @@ const ProblemsWeFix = () => {
             </section>
 
             {/* Where AI fits, in full. */}
-            <section id="where-ai-fits" className="scroll-mt-20 bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <section id="where-ai-fits" className="scroll-mt-28 bg-stone-100 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-4xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('aiHeading')}</h2>
                     <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">{t('aiLead')}</p>
@@ -106,7 +98,7 @@ const ProblemsWeFix = () => {
             </section>
 
             {/* Automation should enforce good work, in full. */}
-            <section id="automation" className="scroll-mt-20 bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+            <section id="automation" className="scroll-mt-28 bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <motion.div {...fadeUp} className="mx-auto max-w-4xl">
                     <h2 className="text-2xl font-bold leading-tight sm:text-3xl">{t('autoHeading')}</h2>
                     <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">{t('autoLead')}</p>

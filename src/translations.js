@@ -58,6 +58,8 @@ import { visibilityRefreshCopy, visibilityRefreshTh } from './copy/visibilityRef
 import { repositioningCopy, repositioningTh } from './copy/repositioning';
 import { offerRefreshCopy } from './copy/offerRefresh1018';
 import { offerRefreshTh } from './copy/offerRefreshTh1018';
+// The site review of 19 October 2026: LAST in both blocks, so it wins. See the module's header.
+import { improvementsEn, improvementsTh } from './copy/improvements1019';
 
 export const translations = {
     en: {
@@ -493,7 +495,10 @@ export const translations = {
         // English only. It is not spread into `th`: a page carrying these lines renders English
         // on its Thai address (THAI_PENDING_ROUTES, src/constants/lang.js), or shows the new
         // sections on its English page only (Examples), so nothing reaches a Thai page as English.
-        ...offerRefreshCopy
+        ...offerRefreshCopy,
+
+        // 19 October 2026: the site review. LAST of all, so it wins.
+        ...improvementsEn
     },
     th: {
         // TH PENDING: English values on purpose. See the note at the top of this file.
@@ -983,6 +988,9 @@ export const translations = {
         // 18 October 2026: the machine Thai for the seven repositioned pages, the Websites page and
         // the new Examples sections, on Ian's "A" (translate now, Ann checks after). UNREVIEWED.
         // LAST of all, so it wins over the English spread above.
-        ...offerRefreshTh
+        ...offerRefreshTh,
+
+        // 19 October 2026: the site review's machine Thai, UNREVIEWED. LAST of all, so it wins.
+        ...improvementsTh
     }
 };

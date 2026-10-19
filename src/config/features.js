@@ -10,12 +10,6 @@
 // opens LINE with the backups beneath it, so the button never dead-ends.
 export const FIT_CALL_BOOKING_URL = '';
 
-// ---------------------------------------------------------------- About Ian
-// The brief's section 17 paragraph. Ian's rules of 18 and 27 September keep any founder line off
-// the site until he lifts them himself; he asked on 1 October for it to be "prepared so it can be
-// switched on or off". Set to true to show it.
-export const SHOW_ABOUT_IAN = false;
-
 // ---------------------------------------------------------------- Insights
 // Held until the first article exists (Ian, 1 October, agreed). Set to true to show the header
 // item and the page.
