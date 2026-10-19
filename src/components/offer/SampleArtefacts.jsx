@@ -150,6 +150,27 @@ export const SampleBusinessMap = () => {
     );
 };
 
+// WHY THIS PRIORITY, 19 October 2026 evening (Rich's finish list item 9, bridge row 4882). The
+// owner's goal is a full weekday room; the priority is same-day replies. These three lines say why
+// the one serves the other, what would show it, and what is checked next. They never say faster
+// replies alone fill the room. Strings in src/copy/finish1019.js.
+export const WhyThisPriority = () => {
+    const { t } = useLanguage();
+    return (
+        <div className="mt-6 rounded-xl border border-slate-200 bg-stone-50 p-4 sm:p-5">
+            <p className="text-sm font-bold text-slate-950">{t('whyHeading')}</p>
+            <dl className="mt-3 grid gap-4 md:grid-cols-3">
+                {[1, 2, 3].map((n) => (
+                    <div key={n}>
+                        <dt className="text-xs font-bold uppercase tracking-[0.14em] text-indigo-700">{t(`why${n}Label`)}</dt>
+                        <dd className="mt-1 text-sm leading-6 text-slate-700">{t(`why${n}Body`)}</dd>
+                    </div>
+                ))}
+            </dl>
+        </div>
+    );
+};
+
 export const ImprovementPlanExtract = () => {
     const { t } = useLanguage();
     const rows = [1, 2, 3, 4, 5, 6].map((n) => ({
@@ -174,6 +195,8 @@ export const ImprovementPlanExtract = () => {
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-indigo-700">{t('planPriorityLabel')}</p>
                 <p className="mt-1 text-lg font-semibold leading-7 text-slate-950">{t('planPriority')}</p>
             </div>
+
+            <WhyThisPriority />
 
             <div className="mt-6 hidden md:block">
                 <table className="w-full text-left text-sm">
@@ -330,6 +353,7 @@ export const SamplePreview = ({ links = true }) => {
                     </ol>
                 </div>
             </div>
+            <WhyThisPriority />
             {links ? (
                 <div className="mt-6 flex flex-col gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:flex-wrap sm:gap-x-8">
                     <Link to={`${lp(ROUTE_EXAMPLES)}#sample-business-map`} className={PREVIEW_LINK}>
