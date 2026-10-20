@@ -3,13 +3,15 @@
 //
 // THE ONE LINE SWITCH, 19 October 2026 evening (bridge row 4882, Rich's item 4; brief constraint (a)).
 // Rich gives https://line.me/ti/p/5_UWYMe4nU as Ian's confirmed destination. That is a PERSONAL
-// profile link; the site's standing rail is the Official Account above. HELD FOR IAN'S RULING: the
-// site keeps the Official Account until he rules. To swap, set LINE_DESTINATION = LINE_PROFILE_LINK
-// below, regenerate public/brand/qr-line.svg with scripts/make-qr.mjs, and rebuild. Every LINE
-// button, the utm-tagged links and the Business Read link follow this one constant.
+// profile link; the site's standing rail was the Official Account above.
+// IAN RULED, 20 October 2026, in the build session: "As attached QR". The QR he attached decodes to
+// https://line.me/ti/p/5_UWYMe4nU (OpenCV, 20 October 06:5x Bangkok), so LINE_DESTINATION is the
+// profile link and public/brand/qr-line.svg was regenerated from it with scripts/make-qr.mjs. Every
+// LINE button, the utm-tagged links, the Business Read link and the Organization schema's sameAs
+// follow this one constant. The Official Account link is kept here, unused, to switch back.
 const LINE_OFFICIAL_ACCOUNT_LINK = 'https://lin.ee/YQMkWI3';
 export const LINE_PROFILE_LINK = 'https://line.me/ti/p/5_UWYMe4nU';
-export const LINE_DESTINATION = LINE_OFFICIAL_ACCOUNT_LINK;
+export const LINE_DESTINATION = LINE_PROFILE_LINK;
 const LINE_BASE = LINE_DESTINATION;
 const utm = (content) =>
     `${LINE_BASE}?utm_source=hlt_website&utm_medium=line_cta&utm_campaign=contact&utm_content=${content}`;

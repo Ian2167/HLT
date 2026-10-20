@@ -19,7 +19,7 @@
 // the only one.
 import { useLanguage } from '../context/LanguageContext';
 import { OG_LOCALE, SITE_URL, absoluteUrl, isThaiPending } from '../constants/lang';
-import { CONTACT_EMAIL, CONTACT_PHONE_E164, LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
+import { CONTACT_PHONE_E164, LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 import { captureHead } from '../lib/head';
 
 const SITE_NAME = 'High Level Thai';
@@ -89,7 +89,8 @@ const Seo = ({ title, description, route, image = DEFAULT_IMAGE, organization = 
               alternateName: SITE_NAME,
               url: SITE_URL,
               logo: `${SITE_URL}/brand/hlt-lockup-colour.png`,
-              email: CONTACT_EMAIL,
+              // No email here since 20 October 2026: Ian ruled "an 'email us' link with no name", and
+              // search engines show this field as text. The phone and LINE stay.
               telephone: CONTACT_PHONE_E164,
               areaServed: ['Hua Hin', 'Thailand'],
               sameAs: [LINE_OFFICIAL_ACCOUNT],

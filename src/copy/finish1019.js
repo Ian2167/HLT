@@ -19,7 +19,14 @@
 //     disclosure, and the Hua Hin headline goal-first with CRM explained
 //
 // NOTHING INVENTED: no new price, time, result, client or guarantee. The fee is the one on main
-// (THB 22,500 plus VAT). The two [IAN: ...] slots in improvements1019.js are untouched.
+// (THB 22,500 plus VAT). The two [IAN: ...] slots in improvements1019.js were filled there on
+// 20 October 2026 with Ian's own words (see that file's header).
+//
+// IAN'S RULING 7, 20 October 2026, in the build session, verbatim: "Can we just use an 'email us'
+// link with no name?" The address is no longer shown as text anywhere: the footer and Contact rails
+// read "Email us", and the legal pages' contact line ends in an "Email us" link. The link itself
+// still opens CONTACT_EMAIL (src/constants/contact.js), one constant to change if a no-name address
+// is set up.
 //
 // THE THAI is code-builder's machine Thai, UNREVIEWED, for the native speaker's pass. Every key in
 // finishTh mirrors a key in finishEn, and the consolidated report lists every one.
@@ -103,6 +110,10 @@ export const finishEn = {
     huahinH1: "More of the right customers in Hua Hin, and a business that keeps going when you're away.",
     huahinLocalBody:
         'A CRM is one place for every customer, their messages and what happens next. It can work exactly as designed and still miss how a Thai business knows its customers: by nickname, by LINE chat, by a pin on Google Maps. We look for those gaps before adding another tool.',
+
+    // ------------------------------------------------------------ Ian's ruling 7: "Email us", no name
+    emailUsLabel: 'Email us',
+    legalContactLine: 'Questions about your data in the meantime?',
 };
 
 export const finishTh = {
@@ -174,4 +185,7 @@ export const finishTh = {
     huahinH1: 'ได้ลูกค้าที่ใช่มากขึ้นในหัวหิน และธุรกิจที่เดินต่อได้แม้คุณไม่อยู่',
     huahinLocalBody:
         'CRM คือที่เดียวที่เก็บลูกค้าทุกคน ข้อความของเขา และสิ่งที่ต้องทำต่อ ระบบอาจทำงานตรงตามที่ออกแบบไว้ทุกอย่าง แต่ก็ยังไม่ตรงกับวิธีที่ธุรกิจไทยรู้จักลูกค้า: จากชื่อเล่น จากแชต LINE จากหมุดใน Google Maps เรามองหาช่องว่างเหล่านี้ก่อนจะเพิ่มเครื่องมืออีกชิ้น',
+
+    emailUsLabel: 'ส่งอีเมลถึงเรา',
+    legalContactLine: 'ระหว่างนี้ หากมีคำถามเกี่ยวกับข้อมูลของคุณ',
 };

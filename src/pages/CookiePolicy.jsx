@@ -4,6 +4,7 @@
 import { useLanguage } from '../context/LanguageContext';
 import { ROUTE_COOKIES } from '../constants/routes';
 import Seo from '../components/Seo';
+import LegalContactLine from '../components/LegalContactLine';
 
 const CookiePolicy = () => {
     const { t } = useLanguage();
@@ -14,7 +15,7 @@ const CookiePolicy = () => {
             <div className="container mx-auto max-w-3xl px-6">
                 <h1 className="mb-6 text-4xl font-bold text-slate-900">{t('cookiesTitle')}</h1>
                 <p className="text-lg leading-8 text-slate-600">{t('cookiesBody')}</p>
-                <p className="mt-6 text-base leading-7 text-slate-500">{t('legalContactLine')}</p>
+                <LegalContactLine />
             </div>
         </section>
     );

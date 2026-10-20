@@ -15,7 +15,8 @@
 // one of Ian's six locked public pages (17 September) and the spec's list would otherwise leave it
 // reachable from nowhere on a desktop. Listed in the report as the one addition.
 //
-// CONTACT is the ruled block and nothing else: ian@highlevelthai.com and +66 96 839 8305 as rows,
+// CONTACT is the ruled block and nothing else: an "Email us" link (20 October 2026, Ian: "an 'email
+// us' link with no name"; it opens CONTACT_EMAIL) and +66 96 839 8305 as rows,
 // WhatsApp and LINE as buttons and, from md up, as QR codes (1 October 2026, Ian: the raw LINE ID
 // "looks particularly poor, can we not use the QR code for that and WhatsApp throughout?"). The ID
 // and the number as WhatsApp text no longer appear anywhere. No street address anywhere: the
@@ -115,7 +116,8 @@ const Footer = () => {
                                     <span className={BADGE_CLASSES}>
                                         <Mail size={18} aria-hidden="true" />
                                     </span>
-                                    <span className="break-all">{CONTACT_EMAIL}</span>
+                                    {/* 20 October 2026, Ian: "an 'email us' link with no name". */}
+                                    <span>{t('emailUsLabel')}</span>
                                 </a>
                             </li>
                             <li>

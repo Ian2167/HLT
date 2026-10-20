@@ -254,18 +254,22 @@ try {
         check(JSON.stringify(toggle) === JSON.stringify(['/en', '/']), `nav: the desktop language control offers EN and ไทย (${toggle.join(' ')})`);
         const footerQuick = await page.evaluate(() => [...document.querySelectorAll('footer ul a[href^="/"]')].map((a) => a.getAttribute('href')));
         for (const item of [...FOOTER_QUICK_LINKS, ...LEGAL_LINKS]) check(footerQuick.includes(localPath(item.to, 'en')), `footer: links to ${localPath(item.to, 'en')}`);
-        const contact = await page.evaluate(() => [...document.querySelectorAll('footer a[href^="mailto:"], footer a[href^="tel:"], footer a[href*="wa.me"], footer a[href*="lin.ee"]')].map((a) => a.getAttribute('href')));
-        check(contact.some((h) => h === 'mailto:ian@highlevelthai.com'), 'contact: footer email is ian@highlevelthai.com');
+        // 20 October 2026, Ian: LINE "As attached QR" (line.me/ti/p/5_UWYMe4nU), and the email shown
+        // as an "Email us" link with no name (it still opens the same address).
+        const contact = await page.evaluate(() => [...document.querySelectorAll('footer a[href^="mailto:"], footer a[href^="tel:"], footer a[href*="wa.me"], footer a[href*="lin.ee"], footer a[href*="line.me"]')].map((a) => a.getAttribute('href')));
+        check(contact.some((h) => h === 'mailto:ian@highlevelthai.com'), 'contact: footer email link opens ian@highlevelthai.com');
+        const mailText = await page.evaluate(() => [...document.querySelectorAll('footer a[href^="mailto:"]')].map((a) => a.textContent.trim()));
+        check(mailText.length > 0 && mailText.every((s) => s === 'Email us'), `contact: footer email link reads "Email us", no name (${mailText.join(' | ')})`);
         check(contact.some((h) => h === 'tel:+66968398305'), 'contact: footer phone is +66 96 839 8305');
         check(contact.some((h) => h === 'https://wa.me/66968398305'), 'contact: footer WhatsApp is wa.me/66968398305');
-        check(contact.some((h) => h.startsWith('https://lin.ee/YQMkWI3')), 'contact: footer LINE is lin.ee/YQMkWI3');
+        check(contact.some((h) => h.startsWith('https://line.me/ti/p/5_UWYMe4nU')) && !contact.some((h) => /lin\.ee/.test(h)), 'contact: footer LINE is line.me/ti/p/5_UWYMe4nU');
         const badLine = await page.evaluate(() => [...document.querySelectorAll('a[href*="@highlevelthai"]')].filter((a) => /line\.me/.test(a.href)).length);
         check(badLine === 0, 'contact: the dead @highlevelthai LINE handle is linked nowhere');
         const heroCtas = await page.evaluate(() => [...document.querySelectorAll('main section:first-of-type a')].map((a) => a.getAttribute('href')));
         check(heroCtas.length === 1 && heroCtas[0] === '/en/business-read', `contact: the hero offers one action, Start with The Business Read (${heroCtas.join(' ')})`);
         // The final band offers the Fit Call, the Business Read, LINE and WhatsApp.
         const finalCtas = await page.evaluate(() => [...document.querySelectorAll('main section:last-of-type a')].map((a) => a.getAttribute('href')));
-        check(finalCtas.includes('/en/business-read') && finalCtas.some((h) => h.startsWith('https://lin.ee/')) && finalCtas.includes('https://wa.me/66968398305'), `contact: the final band offers the Business Read, LINE and WhatsApp (${finalCtas.length} links)`);
+        check(finalCtas.includes('/en/business-read') && finalCtas.some((h) => h.startsWith('https://line.me/ti/p/5_UWYMe4nU')) && finalCtas.includes('https://wa.me/66968398305'), `contact: the final band offers the Business Read, LINE and WhatsApp (${finalCtas.length} links)`);
         check(FIT_CALL_BOOKING_URL ? finalCtas.includes(FIT_CALL_BOOKING_URL) : finalCtas.includes('/en/contact'), 'contact: the final band offers the Fit Call');
         // The three flows are ordered lists, readable without the arrows.
         const flows = await page.evaluate(() => document.querySelectorAll('main ol').length);

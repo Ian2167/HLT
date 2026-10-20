@@ -18,8 +18,9 @@
 // THE THAI is the builder's machine Thai, UNREVIEWED, for the native speaker's pass. Every key in
 // improvementsTh mirrors a key in improvementsEn.
 //
-// "[IAN: ...]" marks a fact only Ian can supply. It is shown on the page on purpose, so nothing is
-// guessed in the meantime.
+// "[IAN: ...]" marked a fact only Ian can supply. Both are now his words, 20 October 2026, in the
+// build session, verbatim: "Business Read is within 3 days. Line and WhatsApp within 24 hours".
+// The plan timing is homeFaq2A, brTimingValue and brFaq7A; the reply time is ctNext1.
 
 export const improvementsEn = {
     // ------------------------------------------------------------ the Fit Call, asked for honestly
@@ -141,7 +142,7 @@ export const improvementsEn = {
     homeFaq1Q: 'What does the Business Read cost?',
     homeFaq1A: "THB 22,500, excluding VAT at seven per cent. Anything done afterwards is scoped and priced separately, and you're not obliged to buy it.",
     homeFaq2Q: 'When do I get the written plan?',
-    homeFaq2A: '[IAN: when the written plan arrives]',
+    homeFaq2A: 'Within 3 days of the Business Read meeting.',
     homeFaq3Q: 'Can I talk to you about a website without a Business Read?',
     homeFaq3A: 'Yes. If you already have a clear brief for a new or improved website, we can talk about that project on its own.',
     homeFaq4Q: 'Do I need to prepare anything?',
@@ -166,14 +167,14 @@ export const improvementsEn = {
         "A decision on what deserves attention first, and a plan your team can act on. Here's a small part of a sample, built on an invented clinic.",
     brReceiveNote: "Every point is marked 'we checked this' or 'we still need to check this', so you never have to guess.",
     brTimingLabel: 'When the plan arrives:',
-    brTimingValue: '[IAN: when the written plan arrives]',
+    brTimingValue: 'Within 3 days of the meeting.',
     brExcludedBody2: "It also isn't a software sales pitch or a general talk about AI.",
     brFaq2A:
         "No. A person runs the conversations, weighs what we find and decides what goes in the plan, and that person answers to you for it. We use AI tools to help with research, transcription and first drafts, and we check what they produce against what we saw and heard. Anything we couldn't check is marked that way.",
     brFaq3A:
         "That's common, and it's useful. A suspicion you already have gets tested against what we find and ranked against everything else, so you can see whether it really comes first. Anything we couldn't prove is marked 'we still need to check this'.",
     brFaq7Q: 'When do I get the written plan?',
-    brFaq7A: '[IAN: when the written plan arrives]',
+    brFaq7A: 'Within 3 days of the Business Read meeting.',
 
     // ------------------------------------------------------------ Examples
     exHeroHeadline: 'What we look at, and what could change',
@@ -196,7 +197,7 @@ export const improvementsEn = {
     ctInclude1: 'Your website address, if you have one',
     ctInclude2: 'The one thing you most want to change or achieve, for example more suitable enquiries, a new website, or fewer things coming back to you',
     ctInclude3: 'A day and time that suit you for the call',
-    ctNext1: 'We read your message and reply ourselves. Reply time: [IAN: reply time]',
+    ctNext1: 'We read your message and reply ourselves, within 24 hours on LINE and WhatsApp.',
 
     // ------------------------------------------------------------ How It Works
     hiwHold1: 'We explain why before we recommend what.',
@@ -470,7 +471,7 @@ export const improvementsTh = {
     homeFaq1Q: 'Business Read ราคาเท่าไร',
     homeFaq1A: '22,500 บาท ไม่รวมภาษีมูลค่าเพิ่ม 7% งานใดๆ หลังจากนั้นตกลงขอบเขตและราคาแยกต่างหาก และคุณไม่มีข้อผูกมัดที่ต้องซื้อ',
     homeFaq2Q: 'จะได้รับแผนฉบับเขียนเมื่อไร',
-    homeFaq2A: '[IAN: when the written plan arrives]',
+    homeFaq2A: 'ภายใน 3 วันหลังการคุย Business Read',
     homeFaq3Q: 'คุยเรื่องเว็บไซต์โดยไม่ต้องทำ Business Read ได้ไหม',
     homeFaq3A: 'ได้ ถ้าคุณมีโจทย์ที่ชัดเจนสำหรับเว็บไซต์ใหม่หรือการปรับปรุงเว็บไซต์เดิม เราคุยเรื่องงานนั้นแยกต่างหากได้',
     homeFaq4Q: 'ต้องเตรียมอะไรไหม',
@@ -492,14 +493,14 @@ export const improvementsTh = {
     brValueBody: 'การตัดสินใจว่าเรื่องไหนควรได้รับความสนใจก่อน และแผนที่ทีมของคุณลงมือทำได้ นี่คือส่วนเล็กๆ จากตัวอย่าง ที่สร้างจากคลินิกสมมติ',
     brReceiveNote: 'ทุกประเด็นระบุไว้ว่า "เราตรวจสอบแล้ว" หรือ "เรายังต้องตรวจสอบ" คุณจึงไม่ต้องเดา',
     brTimingLabel: 'ได้รับแผนเมื่อไร:',
-    brTimingValue: '[IAN: when the written plan arrives]',
+    brTimingValue: 'ภายใน 3 วันหลังการคุย',
     brExcludedBody2: 'และไม่ใช่การขายซอฟต์แวร์ หรือการคุยเรื่อง AI แบบทั่วไป',
     brFaq2A:
         'ไม่ใช่ คนจริงเป็นผู้คุยกับคุณ ชั่งน้ำหนักสิ่งที่เราพบ และตัดสินใจว่าอะไรอยู่ในแผน และคนนั้นรับผิดชอบต่อคุณ เราใช้เครื่องมือ AI ช่วยค้นข้อมูล ถอดความ และร่างฉบับแรก แล้วตรวจสิ่งที่ได้กับสิ่งที่เราเห็นและได้ยินจริง เรื่องไหนที่เรายังตรวจสอบไม่ได้ จะระบุไว้ชัดเจน',
     brFaq3A:
         'เป็นเรื่องปกติ และมีประโยชน์ สิ่งที่คุณสงสัยอยู่แล้วจะถูกทดสอบกับสิ่งที่เราพบ และจัดลำดับเทียบกับเรื่องอื่นๆ คุณจึงเห็นว่ามันควรมาก่อนจริงหรือไม่ เรื่องไหนที่เรายังพิสูจน์ไม่ได้ จะระบุไว้ว่า "เรายังต้องตรวจสอบ"',
     brFaq7Q: 'จะได้รับแผนฉบับเขียนเมื่อไร',
-    brFaq7A: '[IAN: when the written plan arrives]',
+    brFaq7A: 'ภายใน 3 วันหลังการคุย Business Read',
 
     exHeroHeadline: 'สิ่งที่เราดู และสิ่งที่อาจเปลี่ยนไป',
     exHeroLead:
@@ -520,7 +521,7 @@ export const improvementsTh = {
     ctInclude1: 'ที่อยู่เว็บไซต์ของคุณ ถ้ามี',
     ctInclude2: 'เรื่องเดียวที่คุณอยากเปลี่ยนหรืออยากไปถึงมากที่สุด เช่น ได้ข้อความสอบถามที่ใช่มากขึ้น เว็บไซต์ใหม่ หรือเรื่องที่วนกลับมาหาคุณน้อยลง',
     ctInclude3: 'วันและเวลาที่คุณสะดวกสำหรับการคุย',
-    ctNext1: 'เราอ่านข้อความของคุณและตอบกลับด้วยตัวเอง ระยะเวลาตอบกลับ: [IAN: reply time]',
+    ctNext1: 'เราอ่านข้อความของคุณและตอบกลับด้วยตัวเอง ทาง LINE และ WhatsApp ภายใน 24 ชั่วโมง',
 
     hiwHold1: 'เราอธิบายว่าทำไม ก่อนจะแนะนำว่าทำอะไร',
     hiwHold2: 'ทุกอย่างที่เราเขียนระบุไว้ว่า "เราตรวจสอบแล้ว" หรือ "เรายังต้องตรวจสอบ"',

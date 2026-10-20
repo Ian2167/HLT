@@ -234,7 +234,10 @@ if (existsSync(PRIVATE)) {
 } else {
     console.log(`note  private term list not found at ${PRIVATE}: client names and prices NOT CHECKED`);
 }
-check(allRaw.includes('https://lin.ee/YQMkWI3') && !/line\.me\/ti\/p\/(VsfoVdvbUf|5_UWYMe4nU)/.test(allRaw), 'claims LINE buttons use lin.ee/YQMkWI3');
+// 20 October 2026: Ian ruled the LINE destination "As attached QR", which decodes to
+// line.me/ti/p/5_UWYMe4nU. Every LINE link uses it; the old Official Account and the older
+// VsfoVdvbUf link appear nowhere a visitor can follow.
+check(allRaw.includes('https://line.me/ti/p/5_UWYMe4nU') && !/href="https:\/\/lin\.ee\//.test(allRaw) && !/line\.me\/ti\/p\/VsfoVdvbUf/.test(allRaw), 'claims LINE buttons use line.me/ti/p/5_UWYMe4nU (Ian, 20 Oct)');
 check(/66968398305|\+66 96 839 8305/.test(allRaw), 'claims the phone is +66 96 839 8305');
 check(!/Interchange 21|Soi \d|Moo \d|\b77110\b/.test(all), 'claims no street address');
 const slots = (all.match(/\[IAN:[^\]]*\]/g) || []).length;

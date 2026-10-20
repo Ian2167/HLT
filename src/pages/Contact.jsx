@@ -88,8 +88,8 @@ const Contact = () => {
                         <li>
                             <a href={`mailto:${CONTACT_EMAIL}`} onClick={() => logEvent(EVENTS.emailClick, { place: 'contact' })} className={RAIL_CLASSES}>
                                 <Mail size={18} aria-hidden="true" className="shrink-0 text-indigo-600" />
-                                <span className="font-semibold">{t('ctEmailLabel')}</span>
-                                <span className="break-all text-slate-600">{CONTACT_EMAIL}</span>
+                                {/* 20 October 2026, Ian: "an 'email us' link with no name". */}
+                                <span className="font-semibold">{t('emailUsLabel')}</span>
                             </a>
                         </li>
                         <li>
