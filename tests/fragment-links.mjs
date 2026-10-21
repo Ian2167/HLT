@@ -23,15 +23,17 @@ const { chromium } = await resolvePlaywright();
 const browser = await chromium.launch({ channel: 'chrome' }).catch(() => chromium.launch());
 
 // [source page, link href ending, target page, target id]. Routes are language-free.
+// 20 October 2026: the home's three links into /examples lived in the sample preview, which Ian has
+// held (SHOW_SAMPLE_PREVIEW = false), so they no longer render. The home's cross-page link now
+// checked is the Money Lost card, which lands on /problems-we-fix#revenue-capture.
 const LINKS = [
-    ['/', '/examples#website-demonstration', '/examples', 'website-demonstration'],
-    ['/', '/examples#sample-business-map', '/examples', 'sample-business-map'],
-    ['/', '/examples#improvement-plan-extract', '/examples', 'improvement-plan-extract'],
+    ['/', '/problems-we-fix#revenue-capture', '/problems-we-fix', 'revenue-capture'],
     ['/business-read', '/examples#sample-business-map', '/examples', 'sample-business-map'],
     ['/capabilities/websites', '/how-it-works#delivery', '/how-it-works', 'delivery'],
     ['/capabilities/websites', '/examples#website-demonstration', '/examples', 'website-demonstration'],
 ];
 const EXTRA_DIRECT = [
+    ['/examples', 'improvement-plan-extract'],
     ['/problems-we-fix', 'revenue-capture'],
     ['/problems-we-fix', 'where-ai-fits'],
 ];

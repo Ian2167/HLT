@@ -163,8 +163,10 @@ export const improvementsEn = {
 
     // ------------------------------------------------------------ Business Read
     brPreviewHeading: 'What the Read gives you',
-    brValueBody:
-        "A decision on what deserves attention first, and a plan your team can act on. Here's a small part of a sample, built on an invented clinic.",
+    // 20 October 2026: the sample is held (SHOW_SAMPLE_PREVIEW = false), so the sentence that
+    // introduced it is cut. Put "Here's a small part of a sample, built on an invented clinic." back
+    // if the sample returns.
+    brValueBody: 'A decision on what deserves attention first, and a plan your team can act on.',
     brReceiveNote: "Every point is marked 'we checked this' or 'we still need to check this', so you never have to guess.",
     brTimingLabel: 'When the plan arrives:',
     brTimingValue: 'Within 3 days of the meeting.',
@@ -290,7 +292,8 @@ export const improvementsEn = {
 
     // ------------------------------------------------------------ About
     abMetaDescription:
-        "High Level Thai is a Thai registered company. It helps owner-led businesses reach the goals they've set, by looking at how marketing, people and systems work together. How we work, and a sample of what you'd receive.",
+        // 20 October 2026: "How we work, and a sample of what you'd receive." cut while the sample is held.
+        "High Level Thai is a Thai registered company. It helps owner-led businesses reach the goals they've set, by looking at how marketing, people and systems work together.",
     abHeroHeadline: 'A Thai company that starts with your goals.',
     abHeroLead:
         "High Level Thai helps owner-led businesses in Thailand reach the goals they've set, by looking at how marketing, people and systems work together.",
@@ -490,7 +493,8 @@ export const improvementsTh = {
     spSeeDemo: 'ลองใช้ตัวอย่างเว็บไซต์',
 
     brPreviewHeading: 'Business Read ให้อะไรคุณ',
-    brValueBody: 'การตัดสินใจว่าเรื่องไหนควรได้รับความสนใจก่อน และแผนที่ทีมของคุณลงมือทำได้ นี่คือส่วนเล็กๆ จากตัวอย่าง ที่สร้างจากคลินิกสมมติ',
+    // 20 October 2026: "นี่คือส่วนเล็กๆ จากตัวอย่าง ที่สร้างจากคลินิกสมมติ" cut while the sample is held.
+    brValueBody: 'การตัดสินใจว่าเรื่องไหนควรได้รับความสนใจก่อน และแผนที่ทีมของคุณลงมือทำได้',
     brReceiveNote: 'ทุกประเด็นระบุไว้ว่า "เราตรวจสอบแล้ว" หรือ "เรายังต้องตรวจสอบ" คุณจึงไม่ต้องเดา',
     brTimingLabel: 'ได้รับแผนเมื่อไร:',
     brTimingValue: 'ภายใน 3 วันหลังการคุย',
@@ -610,7 +614,8 @@ export const improvementsTh = {
     expatLead: 'เจ้าของชาวต่างชาติบางคนยังเล่าถึงเรื่องเหล่านี้:',
 
     abMetaDescription:
-        'High Level Thai เป็นบริษัทที่จดทะเบียนในประเทศไทย ช่วยธุรกิจที่เจ้าของบริหารเองไปถึงเป้าหมายที่ตั้งไว้ โดยดูว่าการตลาด คน และระบบทำงานร่วมกันอย่างไร วิธีการทำงานของเรา และตัวอย่างสิ่งที่คุณจะได้รับ',
+        // 20 October 2026: " วิธีการทำงานของเรา และตัวอย่างสิ่งที่คุณจะได้รับ" cut while the sample is held.
+        'High Level Thai เป็นบริษัทที่จดทะเบียนในประเทศไทย ช่วยธุรกิจที่เจ้าของบริหารเองไปถึงเป้าหมายที่ตั้งไว้ โดยดูว่าการตลาด คน และระบบทำงานร่วมกันอย่างไร',
     abHeroHeadline: 'บริษัทไทยที่เริ่มจากเป้าหมายของคุณ',
     abHeroLead: 'High Level Thai ช่วยธุรกิจที่เจ้าของบริหารเองในประเทศไทยไปถึงเป้าหมายที่ตั้งไว้ โดยดูว่าการตลาด คน และระบบทำงานร่วมกันอย่างไร',
     abHeroLead2:

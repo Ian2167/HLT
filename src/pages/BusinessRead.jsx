@@ -36,7 +36,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Check, FileText, Layers, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { BR_PRICING } from '../config/features';
+import { BR_PRICING, SHOW_SAMPLE_PREVIEW } from '../config/features';
 import { localPath } from '../constants/lang';
 import { useLanguage } from '../context/LanguageContext';
 import { ROUTE_BUSINESS_READ, ROUTE_EXAMPLES } from '../constants/routes';
@@ -103,11 +103,15 @@ const BusinessRead = () => {
                             {t('brHeroHeadline')}
                         </h1>
                         <p className="mx-auto max-w-3xl text-lg text-slate-100 sm:text-xl">{t('brHeroLead')}</p>
+                        <div data-business-read-fee className="mx-auto mt-8 max-w-md rounded-xl border border-white/25 bg-white/10 px-5 py-4">
+                            <p className="text-base font-bold text-white">{single ? t('brSingleName') : t('brPriceHeading')}</p>
+                            <p className="mt-1 text-sm font-semibold text-white sm:text-base">{priceLine}</p>
+                        </div>
                         <div className="mt-10 flex justify-center">
                             <FitCallButton place="br-hero" label={t('brCtaLabel')} />
                         </div>
                         <p className="mx-auto mt-5 max-w-xl text-sm text-slate-200 sm:text-base">{t('brCtaNote')}</p>
-                        <p className="mx-auto mt-2 max-w-xl text-sm font-semibold text-white sm:text-base">{priceLine}</p>
+
                     </motion.div>
                 </div>
             </section>
@@ -121,9 +125,11 @@ const BusinessRead = () => {
                     <motion.p {...fadeUp} className="mx-auto mt-5 max-w-2xl text-center text-lg leading-8 text-slate-700">
                         {t('brValueBody')}
                     </motion.p>
+                    {SHOW_SAMPLE_PREVIEW && (
                     <motion.div {...fadeUp} className="mt-8">
                         <SamplePreview />
                     </motion.div>
+                    )}
                 </div>
             </section>
 
@@ -315,7 +321,10 @@ const BusinessRead = () => {
                 <div className="container mx-auto px-5 text-center sm:px-6">
                     <h2 className="mb-5 text-2xl font-bold sm:text-3xl">{t('brHonest')}</h2>
                     <p className="mx-auto mb-3 max-w-2xl text-lg text-slate-200">{t('brNoProject')}</p>
-                    <p className="mx-auto mb-10 max-w-2xl text-base font-semibold text-white">{priceLine}</p>
+                    <div data-business-read-fee className="mx-auto mb-10 mt-6 max-w-md rounded-xl border border-white/25 bg-white/10 px-5 py-4">
+                        <p className="text-base font-bold text-white">{single ? t('brSingleName') : t('brPriceHeading')}</p>
+                        <p className="mt-1 text-base font-semibold text-white">{priceLine}</p>
+                    </div>
                     <div className="flex justify-center">
                         <FitCallButton place="br-final" label={t('brCtaLabel')} />
                     </div>

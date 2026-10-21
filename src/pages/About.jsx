@@ -21,6 +21,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { ROUTE_ABOUT } from '../constants/routes';
 import Seo from '../components/Seo';
 import FitCallButtons from '../components/FitCallButtons';
+import { SHOW_SAMPLE_PREVIEW } from '../config/features';
 import { SamplePreview } from '../components/offer/SampleArtefacts';
 import { fadeUp, heroIn } from '../lib/motion';
 
@@ -59,6 +60,7 @@ const About = () => {
             </section>
 
             {/* 19 October 2026: a sample artefact in place of the "won't" lines. */}
+            {SHOW_SAMPLE_PREVIEW && (
             <section id="sample" className="bg-white px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <motion.div {...fadeUp} className="mx-auto max-w-3xl text-center">
@@ -70,6 +72,7 @@ const About = () => {
                     </motion.div>
                 </div>
             </section>
+            )}
 
 
             {/* The company facts block, Ian's own three-line layout, gate 128, 18 September 2026.

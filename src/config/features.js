@@ -40,3 +40,7 @@ export const CAPABILITIES = {
 export const BR_PRICING = 'single';
 
 export const enabledCapabilities =() => Object.keys(CAPABILITIES).filter((slug) => CAPABILITIES[slug]);
+
+// Ian, 20 October 2026: hold the repeated sample until a stronger example is ready.
+// Keep the components and copy recoverable; this controls both English and Thai pages.
+export const SHOW_SAMPLE_PREVIEW = false;

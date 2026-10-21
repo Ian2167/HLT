@@ -49,6 +49,7 @@ import {
 import Seo from '../components/Seo';
 import FitCallButtons from '../components/FitCallButtons';
 import { AccentRule, HeroFlowCard, StagesBand } from '../components/offer/OfferBands';
+import { SHOW_SAMPLE_PREVIEW } from '../config/features';
 import { SamplePreview } from '../components/offer/SampleArtefacts';
 import { EVENTS, logEvent } from '../lib/analytics';
 import { fadeUp, fadeUpDelayed, heroIn } from '../lib/motion';
@@ -70,7 +71,7 @@ export const OUTLINE_CTA_CLASSES =
 // label it causes: 1 Money lost, 2 Time lost, 3 Control lost. The same pairing is used on
 // /problems-we-fix, so a loss always sits beside the same kind of problem.
 const PROBLEMS = [
-    { n: 1, loss: 1, Icon: MessageCircle, to: `${ROUTE_PROBLEMS}#finding-you` },
+    { n: 1, loss: 1, Icon: MessageCircle, to: `${ROUTE_PROBLEMS}#revenue-capture` },
     { n: 2, loss: 2, Icon: ClipboardCheck, to: `${ROUTE_PROBLEMS}#daily-business-pulse` },
     { n: 3, loss: 3, Icon: UserCog, to: ROUTE_OWNER_DEPENDENCY },
 ];
@@ -219,6 +220,7 @@ const Home = () => {
             </section>
 
             {/* 4. The sample map and the one-priority plan, shown. */}
+            {SHOW_SAMPLE_PREVIEW && (
             <section id="sample" className="bg-sand-200 px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
                 <div className="mx-auto max-w-6xl">
                     <AccentRule />
@@ -233,6 +235,7 @@ const Home = () => {
                     </motion.div>
                 </div>
             </section>
+            )}
 
             {/* 5a. Understand, Diagnose, Improve (Ian's three stages, 17 September), after the sample. */}
             <StagesBand />

@@ -119,7 +119,11 @@ for (const [id, label, tag] of [
 check(/None of it comes from a client/.test(ex), 'change3 the examples say none of it comes from a client');
 check(/nothing is booked and no message is sent/.test(ex), 'change3 the demonstration says nothing is booked or sent');
 // 19 October 2026: the home SHOWS the map and the plan (SamplePreview) and links all three.
-check(inOrder(enHome, ["A look at what you'd receive", 'Sample business map', 'The priority', 'Try the website demonstration']), 'change3 home shows the map and plan and links the three things a client receives');
+// Ian, 20 October: omit the repeated preview, keeping the separate Examples page intact.
+for (const url of ['/', '/en', '/about', '/en/about', '/business-read', '/en/business-read']) {
+    const html = page(url);
+    check(html.length > 0 && !html.includes('id="sample"') && !/<table\b/.test(body(html)), `change3 ${url} omits the held sample section and sample map table`);
+}
 check(!/cutting[- ]edge/i.test(enHome + ex), 'change3 no "cutting edge" claim');
 
 // ------------------------------------------------------------------ change 4: the commercial path
