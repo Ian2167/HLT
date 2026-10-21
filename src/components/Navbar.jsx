@@ -83,10 +83,15 @@ const Navbar = () => {
     const desktopLinks = PUBLIC_NAV.filter((item) => item.to !== ROUTE_CONTACT).map((item) => ({ name: t(item.labelKey), href: item.to }));
     const mobileLinks = MOBILE_NAV.map((item) => ({ name: t(item.labelKey), href: item.to }));
 
+    // THE SCROLLED BAR IS 95% WHITE, 21 October 2026 (Rich's finding, bridge row 4973: "Sticky header
+    // overlays underlying text when scrolled"). It wore `glass` (70% white), so words scrolling under
+    // it read through at 30%: header-1021-check.mjs found them on every page checked, desktop and
+    // phone. 95% white with the same blur keeps the light glass look of 18 September and stops the
+    // words reading through. `glass` itself is unchanged.
     return (
         <nav
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-                scrolled || mobileMenuOpen ? 'glass shadow-sm py-3 xl:py-4' : 'bg-transparent py-4 xl:py-6'
+                scrolled || mobileMenuOpen ? 'border-b border-slate-200/70 bg-white/95 backdrop-blur-md shadow-sm py-3 xl:py-4' : 'bg-transparent py-4 xl:py-6'
             }`}
         >
             <div className="container mx-auto flex items-center justify-between px-5 sm:px-6">

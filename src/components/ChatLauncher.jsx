@@ -2,28 +2,37 @@
 // Added 21 October 2026 (bridge row 4948, brief hlt-site-polish-chat-1021): a visitor can start a
 // conversation in one tap.
 //
-// WHAT IT IS AND ISN'T. Two plain links in a small sheet: LINE and WhatsApp, the same two
-// destinations every other message button on the site uses (src/constants/contact.js). No AI, no
-// third-party widget, no script, no cookie, and nothing is sent until the visitor sends it in their
-// own app. The brief named the LINE Official Account link; the owner's newer ruling of 20 October
-// ("As attached QR") made LINE_DESTINATION the site's one LINE target, so this follows that constant.
+// WHAT IT IS AND ISN'T. A small sheet with two parts.
+//   1. GUIDED HELP (owner's word, 21 Oct: "I decided to add as Guided for now"; brief
+//      hlt-preview-check-1019, reply to bridge row 4975). Eight set questions, each with a set answer
+//      taken only from the knowledge file the EA Desk read off the live site (src/copy/
+//      guidedHelp1021.js says which lines). Labelled "Guided help", with no "AI" and no persona name.
+//      Nothing typed, nothing stored, nothing sent anywhere, and no answer says anything is booked.
+//   2. LINE and WhatsApp, always the last two things in the sheet, under every answer as well as the
+//      list: the same two destinations every other message button on the site uses
+//      (src/constants/contact.js). The brief of 21 Oct morning named the LINE Official Account link;
+//      the owner's newer ruling of 20 October ("As attached QR") made LINE_DESTINATION the one target.
+// No AI, no third-party widget, no script, no cookie.
 //
 // ACCESSIBILITY. The button is a real <button> with aria-expanded and aria-controls. Opening moves
-// focus to the first option; Escape or the close button shuts it and returns focus to the button;
-// a click outside shuts it. The sheet is a labelled, non-modal dialog, so the page stays usable.
+// focus to the first question; choosing one moves focus to its answer, which sits in a polite live
+// region; Tab reaches "Back", which returns focus to the question chosen. Escape or the close button
+// shuts the sheet and returns focus to the button; a click outside shuts it. The sheet is a labelled,
+// non-modal dialog, so the page stays usable. It scrolls inside itself on a short phone screen.
 //
 // COLOURS. Indigo for the button, as for every button on the site (tailwind.config.js: "indigo
 // stays for buttons only"); a white ring so it reads on the navy bands; the channel greens on the
-// two options, as in MessageBackups.
+// two message options, as in MessageBackups.
 import { useEffect, useId, useRef, useState } from 'react';
-import { MessageCircle, X } from 'lucide-react';
+import { ArrowLeft, MessageCircle, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { CONTACT_WHATSAPP_URL, LINE_OFFICIAL_ACCOUNT } from '../constants/contact';
 import { EVENTS, logEvent } from '../lib/analytics';
 import { LINE_GREEN, LineMark, WHATSAPP_GREEN, WhatsAppMark } from './ChannelIcons';
+import { GUIDED_HELP } from '../copy/guidedHelp1021';
 
-// The two new strings per language. The option labels reuse ctaLine and ctaWhatsApp, so the only
-// new Thai is the button's name and "close" (listed in the report for Ann's read).
+// The button's name and "close" per language; the guided help's words are in guidedHelp1021.js; the
+// message options reuse ctaLine and ctaWhatsApp. New Thai is listed in the report for Ann's read.
 const COPY = {
     en: { open: 'Chat with us', close: 'Close' },
     th: { open: 'แชทกับเรา', close: 'ปิด' },
@@ -31,6 +40,8 @@ const COPY = {
 
 const OPTION_CLASSES =
     'flex min-h-12 w-full items-center gap-3 rounded-xl px-4 text-base font-bold text-white transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2';
+const QUESTION_CLASSES =
+    'flex min-h-11 w-full items-center rounded-xl border border-slate-200 bg-stone-50 px-3 py-2 text-left text-sm font-semibold leading-5 text-slate-900 transition-colors hover:border-indigo-300 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-300';
 
 // NEVER OVER A CALL TO ACTION. The first browser pass (21 Oct) found it covering the phone's "Ask
 // for a Fit Call" button on Hua Hin. So while the closed button's box meets any call to action (a
@@ -45,14 +56,21 @@ const ChatLauncher = () => {
     const copy = COPY[contentLang] || COPY.en;
     const [open, setOpen] = useState(false);
     const [tucked, setTucked] = useState(false);
+    const [answer, setAnswer] = useState(0); // 0 = the question list, n = question n's answer
     const wrapRef = useRef(null);
     const buttonRef = useRef(null);
     const firstRef = useRef(null);
+    const answerRef = useRef(null);
+    const questionRefs = useRef([]);
+    const lastQuestion = useRef(0);
     const sheetId = useId();
     const titleId = useId();
+    const guide = GUIDED_HELP[contentLang] || GUIDED_HELP.en;
+    const faqs = guide.items.map(({ q, a }, i) => ({ n: i + 1, q, a }));
 
     const close = (returnFocus = true) => {
         setOpen(false);
+        setAnswer(0);
         if (returnFocus) buttonRef.current?.focus();
     };
 
@@ -100,6 +118,15 @@ const ChatLauncher = () => {
         };
     }, [open]);
 
+    // Focus follows the view: to the answer when one opens, back to its question on "Back".
+    useEffect(() => {
+        if (!open) return;
+        if (answer) answerRef.current?.focus();
+        else if (lastQuestion.current) questionRefs.current[lastQuestion.current - 1]?.focus();
+    }, [answer, open]);
+
+    const shown = answer ? faqs[answer - 1] : null;
+
     return (
         <div
             ref={wrapRef}
@@ -113,7 +140,7 @@ const ChatLauncher = () => {
                     role="dialog"
                     aria-labelledby={titleId}
                     data-chat-sheet
-                    className="w-64 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl"
+                    className="max-h-[calc(100vh-7rem)] w-[min(20rem,calc(100vw-2rem))] overflow-y-auto rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl"
                 >
                     <div className="flex items-center justify-between gap-3">
                         <p id={titleId} className="text-base font-bold text-slate-950">{copy.open}</p>
@@ -126,9 +153,55 @@ const ChatLauncher = () => {
                             <X size={18} aria-hidden="true" />
                         </button>
                     </div>
-                    <div className="mt-3 flex flex-col gap-2">
+
+                    <div data-chat-guided className="mt-2">
+                        <p data-chat-heading className="text-xs font-bold uppercase tracking-[0.14em] text-saffron-700">{guide.heading}</p>
+                        <p data-chat-note className="mt-1 text-xs leading-5 text-slate-500">{guide.note}</p>
+                        {shown ? (
+                            <div className="mt-3" aria-live="polite">
+                                <p ref={answerRef} tabIndex={-1} data-chat-question className="text-sm font-bold leading-5 text-slate-950 focus:outline-none">{shown.q}</p>
+                                <p data-chat-answer className="mt-2 text-sm leading-6 text-slate-700">{shown.a}</p>
+                                <button
+                                    type="button"
+                                    data-chat-back
+                                    onClick={() => setAnswer(0)}
+                                    className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 rounded-lg px-1"
+                                >
+                                    <ArrowLeft size={16} aria-hidden="true" />
+                                    {guide.back}
+                                </button>
+                            </div>
+                        ) : (
+                            <>
+                            <p className="mt-3 text-sm font-semibold text-slate-700">{guide.pick}</p>
+                            <ul className="mt-2 flex flex-col gap-2">
+                                {faqs.map(({ n, q }) => (
+                                    <li key={n}>
+                                        <button
+                                            type="button"
+                                            data-chat-faq={n}
+                                            ref={(el) => {
+                                                questionRefs.current[n - 1] = el;
+                                                if (n === 1) firstRef.current = el;
+                                            }}
+                                            onClick={() => {
+                                                lastQuestion.current = n;
+                                                setAnswer(n);
+                                            }}
+                                            className={QUESTION_CLASSES}
+                                        >
+                                            {q}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                            </>
+                        )}
+                    </div>
+
+                    <p data-chat-handoff className="mt-4 text-sm font-semibold text-slate-700">{guide.handoff}</p>
+                    <div className="mt-2 flex flex-col gap-2">
                         <a
-                            ref={firstRef}
                             href={LINE_OFFICIAL_ACCOUNT}
                             target="_blank"
                             rel="noopener noreferrer"
