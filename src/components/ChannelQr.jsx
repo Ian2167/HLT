@@ -8,18 +8,26 @@
 //
 // The two SVGs are written by scripts/make-qr.mjs from the same constants every button uses, and
 // read back by a decoder before they are kept, so a scan and a tap land in the same place.
+//
+// 21 October 2026: held behind SHOW_CHANNEL_QR in src/config/features.js ("Remove both QR for now").
+// Off, this renders nothing and the image paths are not in the bundle.
 import { useLanguage } from '../context/LanguageContext';
+import { SHOW_CHANNEL_QR } from '../config/features';
 import { LINE_GREEN, LineMark, WHATSAPP_GREEN, WhatsAppMark } from './ChannelIcons';
+
+const QR_LINE_SRC = SHOW_CHANNEL_QR ? '/brand/qr-line.svg' : '';
+const QR_WHATSAPP_SRC = SHOW_CHANNEL_QR ? '/brand/qr-whatsapp.svg' : '';
 
 const TILE = 'flex flex-col items-center gap-2 rounded-2xl bg-white p-3 text-center shadow-sm';
 const LABEL = 'flex items-center gap-1.5 text-xs font-bold leading-4 text-slate-900';
 
 const ChannelQr = ({ className = '' }) => {
     const { t } = useLanguage();
+    if (!SHOW_CHANNEL_QR) return null;
     return (
         <ul className={`hidden grid-cols-2 gap-3 md:grid ${className}`}>
             <li className={TILE}>
-                <img src="/brand/qr-line.svg" alt={t('qrLineAlt')} width="120" height="120" className="h-auto w-full max-w-[8rem]" loading="lazy" />
+                <img src={QR_LINE_SRC} alt={t('qrLineAlt')} width="120" height="120" className="h-auto w-full max-w-[8rem]" loading="lazy" />
                 <span className={LABEL}>
                     <span style={{ color: LINE_GREEN }}>
                         <LineMark size={16} />
@@ -28,7 +36,7 @@ const ChannelQr = ({ className = '' }) => {
                 </span>
             </li>
             <li className={TILE}>
-                <img src="/brand/qr-whatsapp.svg" alt={t('qrWhatsAppAlt')} width="120" height="120" className="h-auto w-full max-w-[8rem]" loading="lazy" />
+                <img src={QR_WHATSAPP_SRC} alt={t('qrWhatsAppAlt')} width="120" height="120" className="h-auto w-full max-w-[8rem]" loading="lazy" />
                 <span className={LABEL}>
                     <span style={{ color: WHATSAPP_GREEN }}>
                         <WhatsAppMark size={16} />

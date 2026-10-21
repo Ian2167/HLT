@@ -44,3 +44,9 @@ export const enabledCapabilities =() => Object.keys(CAPABILITIES).filter((slug) 
 // Ian, 20 October 2026: hold the repeated sample until a stronger example is ready.
 // Keep the components and copy recoverable; this controls both English and Thai pages.
 export const SHOW_SAMPLE_PREVIEW = false;
+
+// ---------------------------------------------------------------- the LINE and WhatsApp QR codes
+// Owner's word, 21 October 2026: "Remove both QR for now". Off, no page shows either code (footer
+// and Contact); the LINE and WhatsApp buttons stay. The SVGs stay in public/brand, so a code
+// already printed or shared still opens. Set to true to show them again.
+export const SHOW_CHANNEL_QR = false;

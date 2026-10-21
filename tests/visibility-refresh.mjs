@@ -115,7 +115,9 @@ try {
     // 1 October 2026, Ian: the raw LINE ID "looks particularly poor". The two QR codes are served and
     // the footer of every page carries them; the ID text appears on no page.
     check(existsSync(path.join(DIST, 'brand', 'qr-line.svg')) && existsSync(path.join(DIST, 'brand', 'qr-whatsapp.svg')), 'contact: the LINE and WhatsApp QR codes are served');
-    check(readFileSync(staticFile('/en'), 'utf8').includes('src="/brand/qr-line.svg"') && readFileSync(staticFile('/en'), 'utf8').includes('src="/brand/qr-whatsapp.svg"'), 'contact: the footer carries both QR codes');
+    // 21 October 2026, the owner: "Remove both QR for now" (SHOW_CHANNEL_QR = false in
+    // src/config/features.js). The files stay served; no page shows them until the switch is on.
+    check(!readFileSync(staticFile('/en'), 'utf8').includes('src="/brand/qr-line.svg"') && !readFileSync(staticFile('/en'), 'utf8').includes('src="/brand/qr-whatsapp.svg"'), 'contact: the footer shows no QR code while SHOW_CHANNEL_QR is off');
     // The SPA rewrite in vercel.json must not catch asset-looking paths, so a crawler asking for an
     // icon that no longer exists gets a real 404 instead of the app shell.
     const vercelJson = JSON.parse(readFileSync(path.join(REPO, 'vercel.json'), 'utf8'));
