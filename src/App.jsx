@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useLocation, 
 import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ChatLauncher from './components/ChatLauncher';
 import Home from './pages/Home';
 import MCTB from './pages/MCTB';
 import Quotes from './pages/Quotes';
@@ -163,6 +164,8 @@ export function AppShell() {
             </Routes>
           </main>
           <Footer />
+          {/* 21 October 2026 (bridge row 4948): the floating "Chat with us" button, every page. */}
+          <ChatLauncher />
           {/* Vercel Web Analytics (Ian, 1 October 2026: "Yes to Vercel Analytics"). Page views
               from here, the named conversion events from src/lib/analytics.js. Renders nothing
               on the server and sends nothing until Analytics is enabled on the Vercel project.

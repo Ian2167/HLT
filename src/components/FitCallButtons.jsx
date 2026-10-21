@@ -36,14 +36,14 @@ export const FitCallButton = ({ place, className = PRIMARY_CLASSES, label }) => 
     const onClick = () => logEvent(EVENTS.fitCallClick, { place, destination: FIT_CALL_BOOKING_URL ? 'booking' : 'contact' });
     if (FIT_CALL_BOOKING_URL) {
         return (
-            <a href={FIT_CALL_BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={onClick} className={className}>
+            <a data-cta href={FIT_CALL_BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={onClick} className={className}>
                 {text}
                 <ArrowRight size={18} aria-hidden="true" />
             </a>
         );
     }
     return (
-        <Link to={lp(ROUTE_CONTACT)} onClick={onClick} className={className}>
+        <Link data-cta to={lp(ROUTE_CONTACT)} onClick={onClick} className={className}>
             {text}
             <ArrowRight size={18} aria-hidden="true" />
         </Link>
@@ -53,7 +53,7 @@ export const FitCallButton = ({ place, className = PRIMARY_CLASSES, label }) => 
 export const BusinessReadLink = ({ place, className = SECONDARY_DARK_CLASSES }) => {
     const { t, lp } = useLanguage();
     return (
-        <Link to={lp(ROUTE_BUSINESS_READ)} onClick={() => logEvent(EVENTS.businessReadCtaClick, { place })} className={className}>
+        <Link data-cta to={lp(ROUTE_BUSINESS_READ)} onClick={() => logEvent(EVENTS.businessReadCtaClick, { place })} className={className}>
             {t('ctaSeeBusinessRead')}
         </Link>
     );
@@ -66,6 +66,7 @@ export const MessageBackups = ({ place, lead = true, dark = false, center = true
             {lead ? <p className={`text-sm leading-6 ${dark ? 'text-slate-200' : 'text-slate-500'}`}>{t('fitCallBackupLead')}</p> : null}
             <div className={`${lead ? 'mt-3' : ''} flex flex-col gap-3 sm:flex-row ${center ? 'sm:justify-center' : ''}`}>
                 <a
+                    data-cta
                     href={LINE_OFFICIAL_ACCOUNT}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -77,6 +78,7 @@ export const MessageBackups = ({ place, lead = true, dark = false, center = true
                     {t('ctaLine')}
                 </a>
                 <a
+                    data-cta
                     href={CONTACT_WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
