@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:;;;;
+FN:High Level Thai
+X-ABShowAs:COMPANY
+ORG:High Level Thai
+TEL;TYPE=CELL,VOICE:+66968398305
+EMAIL;TYPE=INTERNET,WORK:ian@highlevelthai.com
+URL:https://www.highlevelthai.com/
+X-SOCIALPROFILE;TYPE=WhatsApp:https://wa.me/66968398305
+X-SOCIALPROFILE;TYPE=LINE:https://line.me/ti/p/5_UWYMe4nU
+END:VCARD
