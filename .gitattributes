@@ -1,0 +1,3 @@
+# 23 Oct 2026 (A-062): vCards are CRLF by spec; store them byte-for-byte so Vercel serves CRLF.
+public/card/**/*.vcf -text
+public/card/*.vcf -text
